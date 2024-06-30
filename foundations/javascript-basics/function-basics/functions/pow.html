@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>pow</title>
+  </head>
+  <body>
+    <input class="base">
+    <input class="exponent">
+    <p class="output"></p>
+
+    <script>
+      const baseInput = document.querySelector(".base");
+      const exponentInput = document.querySelector(".exponent");
+      const outputParagraph = document.querySelector(".output");
+
+      function pow(base, exponent) {
+        return base ** exponent;
+      }
+
+      function displayResult() {
+        const base = parseInt(baseInput.value);
+        const exponent = parseInt(exponentInput.value);
+
+        if (isNaN(base) || isNaN(exponent)) {
+          outputParagraph.textContent = "Input must be a number";   
+        } else {
+          outputParagraph.textContent = `${base}^${exponent}=${pow(base, exponent)}`;
+        }
+      }
+
+      exponentInput.addEventListener("change", displayResult);
+    </script>
+  </body>
+</html>
