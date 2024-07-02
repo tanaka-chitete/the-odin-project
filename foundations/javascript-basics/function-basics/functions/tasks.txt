@@ -1,6 +1,6 @@
-1. The following function returns true if the parameter age is greater than 18. 
+1) The following function returns true if the parameter age is greater than 18. 
 Otherwise it asks for a confirmation and returns its result.
-
+Option 1:
 function checkAge(age) {
   if (age > 18) {
     return true;
@@ -10,6 +10,7 @@ function checkAge(age) {
   }
 }
 
+Option 2:
 function checkAge(age) {
   if (age > 18) {
     return true;
@@ -18,13 +19,13 @@ function checkAge(age) {
   return confirm('Did parents allow you?');
 }
 
-Is there any difference in the behavior of these two variants?
+Is there any difference in the behavior of these two options?
 No, in both cases, return confirm('Did parents allow you?') executes only when
 the if condition is falsy.
+--------------------------------------------------------------------------------
 
-2. The following function returns true if the parameter age is greater than 18.
+2) The following function returns true if the parameter age is greater than 18.
 Otherwise it asks for a confirmation and returns its result.
-
 function checkAge(age) {
   if (age > 18) {
     return true;
@@ -33,27 +34,18 @@ function checkAge(age) {
   }
 }
 
-Rewrite it, to perform the same, but without if, in a single line.
-
-Make two variants of checkAge:
-a) Using a question mark operator ?
+a) Rewrite it using the ? operator.
 function checkAge(age) {
   return (age > 18) ? true : confirm('Did parents allow you?');
 }
 
-b) Using OR ||
+b) Rewriting using the logical OR operator.
 function checkAge(age) {
   return (age > 18) || confirm('Did parents allow you?);
 }
+--------------------------------------------------------------------------------
 
-3. Write a function min(a,b) which returns the least of two numbers a and b.
-
-For instance:
-
-min(2, 5) == 2
-min(3, -1) == -1
-min(1, 1) == 1
-
+3) Write a function min(a,b) which returns the least of two numbers a and b.
 function min(a, b) {
   if (a < b) {
     return a;
@@ -62,15 +54,5 @@ function min(a, b) {
   }
 }
 
-4. Write a function pow(x,n) that returns x in power n. Or, in other words, 
-multiplies x by itself n times and returns the result.
-
-pow(3, 2) = 3 * 3 = 9
-pow(3, 3) = 3 * 3 * 3 = 27
-pow(1, 100) = 1 * 1 * ...* 1 = 1
-
-Create a web-page that prompts for x and n, and then shows the result of pow(x,n).
-
-P.S. In this task the function should support only natural values of n: integers up from 1.
-
+4) Write a function pow(x,n) that returns x in power n.
 View pow.html

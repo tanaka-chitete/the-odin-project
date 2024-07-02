@@ -1,7 +1,5 @@
-1. What is the last value alerted by this code? Why?
-
+1) What is the last value alerted by this code? Why?
 let i = 3;
-
 while (i) {
   alert( i-- );
 }
@@ -9,7 +7,7 @@ It is 1 because when i = 0, the while condition evaluates to false, preventing
 the function body from executing again.
 --------------------------------------------------------------------------------
 
-2. For every loop iteration, write down which value it outputs and then compare 
+2) For every loop iteration, write down which value it outputs and then compare 
 it with the solution.
 a) The prefix form:
 let i = 0;
@@ -27,10 +25,9 @@ while (i++ < 5) alert( i );
 2
 3
 4
-
 --------------------------------------------------------------------------------
 
-3. For each loop write down which values it is going to show. Then compare with 
+3) For each loop write down which values it is going to show. Then compare with 
 the answer.
 a) The postfix form:
 for (let i = 0; i < 5; i++) alert( i );
@@ -49,7 +46,7 @@ for (let i = 0; i < 5; ++i) alert( i );
 4
 --------------------------------------------------------------------------------
 
-4. Use the for loop to output even numbers from 2 to 10.
+4) Use the for loop to output even numbers from 2 to 10.
 for (let i = 2; i <= 10; i++) {
   if (i % 2 === 0) {
     console.log(i);
@@ -63,7 +60,7 @@ for (let i = 2; i <= 10; i = i + 2) {
 }
 --------------------------------------------------------------------------------
 
-5. Write a loop which prompts for a number greater than 100. If the user enters 
+5) Write a loop which prompts for a number greater than 100. If the user enters 
 another number – ask them to input again. The loop must ask for a number until 
 either the visitor enters a number greater than 100 or cancels the input/enters 
 an empty line. Here we can assume that the visitor only inputs numbers.
@@ -73,7 +70,7 @@ do {
 } while (num <= 100);
 --------------------------------------------------------------------------------
 
-6. An integer number greater than 1 is called a prime if it cannot be divided 
+6) An integer number greater than 1 is called a prime if it cannot be divided 
 without a remainder by anything except 1 and itself. In other words, n > 1 is a 
 prime if it can’t be evenly divided by anything except 1 and n. For example, 5 
 is a prime, because it cannot be divided without a remainder by 2, 3 and 4. 
