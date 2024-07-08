@@ -1,0 +1,17 @@
+<!DOCTYPE>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Sum Tripled Evens</title>
+  </head>
+  <body>
+    <script>
+      function sumOfTripledEvens(array) {
+        return array
+          .filter((num) => num % 2 === 0)
+          .map((num) => num * 3)
+          .reduce((total, num) => total + num, 0);
+      }
+    </script>
+  </body>
+</html>
