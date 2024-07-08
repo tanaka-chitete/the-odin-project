@@ -1,0 +1,54 @@
+1) Write the code, one line for each action:
+a) Create an empty object user.
+let user = {};
+b) Add the property name with the value John.
+user["name"] = "John";
+c) Add the property surname with the value Smith.
+user["surname"] = "Smith;
+d) Change the value of the name to Pete.
+user["name"] = "Pete";
+e) Remove the property name from the object.
+delete user["name"];
+--------------------------------------------------------------------------------
+
+2) Write the function isEmpty(obj) which returns true if the object has no 
+properties, false otherwise.
+function isEmpty(obj) {
+  let empty = true;
+  for (key in obj) {
+    empty = false;
+    break;
+  }
+
+  return empty;
+}
+--------------------------------------------------------------------------------
+
+3) We have an object storing salaries of our team:
+let salaries = {
+  John: 100,
+  Ann: 160,
+  Pete: 130
+}
+Write the code to sum all salaries and store in the variable sum. 
+function calculateSum(obj) {
+  let sum = 0;
+  for (key in obj) {
+    sum += obj[key]
+  }
+
+  return sum;
+}
+--------------------------------------------------------------------------------
+
+4) Create a function multiplyNumeric(obj) that multiplies all numeric property 
+values of obj by 2.
+function multiplyNumeric(obj) {
+  for (key in obj) {
+    if (typeof obj[key] === "number") {
+    obj[key] *= 2
+    }
+  }
+
+  return obj;
+}
