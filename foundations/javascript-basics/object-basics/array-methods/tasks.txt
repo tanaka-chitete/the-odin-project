@@ -1,0 +1,54 @@
+1) Write the function camelize(str) that changes dash-separated words like 
+“my-short-string” into camel-cased “myShortString”. 
+function camelize(string) {
+  const subStrings = string.split("-");
+  const capitalisedStrings = subStrings.map((subString, index) => {
+    if (index === 0) {
+      return subString;
+    }
+    return subString[0].toUpperCase() + subString.slice(1);  
+  });
+  return camelizedString = capitalisedStrings.join("");
+}
+--------------------------------------------------------------------------------
+
+2) Write a function filterRange(arr, a, b) that gets an array arr, looks for 
+elements with values higher or equal to a and lower or equal to b and return a 
+result as an array.
+function filterRange(array, low, high) {
+  const filteredArray = array.filter(num => {
+    return low <= num && num <= high;
+  });
+  return filteredArray;
+}
+--------------------------------------------------------------------------------
+
+3) Write a function filterRangeInPlace(arr, a, b) that gets an array arr and 
+removes from it all values except those that are between a and b. The test is: 
+a ≤ arr[i] ≤ b.
+function filterRangeInPlace(array, low, high) {
+  for (let i = 0; i < array.length; i++) {
+    let num = array[i];
+
+    if (num < low || num > high) {
+      array.splice(i, 1);
+      i--;
+    }
+  }
+}
+--------------------------------------------------------------------------------
+
+4) Write a function sort(arr) that gets an array arr and sorts it in decreasing
+order.
+function sort(array) {
+  const sortedArray = array.sort((num1, num2) => {
+    return num2 - num1;
+  })
+}
+--------------------------------------------------------------------------------
+
+5) We have an array of strings arr. We’d like to have a sorted copy of it, but 
+keep arr unmodified. Create a function copySorted(arr) that returns such a copy.
+function copySorted(array) {
+  return array.slice().sort();
+}
