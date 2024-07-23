@@ -1,0 +1,19 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.score {
+  text-align: center;
+  font-size: 32px;
+}
+
+.choices {
+  margin: 16px;
+}
+
+.message {
+  text-align: center;
+}

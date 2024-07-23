@@ -1,0 +1,16 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pad {
+  height: 960px;
+  width: 960px;
+  margin: 16px;
+  border: #000000 solid 1px;
+  display: flex;
+  flex-wrap: wrap;
+}

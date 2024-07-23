@@ -1,0 +1,27 @@
+body {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+.recipe-name{
+  text-align: center;
+}
+
+img.chana-masala {
+  height: auto;
+  width: 750px; 
+}
+
+img.rigatoni-alla-vodka {
+  height: auto;
+  width: 625px;
+}
+
+img.spaghetti-bolognese {
+  height: auto;
+  width: 325px
+}
+
+.center-image {
+  display: block;
+  margin: 0 auto;   
+}

@@ -1,0 +1,69 @@
+:root {
+  --calculator-height: 600px;
+  --calculator-width: 480px;
+  --row-count: 5;
+  --column-count: 4;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+}
+
+.calculator {
+  height: var(--calculator-height);
+  width: var(--calculator-width);
+  display: flex;
+  flex-direction: column;
+  font-family: "Space Mono", monospace;
+  border-radius: 8px;
+}
+
+.display {
+  box-sizing: border-box;
+  display: flex;
+  height: calc(var(--calculator-height) / var(--row-count));
+  width: inherit;
+  background: white;
+  color: black;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 74px;
+  padding: 36px;
+  border-radius: 16px;
+}
+
+.keys {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.keys * {
+  box-sizing: border-box;
+  height: calc(var(--calculator-height) / var(--row-count));
+  width: calc(var(--calculator-width) / var(--column-count));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.keys *:hover {
+  cursor: pointer;
+}
+
+.digit {
+  color: white;
+}
+
+.operation {
+  color: orange;
+}
+
+.equals,
+.clear {
+  color: grey;
+}
