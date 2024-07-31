@@ -1,6 +1,49 @@
 @font-face {
   font-family: "Norse Bold";
-  src: url("fonts/norse-bold.woff2") format("woff2"), url("fonts/norse-bold.woff") format("woff");
+  src: url("fonts/Norse-Bold-webfont.woff2") format("woff2"), url("fonts/Norse-Bold-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+}
+
+.background-container {
+  flex: 1;
+}
+
+.icon-container {
+  position: absolute;
+  height: calc(100vh / 9);
+  width: calc(100vw / 3);
+  top: calc((100vh / 3) - (100vh / 9));
+  background: gray;
+}
+
+.form-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.pitch {
+  flex: 1;
+}
+
+form {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs {
+  flex: 1;
+  background: gray;
+}
+
+.submit {
+  flex: 1;
 }
