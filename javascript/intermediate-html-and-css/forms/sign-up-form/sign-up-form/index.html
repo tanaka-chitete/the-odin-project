@@ -8,14 +8,49 @@
   </head>
   <body>
     <div class="background-container">
-      BACKGROUND
-      <div class="icon-container">ICON</div>
+      <div class="logo-container">
+        <img class="logo" src="res/logo.png">
+        ODIN
+      </div>
+      <div class="credit">
+        Photo by <a href="">Halie West</a> on <a href="">Unsplash</a>
+      </div>
     </div>
-    <div class="form-container">
-      <div class="pitch">PITCH</div>
+    <div class="sign-up-container">
+      <div class="pitch">
+        <p> <!-- TODO: limit line length to 66 characters (guideline)-->
+          This is not a real online service! You know you need something like this 
+          in your life to help you realize your deepest dreams. Sign up 
+          <em>now</em> to get started
+        </p>
+        <p>You <em>know</em> you want to.</p>
+      </div>
       <form action="" method="post">
-        <div class="inputs">INPUTS</div>
-        <div class="submit">SUBMIT</div>
+        <div class="inputs">
+          <h1>Let's do this!</h1>
+          <div class="form-row">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" name="first_name">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="last_name">
+          </div>
+          <div class="form-row">
+            <label for="email-address">email</label>
+            <input type="email" id="email-address" name="email_address">
+            <label for="phone-number">Phone Number</label>
+            <input type="tel" id="phone-number" name="phone_number">
+          </div>
+          <div class="form-row">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password">
+            <label for="password-confirmation">Password Confirmation</label>
+            <input type="password" id="password-confirmation" name="password_confirmation">
+          </div>
+        </div>
+        <div class="submit">
+          <button type="submit">Create Account</button>
+          <p>Already have an account? <a href="">Log in</a></p>
+        </div>
       </form>
     </div>
   </body>
