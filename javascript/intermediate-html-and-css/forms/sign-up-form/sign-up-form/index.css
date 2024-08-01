@@ -61,6 +61,14 @@ body {
 
 .pitch-container {
   flex: 1;
+  display: flex;
+  align-items: flex-end;
+  background-color: whitesmoke;
+}
+
+.pitch-text {
+  margin: 3rem;
+  max-inline-size: 75ch; /* Represents maximum acceptable line length */
 }
 
 .inputs-container {
