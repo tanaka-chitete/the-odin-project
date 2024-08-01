@@ -1,13 +1,13 @@
-Implement low-fidelity background section
-Implement low-fidelity logo section
-Implement low-fidelity action section
-Implement low-fidelity input section
-Implement low-fidelity submit section
-Implement medium-fidelity background section
-Implement medium-fidelity logo section
-Implement medium-fidelity action section
-Implement medium-fidelity input section
-Implement medium-fidelity submit section
+Determine how to place label on top of input (internetingishard)
+Determine how to pop up message when passwords don't match (silocreative)
+Actually this ^^^ little span should be under all elements:
+- * First name is required
+- * Last name is required
+- * Password is required
+- * Password confirmation is required
+- * Passwords do not match
+Fix ugly absolute positioning logic
+Move image crop location to right
 Implement high-fidelity background section
 Implement high-fidelity logo section
 Implement high-fidelity action section

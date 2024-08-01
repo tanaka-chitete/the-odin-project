@@ -6,9 +6,15 @@
 }
 
 body {
+  font-family: "Helvetica", "Arial", sans-serif;
+  line-height: 1.5;
   margin: 0;
   height: 100vh;
   display: flex;
+}
+
+a {
+  color: white;
 }
 
 .background-container {
@@ -17,18 +23,33 @@ body {
   align-items: end;
   background: url("res/background.jpg");
   background-size: cover;
+  justify-content: center;
+}
+
+.credit {
+  color: white;
+  padding-bottom: 1em;
 }
 
 .logo-container {
+  --height: calc(100vh / 9);
+  --width: calc(100vw / 3);
+  --end-first-third: calc(100vh / 3);
   position: absolute;
-  height: calc(100vh / 9);
-  width: calc(100vw / 3);
-  top: calc((100vh / 3) - (100vh / 9));
-  background: gray;
+  height: var(--height);
+  width: var(--width);
+  top: calc(var(--end-first-third) - var(--height));
+  background: rgba(0, 0, 0, 0.5);
+  font-family: "Norse Bold";
+  font-size: 5rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo {
-  height: 100%;
+  height: 1.25em;
 }
 
 .sign-up-container {
