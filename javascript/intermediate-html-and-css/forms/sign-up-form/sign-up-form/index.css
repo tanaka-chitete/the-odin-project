@@ -6,3 +6,40 @@
   font-weight: normal;
   font-style: normal;
 }
+
+body {
+  height: 100vh;
+  display: flex;
+}
+
+.background-container {
+  position: relative;
+  flex: 1;
+}
+
+.logo-container {
+  --height: calc(100vh / 6);
+
+  position: absolute;
+  height: var(--height);
+  width: 100%;
+  top: var(--height);
+}
+
+.form-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.pitch-container {
+  flex: 1;
+}
+
+.inputs-container {
+  flex: 1;
+}
+
+.button-container {
+  flex: 1;
+}
