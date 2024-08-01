@@ -58,8 +58,18 @@ a {
   flex-direction: column;
 }
 
-.pitch {
+.pitch-container {
   flex: 1;
+  display: flex;
+  align-items: flex-end;
+  background-color: whitesmoke;
+}
+
+.pitch-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  max-inline-size: 66ch;
+  margin: 3rem;
 }
 
 form {
