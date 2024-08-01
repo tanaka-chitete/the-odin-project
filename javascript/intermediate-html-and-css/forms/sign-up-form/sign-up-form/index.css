@@ -45,12 +45,9 @@ body {
   color: white;
 }
 
-.credit-container {
-  color: white;
-}
-
+.credit-text,
 .credit-link {
-  color: inherit;
+  color: white;
 }
 
 .form-container {
@@ -71,10 +68,35 @@ body {
   max-inline-size: 75ch; /* Represents maximum acceptable line length */
 }
 
+.details-container {
+  flex: 1;
+  box-shadow: 0 4px 8px -2px gainsboro;
+}
+
 .inputs-container {
+  margin-left: 3rem;
+}
+
+.input-row {
+  display: flex;
+}
+
+.input-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Prevents stretching */
+}
+
+.submit-container {
   flex: 1;
 }
 
 .button-container {
-  flex: 1;
+  margin: 3rem;
+}
+
+.login-link {
+  text-decoration: none;
+  font-weight: bold;
+  color: #596D48;
 }

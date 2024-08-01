@@ -13,14 +13,9 @@
         <img src="res/logo.png" alt="Logo for The Odin Project" class="logo-image">
         <div class="logo-text">ODIN</div>
       </div>
-      <div class="credit-container">
-        <div class="credit-text">
-          <p>Photo by <a href="https://unsplash.com/@haliewestphoto" target="_blank" class="credit-link">Halie West</a></p>
-        </div>
-      </div>
+      <p class="credit-text">Photo by <a href="https://unsplash.com/@haliewestphoto" target="_blank" class="credit-link">Halie West</a></p>
     </div>
-
-    <div class="form-container">
+    <form action="" method="post" class="form-container">
       <div class="pitch-container">
         <div class="pitch-text">
           <h2>
@@ -31,11 +26,47 @@
           <h2>You <em>know</em> you want to.</h2>
         </div>
       </div>
-      <div class="inputs-container">
+      <div class="details-container">
+        <div class="inputs-container">
+          <h2>Let's do this!</h2>
+          <div class="input-row">
+            <div class="input-item">
+              <label for="first-name">FIRST NAME</label>
+              <input type="text" id="first-name" name="first_name">
+            </div>
+            <div class="input-item">
+              <label for="last-name">LAST NAME</label>
+              <input type="text" id="last-name" name="last_name">
+            </div>
+          </div>
+          <div class="input-row">
+            <div class="input-item">
+              <label for="email-address">EMAIL</label>
+              <input type="email" id="email-address" name="email_address">
+            </div>
+            <div class="input-item">
+              <label for="phone-number">PHONE NUMBER</label>
+              <input type="tel" id="phone-number" name="phone_number">
+            </div>
+          </div>
+          <div class="input-row">
+            <div class="input-item">
+              <label for="password">PASSWORD</label>
+              <input type="password" id="password" name="password">
+            </div>
+            <div class="input-item">
+              <label for="confirm-password">CONFIRM PASSWORD</label>
+              <input type="password" id="confirm-password" name="confirm_password">
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="button-container">
+      <div class="submit-container">
+        <div class="button-container">
+          <button type="submit" class="create-account-button">Create Account</button>
+          <p class="login-text">Already have an account? <a href="" class="login-link">Log in</a></p>
+        </div>
       </div>
-    </div>
-
+    </form>
   </body>
 </html>
