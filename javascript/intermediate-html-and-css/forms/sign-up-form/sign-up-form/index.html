@@ -10,7 +10,7 @@
     <div class="background-container">
       <div class="logo-container">
         <img class="logo" src="res/logo.png">
-        ODIN
+        <h1>ODIN</h1>
       </div>
       <div class="credit">
         Photo by <a href="">Halie West</a> on <a href="">Unsplash</a>
@@ -19,40 +19,56 @@
     <div class="sign-up-container">
       <div class="pitch-container">
         <div class="pitch-text">
-          <p> <!-- TODO: limit line length to 66 characters (guideline)-->
+          <h2>
             This is not a real online service! You know you need something like this 
-            in your life to help you realize your deepest dreams. 
-          </p>
-          <p>Sign up now to get started.</p>
+            in your life to help you realize your deepest dreams. Sign up <em>now</em> to get started.
+          </h2>
+          <h2>You <em>know</em> you want to.</h2>
         </div>
       </div>
-      <form action="" method="post">
-        <div class="inputs">
-          <h1>Let's do this!</h1>
-          <div class="form-row">
-            <label for="first-name">First Name</label>
-            <input type="text" id="first-name" name="first_name">
-            <label for="last-name">Last Name</label>
-            <input type="text" id="last-name" name="last_name">
+        <form action="" method="post">
+          
+          <div class="input-container">
+            <h2>Let's do this!</h2>
+            <div class="form-row">
+              <div class="input-item">
+                <label for="first-name">FIRST NAME</label>
+                <input type="text" id="first-name" name="first_name">
+              </div>
+              <div class="input-item">
+                <label for="last-name">LAST NAME</label>
+                <input type="text" id="last-name" name="last_name">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="input-item">
+                <label for="email-address">EMAIL</label>
+                <input type="email" id="email-address" name="email_address">
+              </div>
+              <div class="input-item">
+                <label for="phone-number">PHONE NUMBER</label>
+                <input type="tel" id="phone-number" name="phone_number">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="input-item">
+                <label for="password">PASSWORD</label>
+                <input type="password" id="password" name="password">
+              </div>
+              <div class="input-item">
+                <label for="password-confirmation">CONFIRM PASSWORD</label>
+                <input type="password" id="password-confirmation" name="password_confirmation">
+              </div>
+            </div>
           </div>
-          <div class="form-row">
-            <label for="email-address">Email</label>
-            <input type="email" id="email-address" name="email_address">
-            <label for="phone-number">Phone Number</label>
-            <input type="tel" id="phone-number" name="phone_number">
+
+          <div class="submit-container">
+            <button type="submit">Create Account</button>
+            <p>Already have an account? <a href="">Log in</a></p>
           </div>
-          <div class="form-row">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password">
-            <label for="password-confirmation">Confirm Password</label>
-            <input type="password" id="password-confirmation" name="password_confirmation">
-          </div>
-        </div>
-        <div class="submit">
-          <button type="submit">Create Account</button>
-          <p>Already have an account? <a href="">Log in</a></p>
-        </div>
-      </form>
+
+        </form>
+
     </div>
   </body>
 </html>

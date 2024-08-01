@@ -32,7 +32,7 @@ a {
 }
 
 .logo-container {
-  --height: calc(100vh / 9);
+  --height: calc(100vh / 6);
   --width: calc(100vw / 3);
   --end-first-third: calc(100vh / 3);
   position: absolute;
@@ -49,7 +49,7 @@ a {
 }
 
 .logo {
-  height: 1.25em;
+  height: 75%;
 }
 
 .sign-up-container {
@@ -61,16 +61,26 @@ a {
 .pitch-container {
   flex: 1;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: end;
   background-color: whitesmoke;
+}
+
+h1 {
+  font-size: 6rem;
+}
+
+h2 {
+  font-size: 1.5rem;
 }
 
 .pitch-text {
   font-size: 1.5rem;
   font-weight: bold;
-  max-inline-size: 66ch;
+  max-inline-size: calc((66ch + 45ch) / 2);
   margin: 3rem;
 }
+
 
 form {
   display: flex;
@@ -78,11 +88,26 @@ form {
   flex: 2;
 }
 
-.inputs {
-  flex: 1;
-  background: gray;
+.form-row {
+  display: flex;
+  gap: 6rem;
 }
 
-.submit {
+.input-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Prevents stretching */
+}
+
+.input-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-left: 3rem;
+  box-shadow: 0 4px 8px -2px gainsboro;
+}
+
+.submit-container {
   flex: 1;
 }
