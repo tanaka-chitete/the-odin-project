@@ -15,15 +15,42 @@ body {
 .background-container {
   position: relative;
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background: url("res/background.jpg");
+  background-size: cover;
 }
 
 .logo-container {
   --height: calc(100vh / 6);
 
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: var(--height);
   width: 100%;
   top: var(--height);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.logo-image {
+  height: 8rem;
+}
+
+.logo-text {
+  font-family: "Norse Bold";
+  font-size: 6rem;
+  color: white;
+}
+
+.credit-container {
+  color: white;
+}
+
+.credit-link {
+  color: inherit;
 }
 
 .form-container {
