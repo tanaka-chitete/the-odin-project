@@ -10,8 +10,8 @@ html {
   padding: 16px;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: calc(25vw) calc(75vw);
-  grid-template-rows: calc(100vh * calc(1 / 8)) calc(100vh * calc(1 / 8)) calc(100vh * calc(5 / 8)) calc(100vh * calc(1 / 8));
+  grid-template-columns: 300px 900px;
+  grid-template-rows: 100px 100px 500px 100px;
   gap: 15px;
 }
 
