@@ -9,13 +9,49 @@
 
 .sidebar {
   background-color: aqua;
-  grid-row: 1 / 3
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-.header {
-  background-color: aquamarine;
+.sidebar * {
+  color: white;
 }
 
-.core {
-  background-color: blue;
+.branding,
+.destination {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.branding .icon,
+.navigation .icon {
+  grid-column: 1 / 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.branding .icon svg,
+.navigation .icon svg {
+  width: 2rem;
+  fill: currentColor;
+}
+
+.branding, .name,
+.navigation .name {
+  grid-column: 2 / 3;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: bold;
+}
+
+.branding .name {
+  font-size: 2rem;
+}
+
+.navigation .name {
+  font-size: 1.5rem;
 }
