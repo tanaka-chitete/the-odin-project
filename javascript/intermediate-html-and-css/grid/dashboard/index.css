@@ -30,7 +30,8 @@ a {
   padding: 0 2rem;
 }
 
-.top {
+.header .top, 
+.header .bottom {
   display: flex;
   justify-content: space-between;
 }
@@ -63,6 +64,39 @@ a {
   width: 3.5rem;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.greeting {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.greeting .avatar img {
+  width: 5rem;
+}
+
+.greeting .message {
+  font-weight: bold;
+}
+
+.greeting .message .name {
+  font-size: 2rem;
+}
+
+.media {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+.media button {
+  border: none;
+  height: 3rem;
+  width: 8rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-radius: 1.5rem;
 }
 
 .user .name {

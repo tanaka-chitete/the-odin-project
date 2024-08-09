@@ -2,3 +2,4 @@ Change global font to Roboto
 Set custom properties for colours
 Colour text in sidebar according to section
 Set favicon
+Set class names to page positions (e.g. .left instead of .greeting)
