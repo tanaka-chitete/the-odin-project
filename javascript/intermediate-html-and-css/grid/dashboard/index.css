@@ -1,5 +1,20 @@
 @import url("modern-normalize.css");
 
+:root {
+  --header-background-color: #ffffff;
+  --sidebar-background-color: #1992d4;
+  --main-background-color: #e2e8f0;
+  --accent-color: #facc15;
+  --white-text-color: #ffffff;
+  --gray-text-color: #656363;
+  --black-text-color: #202122;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .content {
   height: 100vh;
   display: grid;
@@ -7,8 +22,56 @@
   grid-template-columns: 1fr 4fr;
 }
 
+.header {
+  grid-column: 2 / 3;
+  background: var(--header-background-color);
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  padding: 0 2rem;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search,
+.user {
+  display: flex; 
+  align-items: center;
+  gap: 2rem;
+}
+
+.search svg,
+.user svg {
+  width: 2rem;
+  color: var(--black-text-color);
+}
+
+.search input {
+  outline: none;
+  border: none;
+  background: var(--main-background-color);
+  height: 2rem;
+  width: 50rem;
+  border-radius: 1rem;
+  padding-left: 1rem; /* Prevents text cursor touching input */
+}
+
+.avatar img {
+  aspect-ratio: 1 / 1;
+  width: 3.5rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.user .name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 .sidebar {
-  background-color: #1992d4;
+  background: var(--sidebar-background-color);
   grid-row: 1 / 3;
   display: flex;
   flex-direction: column;
@@ -17,16 +80,12 @@
 }
 
 .sidebar * {
-  color: white;
+  color: var(--white-text-color);
   font-weight: bold;
 }
 
 .sidebar svg {
   fill: currentColor;
-}
-
-.sidebar a {
-  text-decoration: none;
 }
 
 .destinations {
@@ -69,4 +128,8 @@
 
 .destination .name {
   font-size: 1.5rem;
+}
+
+.main {
+  background-color: var(--main-background-color);
 }
