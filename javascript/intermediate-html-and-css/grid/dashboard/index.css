@@ -86,7 +86,7 @@ a {
 
 .media {
   display: flex;
-  gap: 3rem;
+  gap: 2rem;
   align-items: center;
 }
 
@@ -97,6 +97,12 @@ a {
   font-size: 1.25rem;
   font-weight: bold;
   border-radius: 1.5rem;
+  background: var(--sidebar-background-color);
+  color: var(--white-text-color);
+}
+
+.media button:hover {
+  cursor: pointer;
 }
 
 .user .name {
