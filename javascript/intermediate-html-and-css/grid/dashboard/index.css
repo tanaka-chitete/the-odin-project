@@ -19,15 +19,15 @@ a {
   height: 100vh;
   display: grid;
   grid-template-rows: 1fr 4fr;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 2fr 6fr 2fr;
 }
 
 .header {
-  grid-column: 2 / 3;
+  grid-column: 2 / 4;
   background: var(--header-background-color);
   display: grid;
   grid-template-rows: repeat(2, 1fr);
-  padding: 0 2rem;
+  padding: 0 4rem;
 }
 
 .header .top, 
@@ -171,5 +171,44 @@ a {
 }
 
 .main {
+  grid-column: 2 / 4;
   background-color: var(--main-background-color);
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+.main .left {
+  grid-column: 1 / 2;
+  padding: 2rem;
+}
+
+.article {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.article .card {
+  height: 250px;
+  background: var(--white-text-color);
+  padding: 2rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 5px solid var(--accent-color);
+}
+
+.actions {
+  display: flex;
+  gap: 2rem;
+  align-self: flex-end;
+}
+
+.actions .icon svg {
+  width: 2rem;
+}
+
+.main .right {
+  grid-column: 2 / 3;
 }
