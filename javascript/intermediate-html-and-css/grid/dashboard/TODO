@@ -6,3 +6,6 @@ Set class names to page positions (e.g. .left instead of .greeting)
 Add box shadows
 Reorder HTML placement of elements (will make applying shadows easier)
 Create .small .medium, and .large classes for resizing icons (Bootstrap does this)
+Copy CSS from CSS reset article
+Download smaller icons
+Fix avatar spacing in Trending section

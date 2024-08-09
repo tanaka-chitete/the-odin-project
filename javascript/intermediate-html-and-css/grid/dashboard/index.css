@@ -26,7 +26,7 @@ a {
 .content {
   height: 100vh;
   display: grid;
-  grid-template-rows: 1fr 4fr;
+  grid-template-rows: 1fr 5fr;
   grid-template-columns: 2fr 6fr 2fr;
 }
 
@@ -34,7 +34,7 @@ a {
   grid-column: 2 / 4;
   background: var(--header-background-color);
   display: grid;
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: repeat(2, minmax(125px, 1fr));
   padding: 0 4rem;
 }
 
@@ -213,6 +213,11 @@ a {
   border-radius: 0 10px 10px 0;
 }
 
+.card .content p {
+  font-size: 1.25rem;
+  color: var(--gray-text-color);
+}
+
 .actions {
   display: flex;
   gap: 2rem;
@@ -236,4 +241,49 @@ a {
 
 .main .right {
   grid-column: 2 / 3;
+}
+
+.main .right .top {
+  padding: 2rem 2rem 2rem 0;
+}
+
+.announcements {
+  background: var(--white-text-color);
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.announcement .p {
+  color: var(--gray-text-color);
+}
+
+.trending {
+  background: var(--white-text-color);
+  padding: 2rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.listing {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+}
+
+.listing .avatar {
+  grid-column: 1 / 2;
+}
+
+.listing .information {
+  grid-column: 2 / 3;
+}
+
+.listing .information .project {
+  color: var(--gray-text-color);
+}
+
+.main .right .bottom {
+  padding: 0 2rem 2rem 0;
 }
