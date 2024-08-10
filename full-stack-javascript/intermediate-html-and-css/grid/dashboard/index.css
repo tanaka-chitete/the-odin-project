@@ -3,7 +3,8 @@
 :root {
   --white: #ffffff;
   --blue: #1892d3;
-  --gray: #e1e8f0;
+  --gray-background: #e1e8f0;
+  --gray-text: #656363;
   --yellow: #facc16;
   --icon-height: 30px;
   --icon-width: var(--icon-height);
@@ -12,7 +13,7 @@
 body {
   height: 100vh;
   font-family: "Roboto";
-  background: var(--gray);
+  background: var(--gray-background);
 }
 
 .material-symbols-outlined.md-48 {
@@ -56,7 +57,7 @@ body {
 .header-top__search-input {
   width: 100%;
   height: 2.2rem;
-  background-color: var(--gray);
+  background-color: var(--gray-background);
   border: none;
   border-radius: 1.1rem;
 }
@@ -86,23 +87,19 @@ body {
   padding: 1rem 2rem;
 }
 
-.header-bottom__greeting {
+.header-bottom__identification {
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
 
-.profile-picture-image_small {
-  width: 3.5rem;
-}
-
 .header-bottom__identification-full-name {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   margin-bottom: 0.1rem;
 }
 
 .header-bottom__identification-username {
-  font-size: 1rem;
+  font-size: 1.25rem;
   margin-bottom: 0.1rem;
 }
 
@@ -167,8 +164,57 @@ body {
   gap: 1rem;
 }
 
-
-
 .main {
   grid-area: main;
+  display: grid;
+  grid-template-columns: 2.2fr 1fr;
+}
+
+.main-left {
+  padding: 2rem 1rem 2rem 2rem;
+}
+
+.main-left__header {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.projects__project {
+  height: 100%;
+  margin-left: 0.5rem;
+  padding: 2rem;
+  border-radius: 0 10px 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--white);
+  box-shadow: 3px 3px 10px -3px rgba(0, 0, 0, 0.2);
+}
+
+.projects__project-accent {
+  height: 300px;
+  border-radius: 10px;
+  background-color: var(--yellow);
+}
+
+.projects__project-name {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.projects__project-description {
+  color: var(--gray-text);
+}
+
+.projects__project-actions {
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
 }
