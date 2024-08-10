@@ -1,17 +1,3 @@
-Change global font to Roboto
-Set custom properties for colours
-Colour text in sidebar according to section
 Set favicon
-Set class names to page positions (e.g. .left instead of .greeting)
-Add box shadows
-Reorder HTML placement of elements (will make applying shadows easier)
-Create .small .medium, and .large classes for resizing icons (Bootstrap does this)
-Copy CSS from CSS reset article
-Download smaller icons
-Fix avatar spacing in Trending section
-Change notification to unread version
-Switch to Roboto Condensed
-Update headers so that the smallest header is 1rem (h6)
-Rename "name" to "title"
-Limit usage of main-right-top__header and the like.
+Download smaller profile picture images
 Make box shadow a variable

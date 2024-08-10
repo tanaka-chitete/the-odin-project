@@ -16,8 +16,9 @@ body {
   background: var(--gray-background);
 }
 
+/* .md-48 is the largest supported class */
 .material-symbols-outlined.md-48 {
-  font-size: 48px;
+  font-size: 64px;
 }
 
 .page {
@@ -35,26 +36,28 @@ body {
   background-color: var(--white);
   box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.2);
   height: fit-content;
-}
-
-.header-top {
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 1rem 2rem;
 }
 
-.header-top__search {
+.header-left__search {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.header-top__search-icon,
-.header-top__notifications-icon {
+.header-top-right {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.header-left__search-icon {
   font-size: 1rem;
 }
 
-.header-top__search-input {
+.header-left__search-input {
   width: 100%;
   height: 2.2rem;
   background-color: var(--gray-background);
@@ -62,15 +65,9 @@ body {
   border-radius: 1.1rem;
 }
 
-.header-top__search-input:focus {
+.header-left__search-input:focus {
   outline: none;
   border: 1px solid var(--blue);
-}
-
-.header-top__notifications {
-  display: flex;
-  align-items: center;
-  justify-content: end;
 }
 
 .profile-picture-image,
@@ -81,41 +78,18 @@ body {
   border-radius: 50%;
 }
 
-.header-bottom {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  padding: 1rem 2rem;
-}
-
-.header-bottom__identification {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.header-bottom__identification-full-name {
-  font-size: 1.75rem;
-  margin-bottom: 0.1rem;
-}
-
-.header-bottom__identification-username {
-  font-size: 1.25rem;
-  margin-bottom: 0.1rem;
-}
-
-
-.header-bottom__actions {
+.header-right__actions {
   display: flex;
   justify-content: end;
   gap: 1.8rem;
 }
 
-.header-bottom__action {
+.header-right__action {
   display: grid;
   align-items: center;
 }
 
-.header-bottom__action-button {
+.header-right__action-button {
   height: 2.5rem;
   width: 6.5rem;
   border: none;
@@ -252,8 +226,12 @@ body {
   margin: 1rem 0;
 }
 
-.profile-picture-image_small {
+.profile-picture-image {
   width: 3.5rem;
+}
+
+.profile-picture-image_small {
+  width: 2.5rem;
 }
 
 .main-right-bottom__trending {
