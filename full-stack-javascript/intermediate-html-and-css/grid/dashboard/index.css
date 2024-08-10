@@ -140,29 +140,29 @@ body {
 }
 
 
-.sidebar__feature-item,
-.sidebar__account-item {
+.sidebar__feature,
+.sidebar__preference {
   display: grid;
   grid-template-columns: 1fr 3fr;
   align-items: center;
 }
 
 .sidebar__logo-icon,
-.sidebar__feature-item-icon,
-.sidebar__account-item-icon {
+.sidebar__feature-icon,
+.sidebar__preference-icon {
   color: var(--white);
   display: flex;
 }
 
-.sidebar__feature-item-name,
-.sidebar__account-item-name {
+.sidebar__feature-name,
+.sidebar__preference-name {
   color: var(--white);
   font-weight: 500;
   font-size: 1.25rem;
 }
 
-.sidebar__feature-items,
-.sidebar__account-items {
+.sidebar__features,
+.sidebar__preferences {
   display: grid;
   gap: 1rem;
 }
