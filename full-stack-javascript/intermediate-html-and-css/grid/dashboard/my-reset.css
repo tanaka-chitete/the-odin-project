@@ -1,11 +1,5 @@
 @import "modern-normalize.css";
 
-/* 
-Inspired by Matt Bricston 
-(https://mattbrictson.com/blog/css-normalize-and-reset) and Josh W Comeau 
-(https://www.joshwcomeau.com/css/custom-css-reset/) 
-*/
-
 :root {
   /* Ensures line height meets WCAG criteria */
   line-height: 1.5;
@@ -66,3 +60,9 @@ selector for the root element is #root
 #__next {
   isolation: isolate;
 }
+
+/* 
+Inspired by Matt Bricston 
+(https://mattbrictson.com/blog/css-normalize-and-reset) and Josh W Comeau 
+(https://www.joshwcomeau.com/css/custom-css-reset/) 
+*/

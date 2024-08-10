@@ -1,0 +1,44 @@
+@import "my-reset.css";
+
+:root {
+  --header-background-color: #ffffff;
+  --sidebar-background-color: #1892d3;
+  --main-background-color: #e1e8f0;
+}
+
+body {
+  height: 100vh;
+  font-family: "Roboto";
+  background: var(--main-background-color);
+}
+
+.page {
+  height: inherit;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: 1fr 10fr;
+  grid-template-areas: 
+    "sidebar header"
+    "sidebar main";
+}
+
+.header {
+  grid-area: header;
+  background-color: var(--header-background-color);
+  height: fit-content;
+}
+
+.header-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding: 1rem 2rem;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: var(--sidebar-background-color);
+}
+
+.main {
+  grid-area: main;
+}
