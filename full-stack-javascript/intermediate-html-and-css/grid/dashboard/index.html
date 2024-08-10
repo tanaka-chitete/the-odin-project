@@ -13,13 +13,62 @@
     <link 
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" 
     rel="stylesheet">
+    <link 
+    rel="stylesheet" 
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   </head>
   <body>
     <div class="page">
       <header class="header">
-        <div class="header-top"></div>
-        <div class="header-bottom"></div>
+        <div class="header-top">
+          <div class="header-top__search">
+            <span class="material-symbols-outlined header-top__search-icon">
+              search
+            </span>
+            <input type="text" class="header-top__search-input">
+          </div>
+          <div class="header-top__update">
+            <div class="header-top__notifications">
+              <span 
+              class="material-symbols-outlined header-top__notifications-icon">
+                notifications
+              </span>
+            </div>
+            <div class="profile-picture">
+              <img 
+              src="assets/profile-pictures/morgan.jpg" 
+              alt="Your Avatar" 
+              class="profile-picture-image">
+            </div>
+            <div class="header-top__username">
+              <h1 class="header-top__username-text">@morgan</h1>
+            </div>
+          </div>
+        </div>
+        <div class="header-bottom">
+          <div class="header-bottom__greeting">
+            <div class="header-bottom__greeting-message">
+              <h2 class="header-bottom__greeting-message-text-salutation">Hi there,</h2>
+              <h1 class="header-bottom__greeting-message-text-recipient">Morgan Oakley</h1>
+            </div>
+          </div>
+          <div class="header-bottom__actions">
+            <div class="header-bottom__action">
+              <button class="header-bottom__action-button">New</button>
+            </div>
+            <div class="header-bottom__action">
+              <button class="header-bottom__action-button">Upload</button>
+            </div>
+            <div class="header-bottom__action">
+              <button class="header-bottom__action-button">Share</button>
+            </div>
+          </div>
+        </div>
       </header>
+
+
+
+
       <nav class="sidebar">
         <div class="sidebar-top"></div>
         <ul class="sidebar-middle"></ul>

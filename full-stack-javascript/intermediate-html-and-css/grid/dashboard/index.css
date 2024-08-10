@@ -1,15 +1,22 @@
 @import "my-reset.css";
 
 :root {
-  --header-background-color: #ffffff;
-  --sidebar-background-color: #1892d3;
-  --main-background-color: #e1e8f0;
+  --white: #ffffff;
+  --blue: #1892d3;
+  --gray: #e1e8f0;
+  --yellow: #facc16;
+  --icon-height: 30px;
+  --icon-width: var(--icon-height);
 }
 
 body {
   height: 100vh;
   font-family: "Roboto";
-  background: var(--main-background-color);
+  background: var(--gray);
+}
+
+.material-symbols-outlined.md-36 {
+  font-size: 36px;
 }
 
 .page {
@@ -24,19 +31,120 @@ body {
 
 .header {
   grid-area: header;
-  background-color: var(--header-background-color);
+  background-color: var(--white);
+  /* box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.2); */
   height: fit-content;
 }
 
 .header-top {
   display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 1rem 2rem;
+}
+
+.header-top__search {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  gap: 1rem;
+}
+
+.header-top__search-icon,
+.header-top__notifications-icon {
+  font-size: 1rem;
+}
+
+.header-top__search-input {
+  width: 100%;
+  height: 2.2rem;
+  background-color: var(--gray);
+  border: none;
+  border-radius: 1.1rem;
+}
+
+.header-top__search-input:focus {
+  outline: none;
+  border: 1px solid var(--blue);
+}
+
+.header-top__update {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: end;
+}
+
+.profile-picture-image,
+.profile-picture-image_large {
+  aspect-ratio: 1 / 1;
+  width: 3.5rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.header-bottom {
+  display: grid;
   grid-template-columns: 2fr 1fr;
   padding: 1rem 2rem;
 }
 
+.header-bottom__greeting {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-left: 1rem;
+}
+
+.profile-picture-image_large {
+  width: 5rem;
+}
+
+.header-bottom__greeting-message-text-salutation {
+  font-size: 1.3rem;
+  margin-bottom: 0.1rem;
+}
+
+.header-bottom__greeting-message-text-recipient {
+  font-size: 1.8rem;
+  margin-bottom: 0.1rem;
+}
+
+.header-bottom__actions {
+  display: flex;
+  justify-content: end;
+  gap: 1.8rem;
+}
+
+.header-bottom__action {
+  display: grid;
+  align-items: center;
+}
+
+.header-bottom__action-button {
+  height: 3rem;
+  width: 8rem;
+  border: none;
+  border-radius: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--white);
+  background: var(--blue);
+}
+
+
+
+
+
+
+
+
+
+
+
 .sidebar {
   grid-area: sidebar;
-  background-color: var(--sidebar-background-color);
+  background-color: var(--blue);
+  /* box-shadow: 5px 0 10px -3px rgba(0, 0, 0, 0.2); */
 }
 
 .main {
