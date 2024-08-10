@@ -1,0 +1,68 @@
+@import "modern-normalize.css";
+
+/* 
+Inspired by Matt Bricston 
+(https://mattbrictson.com/blog/css-normalize-and-reset) and Josh W Comeau 
+(https://www.joshwcomeau.com/css/custom-css-reset/) 
+*/
+
+:root {
+  /* Ensures line height meets WCAG criteria */
+  line-height: 1.5;
+  /* Apple disabled subpixel antialiasing across macOS */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Allows margins to be easily varied across different elements */
+* {
+  margin: 0;
+}
+
+/* Allows headers to be easily varied across different elements */
+h1, 
+h2, 
+h3, 
+h4, 
+h5 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Prevents media overflow */
+img, 
+picture, 
+video, 
+canvas, 
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Prevents text overflow */
+p, 
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* Ensures form typography is consistent with global typography */
+input, 
+button, 
+textarea, 
+select {
+  font: inherit;
+}
+
+/* 
+When using a JS framework, guarantees that high-priority elements (modals, 
+dropdowns, and tooltips) will always render above other elements. For React, the
+selector for the root element is #root 
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
