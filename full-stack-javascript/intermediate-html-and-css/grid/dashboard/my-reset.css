@@ -12,14 +12,29 @@
   margin: 0;
 }
 
-/* Allows headers to be easily varied across different elements */
 h1, 
 h2, 
 h3, 
 h4, 
-h5 {
+h5,
+h6,
+p {
+  /* Allows headers to be easily varied across different elements */
   font-size: inherit;
   font-weight: inherit;
+
+  /* Prevents text overflow */
+  overflow-wrap: break-word;
+}
+
+/* 
+Prevents lists from being represented using numbers or bullets, 
+as it is rarely desired 
+*/
+ol[role="list"], 
+ul[role="list"] {
+  list-style: none;
+  padding-inline: 0;
 }
 
 /* Prevents media overflow */
@@ -32,16 +47,6 @@ svg {
   max-width: 100%;
 }
 
-/* Prevents text overflow */
-p, 
-h1, 
-h2, 
-h3, 
-h4, 
-h5, 
-h6 {
-  overflow-wrap: break-word;
-}
 
 /* Ensures form typography is consistent with global typography */
 input, 

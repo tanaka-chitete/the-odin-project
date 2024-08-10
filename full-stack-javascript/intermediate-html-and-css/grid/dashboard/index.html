@@ -27,26 +27,21 @@
             </span>
             <input type="text" class="header-top__search-input">
           </div>
-          <div class="header-top__update">
-            <div class="header-top__notifications">
-              <span 
-              class="material-symbols-outlined header-top__notifications-icon">
-                notifications
-              </span>
-            </div>
+          <div class="header-top__notifications">
+            <span 
+            class="material-symbols-outlined header-top__notifications-icon">
+              notifications
+            </span>
+          </div>
+        </div>
+        <div class="header-bottom">
+          <div class="header-bottom__greeting">
             <div class="profile-picture">
               <img 
               src="assets/profile-pictures/morgan.jpg" 
               alt="Your Avatar" 
               class="profile-picture-image">
             </div>
-            <div class="header-top__username">
-              <h1 class="header-top__username-text">@morgan</h1>
-            </div>
-          </div>
-        </div>
-        <div class="header-bottom">
-          <div class="header-bottom__greeting">
             <div class="header-bottom__greeting-message">
               <h2 class="header-bottom__greeting-message-text-salutation">Hi there,</h2>
               <h1 class="header-bottom__greeting-message-text-recipient">Morgan Oakley</h1>
@@ -65,14 +60,70 @@
           </div>
         </div>
       </header>
-
-
-
-
       <nav class="sidebar">
-        <div class="sidebar-top"></div>
-        <ul class="sidebar-middle"></ul>
-        <ul class="sidebar-bottom"></ul>
+        <div class="sidebar__logo">
+          <span class="material-symbols-outlined md-48 sidebar__logo-icon">
+            dashboard
+          </span>
+        </div>
+        <ul role="list" class="sidebar__feature-items">
+          <li class="sidebar__feature-item">
+            <span class="material-symbols-outlined sidebar__feature-item-icon">
+              home
+            </span>
+            <h2 class="sidebar__feature-item-name">Home</h2>
+          </li>
+          <li class="sidebar__feature-item">
+            <span class="material-symbols-outlined sidebar__feature-item-icon">
+              person
+            </span>
+            <h2 class="sidebar__feature-item-name">Profile</h2>
+          </li>
+          <li class="sidebar__feature-item">
+            <span class="material-symbols-outlined sidebar__feature-item-icon">
+              chat_bubble
+            </span>
+            <h2 class="sidebar__feature-item-name">Messages</h2>
+          </li>
+          <li class="sidebar__feature-item">
+            <span class="material-symbols-outlined sidebar__feature-item-icon">
+              history
+            </span>
+            <h2 class="sidebar__feature-item-name">History</h2>
+          </li>
+          <li class="sidebar__feature-item">
+            <span class="material-symbols-outlined sidebar__feature-item-icon">
+              task
+            </span>
+            <h2 class="sidebar__feature-item-name">Tasks</h2>
+          </li>
+          <li class="sidebar__feature-item">
+            <span class="material-symbols-outlined sidebar__feature-item-icon">
+              diversity_3
+            </span>
+            <h2 class="sidebar__feature-item-name">Communities</h2>
+          </li>
+        </ul>
+        <ul role="list" class="sidebar__account-items">
+          <li class="sidebar__account-item">
+            <span class="material-symbols-outlined sidebar__account-item-icon">
+              settings
+              </span>
+            <h2 class="sidebar__account-item-name">Settings</h2>
+          </li>
+          <li class="sidebar__account-item">
+            <span class="material-symbols-outlined sidebar__account-item-icon">
+              help_center
+            </span>
+            <h2 class="sidebar__account-item-name">Support</h2>
+          </li>
+          <li class="sidebar__account-item">
+            <span class="material-symbols-outlined sidebar__account-item-icon">
+              lock
+            </span>
+            <h2 class="sidebar__account-item-name">Privacy</h2>
+          </li>
+        </ul>
       </nav>
       <main class="main">
         <div class="main-left"></div>

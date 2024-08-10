@@ -15,8 +15,8 @@ body {
   background: var(--gray);
 }
 
-.material-symbols-outlined.md-36 {
-  font-size: 36px;
+.material-symbols-outlined.md-48 {
+  font-size: 48px;
 }
 
 .page {
@@ -32,7 +32,7 @@ body {
 .header {
   grid-area: header;
   background-color: var(--white);
-  /* box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.2); */
+  box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.2);
   height: fit-content;
 }
 
@@ -45,7 +45,6 @@ body {
 .header-top__search {
   display: flex;
   align-items: center;
-  padding-left: 1rem;
   gap: 1rem;
 }
 
@@ -67,9 +66,8 @@ body {
   border: 1px solid var(--blue);
 }
 
-.header-top__update {
+.header-top__notifications {
   display: flex;
-  gap: 2rem;
   align-items: center;
   justify-content: end;
 }
@@ -77,7 +75,7 @@ body {
 .profile-picture-image,
 .profile-picture-image_large {
   aspect-ratio: 1 / 1;
-  width: 3.5rem;
+  width: 5rem;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -92,20 +90,19 @@ body {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  padding-left: 1rem;
 }
 
-.profile-picture-image_large {
-  width: 5rem;
+.profile-picture-image_small {
+  width: 3.5rem;
 }
 
 .header-bottom__greeting-message-text-salutation {
-  font-size: 1.3rem;
+  font-size: 1rem;
   margin-bottom: 0.1rem;
 }
 
 .header-bottom__greeting-message-text-recipient {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin-bottom: 0.1rem;
 }
 
@@ -121,31 +118,55 @@ body {
 }
 
 .header-bottom__action-button {
-  height: 3rem;
-  width: 8rem;
+  height: 2.5rem;
+  width: 6.5rem;
   border: none;
   border-radius: 1.5rem;
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--white);
   background: var(--blue);
 }
 
-
-
-
-
-
-
-
-
-
-
 .sidebar {
   grid-area: sidebar;
+  padding: 1rem 2rem;
   background-color: var(--blue);
-  /* box-shadow: 5px 0 10px -3px rgba(0, 0, 0, 0.2); */
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  box-shadow: 5px 0 10px -3px rgba(0, 0, 0, 0.2);
 }
+
+
+.sidebar__feature-item,
+.sidebar__account-item {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  align-items: center;
+}
+
+.sidebar__logo-icon,
+.sidebar__feature-item-icon,
+.sidebar__account-item-icon {
+  color: var(--white);
+  display: flex;
+}
+
+.sidebar__feature-item-name,
+.sidebar__account-item-name {
+  color: var(--white);
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.sidebar__feature-items,
+.sidebar__account-items {
+  display: grid;
+  gap: 1rem;
+}
+
+
 
 .main {
   grid-area: main;
