@@ -10,3 +10,8 @@ Copy CSS from CSS reset article
 Download smaller icons
 Fix avatar spacing in Trending section
 Change notification to unread version
+Switch to Roboto Condensed
+Update headers so that the smallest header is 1rem (h6)
+Rename "name" to "title"
+Limit usage of main-right-top__header and the like.
+Make box shadow a variable
