@@ -96,15 +96,16 @@ body {
   width: 3.5rem;
 }
 
-.header-bottom__greeting-message-text-salutation {
+.header-bottom__identification-full-name {
+  font-size: 1.5rem;
+  margin-bottom: 0.1rem;
+}
+
+.header-bottom__identification-username {
   font-size: 1rem;
   margin-bottom: 0.1rem;
 }
 
-.header-bottom__greeting-message-text-recipient {
-  font-size: 1.5rem;
-  margin-bottom: 0.1rem;
-}
 
 .header-bottom__actions {
   display: flex;
@@ -156,7 +157,7 @@ body {
 .sidebar__feature-item-name,
 .sidebar__account-item-name {
   color: var(--white);
-  font-weight: bold;
+  font-weight: 500;
   font-size: 1.25rem;
 }
 
