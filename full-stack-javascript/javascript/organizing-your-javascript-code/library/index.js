@@ -14,38 +14,47 @@ function Book(title, author, numPages, read) {
   }
 }
 
-const library = new Array();
+const libraryObject = new Array();
 
-function addBookToLibrary(title, author, numPages, read) {
-  const book = new Book(title, author, numPages, read);
-  library.push(book);
+function addBookToLibrary(addBookForm) {
+  const bookObject = new Book(
+    addBookForm.elements["title"].value, 
+    addBookForm.elements["author"].value, 
+    Number(addBookForm.elements["numPages"].value),
+    String(addBookForm.elements["read"].value) === "true"   
+  )
+
+  libraryObject.push(bookObject);
   
-  return book;
-}
+  addBookForm.reset();
+  addBookDialog.close();
 
-function displayBook(book) {
-  const library = document.querySelector(".library");
-  library.innerHTML += `
-    <li data-index="${library.childElementCount} class="library__book">
-      <p class="library__book-info">${book.info()}</p>
-      <button class="library__book-remove-book-button">Remove</button>
-    </li>
-  `;
+  const libraryElement = document.querySelector(".library");
   
-  const bookElement = library.lastElementChild;
-  const removeBookButton = bookElement.querySelector(".library__book-remove-book-button");
-  removeBookButton.addEventListener("click", () => {
-    hideBook(bookElement);
-    removeBookFromLibrary(Number(bookElement.dataset.index));
-  });
+  const bookElement = document.createElement("li");
+  bookElement.setAttribute("data-index", libraryElement.childElementCount);
+  bookElement.classList.add("library__book");
+  
+  const info = document.createElement("p");
+  info.classList.add("library__book-info");
+  info.textContent = `${bookObject.info()}`;
+  
+  const remove = document.createElement("button");
+  remove.classList.add("library__book-remove-book-button");
+  remove.textContent = "Remove";
+  remove.addEventListener("click", (event) => {
+    removeBookFromLibrary(event.target.parentElement);
+  })
+  
+  bookElement.append(info);
+  bookElement.append(remove);
+  
+  libraryElement.append(bookElement);
 }
 
-function hideBook(book) {
-  book.remove();
-}
-
-function removeBookFromLibrary(index) {
-  library.splice(index, 1);
+function removeBookFromLibrary(bookElement) {
+  libraryObject.splice(Number(bookElement.dataset.index));
+  bookElement.remove();
 }
 
 const addBookDialog = document.querySelector(".add-book-dialog");
@@ -57,16 +66,5 @@ const addBookForm = document.querySelector(".add-book-dialog__form");
 addBookForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const book = addBookToLibrary(
-    addBookForm.elements["title"].value, 
-    addBookForm.elements["author"].value, 
-    Number(addBookForm.elements["numPages"].value),
-    String(addBookForm.elements["read"].value) === "true"   
-  )
-  
-  displayBook(book);
-  
-  addBookForm.reset();
-  
-  addBookDialog.close();
+  addBookToLibrary(event.target);  
 });
