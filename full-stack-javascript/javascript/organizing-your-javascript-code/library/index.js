@@ -19,8 +19,33 @@ const library = new Array();
 function addBookToLibrary(title, author, numPages, read) {
   const book = new Book(title, author, numPages, read);
   library.push(book);
-
+  
   return book;
+}
+
+function displayBook(book) {
+  const library = document.querySelector(".library");
+  library.innerHTML += `
+    <li data-index="${library.childElementCount} class="library__book">
+      <p class="library__book-info">${book.info()}</p>
+      <button class="library__book-remove-book-button">Remove</button>
+    </li>
+  `;
+  
+  const bookElement = library.lastElementChild;
+  const removeBookButton = bookElement.querySelector(".library__book-remove-book-button");
+  removeBookButton.addEventListener("click", () => {
+    hideBook(bookElement);
+    removeBookFromLibrary(Number(bookElement.dataset.index));
+  });
+}
+
+function hideBook(book) {
+  book.remove();
+}
+
+function removeBookFromLibrary(index) {
+  library.splice(index, 1);
 }
 
 const addBookDialog = document.querySelector(".add-book-dialog");
@@ -32,23 +57,16 @@ const addBookForm = document.querySelector(".add-book-dialog__form");
 addBookForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const bookObject = addBookToLibrary(
+  const book = addBookToLibrary(
     addBookForm.elements["title"].value, 
     addBookForm.elements["author"].value, 
     Number(addBookForm.elements["numPages"].value),
     String(addBookForm.elements["read"].value) === "true"   
   )
-
-  const library = document.querySelector(".library");
-  const bookElement = `
-    <li data-index="${library.childElementCount} class="library__book">
-      <p class="library__book-info">${bookObject.info()}</p>
-      <button class="library__book-remove-book-button">Remove</button>
-    </li>
-  `;
-  library.innerHTML += bookElement;
+  
+  displayBook(book);
   
   addBookForm.reset();
-
+  
   addBookDialog.close();
 });
