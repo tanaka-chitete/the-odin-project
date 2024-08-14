@@ -1,22 +1,16 @@
-const Board = (function() {
-  // Allows for drawing xs and os
-  // Make method for draw x and draw 0?
-  // or just draw?
-  // Make this an IIFE (rename to Board)
+const board = (function() {
   function createCell() {
     let symbol = "";
 
-    const drawSymbol = (player) => {
-      value = player;
-    }
+    const drawSymbol = (player) => symbol = player;
 
     const getSymbol = () => symbol;
 
     return {
       drawSymbol,
       getSymbol,
-    }
-  };
+    };
+  }
 
   const rows = 3;
   const board = [];
@@ -24,16 +18,14 @@ const Board = (function() {
   for (let i = 0; i < rows; i++) {
     board[i] = new Array();
     for (let j = 0; j < columns; j++) {
-      board[i].push(createCell())
+      board[i].push(createCell());
     }
   }
 
   const getBoard = () => board;
 
   const drawSymbol = (row, column, symbol) => {
-    // TODO
-    // return whether the symbol was drawn
-    // then later, don't allow the player to switch until a valid move has been made
+    // A symbol has already been drawn in this cell
     if (board[row][column]) {
       return false;
     }
@@ -46,64 +38,51 @@ const Board = (function() {
   return {
     getBoard,
     drawSymbol
-  }
+  };
 })();
 
-const Players = (function(player1Name, player2Name) {
-  // Make this an IIFE? (rename to Players, Players.player1, Players.player2)
-  // that's probably just forcing yourself to use IIFEs
-  // Remember, it's one thing adding a tool to your toolkit, its another
-  // knowing when to use it
-  // BUT WE ONLY WANT TWO PLAYERS!
-  const players = [
-    {
-      name: player1Name,
-      symbol: "x"
-    },
-    {
-      name: player2Name,
-      symbol: "o"
-    }
-  ]
+function createPlayer(name, symbol) {
+  this.name = name;
+  this.symbol = symbol;
 
-  const getPlayer1 = () => players[0];
+  const getName = () => name;
 
-  const getPlayer2 = () => players[1];
+  const getSymbol = () => symbol;
 
   return {
-    getPlayer1,
-    getPlayer2
-  }
-})("Player 1", "Player 2");
+    getName,
+    getSymbol
+  };
+}
 
-const Controller = (function(Board, Players) {
+const controller = (function(board, player1, player2) {
   // create player objects here
   // Do they even need to be their own module?
   // Make this an IIFE (rename to Controller)
-  let activePlayer = Players.getPlayer1();
+  let activePlayer = player1;
 
   const switchPlayer = () => {
-    activePlayer = activePlayer === Players.getPlayer1() ? Players.getPlayer2() : Players.getPlayer1();
+    activePlayer = activePlayer === player1 ? player2 : player1;
   }
 
   const getActivePlayer = () => activePlayer;
 
   const startRound = () => {
-    console.log(Board.getBoard());
-    console.log(`${getActivePlayer().name}'s turn.`);
-  };
+    console.log(board.getBoard());
+    console.log(`${getActivePlayer().getName()}'s turn.`);
+  }
 
   const playRound = (row, column) => {
-    if (Board.drawSymbol(row, column, getActivePlayer().symbol)) {
-      console.log(`Drew ${getActivePlayer().name}'s symbol at (${column}, ${row})`);
+    if (board.drawSymbol(row, column, getActivePlayer().getSymbol())) {
+      console.log(`Drew ${getActivePlayer().getSymbol()}'s symbol at (${column}, ${row})`);
     } else {
-      console.log(`Invalid move ${getActivePlayer().name}!`)
+      console.log(`Invalid move ${getActivePlayer().getName()}!`)
       startRound();
       return false;
     }
 
-    if (Board.checkWinner(row, column)) {
-      console.log(`${winningPlayer} wins!`);
+    if (board.determineWinner(row, column)) {
+      console.log(`${getActivePlayer().getName()} wins!`);
       return true;
     } else {
       switchPlayer();
@@ -115,11 +94,11 @@ const Controller = (function(Board, Players) {
   return {
     playRound,
     getActivePlayer
-  }
-})(Board, Players);
+  };
+})(board, player1, player2);
 
 
 
-// controller = createController(Players, Board)
+// controller = createController(Players, board)
 // controller.playRound() should return a boolean indicating the winner? if any?
 // have doWhile loop which represents the game
