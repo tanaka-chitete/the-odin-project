@@ -33,7 +33,33 @@ const board = (function() {
     board[row][column] = symbol;
 
     return true;
-  }
+  };
+
+  const determineWinner = () => {
+    // checkRow
+    // checkColumn
+    // checkDiagonal
+    function checkRow(row) {
+      return (
+        getBoard()[row][0].getSymbol() === getBoard()[row][1].getSymbol() &&
+        getBoard()[row][1].getSymbol() === getBoard()[row][2].getSymbol()
+      );
+    }
+
+    function checkColumn(column) {
+      return (
+        getBoard()[0][column].getSymbol() === getBoard()[1][column].getSymbol() &&
+        getBoard()[1][column].getSymbol() === getBoard()[2][column].getSymbol()
+      );
+    }
+
+    function checkDiagonal(startRow, step) {
+      return (
+        getBoard()[startRow][0].getSymbol() === getBoard()[startRow + step][1].getSymbol() &&
+        getBoard()[startRow + step][1].getSymbol() === getBoard()[startRow + step + step][1].getSymbol()
+      )
+    }
+  };
 
   return {
     getBoard,
@@ -63,14 +89,14 @@ const controller = (function(board, player1, player2) {
 
   const switchPlayer = () => {
     activePlayer = activePlayer === player1 ? player2 : player1;
-  }
+  };
 
   const getActivePlayer = () => activePlayer;
 
   const startRound = () => {
     console.log(board.getBoard());
     console.log(`${getActivePlayer().getName()}'s turn.`);
-  }
+  };
 
   const playRound = (row, column) => {
     if (board.drawSymbol(row, column, getActivePlayer().getSymbol())) {
@@ -89,7 +115,7 @@ const controller = (function(board, player1, player2) {
       startRound();
       return false;
     }
-  }
+  };
 
   return {
     playRound,
