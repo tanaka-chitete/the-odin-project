@@ -27,10 +27,6 @@ const board = (function() {
 
   const getCell = (row, column) => getBoard()[row][column];
 
-  const printBoard = () => {
-    console.table(getBoard().map((row) => row.map((cell) => cell.getSymbol())));
-  }
-
   const isFull = () => numSymbols >= 9;
 
   const drawSymbol = (row, column, symbol) => {
@@ -46,7 +42,6 @@ const board = (function() {
     getBoard,
     getCell,
     isFull,
-    printBoard,
     drawSymbol
   };
 })();
@@ -65,7 +60,25 @@ function createPlayer(name, symbol) {
   };
 }
 
-const controller = (function(board, player1, player2) {
+const view = (function() {
+  const displayBoard = (board) => {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        if (board[i][j].getSymbol()) {
+          const cell = document.querySelector(`.board__cell[data-row="${i}"][data-column="${j}"]`);
+          const symbol = document.createElement("p");
+          symbol.setAttribute("class", "board__cell-symbol");
+          symbol.textContent = board[i][j].getSymbol();
+          cell.appendChild(symbol);
+        }
+      }
+    }
+  };
+
+  return { displayBoard };
+})();
+
+const controller = (function(board, player1, player2, view) {
   let activePlayer = player1;
   
   function switchPlayer() {
@@ -80,19 +93,21 @@ const controller = (function(board, player1, player2) {
     if (!board.getCell(row, column).getSymbol()) {
       board.drawSymbol(row, column, getActivePlayer().getSymbol());
       console.log(`Drew ${getActivePlayer().getName()}'s symbol.`);
-      board.printBoard();
+      view.displayBoard(board.getBoard());
 
       if (determineWinner(getActivePlayer().getSymbol())) { // TODO: Check if specific player won!
         console.log(`${getActivePlayer().getName()} wins!`);
         return true;
-      } else if (board.isFull()) {
+      }
+      
+      if (board.isFull()) {
         console.log("It's a tie!");
         return true;
-      } else {
-        switchPlayer();
-        console.log(`${getActivePlayer().getName()}'s turn.`);
-        return false;
       }
+
+      switchPlayer();
+      console.log(`${getActivePlayer().getName()}'s turn.`);
+      return false;
     } else {
       console.log(`That square is taken, ${getActivePlayer().getName()}!`);
       return false;
@@ -167,4 +182,4 @@ const controller = (function(board, player1, player2) {
   }
   
   return { startGame };
-})(board, createPlayer("player1", "x"), createPlayer("player2", "o"));
+})(board, createPlayer("player1", "x"), createPlayer("player2", "o"), view);

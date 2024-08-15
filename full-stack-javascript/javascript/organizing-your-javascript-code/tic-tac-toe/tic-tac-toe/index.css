@@ -1,0 +1,21 @@
+@import "my-reset.css";
+
+body {
+  font-family: monospace;
+  height: 100vh;
+  display: grid;
+}
+
+.board {
+  aspect-ratio: 1 / 1;
+  width: 50%;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.1rem;
+  background: black;
+}
+
+.board__cell {
+  background: white;
+}
