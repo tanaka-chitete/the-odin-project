@@ -70,24 +70,22 @@ const controller = (function(board, player1, player2) {
     return activePlayer;
   }
   
-  const startRound = () => {
-    board.printBoard();
-    console.log(`${getActivePlayer().getName()}'s turn.`);
-  };
-  
   const playRound = (row, column) => {
     if (!board.getCell(row, column).getSymbol()) {
       board.drawSymbol(row, column, getActivePlayer().getSymbol());
       console.log(`Drew ${getActivePlayer().getName()}'s symbol.`);
+      board.printBoard();
+
+      if (determineWinner(getActivePlayer().getSymbol())) { // TODO: Check if specific player won!
+        console.log(`${getActivePlayer().getName()} wins!`);
+        return true;
+      } else {
+        switchPlayer();
+        console.log(`${getActivePlayer().getName()}'s turn.`);
+        return false;
+      }
     } else {
-      console.log(`That square is taken, ${controller.getActivePlayer().getName()}!`);
-    }
-    
-    if (determineWinner(getActivePlayer().getSymbol())) { // TODO: Check if specific player won!
-      console.log(`${getActivePlayer().getName()} wins!`);
-      return true;
-    } else {
-      switchPlayer();
+      console.log(`That square is taken, ${getActivePlayer().getName()}!`);
       return false;
     }
   };
@@ -95,14 +93,10 @@ const controller = (function(board, player1, player2) {
   const startGame = () => {
     let winner;
     do {
-      startRound();
       const row = Number(prompt("Row to draw symbol: ")); // TODO: Implement error-handling
       const column = Number(prompt("Column to draw symbol: ")); // TODO: Implement error-handling
       winner = playRound(row, column);
     } while(!winner);
-    // controller = createController(Players, board)
-    // controller.playRound() should return a boolean indicating the winner? if any?
-    // have doWhile loop which represents the game
   }
 
   function determineWinner(symbol) { // TODO: Refactor this mess
@@ -126,7 +120,7 @@ const controller = (function(board, player1, player2) {
       return (
         board.getCell(startRow, 0).getSymbol() === symbol &&
         board.getCell(startRow + step, 1).getSymbol() === symbol &&
-        board.getCell(startRow + step + step, 1).getSymbol() === symbol
+        board.getCell(startRow + step + step, 2).getSymbol() === symbol
       )
     }
 
