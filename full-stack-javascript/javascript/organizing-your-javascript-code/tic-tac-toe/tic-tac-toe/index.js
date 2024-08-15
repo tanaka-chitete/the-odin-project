@@ -14,6 +14,7 @@ const board = (function() {
 
   const rows = 3;
   const board = [];
+  let numSymbols = 0;
   
   for (let i = 0; i < rows; i++) {
     board[i] = new Array();
@@ -30,13 +31,21 @@ const board = (function() {
     console.table(getBoard().map((row) => row.map((cell) => cell.getSymbol())));
   }
 
+  const isFull = () => numSymbols >= 9;
+
   const drawSymbol = (row, column, symbol) => {
+    if (board[row][column].getSymbol()) {
+      return false;
+    }
+
     board[row][column].drawSymbol(symbol);
+    numSymbols++;
   };
 
   return {
     getBoard,
     getCell,
+    isFull,
     printBoard,
     drawSymbol
   };
@@ -57,9 +66,6 @@ function createPlayer(name, symbol) {
 }
 
 const controller = (function(board, player1, player2) {
-  // create player objects here
-  // Do they even need to be their own module?
-  // Make this an IIFE (rename to Controller)
   let activePlayer = player1;
   
   function switchPlayer() {
@@ -79,6 +85,9 @@ const controller = (function(board, player1, player2) {
       if (determineWinner(getActivePlayer().getSymbol())) { // TODO: Check if specific player won!
         console.log(`${getActivePlayer().getName()} wins!`);
         return true;
+      } else if (board.isFull()) {
+        console.log("It's a tie!");
+        return true;
       } else {
         switchPlayer();
         console.log(`${getActivePlayer().getName()}'s turn.`);
@@ -91,12 +100,12 @@ const controller = (function(board, player1, player2) {
   };
 
   const startGame = () => {
-    let winner;
+    let end;
     do {
       const row = Number(prompt("Row to draw symbol: ")); // TODO: Implement error-handling
       const column = Number(prompt("Column to draw symbol: ")); // TODO: Implement error-handling
-      winner = playRound(row, column);
-    } while(!winner);
+      end = playRound(row, column);
+    } while(!end);
   }
 
   function determineWinner(symbol) { // TODO: Refactor this mess
