@@ -1,1 +1,2 @@
-Return individual player objects from Players IIFE
+Refactor determineWinner()
+Move determineWinner() logic from Board to Controller?
