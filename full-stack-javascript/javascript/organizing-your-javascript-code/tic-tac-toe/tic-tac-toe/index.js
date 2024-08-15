@@ -1,8 +1,8 @@
 const board = (function() {
   function createCell() {
-    let symbol = "";
+    let symbol = undefined;
 
-    const drawSymbol = (player) => symbol = player;
+    const drawSymbol = (inSymbol) => symbol = inSymbol;
 
     const getSymbol = () => symbol;
 
@@ -17,7 +17,7 @@ const board = (function() {
   
   for (let i = 0; i < rows; i++) {
     board[i] = new Array();
-    for (let j = 0; j < columns; j++) {
+    for (let j = 0; j < rows; j++) {
       board[i].push(createCell());
     }
   }
@@ -26,21 +26,18 @@ const board = (function() {
 
   const getCell = (row, column) => getBoard()[row][column];
 
+  const printBoard = () => {
+    console.table(getBoard().map((row) => row.map((cell) => cell.getSymbol())));
+  }
+
   const drawSymbol = (row, column, symbol) => {
-    // A symbol has already been drawn in this cell
-    if (board[row][column]) {
-      return false;
-    }
-
-    board[row][column] = symbol;
-
-    return true;
+    board[row][column].drawSymbol(symbol);
   };
 
-  
   return {
     getBoard,
     getCell,
+    printBoard,
     drawSymbol
   };
 })();
@@ -73,49 +70,63 @@ const controller = (function(board, player1, player2) {
     return activePlayer;
   }
   
-  function startRound() {
-    console.log(board.getBoard());
+  const startRound = () => {
+    board.printBoard();
     console.log(`${getActivePlayer().getName()}'s turn.`);
-  }
+  };
   
   const playRound = (row, column) => {
-    if (board.drawSymbol(row, column, getActivePlayer().getSymbol())) {
-      console.log(`Drew ${getActivePlayer().getSymbol()}'s symbol at (${column}, ${row})`);
+    if (!board.getCell(row, column).getSymbol()) {
+      board.drawSymbol(row, column, getActivePlayer().getSymbol());
+      console.log(`Drew ${getActivePlayer().getName()}'s symbol.`);
     } else {
-      console.log(`Invalid move ${getActivePlayer().getName()}!`)
-      startRound();
-      return false;
+      console.log(`That square is taken, ${controller.getActivePlayer().getName()}!`);
     }
     
-    if (determineWinner(row, column)) {
+    if (determineWinner(getActivePlayer().getSymbol())) { // TODO: Check if specific player won!
       console.log(`${getActivePlayer().getName()} wins!`);
       return true;
     } else {
       switchPlayer();
-      startRound();
       return false;
     }
   };
-  
-  function determineWinner() { // TODO: Refactor this mess
+
+  const startGame = () => {
+    let winner;
+    do {
+      startRound();
+      const row = Number(prompt("Row to draw symbol: ")); // TODO: Implement error-handling
+      const column = Number(prompt("Column to draw symbol: ")); // TODO: Implement error-handling
+      winner = playRound(row, column);
+    } while(!winner);
+    // controller = createController(Players, board)
+    // controller.playRound() should return a boolean indicating the winner? if any?
+    // have doWhile loop which represents the game
+  }
+
+  function determineWinner(symbol) { // TODO: Refactor this mess
     function checkRow(row) {
       return (
-        board.getCell(row, 0).getSymbol() === board.getCell(row, 1).getSymbol() &&
-        board.getCell(row, 1).getSymbol() === board.getCell(row, 2).getSymbol()
+        board.getCell(row, 0).getSymbol() === symbol &&
+        board.getCell(row, 1).getSymbol() === symbol &&
+        board.getCell(row, 2).getSymbol() === symbol
       );
     }
   
     function checkColumn(column) {
       return (
-        board.getCell(0, column).getSymbol() === board.getCell(1, column).getSymbol() && 
-        board.getCell(1, column).getSymbol() === board.getCell(2, column).getSymbol()
+        board.getCell(0, column).getSymbol() === symbol && 
+        board.getCell(1, column).getSymbol() === symbol && 
+        board.getCell(2, column).getSymbol() === symbol
       );
     }
   
     function checkDiagonal(startRow, step) {
       return (
-        board.getCell(startRow, 0).getSymbol() === board.getCell(startRow + step, 1).getSymbol() &&
-        board.getCell(startRow + step, 1).getSymbol() === board.getCell(startRow + step + step, 1).getSymbol()
+        board.getCell(startRow, 0).getSymbol() === symbol &&
+        board.getCell(startRow + step, 1).getSymbol() === symbol &&
+        board.getCell(startRow + step + step, 1).getSymbol() === symbol
       )
     }
 
@@ -152,16 +163,5 @@ const controller = (function(board, player1, player2) {
     }
   }
   
-  return {
-    playRound,
-    getActivePlayer
-  };
-})(board, player1, player2);
-
-
-while (true) {
-
-}
-// controller = createController(Players, board)
-// controller.playRound() should return a boolean indicating the winner? if any?
-// have doWhile loop which represents the game
+  return { startGame };
+})(board, createPlayer("player1", "x"), createPlayer("player2", "o"));
