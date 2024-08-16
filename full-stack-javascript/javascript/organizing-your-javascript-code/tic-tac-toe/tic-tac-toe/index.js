@@ -30,7 +30,7 @@ function createBoard() {
       return "";
     }
     
-    getArray()[row][column];
+    return getArray()[row][column];
   };
 
   const isFull = () => numValues >= (numRows ** 2);
@@ -57,13 +57,13 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
     }
   ];
 
-  let activePlayer = players[0];
+  let currentPlayer = players[0];
   
   function changeTurn() {
-    activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
   };
   
-  const getCurrentPlayer = () => activePlayer;
+  const getCurrentPlayer = () => currentPlayer;
 
   const startTurn = () => {
     console.table(board.getArray());
@@ -72,7 +72,6 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
   
   const playTurn = (row, column) => {
     board.setValue(row, column, getCurrentPlayer().symbol);
-    view.displayArray(board.getArray());
     console.log(`Drew ${getCurrentPlayer().name}'s symbol at row ${row}, column ${column}.`);
     
     if (findTrio(getCurrentPlayer().symbol)) {
@@ -111,18 +110,18 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
       return true;
     }
 
-    // Checks column 1
+    // Checks column 0
     if (isTrio(0, 1, 0, 0)) {
       return true;
     }
 
-    // Checks column 2
-    if (isTrio(0, 2, 0, 0)) {
+    // Checks column 1
+    if (isTrio(0, 1, 1, 0)) {
       return true;
     }
 
-    // Checks column 3
-    if (isTrio(0, 3, 0, 0)) {
+    // Checks column 2
+    if (isTrio(0, 1, 2, 0)) {
       return true;
     }
 
@@ -135,6 +134,8 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
     if (isTrio(2, -1, 0, 1)) {
       return true;
     }
+
+    return false;
   }
 
   return { 
@@ -150,10 +151,10 @@ function createDisplayController() {
   const boardDiv = document.querySelector(".board");
 
   function updateDisplay() {
-    boardDiv.textContent = 0;
+    boardDiv.innerHTML = "";
 
-    boardArray = game.getBoard();
-    currentPlayer = board.getCurrentPlayer();
+    boardArray = gameController.getBoard();
+    currentPlayer = gameController.getCurrentPlayer();
 
     turnH1.textContent = `${currentPlayer.name}'s turn...`;
 
@@ -167,12 +168,22 @@ function createDisplayController() {
         cellButton.dataset.column = columnIndex;
 
         cellButton.textContent = cellValue;
+        // Only allows cells to be clicked if they are unmarked
+        if (!cellValue) {
+          cellButton.addEventListener("click", () => {
+            gameController.playTurn(
+              cellButton.dataset.row, 
+              cellButton.dataset.column);
+          });
+        }
+
         boardDiv.appendChild(cellButton);
       });
     });
   }
 
-  boardDiv.addEventListener("click", () => {
-    
-  });
+  // Updates display for the first time
+  updateDisplay();
 }
+
+createDisplayController();
