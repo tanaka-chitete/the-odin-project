@@ -1,80 +1,49 @@
-const board = (function() {
-  const rows = 3;
+function createBoard() {
+  const numRows = 3;
   const array = [];
-  let numSymbols = 0;
+  let size = 0;
   
-  for (let i = 0; i < rows; i++) {
+  for (let i = 0; i < numRows; i++) {
     array[i] = new Array();
-    for (let j = 0; j < rows; j++) {
-      array[i].push(undefined);
+    for (let j = 0; j < numRows; j++) {
+      array[i].push("");
     }
   }
 
   const getArray = () => array;
 
-  const getCell = (row, column) => {
-    if (row >= 3 || column >= 3) {
-      return undefined;
+  const setValue = (row, column, value) => {
+    if (row >= numRows || column >= numRows) {
+      return false;
+    }
+
+    if (array[row][column]) {
+      return false;
+    }
+
+    array[row][column] = value;
+    size++;
+  };
+
+  const getValue = (row, column) => {
+    if (row >= numRows || column >= numRows) {
+      return "";
     }
     
     getArray()[row][column];
   };
 
-  const isFull = () => numSymbols >= 9;
-
-  const drawSymbol = (row, column, symbol) => {
-    if (array[row][column]) {
-      return false;
-    }
-
-    array[row][column] = symbol;
-    numSymbols++;
-  };
+  const isFull = () => size >= 9;
 
   return {
     getArray,
-    getCell,
-    isFull,
-    drawSymbol
-  };
-})();
-
-function createPlayer(name, symbol) {
-  this.name = name;
-  this.symbol = symbol;
-  
-  const getName = () => name;
-  
-  const getSymbol = () => symbol;
-  
-  return {
-    getName,
-    getSymbol
+    setValue,
+    getValue,
+    isFull
   };
 }
 
-const view = (function() {
-  const displayArray = (array) => {
-    for (let i = 0; i < array.length; i++) {
-      for (let j = 0; j < array[i].length; j++) {
-        if (array[i][j]) {
-          console.log(array[i][j]);
-          const cell = document.querySelector(`.board__cell[data-row="${i}"][data-column="${j}"]`);
-          console.log(cell);
-          const symbol = document.createElement("p");
-          symbol.setAttribute("class", "board__cell-symbol");
-          symbol.textContent = array[i][j];
-          console.log(symbol);
-          cell.appendChild(symbol);
-        }
-      }
-    }
-  };
-
-  return { displayArray };
-})();
-
-const controller = (function(board, player1, player2, view) {
+function createController() {
   let activePlayer = player1;
   
   function switchPlayer() {
@@ -86,11 +55,11 @@ const controller = (function(board, player1, player2, view) {
   }
   
   const playRound = (row, column) => {
-    if (!board.getCell(row, column)) {
-      board.drawSymbol(row, column, getActivePlayer().getSymbol());
+    if (!board.getValue(row, column)) {
+      board.setValue(row, column, getActivePlayer().getSymbol());
       console.log(`Drew ${getActivePlayer().getName()}'s symbol.`);
       view.displayArray(board.getArray());
-
+      
       if (determineWinner(getActivePlayer())) { // TODO: Check if specific player won!
         console.log(`${getActivePlayer().getName()} wins!`);
         return true;
@@ -100,16 +69,17 @@ const controller = (function(board, player1, player2, view) {
         console.log("It's a tie!");
         return true;
       }
-
+      
       switchPlayer();
       console.log(`${getActivePlayer().getName()}'s turn.`);
+      
       return false;
     } else {
       console.log(`That square is taken, ${getActivePlayer().getName()}!`);
       return false;
     }
   };
-
+  
   const startGame = () => {
     let end;
     do {
@@ -123,25 +93,25 @@ const controller = (function(board, player1, player2, view) {
   function determineWinner(symbol) { // TODO: Refactor this mess
     function checkRow(row) {
       return (
-        board.getCell(row, 0) === symbol &&
-        board.getCell(row, 1) === symbol &&
-        board.getCell(row, 2) === symbol
+        board.getValue(row, 0) === symbol &&
+        board.getValue(row, 1) === symbol &&
+        board.getValue(row, 2) === symbol
       );
     }
   
     function checkColumn(column) {
       return (
-        board.getCell(0, column) === symbol && 
-        board.getCell(1, column) === symbol && 
-        board.getCell(2, column) === symbol
+        board.getValue(0, column) === symbol && 
+        board.getValue(1, column) === symbol && 
+        board.getValue(2, column) === symbol
       );
     }
   
     function checkDiagonal(startRow, step) {
       return (
-        board.getCell(startRow, 0) === symbol &&
-        board.getCell(startRow + step, 1) === symbol &&
-        board.getCell(startRow + step + step, 2) === symbol
+        board.getValue(startRow, 0) === symbol &&
+        board.getValue(startRow + step, 1) === symbol &&
+        board.getValue(startRow + step + step, 2) === symbol
       )
     }
 
@@ -178,5 +148,7 @@ const controller = (function(board, player1, player2, view) {
     }
   }
   
-  return { startGame };
-})(board, createPlayer("player1", "x"), createPlayer("player2", "o"), view);
+  return { 
+    startGame 
+  };
+}
