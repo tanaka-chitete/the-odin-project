@@ -8,7 +8,7 @@
 }
 
 /* Allows margin to be easily varied across different elements */
-body {
+* {
 	margin: 0; 
 }
 

@@ -5,16 +5,28 @@
   height: 100vh;
   display: grid;
   justify-content: center;
+  grid-template-rows: 1fr 10fr 1fr;
+  grid-template-areas: 
+    "message"
+    "board"
+    "restart";
+  gap: 1rem;
 }
 
 .message {
-  font-size: 3rem;
-  text-align: center;
+  grid-area: message;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message__text {
+  font-size: 2rem;
 }
 
 .board {
+  grid-area: board;
   aspect-ratio: 1 / 1;
-  width: min(75vh, 75vh);
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
@@ -30,4 +42,14 @@
 
 .board__cell:hover {
   cursor: pointer;
+}
+
+.restart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.restart__button {
+  grid-area: restart;
 }
