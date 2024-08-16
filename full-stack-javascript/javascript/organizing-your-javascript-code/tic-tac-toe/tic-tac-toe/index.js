@@ -173,6 +173,9 @@ function createDisplayController() {
     });
   });
 
+  const restartButton = document.querySelector(".restart__button");
+  restartButton.addEventListener("click", () => createDisplayController());
+
   // Updates display for the first time
   updateDisplay();
 }

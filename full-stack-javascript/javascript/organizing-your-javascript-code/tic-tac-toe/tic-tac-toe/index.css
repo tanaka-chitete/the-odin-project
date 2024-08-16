@@ -40,7 +40,8 @@
   font-size: 10rem;
 }
 
-.board__cell:hover {
+.board__cell:hover,
+.restart__button:hover {
   cursor: pointer;
 }
 
