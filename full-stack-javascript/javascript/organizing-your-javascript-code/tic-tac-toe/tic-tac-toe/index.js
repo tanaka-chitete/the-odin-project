@@ -43,7 +43,7 @@ function createBoard() {
   };
 }
 
-function createController(player1Name = "Player 1", player2Name = "Player 2") {
+function createGameController(player1Name = "Player 1", player2Name = "Player 2") {
   const board = createBoard();
 
   const players = [
@@ -63,20 +63,20 @@ function createController(player1Name = "Player 1", player2Name = "Player 2") {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
   };
   
-  const getActivePlayer = () => activePlayer;
+  const getCurrentPlayer = () => activePlayer;
 
   const startTurn = () => {
     console.table(board.getArray());
-    console.log(`${getActivePlayer().name}'s turn.`);
+    console.log(`${getCurrentPlayer().name}'s turn.`);
   }
   
   const playTurn = (row, column) => {
-    board.setValue(row, column, getActivePlayer().symbol);
+    board.setValue(row, column, getCurrentPlayer().symbol);
     view.displayArray(board.getArray());
-    console.log(`Drew ${getActivePlayer().name}'s symbol at row ${row}, column ${column}.`);
+    console.log(`Drew ${getCurrentPlayer().name}'s symbol at row ${row}, column ${column}.`);
     
-    if (findTrio(getActivePlayer().symbol)) {
-      console.log(`${getActivePlayer().name} wins!`);
+    if (findTrio(getCurrentPlayer().symbol)) {
+      console.log(`${getCurrentPlayer().name} wins!`);
     }
     
     if (board.isFull()) {
@@ -140,6 +140,39 @@ function createController(player1Name = "Player 1", player2Name = "Player 2") {
   return { 
     playTurn,
     getCurrentPlayer,
-    getBoard: board.getBoard 
+    getBoard: board.getArray 
   };
+}
+
+function createDisplayController() {
+  const gameController = createGameController();
+  const turnH1 = document.querySelector(".turn");
+  const boardDiv = document.querySelector(".board");
+
+  function updateDisplay() {
+    boardDiv.textContent = 0;
+
+    boardArray = game.getBoard();
+    currentPlayer = board.getCurrentPlayer();
+
+    turnH1.textContent = `${currentPlayer.name}'s turn...`;
+
+    boardArray.forEach((row, rowIndex) => {
+      row.forEach((cellValue, columnIndex) => {
+        const cellButton = document.createElement("button");
+        cellButton.classList.add("board__cell");
+
+        // Creating data attributes makes identifying cells easier
+        cellButton.dataset.row = rowIndex;
+        cellButton.dataset.column = columnIndex;
+
+        cellButton.textContent = cellValue;
+        boardDiv.appendChild(cellButton);
+      });
+    });
+  }
+
+  boardDiv.addEventListener("click", () => {
+    
+  });
 }

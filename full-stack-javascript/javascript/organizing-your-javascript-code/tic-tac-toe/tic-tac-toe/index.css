@@ -1,6 +1,6 @@
 @import "my-reset.css";
 
-body {
+.page {
   font-family: monospace;
   height: 100vh;
   display: grid;
