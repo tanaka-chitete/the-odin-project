@@ -43,7 +43,10 @@ function createBoard() {
   };
 }
 
-function createGameController(player1Name = "Player 1", player2Name = "Player 2") {
+function createGameController(
+  player1Name = "Player 1", 
+  player2Name = "Player 2"
+) {
   const board = createBoard();
   let over = false;
   const players = [
@@ -58,7 +61,7 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
   ];
 
   let currentPlayer = players[0];
-  message = `${currentPlayer.name}'s turn.`
+  message = `${currentPlayer.name}'s turn`
   
   const playTurn = (row, column) => {
     if (!over) {
@@ -72,12 +75,10 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
         over = true;
       } else {
         currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
-        message = `${currentPlayer.name}'s turn.`
+        message = `${currentPlayer.name}'s turn`
       }
     }
   };
-
-  const isOver = () => over;
 
   const getMessage = () => message;
 
@@ -136,7 +137,6 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
   return { 
     playTurn,
     getMessage,
-    isOver,
     getBoard: board.getArray 
   };
 }
