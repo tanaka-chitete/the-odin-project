@@ -1,3 +1,4 @@
 Refactor determineWinner() to determineWinner(row, rowStep, column, columnStep)
 Move determineWinner() logic from Board to Controller?
 Rename Board.getBoard() to Board.getArray()
+Combine changeTurn() and startTurn()

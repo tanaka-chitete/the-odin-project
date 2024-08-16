@@ -1,7 +1,7 @@
 function createBoard() {
   const numRows = 3;
   const array = [];
-  let size = 0;
+  let numValues = 0;
   
   for (let i = 0; i < numRows; i++) {
     array[i] = new Array();
@@ -22,7 +22,7 @@ function createBoard() {
     }
 
     array[row][column] = value;
-    size++;
+    numValues++;
   };
 
   const getValue = (row, column) => {
@@ -33,7 +33,7 @@ function createBoard() {
     getArray()[row][column];
   };
 
-  const isFull = () => size >= 9;
+  const isFull = () => numValues >= (numRows ** 2);
 
   return {
     getArray,
@@ -43,112 +43,103 @@ function createBoard() {
   };
 }
 
-function createController() {
-  let activePlayer = player1;
+function createController(player1Name = "Player 1", player2Name = "Player 2") {
+  const board = createBoard();
+
+  const players = [
+    {
+      name: player1Name,
+      symbol: "x"
+    },
+    {
+      name: player2Name,
+      symbol: "o"
+    }
+  ];
+
+  let activePlayer = players[0];
   
-  function switchPlayer() {
-    activePlayer = activePlayer === player1 ? player2 : player1;
+  function changeTurn() {
+    activePlayer = activePlayer === players[0] ? players[1] : players[0];
   };
   
-  function getActivePlayer() {
-    return activePlayer;
+  const getActivePlayer = () => activePlayer;
+
+  const startTurn = () => {
+    console.table(board.getArray());
+    console.log(`${getActivePlayer().name}'s turn.`);
   }
   
-  const playRound = (row, column) => {
-    if (!board.getValue(row, column)) {
-      board.setValue(row, column, getActivePlayer().getSymbol());
-      console.log(`Drew ${getActivePlayer().getName()}'s symbol.`);
-      view.displayArray(board.getArray());
-      
-      if (determineWinner(getActivePlayer())) { // TODO: Check if specific player won!
-        console.log(`${getActivePlayer().getName()} wins!`);
-        return true;
-      }
-      
-      if (board.isFull()) {
-        console.log("It's a tie!");
-        return true;
-      }
-      
-      switchPlayer();
-      console.log(`${getActivePlayer().getName()}'s turn.`);
-      
-      return false;
-    } else {
-      console.log(`That square is taken, ${getActivePlayer().getName()}!`);
-      return false;
+  const playTurn = (row, column) => {
+    board.setValue(row, column, getActivePlayer().symbol);
+    view.displayArray(board.getArray());
+    console.log(`Drew ${getActivePlayer().name}'s symbol at row ${row}, column ${column}.`);
+    
+    if (findTrio(getActivePlayer().symbol)) {
+      console.log(`${getActivePlayer().name} wins!`);
     }
+    
+    if (board.isFull()) {
+      console.log("It's a tie!");
+    }
+    
+    changeTurn();
+    startTurn();
   };
-  
-  const startGame = () => {
-    let end;
-    do {
-      // THIS PROMPT IS PREVENTING THE DOM FROM UPDATING
-      const row = Number(prompt("Row to draw symbol: ")); // TODO: Implement error-handling
-      const column = Number(prompt("Column to draw symbol: ")); // TODO: Implement error-handling
-      end = playRound(row, column);
-    } while(!end);
-  }
 
-  function determineWinner(symbol) { // TODO: Refactor this mess
-    function checkRow(row) {
+  function findTrio(symbol) {
+    function isTrio(row, rowStep, column, columnStep) {
       return (
-        board.getValue(row, 0) === symbol &&
-        board.getValue(row, 1) === symbol &&
-        board.getValue(row, 2) === symbol
+        board.getValue(row, column) === symbol &&
+        board.getValue(row + rowStep, column + columnStep) === symbol &&
+        board.getValue(row + (2 * rowStep), column + (2 * columnStep)) === symbol
       );
     }
-  
-    function checkColumn(column) {
-      return (
-        board.getValue(0, column) === symbol && 
-        board.getValue(1, column) === symbol && 
-        board.getValue(2, column) === symbol
-      );
-    }
-  
-    function checkDiagonal(startRow, step) {
-      return (
-        board.getValue(startRow, 0) === symbol &&
-        board.getValue(startRow + step, 1) === symbol &&
-        board.getValue(startRow + step + step, 2) === symbol
-      )
-    }
 
-    if (checkRow(0)) {
+    // Checks row 0
+    if (isTrio(0, 0, 0, 1)) {
       return true;
     }
 
-    if (checkRow(1)) {
+    // Checks row 1
+    if (isTrio(1, 0, 0, 1)) {
       return true;
     }
 
-    if (checkRow(2)) {
+    // Checks row 2
+    if (isTrio(2, 0, 0, 1)) {
       return true;
     }
 
-    if (checkColumn(0)) {
+    // Checks column 1
+    if (isTrio(0, 1, 0, 0)) {
       return true;
     }
 
-    if (checkColumn(1)) {
+    // Checks column 2
+    if (isTrio(0, 2, 0, 0)) {
       return true;
     }
 
-    if (checkColumn(2)) {
+    // Checks column 3
+    if (isTrio(0, 3, 0, 0)) {
       return true;
     }
 
-    if (checkDiagonal(0, 1)) {
+    // Checks top-left to bottom-right diagonal
+    if (isTrio(0, 1, 0, 1)) {
       return true;
     }
 
-    if (checkDiagonal(2, -1)) {
+    // Checks bottom-left to top-right diagonal
+    if (isTrio(2, -1, 0, 1)) {
       return true;
     }
   }
-  
+
   return { 
-    startGame 
+    playTurn,
+    getCurrentPlayer,
+    getBoard: board.getBoard 
   };
 }
