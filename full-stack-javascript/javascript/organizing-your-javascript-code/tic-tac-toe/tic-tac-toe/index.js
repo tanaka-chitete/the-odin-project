@@ -64,13 +64,9 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
   };
   
   const getCurrentPlayer = () => currentPlayer;
-
-  const startTurn = () => {
-    console.table(board.getArray());
-    console.log(`${getCurrentPlayer().name}'s turn.`);
-  }
   
   const playTurn = (row, column) => {
+    // TODO: Check if game is finished
     board.setValue(row, column, getCurrentPlayer().symbol);
     console.log(`Drew ${getCurrentPlayer().name}'s symbol at row ${row}, column ${column}.`);
     
@@ -83,7 +79,6 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
     }
     
     changeTurn();
-    startTurn();
   };
 
   function findTrio(symbol) {
@@ -147,40 +142,37 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
 
 function createDisplayController() {
   const gameController = createGameController();
-  const turnH1 = document.querySelector(".turn");
-  const boardDiv = document.querySelector(".board");
 
   function updateDisplay() {
-    boardDiv.innerHTML = "";
+    const turnH1 = document.querySelector(".turn"); // TODO: Rename to game status
 
     boardArray = gameController.getBoard();
-    currentPlayer = gameController.getCurrentPlayer();
-
-    turnH1.textContent = `${currentPlayer.name}'s turn...`;
+    turnH1.textContent = `${gameController.getCurrentPlayer().name}'s turn...`;
 
     boardArray.forEach((row, rowIndex) => {
       row.forEach((cellValue, columnIndex) => {
-        const cellButton = document.createElement("button");
-        cellButton.classList.add("board__cell");
-
-        // Creating data attributes makes identifying cells easier
-        cellButton.dataset.row = rowIndex;
-        cellButton.dataset.column = columnIndex;
+        const cellButton = document.querySelector(
+          `.board__cell[data-row="${rowIndex}"][data-column="${columnIndex}"]`
+        );
 
         cellButton.textContent = cellValue;
-        // Only allows cells to be clicked if they are unmarked
-        if (!cellValue) {
-          cellButton.addEventListener("click", () => {
-            gameController.playTurn(
-              cellButton.dataset.row, 
-              cellButton.dataset.column);
-          });
-        }
-
-        boardDiv.appendChild(cellButton);
       });
     });
   }
+  
+  const cellButtons = [...document.querySelectorAll(".board__cell")];
+  cellButtons.forEach((cellButton) => {
+    cellButton.addEventListener("click", () => {
+      gameController.playTurn(
+        cellButton.dataset.row, 
+        cellButton.dataset.column
+      );
+      updateDisplay();
+    }, 
+    { 
+      once: true 
+    });
+  });
 
   // Updates display for the first time
   updateDisplay();
