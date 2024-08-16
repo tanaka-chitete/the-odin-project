@@ -45,7 +45,7 @@ function createBoard() {
 
 function createGameController(player1Name = "Player 1", player2Name = "Player 2") {
   const board = createBoard();
-
+  let over = false;
   const players = [
     {
       name: player1Name,
@@ -58,28 +58,28 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
   ];
 
   let currentPlayer = players[0];
-  
-  function changeTurn() {
-    currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
-  };
-  
-  const getCurrentPlayer = () => currentPlayer;
+  message = `${currentPlayer.name}'s turn.`
   
   const playTurn = (row, column) => {
-    // TODO: Check if game is finished
-    board.setValue(row, column, getCurrentPlayer().symbol);
-    console.log(`Drew ${getCurrentPlayer().name}'s symbol at row ${row}, column ${column}.`);
-    
-    if (findTrio(getCurrentPlayer().symbol)) {
-      console.log(`${getCurrentPlayer().name} wins!`);
+    if (!over) {
+      board.setValue(row, column, currentPlayer.symbol);
+      
+      if (findTrio(currentPlayer.symbol)) {
+        message = `${currentPlayer.name} wins!`;
+        over = true;
+      } else if (board.isFull()) {
+        message = "It's a tie!";
+        over = true;
+      } else {
+        currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
+        message = `${currentPlayer.name}'s turn.`
+      }
     }
-    
-    if (board.isFull()) {
-      console.log("It's a tie!");
-    }
-    
-    changeTurn();
   };
+
+  const isOver = () => over;
+
+  const getMessage = () => message;
 
   function findTrio(symbol) {
     function isTrio(row, rowStep, column, columnStep) {
@@ -135,7 +135,8 @@ function createGameController(player1Name = "Player 1", player2Name = "Player 2"
 
   return { 
     playTurn,
-    getCurrentPlayer,
+    getMessage,
+    isOver,
     getBoard: board.getArray 
   };
 }
@@ -144,11 +145,10 @@ function createDisplayController() {
   const gameController = createGameController();
 
   function updateDisplay() {
-    const turnH1 = document.querySelector(".turn"); // TODO: Rename to game status
+    const messageH1 = document.querySelector(".message"); // TODO: Rename to game status
+    messageH1.textContent = gameController.getMessage();
 
     boardArray = gameController.getBoard();
-    turnH1.textContent = `${gameController.getCurrentPlayer().name}'s turn...`;
-
     boardArray.forEach((row, rowIndex) => {
       row.forEach((cellValue, columnIndex) => {
         const cellButton = document.querySelector(
@@ -168,9 +168,8 @@ function createDisplayController() {
         cellButton.dataset.column
       );
       updateDisplay();
-    }, 
-    { 
-      once: true 
+    }, { 
+      once: true // Prevents users from drawing on occupied cells
     });
   });
 
