@@ -40,12 +40,12 @@
   font-size: 10rem;
 }
 
-.board__cell:hover,
-.restart__button:hover {
+.board__cell:hover {
   cursor: pointer;
 }
 
 .restart {
+  grid-area: restart;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,4 +53,8 @@
 
 .restart__button {
   grid-area: restart;
+}
+
+.restart__button:hover {
+  cursor: pointer;
 }
