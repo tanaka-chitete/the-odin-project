@@ -145,7 +145,7 @@ function createDisplayController() {
   const gameController = createGameController();
 
   function updateDisplay() {
-    const messageH1 = document.querySelector(".message__text"); // TODO: Rename to game status
+    const messageH1 = document.querySelector(".message__text");
     messageH1.textContent = gameController.getMessage();
 
     boardArray = gameController.getBoard();
