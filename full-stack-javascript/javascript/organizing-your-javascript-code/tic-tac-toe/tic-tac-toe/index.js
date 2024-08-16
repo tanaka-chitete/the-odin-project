@@ -1,45 +1,38 @@
 const board = (function() {
-  function createCell() {
-    let symbol = undefined;
-
-    const drawSymbol = (inSymbol) => symbol = inSymbol;
-
-    const getSymbol = () => symbol;
-
-    return {
-      drawSymbol,
-      getSymbol,
-    };
-  }
-
   const rows = 3;
-  const board = [];
+  const array = [];
   let numSymbols = 0;
   
   for (let i = 0; i < rows; i++) {
-    board[i] = new Array();
+    array[i] = new Array();
     for (let j = 0; j < rows; j++) {
-      board[i].push(createCell());
+      array[i].push(undefined);
     }
   }
 
-  const getBoard = () => board;
+  const getArray = () => array;
 
-  const getCell = (row, column) => getBoard()[row][column];
+  const getCell = (row, column) => {
+    if (row >= 3 || column >= 3) {
+      return undefined;
+    }
+    
+    getArray()[row][column];
+  };
 
   const isFull = () => numSymbols >= 9;
 
   const drawSymbol = (row, column, symbol) => {
-    if (board[row][column].getSymbol()) {
+    if (array[row][column]) {
       return false;
     }
 
-    board[row][column].drawSymbol(symbol);
+    array[row][column] = symbol;
     numSymbols++;
   };
 
   return {
-    getBoard,
+    getArray,
     getCell,
     isFull,
     drawSymbol
@@ -61,21 +54,24 @@ function createPlayer(name, symbol) {
 }
 
 const view = (function() {
-  const displayBoard = (board) => {
-    for (let i = 0; i < board.length; i++) {
-      for (let j = 0; j < board[i].length; j++) {
-        if (board[i][j].getSymbol()) {
+  const displayArray = (array) => {
+    for (let i = 0; i < array.length; i++) {
+      for (let j = 0; j < array[i].length; j++) {
+        if (array[i][j]) {
+          console.log(array[i][j]);
           const cell = document.querySelector(`.board__cell[data-row="${i}"][data-column="${j}"]`);
+          console.log(cell);
           const symbol = document.createElement("p");
           symbol.setAttribute("class", "board__cell-symbol");
-          symbol.textContent = board[i][j].getSymbol();
+          symbol.textContent = array[i][j];
+          console.log(symbol);
           cell.appendChild(symbol);
         }
       }
     }
   };
 
-  return { displayBoard };
+  return { displayArray };
 })();
 
 const controller = (function(board, player1, player2, view) {
@@ -90,12 +86,12 @@ const controller = (function(board, player1, player2, view) {
   }
   
   const playRound = (row, column) => {
-    if (!board.getCell(row, column).getSymbol()) {
+    if (!board.getCell(row, column)) {
       board.drawSymbol(row, column, getActivePlayer().getSymbol());
       console.log(`Drew ${getActivePlayer().getName()}'s symbol.`);
-      view.displayBoard(board.getBoard());
+      view.displayArray(board.getArray());
 
-      if (determineWinner(getActivePlayer().getSymbol())) { // TODO: Check if specific player won!
+      if (determineWinner(getActivePlayer())) { // TODO: Check if specific player won!
         console.log(`${getActivePlayer().getName()} wins!`);
         return true;
       }
@@ -117,6 +113,7 @@ const controller = (function(board, player1, player2, view) {
   const startGame = () => {
     let end;
     do {
+      // THIS PROMPT IS PREVENTING THE DOM FROM UPDATING
       const row = Number(prompt("Row to draw symbol: ")); // TODO: Implement error-handling
       const column = Number(prompt("Column to draw symbol: ")); // TODO: Implement error-handling
       end = playRound(row, column);
@@ -126,25 +123,25 @@ const controller = (function(board, player1, player2, view) {
   function determineWinner(symbol) { // TODO: Refactor this mess
     function checkRow(row) {
       return (
-        board.getCell(row, 0).getSymbol() === symbol &&
-        board.getCell(row, 1).getSymbol() === symbol &&
-        board.getCell(row, 2).getSymbol() === symbol
+        board.getCell(row, 0) === symbol &&
+        board.getCell(row, 1) === symbol &&
+        board.getCell(row, 2) === symbol
       );
     }
   
     function checkColumn(column) {
       return (
-        board.getCell(0, column).getSymbol() === symbol && 
-        board.getCell(1, column).getSymbol() === symbol && 
-        board.getCell(2, column).getSymbol() === symbol
+        board.getCell(0, column) === symbol && 
+        board.getCell(1, column) === symbol && 
+        board.getCell(2, column) === symbol
       );
     }
   
     function checkDiagonal(startRow, step) {
       return (
-        board.getCell(startRow, 0).getSymbol() === symbol &&
-        board.getCell(startRow + step, 1).getSymbol() === symbol &&
-        board.getCell(startRow + step + step, 2).getSymbol() === symbol
+        board.getCell(startRow, 0) === symbol &&
+        board.getCell(startRow + step, 1) === symbol &&
+        board.getCell(startRow + step + step, 2) === symbol
       )
     }
 
