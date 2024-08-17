@@ -7,11 +7,6 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* Allows margin to be easily varied across different elements */
-* {
-	margin: 0; 
-}
-
 h1, 
 h2, 
 h3, 
