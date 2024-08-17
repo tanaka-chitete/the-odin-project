@@ -1,0 +1,2 @@
+Refactor to use class instead of function
+Use controller to interface with browser
