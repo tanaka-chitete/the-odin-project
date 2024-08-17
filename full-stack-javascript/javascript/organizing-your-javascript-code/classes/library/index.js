@@ -6,7 +6,7 @@ class Book {
     this.read = read;
   }
   
-  get info() {
+  get details() {
     return `${this.title} by ${this.author}, ${this.numPages} pages, ${this.read ? "read" : "unread"}`;
   }
 }
@@ -17,16 +17,18 @@ class Library {
   }
 
   add(title, author, numPages, read) {
-    const book = new Book(title, author, numPages, read);
+    const newBook = new Book(title, author, numPages, read);
 
-    this.books.push(book);
+    this.books.push(newBook);
 
-    return book;
+    return newBook;
   }
   
   // The client will know that the underlying data structure is an array. Problem?
   remove(index) {
-    this.books.splice(index);
+    const removedBook = this.books.splice(index)[0];
+
+    return removedBook;
   }
 }
 
@@ -65,8 +67,8 @@ class Controller {
     bookListItem.classList.add("library__book");
     
     const bookP = document.createElement("p");
-    bookP.classList.add("library__book-info");
-    bookP.textContent = `${bookObject.info}`;
+    bookP.classList.add("library__book-details");
+    bookP.textContent = `${bookObject.details}`;
     
     const removeBookButton = document.createElement("button");
     removeBookButton.classList.add("library__book-remove-book-button");
