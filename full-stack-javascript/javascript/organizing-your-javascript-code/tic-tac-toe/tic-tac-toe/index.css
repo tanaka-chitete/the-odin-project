@@ -1,0 +1,60 @@
+@import "my-reset.css";
+
+.page {
+  font-family: monospace;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  grid-template-rows: 1fr 10fr 1fr;
+  grid-template-areas: 
+    "message"
+    "board"
+    "restart";
+  gap: 1rem;
+}
+
+.message {
+  grid-area: message;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message__text {
+  font-size: 2rem;
+}
+
+.board {
+  grid-area: board;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.2rem;
+  background: black;
+}
+
+.board__cell {
+  border: none;
+  background: white;
+  font-size: 10rem;
+}
+
+.board__cell:hover {
+  cursor: pointer;
+}
+
+.restart {
+  grid-area: restart;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.restart__button {
+  grid-area: restart;
+}
+
+.restart__button:hover {
+  cursor: pointer;
+}

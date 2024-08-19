@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <main class="page">
+      <h1 class="heading">My Library</h1>
+      <button type="button" class="add-book-button">Add Book</button>
+  
+      <ul role="list" class="library"></ul>
+    </main>
+
+    <dialog class="add-book-dialog">
+      <h1 class="add-book-dialog__heading">Add Book</h1>
+      <form action="" class="add-book-dialog__form">
+        <ul role="list" class="add-book-dialog__details">
+          <li class="add-book-dialog__typed-detail">
+            <label for="title" class="add-book-dialog__label">Title</label>
+            <input type="text" id="title" name="title" class="add-book-dialog__text-input" required>
+          </li>
+          <li class="add-book-dialog__typed-detail">
+            <label for="author" class="add-book-dialog__label">Author</label>
+            <input type="text" id="author" name="author" class="add-book-dialog__text-input" required>
+          </li>
+          <li class="add-book-dialog__typed-detail">
+            <label for="numPages" class="add-book-dialog__label">Pages</label>
+            <input type="number" id="numPages" name="numPages" class="add-book-dialog__tel-input" required>
+          </li>
+          <li class="add-book-dialog__clicked-detail">
+            <fieldset class="add-book-dialog__read-fieldset">
+              <legend class="add-book-dialog__read-legend">Have you read the book?</legend>
+              <div class="add-book-dialog__read-choices">
+                <input type="radio" id="add-book-dialog__read-radio1" name="read" value="true" class="add-book-dialog__read-radio" checked required>
+                <label for="add-book-dialog__read-radio1" class="add-book-dialog__read-label">Yes</label>
+  
+                <input type="radio" id="add-book-dialog__read-radio2" name="read" value="false" class="add-book-dialog__read-radio" required>
+                <label for="add-book-dialog__read-radio2" class="add-book-dialog__read-label">No</label>
+              </div>
+            </fieldset>
+          </li>
+        </ul>
+        <button class="add-book-dialog__submit-book-button" type="submit" value="null">Submit</button>
+      </form>
+    </dialog>
+    <script src="index.js"></script>
+  </body>
+</html>

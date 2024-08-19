@@ -1,0 +1,7 @@
+Refactor determineWinner() to determineWinner(row, rowStep, column, columnStep)
+Move determineWinner() logic from Board to Controller?
+Rename Board.getBoard() to Board.getArray()
+Combine changeTurn() and startTurn()
+Add boolean for game end. Stop updating display and board when game ends
+Handle game end in playTurn() and updateDisplay()
+Delete unnecessary getters and setters (i.e. the ones for only privately used data)

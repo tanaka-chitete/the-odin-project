@@ -1,167 +1,183 @@
-const board = (function() {
-  function createCell() {
-    let symbol = undefined;
-
-    const drawSymbol = (inSymbol) => symbol = inSymbol;
-
-    const getSymbol = () => symbol;
-
-    return {
-      drawSymbol,
-      getSymbol,
-    };
-  }
-
-  const rows = 3;
-  const board = [];
+function createBoard() {
+  const numRows = 3;
+  const array = [];
+  let numValues = 0;
   
-  for (let i = 0; i < rows; i++) {
-    board[i] = new Array();
-    for (let j = 0; j < rows; j++) {
-      board[i].push(createCell());
+  for (let i = 0; i < numRows; i++) {
+    array[i] = new Array();
+    for (let j = 0; j < numRows; j++) {
+      array[i].push("");
     }
   }
 
-  const getBoard = () => board;
+  const getArray = () => array;
 
-  const getCell = (row, column) => getBoard()[row][column];
+  const setValue = (row, column, value) => {
+    if (row >= numRows || column >= numRows) {
+      return false;
+    }
 
-  const printBoard = () => {
-    console.table(getBoard().map((row) => row.map((cell) => cell.getSymbol())));
-  }
+    if (array[row][column]) {
+      return false;
+    }
 
-  const drawSymbol = (row, column, symbol) => {
-    board[row][column].drawSymbol(symbol);
+    array[row][column] = value;
+    numValues++;
   };
 
-  return {
-    getBoard,
-    getCell,
-    printBoard,
-    drawSymbol
+  const getValue = (row, column) => {
+    if (row >= numRows || column >= numRows) {
+      return "";
+    }
+    
+    return getArray()[row][column];
   };
-})();
 
-function createPlayer(name, symbol) {
-  this.name = name;
-  this.symbol = symbol;
-  
-  const getName = () => name;
-  
-  const getSymbol = () => symbol;
-  
+  const isFull = () => numValues >= (numRows ** 2);
+
   return {
-    getName,
-    getSymbol
+    getArray,
+    setValue,
+    getValue,
+    isFull
   };
 }
 
-const controller = (function(board, player1, player2) {
-  // create player objects here
-  // Do they even need to be their own module?
-  // Make this an IIFE (rename to Controller)
-  let activePlayer = player1;
-  
-  function switchPlayer() {
-    activePlayer = activePlayer === player1 ? player2 : player1;
-  };
-  
-  function getActivePlayer() {
-    return activePlayer;
-  }
-  
-  const startRound = () => {
-    board.printBoard();
-    console.log(`${getActivePlayer().getName()}'s turn.`);
-  };
-  
-  const playRound = (row, column) => {
-    if (!board.getCell(row, column).getSymbol()) {
-      board.drawSymbol(row, column, getActivePlayer().getSymbol());
-      console.log(`Drew ${getActivePlayer().getName()}'s symbol.`);
-    } else {
-      console.log(`That square is taken, ${controller.getActivePlayer().getName()}!`);
+function createGameController(
+  player1Name = "Player 1", 
+  player2Name = "Player 2"
+) {
+  const board = createBoard();
+  let over = false;
+  const players = [
+    {
+      name: player1Name,
+      symbol: "x"
+    },
+    {
+      name: player2Name,
+      symbol: "o"
     }
-    
-    if (determineWinner(getActivePlayer().getSymbol())) { // TODO: Check if specific player won!
-      console.log(`${getActivePlayer().getName()} wins!`);
-      return true;
-    } else {
-      switchPlayer();
-      return false;
+  ];
+
+  let currentPlayer = players[0];
+  message = `${currentPlayer.name}'s turn`
+  
+  const playTurn = (row, column) => {
+    if (!over) {
+      board.setValue(row, column, currentPlayer.symbol);
+      
+      if (findTrio(currentPlayer.symbol)) {
+        message = `${currentPlayer.name} wins!`;
+        over = true;
+      } else if (board.isFull()) {
+        message = "It's a tie!";
+        over = true;
+      } else {
+        currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
+        message = `${currentPlayer.name}'s turn`
+      }
     }
   };
 
-  const startGame = () => {
-    let winner;
-    do {
-      startRound();
-      const row = Number(prompt("Row to draw symbol: ")); // TODO: Implement error-handling
-      const column = Number(prompt("Column to draw symbol: ")); // TODO: Implement error-handling
-      winner = playRound(row, column);
-    } while(!winner);
-    // controller = createController(Players, board)
-    // controller.playRound() should return a boolean indicating the winner? if any?
-    // have doWhile loop which represents the game
-  }
+  const getMessage = () => message;
 
-  function determineWinner(symbol) { // TODO: Refactor this mess
-    function checkRow(row) {
+  function findTrio(symbol) {
+    function isTrio(row, rowStep, column, columnStep) {
       return (
-        board.getCell(row, 0).getSymbol() === symbol &&
-        board.getCell(row, 1).getSymbol() === symbol &&
-        board.getCell(row, 2).getSymbol() === symbol
+        board.getValue(row, column) === symbol &&
+        board.getValue(row + rowStep, column + columnStep) === symbol &&
+        board.getValue(row + (2 * rowStep), column + (2 * columnStep)) === symbol
       );
     }
-  
-    function checkColumn(column) {
-      return (
-        board.getCell(0, column).getSymbol() === symbol && 
-        board.getCell(1, column).getSymbol() === symbol && 
-        board.getCell(2, column).getSymbol() === symbol
-      );
-    }
-  
-    function checkDiagonal(startRow, step) {
-      return (
-        board.getCell(startRow, 0).getSymbol() === symbol &&
-        board.getCell(startRow + step, 1).getSymbol() === symbol &&
-        board.getCell(startRow + step + step, 1).getSymbol() === symbol
-      )
-    }
 
-    if (checkRow(0)) {
+    // Checks row 0
+    if (isTrio(0, 0, 0, 1)) {
       return true;
     }
 
-    if (checkRow(1)) {
+    // Checks row 1
+    if (isTrio(1, 0, 0, 1)) {
       return true;
     }
 
-    if (checkRow(2)) {
+    // Checks row 2
+    if (isTrio(2, 0, 0, 1)) {
       return true;
     }
 
-    if (checkColumn(0)) {
+    // Checks column 0
+    if (isTrio(0, 1, 0, 0)) {
       return true;
     }
 
-    if (checkColumn(1)) {
+    // Checks column 1
+    if (isTrio(0, 1, 1, 0)) {
       return true;
     }
 
-    if (checkColumn(2)) {
+    // Checks column 2
+    if (isTrio(0, 1, 2, 0)) {
       return true;
     }
 
-    if (checkDiagonal(0, 1)) {
+    // Checks top-left to bottom-right diagonal
+    if (isTrio(0, 1, 0, 1)) {
       return true;
     }
 
-    if (checkDiagonal(2, -1)) {
+    // Checks bottom-left to top-right diagonal
+    if (isTrio(2, -1, 0, 1)) {
       return true;
     }
+
+    return false;
+  }
+
+  return { 
+    playTurn,
+    getMessage,
+    getBoard: board.getArray 
+  };
+}
+
+function createDisplayController() {
+  const gameController = createGameController();
+
+  function updateDisplay() {
+    const messageH1 = document.querySelector(".message__text");
+    messageH1.textContent = gameController.getMessage();
+
+    boardArray = gameController.getBoard();
+    boardArray.forEach((row, rowIndex) => {
+      row.forEach((cellValue, columnIndex) => {
+        const cellButton = document.querySelector(
+          `.board__cell[data-row="${rowIndex}"][data-column="${columnIndex}"]`
+        );
+
+        cellButton.textContent = cellValue;
+      });
+    });
   }
   
-  return { startGame };
-})(board, createPlayer("player1", "x"), createPlayer("player2", "o"));
+  const cellButtons = [...document.querySelectorAll(".board__cell")];
+  cellButtons.forEach((cellButton) => {
+    cellButton.addEventListener("click", () => {
+      gameController.playTurn(
+        cellButton.dataset.row, 
+        cellButton.dataset.column
+      );
+      updateDisplay();
+    }, { 
+      once: true // Prevents users from drawing on occupied cells
+    });
+  });
+
+  const restartButton = document.querySelector(".restart__button");
+  restartButton.addEventListener("click", () => createDisplayController());
+
+  // Updates display for the first time
+  updateDisplay();
+}
+
+createDisplayController();

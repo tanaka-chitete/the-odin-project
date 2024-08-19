@@ -1,2 +1,0 @@
-Refactor determineWinner()
-Move determineWinner() logic from Board to Controller?
