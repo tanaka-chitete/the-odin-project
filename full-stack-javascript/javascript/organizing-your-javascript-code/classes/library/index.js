@@ -1,70 +1,92 @@
-"use strict";
-
-function Book(title, author, numPages, read) {
-  if (!(this instanceof Book)) {
-    throw Error("Use the new operator to call this function");
+class Book {
+  constructor(title, author, numPages, read) {
+    this.title = title;
+    this.author = author;
+    this.numPages = numPages;
+    this.read = read;
   }
-
-  this.title = title;
-  this.author = author;
-  this.numPages = numPages;
-  this.read = read;
-  this.info = function() {
-    return `${this.title} by ${this.author}, ${this.numPages} pages, ${read ? "read" : "unread"}`;
+  
+  get details() {
+    return `${this.title} by ${this.author}, ${this.numPages} pages, ${this.read ? "read" : "unread"}`;
   }
 }
 
-const libraryObject = new Array();
+class Library {
+  constructor() {
+    this.books = [];
+  }
 
-function addBookToLibrary(addBookForm) {
-  const bookObject = new Book(
-    addBookForm.elements["title"].value, 
-    addBookForm.elements["author"].value, 
-    Number(addBookForm.elements["numPages"].value),
-    String(addBookForm.elements["read"].value) === "true"   
-  )
+  add(title, author, numPages, read) {
+    const newBook = new Book(title, author, numPages, read);
 
-  libraryObject.push(bookObject);
-  
-  addBookForm.reset();
-  addBookDialog.close();
+    this.books.push(newBook);
 
-  const libraryElement = document.querySelector(".library");
+    return newBook;
+  }
   
-  const bookElement = document.createElement("li");
-  bookElement.setAttribute("data-index", libraryElement.childElementCount);
-  bookElement.classList.add("library__book");
-  
-  const info = document.createElement("p");
-  info.classList.add("library__book-info");
-  info.textContent = `${bookObject.info()}`;
-  
-  const remove = document.createElement("button");
-  remove.classList.add("library__book-remove-book-button");
-  remove.textContent = "Remove";
-  remove.addEventListener("click", (event) => {
-    removeBookFromLibrary(event.target.parentElement);
-  })
-  
-  bookElement.append(info);
-  bookElement.append(remove);
-  
-  libraryElement.append(bookElement);
+  // The client will know that the underlying data structure is an array. Problem?
+  remove(index) {
+    const removedBook = this.books.splice(index)[0];
+
+    return removedBook;
+  }
 }
 
-function removeBookFromLibrary(bookElement) {
-  libraryObject.splice(Number(bookElement.dataset.index));
-  bookElement.remove();
+class Controller {
+  constructor() {
+    this.library = new Library();
+    
+    const addBookButton = document.querySelector(".add-book-button");
+    const addBookDialog = document.querySelector(".add-book-dialog");
+    addBookButton.addEventListener("click", () => addBookDialog.showModal());
+    
+    const addBookForm = document.querySelector(".add-book-dialog__form");
+    addBookForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      this.handleAddBook(event.target);
+    });
+  }
+  
+  handleAddBook(addBookForm) {
+    const bookObject = this.library.add(
+      addBookForm.elements["title"].value, 
+      addBookForm.elements["author"].value, 
+      Number(addBookForm.elements["numPages"].value),
+      String(addBookForm.elements["read"].value) === "true"   
+    );
+    
+    addBookForm.reset();
+    
+    const addBookDialog = addBookForm.parentElement;
+    addBookDialog.close();
+    
+    const libraryDiv = document.querySelector(".library");
+    
+    const bookListItem = document.createElement("li");
+    bookListItem.dataset.index = libraryDiv.childElementCount;
+    bookListItem.classList.add("library__book");
+    
+    const bookP = document.createElement("p");
+    bookP.classList.add("library__book-details");
+    bookP.textContent = `${bookObject.details}`;
+    
+    const removeBookButton = document.createElement("button");
+    removeBookButton.classList.add("library__book-remove-book-button");
+    removeBookButton.textContent = "Remove";
+    removeBookButton.addEventListener("click", (event) => {
+      this.handleRemoveBook(event.target.parentElement);
+    });
+
+    bookListItem.append(bookP);
+    bookListItem.append(removeBookButton);
+    
+    libraryDiv.append(bookListItem);
+  }
+  
+  handleRemoveBook(bookListItem) {
+    bookListItem.remove();
+    this.library.remove(Number(bookListItem.dataset.index));
+  }
 }
 
-const addBookDialog = document.querySelector(".add-book-dialog");
-const addBookButton = document.querySelector(".add-book-button");
-
-addBookButton.addEventListener("click", () => addBookDialog.showModal());
-
-const addBookForm = document.querySelector(".add-book-dialog__form");
-addBookForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  addBookToLibrary(event.target);  
-});
+new Controller();
