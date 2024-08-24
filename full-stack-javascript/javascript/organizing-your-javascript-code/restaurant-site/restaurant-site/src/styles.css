@@ -11,6 +11,7 @@
   --color10: #527c76;
 }
 
-body {
-  background-color: blue;
+#content {
+  height: 100vh;
+  background: no-repeat center/100% url("../assets/images/hero.jpg");
 }
