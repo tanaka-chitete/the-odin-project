@@ -11,7 +11,11 @@
   --color10: #527c76;
 }
 
-#content {
+header {
+  position: absolute;
+}
+
+main {
   height: 100vh;
   background: no-repeat center url("../assets/images/hero.jpg");
   background-size: cover;
