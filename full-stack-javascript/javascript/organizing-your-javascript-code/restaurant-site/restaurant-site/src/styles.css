@@ -17,7 +17,7 @@ header {
   justify-content: center;
 }
 
-body {
+main {
   height: 100vh;
   background: no-repeat center url("../assets/images/hero.jpg");
   background-size: cover;
