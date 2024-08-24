@@ -11,12 +11,27 @@
   --color10: #527c76;
 }
 
+/* body {} */
+
 header {
   position: absolute;
+  display: flex;
+  width: 100vw;
+  justify-content: center;
 }
 
-main {
+nav {
+  display: flex;
+  width: min(100vw, 1184px);
+  justify-content: space-between;
+}
+
+body {
   height: 100vh;
   background: no-repeat center url("../assets/images/hero.jpg");
   background-size: cover;
+}
+
+.page {
+  width: min(100vw, 1184px);
 }
