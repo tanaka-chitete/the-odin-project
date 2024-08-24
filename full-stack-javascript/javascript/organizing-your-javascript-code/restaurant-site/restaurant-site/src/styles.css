@@ -11,21 +11,22 @@
   --color10: #527c76;
 }
 
-header {
-  position: absolute;
-  width: 100vw;
-  justify-content: center;
-}
-
-main {
-  height: 100vh;
-  background: no-repeat center url("../assets/images/hero.jpg");
-  background-size: cover;
+body {
+  /* Hides horizontal scrollbar resulting from total page height >100vh */
+  overflow-x: hidden;
 }
 
 .container {
   max-width: 80rem;
   margin: 0 auto;
+}
+
+/* Header */
+
+header {
+  position: absolute;
+  width: 100vw;
+  justify-content: center;
 }
 
 .nav-core {
@@ -34,4 +35,33 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* Main */
+
+main {
+  height: 100vh;
+  background: url("../assets/images/hero.jpg") no-repeat center;
+  background-size: cover;
+}
+
+/* Footer */
+
+.footer-core {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas: "footer-core__left footer-core__right";
+  padding: 4rem;
+}
+
+.footer-core__left {
+  grid-area: footer-core__left;
+}
+
+.footer-core__left-icon {
+  user-select: none;
+}
+
+.footer-core__right {
+  grid-area: footer-core__right;
 }
