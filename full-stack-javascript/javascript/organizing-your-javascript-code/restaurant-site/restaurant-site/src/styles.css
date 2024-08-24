@@ -15,23 +15,23 @@
 
 header {
   position: absolute;
-  display: flex;
   width: 100vw;
   justify-content: center;
 }
 
-nav {
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.links {
   display: flex;
-  width: min(100vw, 1184px);
   justify-content: space-between;
+  padding: 0.5rem 1rem;
 }
 
 body {
   height: 100vh;
   background: no-repeat center url("../assets/images/hero.jpg");
   background-size: cover;
-}
-
-.page {
-  width: min(100vw, 1184px);
 }
