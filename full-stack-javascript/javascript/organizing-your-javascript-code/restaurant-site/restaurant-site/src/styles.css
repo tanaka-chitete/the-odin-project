@@ -10,3 +10,7 @@
   --color9: #ede4cb;
   --color10: #527c76;
 }
+
+body {
+  background-color: blue;
+}
