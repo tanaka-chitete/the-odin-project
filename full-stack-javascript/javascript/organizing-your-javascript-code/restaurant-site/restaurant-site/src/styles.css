@@ -11,12 +11,16 @@
   --color10: #527c76;
 }
 
-/* body {} */
-
 header {
   position: absolute;
   width: 100vw;
   justify-content: center;
+}
+
+body {
+  height: 100vh;
+  background: no-repeat center url("../assets/images/hero.jpg");
+  background-size: cover;
 }
 
 .container {
@@ -24,14 +28,10 @@ header {
   margin: 0 auto;
 }
 
-.links {
+.nav-core {
+  height: 4rem;
+  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
-}
-
-body {
-  height: 100vh;
-  background: no-repeat center url("../assets/images/hero.jpg");
-  background-size: cover;
+  align-items: center;
 }
