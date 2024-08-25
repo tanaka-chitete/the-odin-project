@@ -67,5 +67,5 @@ main {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-areas: 
-    "footer-right-contact footer-right-hours careers about follow";
+    "footer-right__contact footer-right__hours footer-right__careers footer-right__about footer-right__follow";
 }
