@@ -16,6 +16,11 @@ body {
   overflow-x: hidden;
 }
 
+a,
+a:visited {
+  color: inherit;
+}
+
 .container {
   max-width: 80rem;
   margin: 0 auto;
@@ -47,15 +52,19 @@ main {
 
 /* Footer */
 
+footer {
+  background: var(--color4);
+}
+
 .footer {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-template-areas: "footer-left footer-right";
   padding: 4rem;
 }
 
 .footer-left {
-  grid-area: footer-left;
+  display: flex;
+  align-items: flex-end;
 }
 
 .footer-left__branding {
@@ -63,9 +72,6 @@ main {
 }
 
 .footer-right {
-  grid-area: footer-right;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-areas: 
-    "footer-right__contact footer-right__hours footer-right__careers footer-right__about footer-right__follow";
 }
