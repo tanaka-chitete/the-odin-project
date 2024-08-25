@@ -56,22 +56,39 @@ footer {
   background: var(--color4);
 }
 
-.footer {
+.footer-core {
   display: grid;
   grid-template-columns: 1fr 2fr;
   padding: 4rem;
 }
 
-.footer-left {
+.footer-core__left {
   display: flex;
   align-items: flex-end;
 }
 
-.footer-left__branding {
+.footer-core__branding {
   user-select: none;
 }
 
-.footer-right {
+.footer-core__right {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+}
+
+.footer-core__listing-heading {
+  font-family: "Inria Serif";
+  margin-bottom: 1rem;
+  color: var(--color5);
+}
+
+.footer-core__listing-list-item {
+  font-family: "Manrope";
+  text-transform: uppercase;
+  color: var(--color5);
+  font-size: 0.85rem;
+}
+
+.footer-core__listing-list-item:not(:last-child) {
+  margin-bottom: 1rem;
 }

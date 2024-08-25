@@ -3,3 +3,4 @@ Make light coloured favicon (actually, use dark one. most people have light mode
 Rename main.js to index.js
 Rename styles.css to index.css
 Make a common style sheet called common.css
+Revert floating header

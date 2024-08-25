@@ -5,6 +5,11 @@
   -webkit-font-smoothing: antialiased;
 }
 
+/* Allows margins to be easily varied across different elements */
+* {
+  margin: 0;
+}
+
 h1, 
 h2, 
 h3, 
@@ -21,8 +26,8 @@ p {
 }
 
 /* 
-Prevents lists from being represented using numbers or bullets, as it is rarely 
-desired 
+Prevents lists from being represented using numbers or bullets, 
+as it is rarely desired 
 */
 ol[role="list"], 
 ul[role="list"] {
