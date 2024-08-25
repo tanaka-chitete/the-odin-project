@@ -47,21 +47,25 @@ main {
 
 /* Footer */
 
-.footer-core {
+.footer {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-template-areas: "footer-core__left footer-core__right";
+  grid-template-areas: "footer-left footer-right";
   padding: 4rem;
 }
 
-.footer-core__left {
-  grid-area: footer-core__left;
+.footer-left {
+  grid-area: footer-left;
 }
 
-.footer-core__left-icon {
+.footer-left__branding {
   user-select: none;
 }
 
-.footer-core__right {
-  grid-area: footer-core__right;
+.footer-right {
+  grid-area: footer-right;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-areas: 
+    "footer-right-contact footer-right-hours careers about follow";
 }
