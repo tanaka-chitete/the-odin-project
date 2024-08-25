@@ -9,6 +9,7 @@
   --color8: #898765;
   --color9: #ede4cb;
   --color10: #527c76;
+  --nav-core-height: 4rem;
 }
 
 body {
@@ -28,27 +29,49 @@ a:visited {
 
 /* Header */
 
-header {
-  width: 100vw;
-  justify-content: center;
-}
-
 nav {
-  background: var(--color5);
+  background: var(--color4);
 }
 
 .nav-core {
-  height: 4rem;
+  height: var(--nav-core-height);
   padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+.nav-core__right {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-core__nav-item {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color5);
+}
+
+.nav-core__nav-item:hover {
+  cursor: pointer;
+}
+
+.nav-core__nav-item_branding {
+  font-family: "DM Sans";
+  font-size: 1.5rem;
+}
+
+.nav-core__nav-item_tab {
+  font-family: "Manrope";
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
 /* Main */
 
 main {
-  height: calc(100vh - 4rem);
+  height: calc(100vh - var(--nav-core-height));
 }
 
 .hero-image {
@@ -91,9 +114,9 @@ footer {
 
 .footer-core__listing-list-item {
   font-family: "Manrope";
+  font-size: 0.85rem;
   text-transform: uppercase;
   color: var(--color5);
-  font-size: 0.85rem;
 }
 
 .footer-core__listing-list-item:not(:last-child) {
