@@ -5,3 +5,6 @@ import "./styles.css";
 import { displayHome } from "./home.js";
 
 displayHome();
+
+const homeButton = document.querySelector("#home");
+homeButton.addEventListener("click", () => displayHome());

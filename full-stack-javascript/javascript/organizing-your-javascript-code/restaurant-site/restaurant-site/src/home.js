@@ -3,7 +3,7 @@ const displayHome = () => {
   heroImage.classList.add("hero-image");
 
   const main = document.querySelector("main");
-  main.append(heroImage);
+  main.replaceChildren(heroImage);
 };
 
 export { displayHome };
