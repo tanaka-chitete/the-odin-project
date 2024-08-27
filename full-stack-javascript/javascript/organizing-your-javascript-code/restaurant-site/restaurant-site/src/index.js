@@ -5,7 +5,10 @@ import "./styles.css";
 import { displayHome } from "./home.js";
 import { displayMenu } from "./menu.js";
 
-// displayHome();
+displayHome();
+
+const brandingButton = document.querySelector("#branding");
+brandingButton.addEventListener("click", () => displayHome());
 
 const homeButton = document.querySelector("#home");
 homeButton.addEventListener("click", () => displayHome());
