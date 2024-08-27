@@ -104,6 +104,8 @@ main {
   justify-content: space-between;
 }
 
+
+
 .menu-items__menu-item-name,
 .menu-items__menu-item-price {
   font-family: "Inria Serif";
@@ -115,10 +117,12 @@ main {
 .menu-items__menu-item-info {
   font-family: "Inria Serif";
   font-size: 1rem;
+  font-weight: normal;
   color: var(--color4);
   display: inline-block;
   margin-left: 1rem;
 }
+
 
 /* Footer */
 
