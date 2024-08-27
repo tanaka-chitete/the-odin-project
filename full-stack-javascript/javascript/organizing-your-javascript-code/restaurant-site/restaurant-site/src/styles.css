@@ -94,17 +94,27 @@ main {
 .menu-name {
   font-family: "Inria Serif";
   font-weight: bold;
-  font-size: 2rem;
   margin-bottom: 1rem;
   color: var(--color4);
+}
+
+.menu-name_main {
+  font-size: 2rem;
+}
+
+.menu-name_sub {
+  font-size: 1.5rem;
+}
+
+.menu-items {
+  margin-bottom: 4rem;
 }
 
 .menu-items__menu-item {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 0.5rem;
 }
-
-
 
 .menu-items__menu-item-name,
 .menu-items__menu-item-price {
