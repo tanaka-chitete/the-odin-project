@@ -33,9 +33,12 @@ nav {
   background: var(--color4);
 }
 
+.container_nav {
+  padding: 0.5rem 2rem;
+}
+
 .nav-core {
   height: var(--nav-core-height);
-  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,13 +74,10 @@ nav {
 
 main {
   height: calc(100vh - var(--nav-core-height));
-  padding-top: 4rem;
 }
 
-.main-container {
-  max-width: 80rem;
+.container_main {
   padding: 4rem 2rem;
-  margin: 0 auto;
 }
 
 /* Home */
@@ -105,10 +105,13 @@ footer {
   background: var(--color4);
 }
 
+.container_footer {
+  padding: 4rem;
+}
+
 .footer-core {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  padding: 4rem;
 }
 
 .footer-core__left {
