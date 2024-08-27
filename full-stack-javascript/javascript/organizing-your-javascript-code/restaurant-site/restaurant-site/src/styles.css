@@ -99,6 +99,7 @@ footer {
 
 .footer-core__branding {
   user-select: none;
+  height: calc(100% / 3);
 }
 
 .footer-core__right {
