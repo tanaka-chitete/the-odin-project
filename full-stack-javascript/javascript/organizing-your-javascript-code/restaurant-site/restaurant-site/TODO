@@ -4,3 +4,4 @@ Rename main.js to index.js
 Rename styles.css to index.css
 Make a common style sheet called common.css
 Fix issue where page displays without CSS when refreshed quickly
+Rename lists in footer to be like the list in main (i.e. list-items__list-item)
