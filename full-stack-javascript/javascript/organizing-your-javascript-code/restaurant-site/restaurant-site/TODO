@@ -1,13 +1,5 @@
-Generally, refactor BEM names to be more consistent
-Rename container_about etc to about-core etc
-Consolidate heading styling into h1, h2, h3, and h4
-Rename lists in footer to be like the list in main (i.e. list-items__list-item)
 Generally, refactor JS names to be more consistent
 Split styles.css into multiple files
 Fix issue where page displays without CSS when refreshed quickly
-Fix issue where footer covers content on shorter screens
-Deconstruct use of flex like on about page, only have container around elements which need grouping.
-For all lists, refer to items as well item, not paragraph (for paragraphs) for example
-Construct pages using template strings, not HTML methods. The readability of the javascript
-is poor!
+Fix issue where footer covers content with Dev Tools open
 Limit lines to 80char

@@ -1,4 +1,4 @@
-const foodsJS = [
+const foodsArray = [
   {
     "name": "Artichoke sandwich",
     "info": "Fried artichoke, walnuts, aioli, and agrodolce dressing on focaccia",
@@ -31,7 +31,7 @@ const foodsJS = [
   }
 ];
 
-const coffeesJS = [
+const coffeesArray = [
   {
     "name": "White",
     "info": "Pacemaker blend by Sample Coffee with oat or soy",
@@ -44,7 +44,7 @@ const coffeesJS = [
   }
 ];
 
-const teasJS = [
+const teasArray = [
   {
     "name": "Hayashi black (kocha)",
     "info": "Kirishimi-shi, Kagoshima Ken, Japan",
@@ -67,17 +67,17 @@ const teasJS = [
   }
 ];
 
-function createLi(itemJS) {
+function createLi(itemObject) {
   const itemNameH3 = document.createElement("h3");
-  itemNameH3.textContent = itemJS["name"];
+  itemNameH3.textContent = itemObject["name"];
 
   const itemSpan = document.createElement("span");
-  itemSpan.textContent = itemJS["info"];
+  itemSpan.textContent = itemObject["info"];
   itemSpan.classList.add("menu-items__menu-item-details");
   itemNameH3.append(itemSpan);
 
   const itemPriceH3 = document.createElement("h3");
-  itemPriceH3.textContent = itemJS["price"];
+  itemPriceH3.textContent = itemObject["price"];
 
   const itemLi = document.createElement("li");
   itemLi.classList.add("menu-items__menu-item");
@@ -97,8 +97,8 @@ const displayMenuPage = () => {
   const foodsUl = document.createElement("ul");
   foodsUl.setAttribute("role", "list");
   foodsUl.classList.add("menu-items");
-  foodsJS.forEach((foodJS) => {
-    const foodLi = createLi(foodJS);
+  foodsArray.forEach((item) => {
+    const foodLi = createLi(item);
     foodsUl.append(foodLi);
   });
   containerDiv.append(foodsUl);
@@ -114,8 +114,8 @@ const displayMenuPage = () => {
   const coffeesUl = document.createElement("ul");
   coffeesUl.setAttribute("role", "list");
   coffeesUl.classList.add("menu-items");
-  coffeesJS.forEach((coffeeJS) => {
-    const coffeeLi = createLi(coffeeJS);
+  coffeesArray.forEach((item) => {
+    const coffeeLi = createLi(item);
     coffeesUl.append(coffeeLi);
   });
   containerDiv.append(coffeesUl);
@@ -127,8 +127,8 @@ const displayMenuPage = () => {
   const teasUl = document.createElement("ul");
   teasUl.setAttribute("role", "list");
   teasUl.classList.add("menu-items");
-  teasJS.forEach((teaJS) => {
-    const teaLi = createLi(teaJS);
+  teasArray.forEach((item) => {
+    const teaLi = createLi(item);
     teasUl.append(teaLi);
   });
   containerDiv.append(teasUl);
