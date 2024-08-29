@@ -200,13 +200,13 @@ footer {
   grid-template-columns: repeat(5, 1fr);
 }
 
-.footer-sections__listings-item {
+.footer-sections__listing {
   font-family: "Manrope";
   font-size: 0.85rem;
   text-transform: uppercase;
   color: var(--color5);
 }
 
-.footer-sections__listings-item:not(:last-child) {
+.footer-sections__listing:not(:last-child) {
   margin-bottom: 1rem;
 }
