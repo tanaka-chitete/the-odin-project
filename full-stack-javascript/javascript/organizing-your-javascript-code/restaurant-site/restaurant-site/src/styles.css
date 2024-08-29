@@ -10,6 +10,7 @@
   --color9: #ede4cb;
   --color10: #527c76;
   --height_container_nav: 4rem;
+  --height-main: calc(100vh - var(--height_container_nav));
 }
 
 body {
@@ -18,7 +19,7 @@ body {
 }
 
 main {
-  height: calc(100vh - var(--height_container_nav));
+  min-height: var(--height-main);
   background-color: var(--color5);
 }
 
@@ -115,7 +116,7 @@ nav {
 }
 
 .hero {
-  height: 100%;
+  height: var(--height-main);
   background: url("../assets/images/hero.jpg") no-repeat center;
   background-size: cover;
 }
@@ -130,13 +131,13 @@ nav {
   margin-bottom: 4rem;
 }
 
-.menu-items__menu-item {
+.menu-items__item {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
 }
 
-.menu-items__menu-item-details {
+.menu-items__item-details {
   font-size: 1rem;
   font-weight: normal;
   margin-left: 1rem;

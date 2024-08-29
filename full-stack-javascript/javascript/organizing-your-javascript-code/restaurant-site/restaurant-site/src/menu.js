@@ -73,14 +73,14 @@ function createLi(itemObject) {
 
   const itemSpan = document.createElement("span");
   itemSpan.textContent = itemObject["info"];
-  itemSpan.classList.add("menu-items__menu-item-details");
+  itemSpan.classList.add("menu-items__item-details");
   itemNameH3.append(itemSpan);
 
   const itemPriceH3 = document.createElement("h3");
   itemPriceH3.textContent = itemObject["price"];
 
   const itemLi = document.createElement("li");
-  itemLi.classList.add("menu-items__menu-item");
+  itemLi.classList.add("menu-items__item");
   itemLi.append(itemNameH3, itemPriceH3);
 
   return itemLi;

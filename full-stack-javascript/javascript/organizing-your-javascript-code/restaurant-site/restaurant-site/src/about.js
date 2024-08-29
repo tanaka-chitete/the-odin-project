@@ -22,12 +22,6 @@ const displayAboutPage = () => {
 
   containerDiv.append(storyArticle);
 
-  const tagImg = document.createElement("img");
-  tagImg.src = tagPng;
-  tagImg.setAttribute("alt", "Tag");
-  tagImg.classList.add("tag");
-  containerDiv.append(tagImg);
-
   const main = document.querySelector("main");
   main.replaceChildren(containerDiv);
 }
