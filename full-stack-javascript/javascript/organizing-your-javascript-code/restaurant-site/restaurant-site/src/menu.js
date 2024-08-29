@@ -73,7 +73,7 @@ function createLi(itemJS) {
 
   const itemSpan = document.createElement("span");
   itemSpan.textContent = itemJS["info"];
-  itemSpan.classList.add("menu-items__menu-item-info");
+  itemSpan.classList.add("menu-items__menu-item-details");
   itemNameH3.append(itemSpan);
 
   const itemPriceH3 = document.createElement("h3");
@@ -88,7 +88,7 @@ function createLi(itemJS) {
 
 const displayMenuPage = () => {
   const containerDiv = document.createElement("div");
-  containerDiv.classList.add("container", "container_main");
+  containerDiv.classList.add("container", "container_page_menu");
 
   const foodH1 = document.createElement("h1");
   foodH1.textContent = "Food";

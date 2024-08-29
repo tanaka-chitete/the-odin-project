@@ -114,9 +114,6 @@ main {
   background-color: var(--color5);
 }
 
-.container_main {
-  padding: 4rem 2rem;
-}
 
 /* Home */
 
@@ -128,6 +125,10 @@ main {
 
 /* Menu */
 
+.container_page_menu {
+  padding: 4rem 2rem;
+}
+
 .menu-items {
   margin-bottom: 4rem;
 }
@@ -138,13 +139,9 @@ main {
   margin-bottom: 0.5rem;
 }
 
-
-.menu-items__menu-item-info {
-  font-family: "Inria Serif";
+.menu-items__menu-item-details {
   font-size: 1rem;
   font-weight: normal;
-  color: var(--color4);
-  display: inline-block;
   margin-left: 1rem;
 }
 
