@@ -180,11 +180,9 @@ footer {
 
 .container_footer {
   padding: 4rem;
-}
-
-.footer-core {
   display: grid;
   grid-template-columns: 1fr 2fr;
+  align-items: flex-end;
 }
 
 .footer-core__left {
@@ -192,23 +190,23 @@ footer {
   align-items: flex-end;
 }
 
-.footer-core__branding {
+.footer-brand {
   user-select: none;
   height: calc(100% / 3);
 }
 
-.footer-core__right {
+.footer-sections {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 }
 
-.footer-core__listing-list-item {
+.footer-sections__listings-item {
   font-family: "Manrope";
   font-size: 0.85rem;
   text-transform: uppercase;
   color: var(--color5);
 }
 
-.footer-core__listing-list-item:not(:last-child) {
+.footer-sections__listings-item:not(:last-child) {
   margin-bottom: 1rem;
 }

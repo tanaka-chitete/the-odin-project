@@ -8,8 +8,8 @@ import { displayAboutPage } from "./about.js";
 
 displayHomePage();
 
-const brandButton = document.querySelector("#brand");
-brandButton.addEventListener("click", () => displayHomePage());
+const navBrandButton = document.querySelector("#nav-brand");
+navBrandButton.addEventListener("click", () => displayHomePage());
 
 const homeButton = document.querySelector("#home");
 homeButton.addEventListener("click", () => displayHomePage());
