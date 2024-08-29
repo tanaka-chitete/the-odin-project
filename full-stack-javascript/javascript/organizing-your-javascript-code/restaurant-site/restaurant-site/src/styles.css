@@ -17,6 +17,11 @@ body {
   overflow-x: hidden;
 }
 
+main {
+  height: calc(100vh - var(--height_container_nav));
+  background-color: var(--color5);
+}
+
 a,
 a:visited {
   color: inherit;
@@ -103,15 +108,11 @@ nav {
   text-transform: uppercase;
 }
 
-/* Main */
-
-main {
-  height: calc(100vh - var(--height_container_nav));
-  background-color: var(--color5);
-}
-
-
 /* Home */
+
+.container_home {
+  max-width: 100%;
+}
 
 .hero-image {
   height: 100%;
