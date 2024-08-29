@@ -1,4 +1,4 @@
-const displayHome = () => {
+const displayHomePage = () => {
   const heroImage = document.createElement("div");
   heroImage.classList.add("hero-image");
 
@@ -6,4 +6,4 @@ const displayHome = () => {
   main.replaceChildren(heroImage);
 };
 
-export { displayHome };
+export { displayHomePage };

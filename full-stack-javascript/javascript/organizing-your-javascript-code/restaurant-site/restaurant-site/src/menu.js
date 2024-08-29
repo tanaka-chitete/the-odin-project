@@ -88,7 +88,7 @@ function createLi(itemJS) {
   return itemLi;
 }
 
-const displayMenu = () => {
+const displayMenuPage = () => {
   const containerDiv = document.createElement("div");
   containerDiv.classList.add("container", "container_main");
 
@@ -143,4 +143,4 @@ const displayMenu = () => {
   main.replaceChildren(containerDiv);
 };
 
-export { displayMenu };
+export { displayMenuPage };
