@@ -2,4 +2,3 @@ Generally, refactor JS names to be more consistent
 Split styles.css into multiple files
 Fix issue where page displays without CSS when refreshed quickly
 Fix issue where footer covers content with Dev Tools open
-Limit lines to 80char
