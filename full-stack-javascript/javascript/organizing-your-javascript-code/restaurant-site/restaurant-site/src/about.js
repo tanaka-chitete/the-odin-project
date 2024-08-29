@@ -7,31 +7,29 @@ const storyArray = [
 ]
 
 const displayAboutPage = () => {
-  const aboutCoreDiv = document.createElement("div");
-  aboutCoreDiv.classList.add("about-core");
-
-  const aboutCoreTopDiv = document.createElement("div");
-  aboutCoreTopDiv.classList.add("about-core-top");
-
+  const containerDiv = document.createElement("div");
+  containerDiv.classList.add("container", "container_page_about");
+  
+  const storyArticle = document.createElement("article");
   const title = document.createElement("h1");
   title.textContent = "Who we are";
-
-  const storyArticle = document.createElement("article");
+  storyArticle.append(title);
   storyArray.forEach((paragraphString) => {
     const paragraphP = document.createElement("p");
     paragraphP.textContent = paragraphString;
     storyArticle.append(paragraphP);
   });
 
-  aboutCoreTopDiv.append(title, storyArticle);
-  aboutCoreDiv.append(aboutCoreTopDiv);
+  containerDiv.append(storyArticle);
 
   const tagImg = document.createElement("img");
   tagImg.src = tagPng;
   tagImg.setAttribute("alt", "Tag");
+  tagImg.classList.add("tag");
+  containerDiv.append(tagImg);
 
   const main = document.querySelector("main");
-  main.replaceChildren(aboutCoreDiv);
+  main.replaceChildren(containerDiv);
 }
 
 export { displayAboutPage };

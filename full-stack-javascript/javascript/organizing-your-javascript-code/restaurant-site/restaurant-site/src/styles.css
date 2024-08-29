@@ -30,6 +30,27 @@ h1 {
   color: var(--color4);
 }
 
+h2 {
+  font-family: "Inria Serif";
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--color4);
+}
+
+h3 {
+  font-family: "Inria Serif";
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--color4);
+}
+
+h4 {
+  font-family: "Inria Serif";
+  margin-bottom: 1rem;
+  color: var(--color5);
+}
+
 p {
   font-family: "Inria Serif";
   margin-bottom: 1rem;
@@ -107,21 +128,6 @@ main {
 
 /* Menu */
 
-.menu-name {
-  font-family: "Inria Serif";
-  font-weight: bold;
-  margin-bottom: 1rem;
-  color: var(--color4);
-}
-
-.menu-name_main {
-  font-size: 2rem;
-}
-
-.menu-name_sub {
-  font-size: 1.5rem;
-}
-
 .menu-items {
   margin-bottom: 4rem;
 }
@@ -132,13 +138,6 @@ main {
   margin-bottom: 0.5rem;
 }
 
-.menu-items__menu-item-name,
-.menu-items__menu-item-price {
-  font-family: "Inria Serif";
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: var(--color4);
-}
 
 .menu-items__menu-item-info {
   font-family: "Inria Serif";
@@ -151,7 +150,7 @@ main {
 
 /* About */
 
-.about-core {
+.container_page_about {
   height: 100%;
   max-width: 80rem;
   margin: 0 auto;
@@ -207,12 +206,6 @@ footer {
 .footer-core__right {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-}
-
-.footer-core__listing-heading {
-  font-family: "Inria Serif";
-  margin-bottom: 1rem;
-  color: var(--color5);
 }
 
 .footer-core__listing-list-item {

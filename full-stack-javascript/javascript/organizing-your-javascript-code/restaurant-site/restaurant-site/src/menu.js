@@ -70,7 +70,6 @@ const teasJS = [
 function createLi(itemJS) {
   const itemNameH3 = document.createElement("h3");
   itemNameH3.textContent = itemJS["name"];
-  itemNameH3.classList.add("menu-items__menu-item-name");
 
   const itemSpan = document.createElement("span");
   itemSpan.textContent = itemJS["info"];
@@ -79,7 +78,6 @@ function createLi(itemJS) {
 
   const itemPriceH3 = document.createElement("h3");
   itemPriceH3.textContent = itemJS["price"];
-  itemPriceH3.classList.add("menu-items__menu-item-price");
 
   const itemLi = document.createElement("li");
   itemLi.classList.add("menu-items__menu-item");
@@ -93,7 +91,6 @@ const displayMenuPage = () => {
   containerDiv.classList.add("container", "container_main");
 
   const foodH1 = document.createElement("h1");
-  foodH1.classList.add("menu-name", "menu-name_main");
   foodH1.textContent = "Food";
   containerDiv.append(foodH1);
 
@@ -107,12 +104,10 @@ const displayMenuPage = () => {
   containerDiv.append(foodsUl);
 
   const drinkH1 = document.createElement("h1");
-  drinkH1.classList.add("menu-name", "menu-name_main");
   drinkH1.textContent = "Drink";
   containerDiv.append(drinkH1);
 
   const coffeeH2 = document.createElement("h2");
-  coffeeH2.classList.add("menu-name", "menu-name_sub");
   coffeeH2.textContent = "Coffee";
   containerDiv.append(coffeeH2);
 
@@ -126,7 +121,6 @@ const displayMenuPage = () => {
   containerDiv.append(coffeesUl);
 
   const teaH2 = document.createElement("h2");
-  teaH2.classList.add("menu-name", "menu-name_sub");
   teaH2.textContent = "Tea";
   containerDiv.append(teaH2);
 
