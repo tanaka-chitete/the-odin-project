@@ -10,3 +10,4 @@ Deconstruct use of flex like on about page, only have container around elements 
 For all lists, refer to items as well item, not paragraph (for paragraphs) for example
 Construct pages using template strings, not HTML methods. The readability of the javascript
 is poor!
+Limit lines to 80char

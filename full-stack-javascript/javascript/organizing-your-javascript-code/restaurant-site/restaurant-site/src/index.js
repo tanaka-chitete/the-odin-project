@@ -1,5 +1,5 @@
 import "./modern-normalize.css";
-import "./my-reset.css";
+import "./reset.css";
 import "./styles.css";
 
 import { displayHomePage } from "./home.js";
@@ -8,8 +8,8 @@ import { displayAboutPage } from "./about.js";
 
 displayHomePage();
 
-const brandingButton = document.querySelector("#branding");
-brandingButton.addEventListener("click", () => displayHomePage());
+const brandButton = document.querySelector("#brand");
+brandButton.addEventListener("click", () => displayHomePage());
 
 const homeButton = document.querySelector("#home");
 homeButton.addEventListener("click", () => displayHomePage());
