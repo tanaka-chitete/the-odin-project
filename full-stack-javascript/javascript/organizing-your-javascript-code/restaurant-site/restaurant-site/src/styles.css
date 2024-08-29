@@ -22,6 +22,21 @@ a:visited {
   color: inherit;
 }
 
+h1 {
+  font-family: "Inria Serif";
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color4);
+}
+
+p {
+  font-family: "Inria Serif";
+  margin-bottom: 1rem;
+  color: var(--color4);
+}
+
+/* TODO: Delete */
 .container {
   max-width: 80rem;
   height: 100%;
@@ -159,19 +174,6 @@ main {
   justify-content: flex-start;
 }
 
-.heading1_about {
-  font-family: "Inria Serif";
-  font-weight: bold;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--color4);
-}
-
-.story__paragraph {
-  font-family: "Inria Serif";
-  margin-bottom: 1rem;
-  color: var(--color4);
-}
 
 .tag {
   justify-self: flex-end;
