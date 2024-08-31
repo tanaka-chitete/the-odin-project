@@ -1,9 +1,6 @@
-Generally, refactor BEM names to be more consistent
-Rename container_about etc to about-core etc
-Consolidate heading styling into h1, h2, h3, and h4
-Rename lists in footer to be like the list in main (i.e. list-items__list-item)
-Generally, refactor JS names to be more consistent
+Change favicon to dark version
+Implement easter egg page
+Make JavaScript variables more consistent
 Make common stylesheet
 Make page-specific stylesheets
 Fix issue where page displays without CSS when refreshed quickly
-Fix issue where footer covers content on shorter screens
