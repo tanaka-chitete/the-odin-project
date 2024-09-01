@@ -4,3 +4,4 @@ Make JavaScript variables more consistent
 Make common stylesheet
 Make page-specific stylesheets
 Fix issue where page displays without CSS when refreshed quickly
+Fix issue where footer covers content with Dev Tools open

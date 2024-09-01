@@ -9,7 +9,8 @@
   --color8: #898765;
   --color9: #ede4cb;
   --color10: #527c76;
-  --nav-core-height: 4rem;
+  --height_container_nav: 4rem;
+  --height-main: calc(100vh - var(--height_container_nav));
 }
 
 body {
@@ -17,9 +18,49 @@ body {
   overflow-x: hidden;
 }
 
+main {
+  min-height: var(--height-main);
+  background-color: var(--color5);
+}
+
 a,
 a:visited {
   color: inherit;
+}
+
+h1 {
+  font-family: "Inria Serif";
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color4);
+}
+
+h2 {
+  font-family: "Inria Serif";
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--color4);
+}
+
+h3 {
+  font-family: "Inria Serif";
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--color4);
+}
+
+h4 {
+  font-family: "Inria Serif";
+  margin-bottom: 1rem;
+  color: var(--color5);
+}
+
+p {
+  font-family: "Inria Serif";
+  margin-bottom: 1rem;
+  color: var(--color4);
 }
 
 .container {
@@ -35,108 +76,76 @@ nav {
 }
 
 .container_nav {
+  height: var(--height_container_nav);
   padding: 0.5rem 2rem;
-}
-
-.nav-core {
-  height: var(--nav-core-height);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.nav-core__right {
+.nav-buttons {
   display: flex;
   gap: 2rem;
 }
 
-.nav-core__nav-item {
+.nav-buttons__button {
   background: none;
   border: none;
   padding: 0;
   color: var(--color5);
 }
 
-.nav-core__nav-item:hover {
+.nav-buttons__button:hover {
   cursor: pointer;
 }
 
-.nav-core__nav-item_branding {
+.nav-buttons__button_type_brand {
   font-family: "DM Sans";
   font-size: 1.5rem;
 }
 
-.nav-core__nav-item_tab {
+.nav-buttons__button_type_page {
   font-family: "Manrope";
   text-transform: uppercase;
 }
 
-/* Main */
-
-main {
-  height: calc(100vh - var(--nav-core-height));
-  background-color: var(--color5);
-}
-
-.container_main {
-  padding: 4rem 2rem;
-}
-
 /* Home */
 
-.hero-image {
-  height: 100%;
+.container_home {
+  max-width: 100%;
+}
+
+.hero {
+  height: var(--height-main);
   background: url("../assets/images/hero.jpg") no-repeat center;
   background-size: cover;
 }
 
 /* Menu */
 
-.menu-name {
-  font-family: "Inria Serif";
-  font-weight: bold;
-  margin-bottom: 1rem;
-  color: var(--color4);
-}
-
-.menu-name_main {
-  font-size: 2rem;
-}
-
-.menu-name_sub {
-  font-size: 1.5rem;
+.container_page_menu {
+  padding: 4rem 2rem;
 }
 
 .menu-items {
   margin-bottom: 4rem;
 }
 
-.menu-items__menu-item {
+.menu-items__item {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
 }
 
-.menu-items__menu-item-name,
-.menu-items__menu-item-price {
-  font-family: "Inria Serif";
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: var(--color4);
-}
-
-.menu-items__menu-item-info {
-  font-family: "Inria Serif";
+.menu-items__item-details {
   font-size: 1rem;
   font-weight: normal;
-  color: var(--color4);
-  display: inline-block;
   margin-left: 1rem;
 }
 
 /* About */
 
-.about-core {
+.container_page_about {
   height: 100%;
   max-width: 80rem;
   margin: 0 auto;
@@ -159,19 +168,6 @@ main {
   justify-content: flex-start;
 }
 
-.heading1_about {
-  font-family: "Inria Serif";
-  font-weight: bold;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--color4);
-}
-
-.story__paragraph {
-  font-family: "Inria Serif";
-  margin-bottom: 1rem;
-  color: var(--color4);
-}
 
 .tag {
   justify-self: flex-end;
@@ -185,11 +181,9 @@ footer {
 
 .container_footer {
   padding: 4rem;
-}
-
-.footer-core {
   display: grid;
   grid-template-columns: 1fr 2fr;
+  align-items: flex-end;
 }
 
 .footer-core__left {
@@ -197,29 +191,23 @@ footer {
   align-items: flex-end;
 }
 
-.footer-core__branding {
+.footer-brand {
   user-select: none;
   height: calc(100% / 3);
 }
 
-.footer-core__right {
+.footer-sections {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 }
 
-.footer-core__listing-heading {
-  font-family: "Inria Serif";
-  margin-bottom: 1rem;
-  color: var(--color5);
-}
-
-.footer-core__listing-list-item {
+.footer-sections__listing {
   font-family: "Manrope";
   font-size: 0.85rem;
   text-transform: uppercase;
   color: var(--color5);
 }
 
-.footer-core__listing-list-item:not(:last-child) {
+.footer-sections__listing:not(:last-child) {
   margin-bottom: 1rem;
 }

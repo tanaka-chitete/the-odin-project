@@ -1,17 +1,21 @@
 import "./modern-normalize.css";
-import "./my-reset.css";
+import "./reset.css";
 import "./styles.css";
 
-import { displayHome } from "./home.js";
-import { displayMenu } from "./menu.js";
+import { displayHomePage } from "./home.js";
+import { displayMenuPage } from "./menu.js";
+import { displayAboutPage } from "./about.js";
 
-// displayHome();
+displayHomePage();
 
-const brandingButton = document.querySelector("#branding");
-brandingButton.addEventListener("click", () => displayHome());
+const navBrandButton = document.querySelector("#nav-brand");
+navBrandButton.addEventListener("click", () => displayHomePage());
 
 const homeButton = document.querySelector("#home");
-homeButton.addEventListener("click", () => displayHome());
+homeButton.addEventListener("click", () => displayHomePage());
 
 const menuButton = document.querySelector("#menu");
-menuButton.addEventListener("click", () => displayMenu());
+menuButton.addEventListener("click", () => displayMenuPage());
+
+const aboutButton = document.querySelector("#about");
+aboutButton.addEventListener("click", () => displayAboutPage());

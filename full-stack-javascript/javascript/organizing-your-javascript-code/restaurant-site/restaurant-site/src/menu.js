@@ -1,4 +1,4 @@
-const foodsJS = [
+const foodsArray = [
   {
     "name": "Artichoke sandwich",
     "info": "Fried artichoke, walnuts, aioli, and agrodolce dressing on focaccia",
@@ -31,7 +31,7 @@ const foodsJS = [
   }
 ];
 
-const coffeesJS = [
+const coffeesArray = [
   {
     "name": "White",
     "info": "Pacemaker blend by Sample Coffee with oat or soy",
@@ -44,7 +44,7 @@ const coffeesJS = [
   }
 ];
 
-const teasJS = [
+const teasArray = [
   {
     "name": "Hayashi black (kocha)",
     "info": "Kirishimi-shi, Kagoshima Ken, Japan",
@@ -67,74 +67,68 @@ const teasJS = [
   }
 ];
 
-function createLi(itemJS) {
+function createLi(itemObject) {
   const itemNameH3 = document.createElement("h3");
-  itemNameH3.textContent = itemJS["name"];
-  itemNameH3.classList.add("menu-items__menu-item-name");
+  itemNameH3.textContent = itemObject["name"];
 
   const itemSpan = document.createElement("span");
-  itemSpan.textContent = itemJS["info"];
-  itemSpan.classList.add("menu-items__menu-item-info");
+  itemSpan.textContent = itemObject["info"];
+  itemSpan.classList.add("menu-items__item-details");
   itemNameH3.append(itemSpan);
 
   const itemPriceH3 = document.createElement("h3");
-  itemPriceH3.textContent = itemJS["price"];
-  itemPriceH3.classList.add("menu-items__menu-item-price");
+  itemPriceH3.textContent = itemObject["price"];
 
   const itemLi = document.createElement("li");
-  itemLi.classList.add("menu-items__menu-item");
+  itemLi.classList.add("menu-items__item");
   itemLi.append(itemNameH3, itemPriceH3);
 
   return itemLi;
 }
 
-const displayMenu = () => {
+const displayMenuPage = () => {
   const containerDiv = document.createElement("div");
-  containerDiv.classList.add("container", "container_main");
+  containerDiv.classList.add("container", "container_page_menu");
 
   const foodH1 = document.createElement("h1");
-  foodH1.classList.add("menu-name", "menu-name_main");
   foodH1.textContent = "Food";
   containerDiv.append(foodH1);
 
   const foodsUl = document.createElement("ul");
   foodsUl.setAttribute("role", "list");
   foodsUl.classList.add("menu-items");
-  foodsJS.forEach((foodJS) => {
-    const foodLi = createLi(foodJS);
+  foodsArray.forEach((item) => {
+    const foodLi = createLi(item);
     foodsUl.append(foodLi);
   });
   containerDiv.append(foodsUl);
 
   const drinkH1 = document.createElement("h1");
-  drinkH1.classList.add("menu-name", "menu-name_main");
   drinkH1.textContent = "Drink";
   containerDiv.append(drinkH1);
 
   const coffeeH2 = document.createElement("h2");
-  coffeeH2.classList.add("menu-name", "menu-name_sub");
   coffeeH2.textContent = "Coffee";
   containerDiv.append(coffeeH2);
 
   const coffeesUl = document.createElement("ul");
   coffeesUl.setAttribute("role", "list");
   coffeesUl.classList.add("menu-items");
-  coffeesJS.forEach((coffeeJS) => {
-    const coffeeLi = createLi(coffeeJS);
+  coffeesArray.forEach((item) => {
+    const coffeeLi = createLi(item);
     coffeesUl.append(coffeeLi);
   });
   containerDiv.append(coffeesUl);
 
   const teaH2 = document.createElement("h2");
-  teaH2.classList.add("menu-name", "menu-name_sub");
   teaH2.textContent = "Tea";
   containerDiv.append(teaH2);
 
   const teasUl = document.createElement("ul");
   teasUl.setAttribute("role", "list");
   teasUl.classList.add("menu-items");
-  teasJS.forEach((teaJS) => {
-    const teaLi = createLi(teaJS);
+  teasArray.forEach((item) => {
+    const teaLi = createLi(item);
     teasUl.append(teaLi);
   });
   containerDiv.append(teasUl);
@@ -143,4 +137,4 @@ const displayMenu = () => {
   main.replaceChildren(containerDiv);
 };
 
-export { displayMenu };
+export { displayMenuPage };
