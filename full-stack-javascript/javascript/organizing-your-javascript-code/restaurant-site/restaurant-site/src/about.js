@@ -1,5 +1,3 @@
-import tagPng from "../assets/illustrations/tag-final.png";
-
 const storyArray = [
   "For the past twelve years, nicola has been an eatery ever curious to learn and grow—to be the best that we can be. Our origin is rooted in an exploration of the natural world, which began with a simple desire to rediscover wild local ingredients by foraging and to follow the seasons.",
   "Since the early years, we have added many layers to what we do; we have teams dedicated only to innovation, another team is specialized in fermentation, we have full-time foragers, gardeners, and researchers. We've traveled the world in search of inspiration, technique, friendship, and new ingredients. Over the years we've grown our staff from a mere seven, to now more than thirty.",

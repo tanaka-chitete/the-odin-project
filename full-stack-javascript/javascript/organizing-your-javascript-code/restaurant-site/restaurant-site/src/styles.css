@@ -156,11 +156,6 @@ nav {
   align-items: center;
 }
 
-.tag {
-  width: 50%;
-}
-
-.core_page_about,
 .container_about {
   padding: 4rem 2rem;
   display: flex;
@@ -168,9 +163,17 @@ nav {
   justify-content: flex-start;
 }
 
+/* Easter Egg */ 
 
-.tag {
-  justify-self: flex-end;
+.container_page_easter-egg {
+  height: var(--height-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.easter-egg {
+  width: 50%;
 }
 
 /* Footer */
@@ -186,9 +189,15 @@ footer {
   align-items: flex-end;
 }
 
-.footer-core__left {
-  display: flex;
-  align-items: flex-end;
+.footer-button {
+  width: fit-content;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.footer-button:hover {
+  cursor: pointer;
 }
 
 .footer-brand {

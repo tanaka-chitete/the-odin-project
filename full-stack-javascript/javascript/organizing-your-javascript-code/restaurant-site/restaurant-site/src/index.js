@@ -5,6 +5,7 @@ import "./styles.css";
 import { displayHomePage } from "./home.js";
 import { displayMenuPage } from "./menu.js";
 import { displayAboutPage } from "./about.js";
+import { displayEasterEggPage } from "./easter_egg.js";
 
 displayHomePage();
 
@@ -19,3 +20,6 @@ menuButton.addEventListener("click", () => displayMenuPage());
 
 const aboutButton = document.querySelector("#about");
 aboutButton.addEventListener("click", () => displayAboutPage());
+
+const footerBrandButton = document.querySelector("#footer-brand");
+footerBrandButton.addEventListener("click", () => displayEasterEggPage());
