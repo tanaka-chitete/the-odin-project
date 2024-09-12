@@ -1,12 +1,15 @@
-The system must allow the user to create tasks.
-The system must allow the user to specify the following properties for any task: title, description, due date, priority, notes, and checklist.
-The system must add tasks in a default project when the user first opens the app.
-The system must allow the user to create projects.
-The system must allow the user to specify the project in which to place a task.
-The system must allow the user to view all projects.
-The system must allow the user to view all tasks in each project.
-The system must allow the user to view additional information of any task in a project.
-The system must allow the user to edit any task.
-The system must allow the user to delete any task.
-The system must persist all tasks.
-The system must persist all project.
+System must allow the user to create tasks.
+System must allow the user to specify the following properties for any task: title, description, due date, priority, notes, and checklist.
+System must add tasks in a default project when the user first opens the app.
+System must allow the user to create projects.
+System must allow the user to specify the project in which to place a task.
+System must allow the user to view all projects.
+System must allow the user to view all tasks in each project.
+System must allow the user to view additional information of any task in a project.
+System must allow the user to edit any task.
+System must allow the user to delete any task.
+System must persist all tasks.
+System must persist all project.
+
+Non-functional
+System shall style the 
