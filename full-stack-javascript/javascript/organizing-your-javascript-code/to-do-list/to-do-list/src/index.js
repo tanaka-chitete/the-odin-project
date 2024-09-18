@@ -1,3 +1,3 @@
+import "./modern-normalize.css";
+import "./reset.css";
 import "./styles.css";
-
-console.log("Hello, world!");
