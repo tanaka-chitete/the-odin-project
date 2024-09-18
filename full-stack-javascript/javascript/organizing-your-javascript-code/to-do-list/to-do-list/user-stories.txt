@@ -9,7 +9,4 @@ System must allow the user to view additional information of any task in a proje
 System must allow the user to edit any task.
 System must allow the user to delete any task.
 System must persist all tasks.
-System must persist all project.
-
-Non-functional
-System shall style the 
+System must persist all projects.
