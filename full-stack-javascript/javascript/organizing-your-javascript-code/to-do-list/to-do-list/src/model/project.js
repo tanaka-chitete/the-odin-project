@@ -15,7 +15,7 @@ class Project {
     return this.#projectName;
   }
 
-  addTask(taskName) {
+  addTask(taskName, ...properties) {
     const newTask = new Task(taskName);
     this.#tasks.push(newTask);
     return newTask;

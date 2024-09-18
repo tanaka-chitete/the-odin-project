@@ -25,12 +25,4 @@ class View {
   unlistTask(index) {
     // ...
   }
-
-  // addProject(form) {
-  //   this.#controller.addProject(/* ... */);
-  // }
-
-  // removeProject(index) {
-  //   this.#controller.removeProject(index);
-  // }
 }

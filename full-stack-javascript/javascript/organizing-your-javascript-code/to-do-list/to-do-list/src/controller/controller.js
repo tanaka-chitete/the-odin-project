@@ -5,19 +5,11 @@ class Controller {
     this.#model = new Model();
   }
 
-  addTask(name) {
-    this.#model.addTask(name);
+  addTask(name, ...properties) {
+    this.#model.addTask(name, ...properties);
   }
 
   removeTask(index) {
     this.#model.removeTask(index);
   }
-
-  // handleAddProject(name) {
-
-  // }
-
-  // handleRemoveProject(index) {
-
-  // }
 }

@@ -7,8 +7,8 @@ class Model {
     this.#view = new View();
   }
 
-  addTask(name) {
-    const task = this.#project.addTask(name);
+  addTask(name, ...properties) {
+    const task = this.#project.addTask(name, ...properties);
     this.#view.listTask(task);
   }
 
@@ -16,12 +16,4 @@ class Model {
     this.#project.removeTask(index);
     this.#view.unlistTask(index);
   }
-
-  // addProject() {
-
-  // }
-
-  // removeProject() {
-
-  // }
 }
