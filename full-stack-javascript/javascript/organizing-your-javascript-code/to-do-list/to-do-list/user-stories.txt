@@ -1,12 +1,63 @@
-System must allow the user to create tasks.
-System must allow the user to specify the following properties for any task: title, description, due date, priority, notes, and checklist.
-System must add tasks in a default project when the user first opens the app.
-System must allow the user to create projects.
-System must allow the user to specify the project in which to place a task.
-System must allow the user to view all projects.
-System must allow the user to view all tasks in each project.
-System must allow the user to view additional information of any task in a project.
-System must allow the user to edit any task.
-System must allow the user to delete any task.
-System must persist all tasks.
-System must persist all projects.
+User Story 1: Create Tasks
+As a user, I want to create tasks so that I can track the things I need to do.
+Acceptance Criteria
+- System allows the user to create tasks.
+- System adds newly-created task to default project when the user first opens 
+  the app.
+
+User Story 2: Specify Task Properties
+As a user, I want to specify properties for any task so that I can better track 
+the things I need to do.
+Acceptance Criteria
+- System allows the user to specify the following properties for any task: 
+  title, description, due date, priority, notes, and checklist.
+
+User Story 3: Create Projects
+As a user, I want to create projects so that I can group related tasks.
+Acceptance Criteria
+- System allows the user to create projects.
+- System allows the user to specify associated project when creating a task.
+
+User Story 4: View Projects
+As a user, I want to view all my projects so that I can easily navigate between 
+different sets of tasks.
+Acceptance Criteria
+- System allows the user to view all projects
+
+User Story 5: View Tasks
+As a user, I want to view all tasks within a project so that I can more easily 
+manage my tasks.
+Acceptance Criteria
+- System allows the user to view all tasks in each project.
+
+User Story 6: View Task Details
+As a user, I want to view detailed information for a task so that I can 
+understand its specific requirements.
+Acceptance Criteria
+- System must allow the user to view additional information of any task in a 
+  project.
+
+User Story 7: Edit Tasks
+As a user, I want to edit tasks so that I can update or correct task 
+information.
+Acceptance Criteria
+- System must allow the user to edit the following properties for any task:
+  title, description, due date, priority, notes, and checklist.
+
+User Story 8: Delete Tasks
+As a user, I want to delete tasks so that I can remove those which are no longer
+relevant.
+Acceptance Criteria
+- System allows the user to delete any task.
+
+User Story 9: Task Persistence
+As a user, I want my tasks to be saved when I leave and loaded when I return so
+that I don't lose any data.
+Acceptance Criteria
+- System must persist all tasks.
+
+User Story 10: Project Persistence
+As a user, I want my projects to be saved when I leave and loaded when I return
+so that I don't lose any data.
+Acceptance Criteria
+- System must persist all projects.
