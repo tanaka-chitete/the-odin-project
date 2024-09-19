@@ -1,0 +1,57 @@
+:root {
+  --salt-200: #fbfafa;
+  --salt-300: #f4f4f3;
+  --salt-400: #eaeaea;
+  --salt-700: #919197;
+  --salt-900: #525257;
+}
+
+body {
+  height: 100vh;
+  display: grid;
+  grid-template-areas: "sidebar tasks";
+  grid-template-columns: 16rem 1fr;
+}
+
+aside {
+  background: var(--salt-200);
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: var(--salt-1000);
+}
+
+p {
+  font-family: "Helvetica", "Arial";
+  color: var(--salt-1000);
+  margin-bottom: 0.25rem;
+}
+
+.container {
+  height: 100%;
+  margin: 0 auto;
+}
+
+.container_section_sidebar {
+  padding: 1rem;
+}
+
+.container_section_tasks {
+  max-width: 80rem;
+  padding: 4rem 2rem;
+}
+
+.tasks__task {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--salt-400);
+}
+
+.task-description {
+  font-size: 0.8rem;
+  color: var(--salt-900);
+}
