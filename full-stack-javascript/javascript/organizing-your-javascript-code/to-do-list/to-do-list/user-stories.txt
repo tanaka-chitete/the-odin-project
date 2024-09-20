@@ -10,7 +10,7 @@ As a user, I want to specify properties for any task so that I can better track
 the things I need to do.
 Acceptance Criteria
 - System allows the user to specify the following properties for any task: 
-  title, description, due date, priority, notes, and checklist.
+  title, description, complete, due date, priority, notes, and checklist.
 
 User Story 3: Create Projects
 As a user, I want to create projects so that I can group related tasks.

@@ -1,0 +1,149 @@
+@import "./reset.css";
+
+:root {
+  /* Error */
+
+  --error-100: #fff7f5;
+  --error-500: #d5351f;
+  --error-800: #b41d08;
+
+  /* Fandango */
+
+  --fandango-100: #f7b3df;
+  --fandango-400: #b30089;
+  --fandango-500: #93006f;
+  --fandango-800: #530047;
+
+  /* Guava */
+
+  --guava-100: #fff3ef;
+  --guava-500: #f45d48;
+
+  /* Warning */
+
+  --warning-100: #fffaf2;
+  --warning-500: #e9b550;
+  --warning-700: #b88023;
+
+  /* Salt */
+
+  --salt-100: #ffffff;
+  --salt-200: #fbfafa;
+  --salt-300: #f4f4f3;
+  --salt-400: #eaeaea;
+  --salt-500: #dcdcdc;
+  --salt-600: #bababc;
+  --salt-700: #919197;
+  --salt-800: #6c6c72;
+  --salt-900: #525257;
+  --salt-1000: #1c1c1c;
+}
+
+body {
+  height: 100vh;
+}
+
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: var(--salt-1000);
+}
+
+p {
+  color: var(--salt-1000);
+  margin-bottom: 0.25rem;
+}
+
+span {
+  font-size: 0.8rem;
+  color: var(--salt-900);
+}
+
+hr {
+  border: 0.1px solid var(--salt-400);
+}
+
+#root {
+  height: 100%;
+  display: grid;
+  grid-template-areas: "sidebar tasks";
+  grid-template-columns: 16rem 1fr;
+}
+
+/* Sidebar */
+
+aside {
+  background: var(--salt-200);
+}
+
+.sidebar-container {
+  height: 100%;
+  padding: 1rem;
+}
+
+.features__feature-button {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+}
+
+.features__feature-button:hover {
+  cursor: pointer;
+  background: var(--salt-300);
+}
+
+/* Add Task */
+
+.add-task-dialog {
+  width: 32rem;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 16rem auto auto auto;
+}
+
+
+.add-task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.add-task-form__input {
+  border: none;
+  outline: none;
+}
+
+.add-task-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.add-task-form__button {
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.add-task-form__button:hover {
+  cursor: pointer;
+}
+
+/* Content */
+
+.content-container {
+  height: 100%;
+  margin: 0 auto;
+  max-width: 80rem;
+  padding: 4rem 2rem;
+}
+
+.tasks__task {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem;
+  /* border-bottom: 1px solid var(--salt-400); */
+}

@@ -1,3 +1,5 @@
+@import "./modern-normalize.css";
+
 :root {
   /* Ensures line height meets WCAG criteria */
   line-height: 1.5;

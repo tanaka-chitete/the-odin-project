@@ -1,15 +1,6 @@
 class Task {
-  #name;
-
-  constructor(name) {
-    this.name = name;
-  }
-
-  set name(name) {
-    this.#name = name;
-  }
-
-  get name() {
-    return this.#name;
+  constructor(taskName, taskDescription, ...properties) {
+    this.taskName = taskName;
+    this.taskDescription = taskDescription;
   }
 }

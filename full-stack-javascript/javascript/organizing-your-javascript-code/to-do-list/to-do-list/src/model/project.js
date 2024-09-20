@@ -1,27 +1,18 @@
 class Project {
-  #projectName;
-  #tasks;
-
   constructor(projectName) {
     this.projectName = projectName;
-    this.#tasks = [];
+    this.tasks = [];
   }
 
-  set projectName(projectName) {
-    this.#projectName = projectName;
-  }
-
-  get projectName() {
-    return this.#projectName;
-  }
-
-  addTask(taskName, ...properties) {
-    const newTask = new Task(taskName);
-    this.#tasks.push(newTask);
+  addTask(taskName, taskDescription, ...properties) {
+    const newTask = new Task(taskName, taskDescription, ...properties);
+    this.tasks.push(newTask);
     return newTask;
   }
 
   removeTask(index) {
-    return this.#tasks.slice(index)[0];
+    return this.tasks.slice(index)[0];
   }
 }
+
+export { Project };

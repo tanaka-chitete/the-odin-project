@@ -1,15 +1,16 @@
 class Controller {
-  #model;
-
-  constructor() {
-    this.#model = new Model();
+  constructor(model, view) {
+    this.model = model;
+    this.view = view;
   }
 
-  addTask(name, ...properties) {
-    this.#model.addTask(name, ...properties);
+  handleAddTask(taskName, description, ...properties) {
+    this.model.addTask(taskName, description, ...properties);
   }
 
-  removeTask(index) {
-    this.#model.removeTask(index);
+  handleDeleteTask(index) {
+    this.model.deleteTask(index);
   }
 }
+
+export { Controller };

@@ -1,19 +1,21 @@
+import { Project } from "./project.js";
+
 class Model {
-  #project;
-  #view;
-
   constructor() {
-    this.#project = new Project("General");
-    this.#view = new View();
+    this.projectNameToProject = {"General": new Project("General")};
   }
 
-  addTask(name, ...properties) {
-    const task = this.#project.addTask(name, ...properties);
-    this.#view.listTask(task);
+  addTask(taskName, taskDescription, ...properties) {
+    this.projectNameToProject[DEFAULT_PROJECT_NAME].addTask(
+      taskName, 
+      taskDescription, 
+      ...properties
+    );
   }
 
-  removeTask(index) {
-    this.#project.removeTask(index);
-    this.#view.unlistTask(index);
+  deleteTask(id) {
+    this.projectNameToProject.deleteTask(id);
   }
 }
+
+export { Model };
