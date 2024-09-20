@@ -4,3 +4,5 @@ class Task {
     this.taskDescription = taskDescription;
   }
 }
+
+export { Task };

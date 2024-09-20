@@ -6,15 +6,23 @@ class Model {
   }
 
   addTask(taskName, taskDescription, ...properties) {
-    this.projectNameToProject[DEFAULT_PROJECT_NAME].addTask(
+    this.projectNameToProject["General"].addTask(
       taskName, 
       taskDescription, 
       ...properties
     );
+
+    this.onTasksChanged(this.projectNameToProject["General"].tasks);
   }
 
   deleteTask(id) {
-    this.projectNameToProject.deleteTask(id);
+    this.projectNameToProject["General"].deleteTask(id);
+
+    this.onTasksChanged(this.projectNameToProject["General"]);
+  }
+
+  bindTasksChanged(callback) {
+    this.onTasksChanged = callback;
   }
 }
 
