@@ -103,6 +103,7 @@ class View {
         const taskLi = this.createElement("li", {"class": "tasks__task"});
         const taskLeftSectionDiv = this.createElement("div", {"class": "tasks__task-section"});
         const uncheckedCircleSpan = this.createElement("span", {"class": "material-symbols-outlined"});
+        uncheckedCircleSpan.textContent = "circle";
         taskLeftSectionDiv.append(uncheckedCircleSpan);
 
         const taskRightSectionDiv = this.createElement("div", {"class": "tasks__task-section"});
