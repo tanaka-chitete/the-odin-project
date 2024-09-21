@@ -3,8 +3,8 @@ class Model {
     this.projectNameToTasks = {"General": []};
   }
 
-  getProjectNames() {
-    this.onProjectNamesChanged(Object.keys(this.projectNameToTasks));
+  pushProjects() {
+    this.onProjectsChanged(Object.keys(this.projectNameToTasks));
   }
 
   createTask(taskName, description, projectName, dueDate, priority) {
@@ -15,21 +15,21 @@ class Model {
       "priority": priority
     });
 
-    this.onProjectChanged("General", this.projectNameToTasks["General"]);
+    this.onTasksChanged("General", this.projectNameToTasks["General"]);
   }
 
-  deleteTask(id) {
-    this.projectNameToTasks["General"].splice(id);
+  // deleteTask(id) {
+  //   this.projectNameToTasks["General"].splice(id);
 
-    this.onProjectChanged(this.projectNameToTasks["General"]);
+  //   this.onTasksChanged(this.projectNameToTasks["General"]);
+  // }
+
+  bindToOnProjectsChanged(callback) {
+    this.onProjectsChanged = callback;
   }
 
-  bindToOnProjectNamesChanged(callback) {
-    this.onProjectNamesChanged = callback;
-  }
-
-  bindToOnProjectChanged(callback) {
-    this.onProjectChanged = callback;
+  bindToOnTasksChanged(callback) {
+    this.onTasksChanged = callback;
   }
 }
 

@@ -51,6 +51,11 @@ h1 {
   color: var(--salt-1000);
 }
 
+h2 {
+  font-weight: bold;
+  color: var(--salt-1000);
+}
+
 p {
   color: var(--salt-1000);
   margin-bottom: 0.25rem;
@@ -78,23 +83,19 @@ input {
 
 /* Sidebar */
 
-aside {
+.sidebar {
+  padding: 1rem;
   background: var(--salt-200);
 }
 
-.sidebar-container {
-  height: 100%;
-  padding: 1rem;
-}
-
-.features__feature-button {
+.actions__action-button {
   background: none;
   border: none;
   padding: 0;
   width: 100%;
 }
 
-.features__feature-button:hover {
+.actions__action-button:hover {
   cursor: pointer;
   background: var(--salt-300);
 }

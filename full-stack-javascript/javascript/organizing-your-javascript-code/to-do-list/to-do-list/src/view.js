@@ -3,21 +3,25 @@ class View {
     this.app = this.getElement("#root");
 
     // Create 'Sidebar'
-    const aside = this.createElement("aside");
-    const sidebarContainerDiv = this.createElement("div", {"class": "sidebar-container"});
-    const featuresUl = this.createElement("ul", {"role": "list", "class": "features"});
-    const addTaskLi = this.createElement("li", {"class": "features__feature"});
-    const addTaskButton = this.createElement("button", {"type": "button", "class": "features__feature-button features__feature-button_name_add-task"});
+    const aside = this.createElement("aside", {"class": "sidebar"});
+    const featuresUl = this.createElement("ul", {"role": "list", "class": "actions"});
+    const addTaskLi = this.createElement("li", {"class": "actions__action"});
+    const addTaskButton = this.createElement("button", {"type": "button", "class": "actions__action-button actions__action-button_name_add-task"});
 
     const addTaskIconSpan = this.createElement("span", {"class": "material-symbols-outlined"});
     addTaskIconSpan.textContent = "add_circle";
-    const addTaskTextSpan = this.createElement("span");
-    addTaskTextSpan.textContent = "Add task";
-    addTaskButton.append(addTaskIconSpan, addTaskTextSpan);
+    const addTaskH2 = this.createElement("h2");
+    addTaskH2.textContent = "Add task";
+    addTaskButton.append(addTaskIconSpan, addTaskH2);
     addTaskLi.append(addTaskButton);
     featuresUl.append(addTaskLi);
-    sidebarContainerDiv.append(featuresUl);
-    aside.append(sidebarContainerDiv);
+
+    const projectsH2 = this.createElement("h2");
+    projectsH2.textContent = "Projects";
+
+    this.projectsUl = this.createElement("ul", {"role": "list", "class": "projects"});
+
+    aside.append(featuresUl, projectsH2, this.projectsUl);
 
     // Create 'Main'
     const main = this.createElement("main");
@@ -50,7 +54,7 @@ class View {
     addTaskFormSectionMiddle.append(dueDateInput, prioritySelect);
     const hr = this.createElement("hr");
     const addTaskFormSectionBottom = this.createElement("div", {"class": "add-task-form__section add-task-form__section_position_bottom"});
-    this.projectNameSelect = this.createElement("select", {"name": "projectName", "class": "add-task-form__input add-task-form__input_type_select"});
+    this.projectSelect = this.createElement("select", {"name": "projectName", "class": "add-task-form__input add-task-form__input_type_select"});
 
     const addTaskFormSectionBottomRight = this.createElement("div", {"class": "add-task-form__section add-task-form__section_position_bottom-right"})
     const addTaskCancelButton = this.createElement("button", {"type": "reset", "class": "add-task-form__button add-task-form__button_name_cancel"});
@@ -58,7 +62,7 @@ class View {
     const addTaskSubmitButton = this.createElement("button", {"type": "submit", "class": "add-task-form__button"});
     addTaskSubmitButton.textContent = "Add";
     addTaskFormSectionBottomRight.append(addTaskCancelButton, addTaskSubmitButton);
-    addTaskFormSectionBottom.append(this.projectNameSelect, addTaskFormSectionBottomRight);
+    addTaskFormSectionBottom.append(this.projectSelect, addTaskFormSectionBottomRight);
     this.addTaskForm.append(addTaskFormSectionTop, addTaskFormSectionMiddle, hr, addTaskFormSectionBottom);
     this.addTaskDialog.append(this.addTaskForm);
 
@@ -121,20 +125,28 @@ class View {
     });
   }
 
-  displayProjectNames(projectNames) {
-    this.projectNameSelect.replaceChildren();
+  displayProjects(projects) {
+    this.projectsUl.replaceChildren();
 
-    projectNames.forEach((projectName) => {
-      const projectNameOption = this.createElement("option", {"value": projectName});
-      projectNameOption.textContent = projectName;
-      this.projectNameSelect.append(projectNameOption);
+    projects.forEach((project) => {
+      const projectLi = this.createElement("li", {"class": "projects__project"});
+      projectLi.textContent = project;
+      this.projectsUl.append(projectLi);
+    });
+
+    this.projectSelect.replaceChildren();
+  
+    projects.forEach((project) => {
+      const projectOption = this.createElement("option", {"value": project});
+      projectOption.textContent = project;
+      this.projectSelect.append(projectOption);
     });
   }
 
-  displayProject(projectName, tasks) {
+  displayTasks(project, tasks) {
     this.tasksUl.replaceChildren();
 
-    this.projectNameH1.textContent = projectName;
+    this.projectNameH1.textContent = project;
 
     if (tasks.length === 0) {
       const p = this.createElement("p");

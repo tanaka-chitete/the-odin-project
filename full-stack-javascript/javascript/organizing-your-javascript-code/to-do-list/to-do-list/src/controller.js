@@ -5,14 +5,15 @@ class Controller {
 
     this.view.bindToAddTaskOpen(this.handleAddTaskOpen);
     this.view.bindToAddTaskSubmit(this.handleAddTaskSubmit);
-    this.model.bindToOnProjectNamesChanged(this.onProjectNamesChanged);
-    this.model.bindToOnProjectChanged(this.onProjectChanged);
+    this.model.bindToOnProjectsChanged(this.onProjectsChanged);
+    this.model.bindToOnTasksChanged(this.onTasksChanged);
 
-    this.onProjectChanged("General", this.model.projectNameToTasks["General"]);
+    this.model.pushProjects();
+    this.onTasksChanged("General", this.model.projectNameToTasks["General"]);
   }
 
   handleAddTaskOpen = () => {
-    this.model.getProjectNames();
+    this.model.pushProjects();
   }
 
   handleAddTaskSubmit = (
@@ -31,16 +32,16 @@ class Controller {
     );
   }
 
-  handleDeleteTask = (index) => {
-    this.model.deleteTask(index);
+  // handleDeleteTask = (id) => {
+  //   this.model.deleteTask(id);
+  // }
+
+  onProjectsChanged = (projects) => {
+    this.view.displayProjects(projects);
   }
 
-  onProjectNamesChanged = (projectNames) => {
-    this.view.displayProjectNames(projectNames);
-  }
-
-  onProjectChanged = (projectName, tasks) => {
-    this.view.displayProject(projectName, tasks);
+  onTasksChanged = (project, tasks) => {
+    this.view.displayTasks(project, tasks);
   }
 }
 

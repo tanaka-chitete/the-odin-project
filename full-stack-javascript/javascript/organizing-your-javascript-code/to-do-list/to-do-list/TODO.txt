@@ -6,3 +6,4 @@ Refactor View.createElement() to only receive object as parameter. For example,
 	"textContent": {...}
 }
 Display artwork for empty projects
+In code, refer to tasks as being 'created' as opposed to 'added'
