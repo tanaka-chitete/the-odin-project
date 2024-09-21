@@ -1,44 +1,35 @@
 class Model {
   constructor() {
-    this.projectNameToProject = {"General": []};
-    this.currentProjectName = undefined; // ?
-    // Should the model maintain which is the current project? Yes!
+    this.projectNameToTasks = {"General": []};
   }
 
   getProjectNames() {
-    this.onProjectNamesChanged(Object.keys(this.projectNameToProject));
+    this.onProjectNamesChanged(Object.keys(this.projectNameToTasks));
   }
 
-  addTask(...properties) {
-    const [
-      taskName, 
-      taskDescription = "", // This is optional
-      dueDate = "", // This is optional
-      priority
-    ] = [...properties];
-
-    this.projectNameToProject["General"].push({
+  createTask(taskName, description, projectName, dueDate, priority) {
+    this.projectNameToTasks[projectName].push({
       "taskName": taskName,
-      "taskDescription": taskDescription,
+      "description": description,
       "dueDate": dueDate,
       "priority": priority
     });
 
-    this.onTasksChanged(this.projectNameToProject["General"]);
+    this.onProjectChanged("General", this.projectNameToTasks["General"]);
   }
 
   deleteTask(id) {
-    this.projectNameToProject["General"].splice(id);
+    this.projectNameToTasks["General"].splice(id);
 
-    this.onTasksChanged(this.projectNameToProject["General"]);
+    this.onProjectChanged(this.projectNameToTasks["General"]);
   }
 
   bindToOnProjectNamesChanged(callback) {
     this.onProjectNamesChanged = callback;
   }
 
-  bindToOnTasksChanged(callback) {
-    this.onTasksChanged = callback;
+  bindToOnProjectChanged(callback) {
+    this.onProjectChanged = callback;
   }
 }
 

@@ -5,3 +5,4 @@ Refactor View.createElement() to only receive object as parameter. For example,
 	"attributeNameToValue": {...},
 	"textContent": {...}
 }
+Display artwork for empty projects
