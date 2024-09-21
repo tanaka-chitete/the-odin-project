@@ -1,4 +1,3 @@
-Name the project Peppercorn
-Use system font for headings
-Use Helvetica or Arial for text
-Ensure that the core logic (e.g. creating tasks) from display logic (e.g. listing tasks in a project)
+Bind 'Cancel' button in 'Add Task' dialog
+Delete Task class
+Delete Project class
