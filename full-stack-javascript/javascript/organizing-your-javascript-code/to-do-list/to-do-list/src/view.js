@@ -4,24 +4,52 @@ class View {
 
     // Create 'Sidebar'
     const aside = this.createElement("aside", {"class": "sidebar"});
-    const featuresUl = this.createElement("ul", {"role": "list", "class": "actions"});
-    const addTaskLi = this.createElement("li", {"class": "actions__action"});
+    
     const addTaskButton = this.createElement("button", {"type": "button", "class": "actions__action-button actions__action-button_name_add-task"});
-
     const addTaskIconSpan = this.createElement("span", {"class": "material-symbols-outlined"});
     addTaskIconSpan.textContent = "add_circle";
     const addTaskH2 = this.createElement("h2");
     addTaskH2.textContent = "Add task";
     addTaskButton.append(addTaskIconSpan, addTaskH2);
-    addTaskLi.append(addTaskButton);
-    featuresUl.append(addTaskLi);
+    
+    const sidebarSectionMiddle = this.createElement("div", {"class": "sidebar__section"});
+    const actionsUl = this.createElement("ul", {"role": "list", "class": "actions"});
+    
+    const dueTodayLi = this.createElement("li", {"class": "actions__action"});
+    const dueTodayButton = this.createElement("button", {"type": "button", "class": "actions__action-button"});
+    const dueTodayIcon = this.createElement("span", {"class": "material-symbols-outlined"});
+    dueTodayIcon.textContent = "today";
+    const dueTodayH3 = this.createElement("h3");
+    dueTodayH3.textContent = "Today";
+    dueTodayButton.append(dueTodayIcon, dueTodayH3);
+    dueTodayLi.append(dueTodayButton);
+
+    const dueNextWeekLi = this.createElement("li", {"class": "actions__action"});
+    const dueNextWeekButton = this.createElement("button", {"type": "button", "class": "actions__action-button"});
+    const dueNextWeekIcon = this.createElement("span", {"class": "material-symbols-outlined"});
+    dueNextWeekIcon.textContent = "date_range";
+    const dueNextWeekH3 = this.createElement("h3");
+    dueNextWeekH3.textContent = "Upcoming";
+    dueNextWeekButton.append(dueNextWeekIcon, dueNextWeekH3);
+    dueNextWeekLi.append(dueNextWeekButton);
+
+    actionsUl.append(dueTodayLi, dueNextWeekLi);
+    sidebarSectionMiddle.append(actionsUl);
+
+    const sidebarSectionBottom = this.createElement("div", {"class": "sidebar__section"});
 
     const projectsH2 = this.createElement("h2");
     projectsH2.textContent = "Projects";
 
-    this.projectsUl = this.createElement("ul", {"role": "list", "class": "projects"});
+    const addProjectButton = this.createElement("button", {"type": "button", "class": "actions__action-button"});
+    const addProjectIcon = this.createElement("div", {"class": "material-symbols-outlined"});
+    addProjectIcon.textContent = "add";
+    addProjectButton.append(addProjectIcon, projectsH2);
 
-    aside.append(featuresUl, projectsH2, this.projectsUl);
+    this.projectsUl = this.createElement("ul", {"role": "list", "class": "actions"});
+    sidebarSectionBottom.append(addProjectButton, this.projectsUl)
+
+    aside.append(addTaskButton, sidebarSectionMiddle, sidebarSectionBottom);
 
     // Create 'Main'
     const main = this.createElement("main");
@@ -129,8 +157,16 @@ class View {
     this.projectsUl.replaceChildren();
 
     projects.forEach((project) => {
-      const projectLi = this.createElement("li", {"class": "projects__project"});
-      projectLi.textContent = project;
+      const projectLi = this.createElement("li", {"class": "actions__action"});
+      const projectButton = this.createElement("button", {"class": "actions__action-button"});
+      const projectIcon = this.createElement("span", {"class": "material-symbols-outlined"});
+      projectIcon.textContent = "tactic";
+      const projectH3 = this.createElement("h3");
+      projectH3.textContent = project;
+
+      projectButton.append(projectIcon, projectH3)
+      projectLi.append(projectButton);
+
       this.projectsUl.append(projectLi);
     });
 
@@ -152,41 +188,42 @@ class View {
       const p = this.createElement("p");
       p.textContent = "Nothing to do!";
       this.tasksUl.append(p);
-    } else {
-      console.log(tasks);
-      tasks.forEach(task => {
-        const taskLi = this.createElement("li", {"class": "tasks__task"});
-        const taskLeftSectionDiv = this.createElement("div", {"class": "tasks__task-section"});
-        const uncheckedCircleSpan = this.createElement("span", {"class": "material-symbols-outlined tasks__task-check-circle"});
-        switch (task["priority"].toLowerCase()) {
-          case "high":
-            uncheckedCircleSpan.classList.add("tasks__task-check-circle_priority_high");
-            break;
-          case "medium":
-            uncheckedCircleSpan.classList.add("tasks__task-check-circle_priority_medium");
-            break;
-          case "low":
-            uncheckedCircleSpan.classList.add("tasks__task-check-circle_priority_low");
-            break;
-        }
-        uncheckedCircleSpan.textContent = "circle";
-        taskLeftSectionDiv.append(uncheckedCircleSpan);
 
-        const taskRightSectionDiv = this.createElement("div", {"class": "tasks__task-section tasks__task-section_position_right"});
-        const taskNameP = this.createElement("p");
-        taskNameP.textContent = task["taskName"];
-        const descriptionSpan = this.createElement("span");
-        descriptionSpan.textContent = task["description"];
-        const dueDateSpan = this.createElement("span");
-        dueDateSpan.textContent = task["dueDate"];
-        taskRightSectionDiv.append(taskNameP, descriptionSpan, dueDateSpan);
-        taskLi.append(taskLeftSectionDiv, taskRightSectionDiv);
+      return;
+    } 
 
-        const hr = this.createElement("hr");
+    tasks.forEach(task => {
+      const taskLi = this.createElement("li", {"class": "tasks__task"});
+      const taskLeftSectionDiv = this.createElement("div", {"class": "tasks__task-section"});
+      const uncheckedCircleSpan = this.createElement("span", {"class": "material-symbols-outlined tasks__task-check-circle"});
+      switch (task["priority"].toLowerCase()) {
+        case "high":
+          uncheckedCircleSpan.classList.add("tasks__task-check-circle_priority_high");
+          break;
+        case "medium":
+          uncheckedCircleSpan.classList.add("tasks__task-check-circle_priority_medium");
+          break;
+        case "low":
+          uncheckedCircleSpan.classList.add("tasks__task-check-circle_priority_low");
+          break;
+      }
+      uncheckedCircleSpan.textContent = "circle";
+      taskLeftSectionDiv.append(uncheckedCircleSpan);
 
-        this.tasksUl.append(taskLi, hr);
-      });
-    }
+      const taskRightSectionDiv = this.createElement("div", {"class": "tasks__task-section tasks__task-section_position_right"});
+      const taskNameP = this.createElement("p");
+      taskNameP.textContent = task["taskName"];
+      const descriptionSpan = this.createElement("span");
+      descriptionSpan.textContent = task["description"];
+      const dueDateSpan = this.createElement("span");
+      dueDateSpan.textContent = task["dueDate"];
+      taskRightSectionDiv.append(taskNameP, descriptionSpan, dueDateSpan);
+      taskLi.append(taskLeftSectionDiv, taskRightSectionDiv);
+
+      const hr = this.createElement("hr");
+
+      this.tasksUl.append(taskLi, hr);
+    });
   }
 }
 

@@ -84,11 +84,21 @@ input {
 /* Sidebar */
 
 .sidebar {
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   background: var(--salt-200);
+  gap: 2rem;
+}
+
+.sidebar__section {
+  display: flex;
+  flex-direction: column;
 }
 
 .actions__action-button {
+  display: flex;
+  gap: 0.5rem;
   background: none;
   border: none;
   padding: 0;
