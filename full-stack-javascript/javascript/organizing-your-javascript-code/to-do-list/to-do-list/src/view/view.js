@@ -32,8 +32,20 @@ class View {
     this.addTaskDialog = this.createElement("dialog", {"class": "add-task-dialog"});
     const addTaskFormContainerDiv = this.createElement("div", {"class": "add-task-form-container"});
     this.addTaskForm = this.createElement("form", {"form": "", "class": "add-task-form"});
-    const addTaskNameInput = this.createElement("input", {"type": "text", "name": "name", "placeholder": "Name", "class": "add-task-form__input"});
-    const addTaskDescriptionInput = this.createElement("input", {"type": "text", "name": "description", "placeholder": "Description", "class": "add-task-form__input"});
+    const addTaskNameInput = this.createElement("input", {"type": "text", "name": "name", "placeholder": "Name", "class": "add-task-form__input add-task-form__input_type_task-name"});
+    const addTaskDescriptionInput = this.createElement("input", {"type": "text", "name": "description", "placeholder": "Description", "class": "add-task-form__input add-task-form__input_type_task-description"});
+    const propertiesDiv = this.createElement("div", {"class": "add-task-form__properties"});
+    const dueDateInput = this.createElement("input", {"type": "date", "class": "add-task-form__input add-task-form__input_type_due-date"});
+    const prioritySelect = this.createElement("select", {"class": "add-task-form__input add-task-form__input_type_priority"});
+    const priority1Option = this.createElement("option", {"value": "1"});
+    priority1Option.textContent = "Priority 1";
+    const priority2Option = this.createElement("option", {"value": "2"});
+    priority2Option.textContent = "Priority 2";
+    const priority3Option = this.createElement("option", {"value": "3"});
+    priority3Option.textContent = "Priority 3";
+    prioritySelect.append(priority1Option, priority2Option, priority3Option);
+    prioritySelect.selectedIndex = 2;
+    propertiesDiv.append(dueDateInput, prioritySelect);
     const hr = this.createElement("hr");
     const addTaskActionsDiv = this.createElement("div", {"class": "add-task-form__actions"});
     const addTaskCancelButton = this.createElement("button", {"class": "add-task-form__button"});
@@ -41,7 +53,7 @@ class View {
     const addTaskSubmitButton = this.createElement("button", {"class": "add-task-form__button"});
     addTaskSubmitButton.textContent = "Submit";
     addTaskActionsDiv.append(addTaskCancelButton, addTaskSubmitButton);
-    this.addTaskForm.append(addTaskNameInput, addTaskDescriptionInput, hr, addTaskActionsDiv);
+    this.addTaskForm.append(addTaskNameInput, addTaskDescriptionInput, hr, propertiesDiv, addTaskActionsDiv);
     addTaskFormContainerDiv.append(this.addTaskForm);
     this.addTaskDialog.append(addTaskFormContainerDiv);
 

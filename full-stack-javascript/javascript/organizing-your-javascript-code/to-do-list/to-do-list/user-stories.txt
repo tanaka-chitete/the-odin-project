@@ -10,7 +10,7 @@ As a user, I want to specify properties for any task so that I can better track
 the things I need to do.
 Acceptance Criteria
 - System allows the user to specify the following properties for any task: 
-  title, description, complete, due date, priority, notes, and checklist.
+  title, description, due date, and priority.
 
 User Story 3: Create Projects
 As a user, I want to create projects so that I can group related tasks.
@@ -48,6 +48,7 @@ User Story 8: Delete Tasks
 As a user, I want to delete tasks so that I can remove those which are no longer
 relevant.
 Acceptance Criteria
+- System allows the user to mark any task as complete.
 - System allows the user to delete any task.
 
 User Story 9: Task Persistence
