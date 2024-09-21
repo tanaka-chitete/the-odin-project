@@ -1,0 +1,7 @@
+Load tasks when the user opens the app
+Refactor View.createElement() to only receive object as parameter. For example,
+{
+	"tag": "div",
+	"attributeNameToValue": {...},
+	"textContent": {...}
+}

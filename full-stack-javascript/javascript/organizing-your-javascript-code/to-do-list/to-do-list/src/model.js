@@ -1,6 +1,12 @@
 class Model {
   constructor() {
     this.projectNameToProject = {"General": []};
+    this.currentProjectName = undefined; // ?
+    // Should the model maintain which is the current project? Yes!
+  }
+
+  getProjectNames() {
+    this.onProjectNamesChanged(Object.keys(this.projectNameToProject));
   }
 
   addTask(...properties) {
@@ -27,7 +33,11 @@ class Model {
     this.onTasksChanged(this.projectNameToProject["General"]);
   }
 
-  bindTasksChanged(callback) {
+  bindToOnProjectNamesChanged(callback) {
+    this.onProjectNamesChanged = callback;
+  }
+
+  bindToOnTasksChanged(callback) {
     this.onTasksChanged = callback;
   }
 }

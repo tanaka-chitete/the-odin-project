@@ -22,7 +22,7 @@ class View {
     // Create 'Main'
     const main = this.createElement("main");
     const contentContainerDiv = this.createElement("div", {"class": "content-container"});
-    const projectNameH1 = this.createElement("h1");
+    const projectNameH1 = this.createElement("h1", {"class": "project-name"});
     projectNameH1.textContent = "General";
     this.tasksUl = this.createElement("ul", {"role": "list", "class": "tasks"});
     contentContainerDiv.append(projectNameH1, this.tasksUl);
@@ -30,13 +30,16 @@ class View {
 
     // Create 'Dialog'
     this.addTaskDialog = this.createElement("dialog", {"class": "add-task-dialog"});
-    const addTaskFormContainerDiv = this.createElement("div", {"class": "add-task-form-container"});
     this.addTaskForm = this.createElement("form", {"form": "", "class": "add-task-form"});
-    const addTaskNameInput = this.createElement("input", {"type": "text", "name": "name", "placeholder": "Name", "class": "add-task-form__input add-task-form__input_type_task-name"});
+    const addTaskFormSectionTop = this.createElement("div", {"class": "add-task-form__section add-task-form__section_position_top"});
+    const addTaskNameInput = this.createElement("input", {"type": "text", "name": "task-name", "placeholder": "Name", "class": "add-task-form__input add-task-form__input_type_task-name"});
     const addTaskDescriptionInput = this.createElement("input", {"type": "text", "name": "description", "placeholder": "Description", "class": "add-task-form__input add-task-form__input_type_task-description"});
-    const propertiesDiv = this.createElement("div", {"class": "add-task-form__properties"});
-    const dueDateInput = this.createElement("input", {"type": "date", "name": "due-date", "class": "add-task-form__input add-task-form__input_type_due-date"});
-    const prioritySelect = this.createElement("select", {"name": "priority", "class": "add-task-form__input add-task-form__input_type_priority"});
+    addTaskFormSectionTop.append(addTaskNameInput, addTaskDescriptionInput);
+
+    
+    const addTaskFormSectionMiddle = this.createElement("div", {"class": "add-task-form__section add-task-form__section_position_middle"});
+    const dueDateInput = this.createElement("input", {"type": "date", "name": "due-date", "class": "add-task-form__input add-task-form__input_type_date"});
+    const prioritySelect = this.createElement("select", {"name": "priority", "class": "add-task-form__input add-task-form__input_type_select"});
     const priorityHighOption = this.createElement("option", {"value": "high"});
     priorityHighOption.textContent = "High";
     const priorityMediumOption = this.createElement("option", {"value": "medium"});
@@ -46,34 +49,49 @@ class View {
     const priorityNoneOption = this.createElement("option", {"value": "none", "selected": "true"});
     priorityNoneOption.textContent = "None";
     prioritySelect.append(priorityHighOption, priorityMediumOption, priorityLowOption, priorityNoneOption);
-    propertiesDiv.append(dueDateInput, prioritySelect);
+    addTaskFormSectionMiddle.append(dueDateInput, prioritySelect);
     const hr = this.createElement("hr");
-    const addTaskActionsDiv = this.createElement("div", {"class": "add-task-form__actions"});
-    const addTaskCancelButton = this.createElement("button", {"type": "reset", "class": "add-task-form__button"});
+    const addTaskFormSectionBottom = this.createElement("div", {"class": "add-task-form__section add-task-form__section_position_bottom"});
+    this.projectNameSelect = this.createElement("select", {"name": "project-name", "class": "add-task-form__input add-task-form__input_type_select"});
+
+    const addTaskFormSectionBottomRight = this.createElement("div", {"class": "add-task-form__section add-task-form__section_position_bottom-right"})
+    const addTaskCancelButton = this.createElement("button", {"type": "reset", "class": "add-task-form__button add-task-form__button_name_cancel"});
     addTaskCancelButton.textContent = "Cancel";
     const addTaskSubmitButton = this.createElement("button", {"type": "submit", "class": "add-task-form__button"});
-    addTaskSubmitButton.textContent = "Submit";
-    addTaskActionsDiv.append(addTaskCancelButton, addTaskSubmitButton);
-    this.addTaskForm.append(addTaskNameInput, addTaskDescriptionInput, propertiesDiv, hr, addTaskActionsDiv);
-    addTaskFormContainerDiv.append(this.addTaskForm);
-    this.addTaskDialog.append(addTaskFormContainerDiv);
+    addTaskSubmitButton.textContent = "Add";
+    addTaskFormSectionBottomRight.append(addTaskCancelButton, addTaskSubmitButton);
+    addTaskFormSectionBottom.append(this.projectNameSelect, addTaskFormSectionBottomRight);
+    this.addTaskForm.append(addTaskFormSectionTop, addTaskFormSectionMiddle, hr, addTaskFormSectionBottom);
+    this.addTaskDialog.append(this.addTaskForm);
 
     // Add event listeners
     addTaskButton.addEventListener("click", () => {
       // Fetch current projects
 
       this.addTaskDialog.showModal();
+
+      const openEvent = new Event("open");
+      this.addTaskDialog.dispatchEvent(openEvent);
+    });
+
+    this.addTaskForm.addEventListener("reset", event => {
+      event.preventDefault();
+
+      this.addTaskDialog.close();
+      this.addTaskForm.reset();
     });
 
     this.app.append(aside, main, this.addTaskDialog);
   }
 
-  createElement(tag, attrs={}) {
+  createElement(tag, attributeNameToValue={}) {
     const element = document.createElement(tag);
 
-    Object.entries(attrs).forEach(([k, v]) => {
-      element.setAttribute(k, v);
-    })
+    Object.entries(attributeNameToValue).forEach(
+      ([attributeName, attributeValue]) => {
+        element.setAttribute(attributeName, attributeValue);
+      }
+    );
 
     return element;
   }
@@ -83,11 +101,19 @@ class View {
     return document.querySelector(selector);
   }
 
-  bindCreateTask(handle) {
+  bindToAddTaskOpen(handle) {
+    this.addTaskDialog.addEventListener("open", event => {
+      event.preventDefault();
+
+      handle();
+    });
+  }
+
+  bindToAddTaskSubmit(handle) {
     this.addTaskForm.addEventListener("submit", event => {
       event.preventDefault();
 
-      const taskName = this.addTaskForm.elements["name"].value;
+      const taskName = this.addTaskForm.elements["task-name"].value;
       const taskDescription = this.addTaskForm.elements["description"].value;
       const dueDate = this.addTaskForm.elements["due-date"].value;
       const priority = this.addTaskForm.elements["priority"].value;
@@ -99,13 +125,6 @@ class View {
         this.addTaskForm.reset();
       }
     });
-
-    this.addTaskForm.addEventListener("reset", event => {
-      event.preventDefault();
-      
-      this.addTaskDialog.close();
-      this.addTaskForm.reset();
-    });
   }
 
 
@@ -113,6 +132,17 @@ class View {
   // bindChangeProject(handle) {
 
   // }
+
+  displayProjectNames(projectNames) {
+    console.log(projectNames);
+    this.projectNameSelect.replaceChildren();
+
+    projectNames.forEach((projectName) => {
+      const projectNameOption = this.createElement("option", {"value": projectName});
+      projectNameOption.textContent = projectName;
+      this.projectNameSelect.append(projectNameOption);
+    });
+  }
 
   displayTasks(tasks) {
     // Removes old tasks from the DOM

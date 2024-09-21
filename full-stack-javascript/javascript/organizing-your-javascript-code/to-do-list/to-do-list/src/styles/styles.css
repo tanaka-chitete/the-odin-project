@@ -62,7 +62,7 @@ span {
 }
 
 hr {
-  border: 0.1px solid var(--salt-400);
+  border: 1px solid var(--salt-400);
 }
 
 input {
@@ -105,7 +105,6 @@ aside {
   width: 32rem;
   border: none;
   border-radius: 0.5rem;
-  padding: 1rem;
   margin: 16rem auto auto auto;
 }
 
@@ -113,6 +112,27 @@ aside {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.add-task-form__section {
+  display: flex;
+}
+
+.add-task-form__section_position_top {
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.add-task-form__section_position_middle {
+  gap: 0.5rem;
+}
+
+.add-task-form__section_position_bottom {
+  justify-content: space-between;
+}
+
+.add-task-form__section_position_bottom-right {
+  gap: 0.5rem;
 }
 
 .add-task-form__input {
@@ -130,15 +150,15 @@ aside {
   gap: 0.5rem;
 }
 
-.add-task-form__input_type_due-date {
-  border: 1px solid var(--salt-700);
+.add-task-form__input_type_date {
+  border: 2px solid var(--salt-400);
   border-radius: 0.3rem;
   width: 8.4rem;
   padding: 0.2rem 0.4rem;
 }
 
-.add-task-form__input_type_priority {
-  border: 1px solid var(--salt-700);
+.add-task-form__input_type_select {
+  border: 2px solid var(--salt-400);
   background: none;
   border-radius: 0.3rem;
   padding: 0.2rem 0.4rem;
@@ -152,12 +172,16 @@ aside {
 
 .add-task-form__button {
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   padding: 0.2rem 1rem;
 }
 
 .add-task-form__button:hover {
   cursor: pointer;
+}
+
+.add-task-form__button_name_cancel {
+  justify-self: flex-end;
 }
 
 /* Project */
