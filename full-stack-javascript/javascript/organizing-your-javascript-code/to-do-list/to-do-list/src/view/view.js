@@ -35,15 +35,15 @@ class View {
     const addTaskNameInput = this.createElement("input", {"type": "text", "name": "name", "placeholder": "Name", "class": "add-task-form__input add-task-form__input_type_task-name"});
     const addTaskDescriptionInput = this.createElement("input", {"type": "text", "name": "description", "placeholder": "Description", "class": "add-task-form__input add-task-form__input_type_task-description"});
     const propertiesDiv = this.createElement("div", {"class": "add-task-form__properties"});
-    const dueDateInput = this.createElement("input", {"type": "date", "class": "add-task-form__input add-task-form__input_type_due-date"});
-    const prioritySelect = this.createElement("select", {"class": "add-task-form__input add-task-form__input_type_priority"});
-    const priority1Option = this.createElement("option", {"value": "1"});
-    priority1Option.textContent = "Priority 1";
-    const priority2Option = this.createElement("option", {"value": "2"});
-    priority2Option.textContent = "Priority 2";
-    const priority3Option = this.createElement("option", {"value": "3"});
-    priority3Option.textContent = "Priority 3";
-    prioritySelect.append(priority1Option, priority2Option, priority3Option);
+    const dueDateInput = this.createElement("input", {"type": "date", "name": "due-date", "class": "add-task-form__input add-task-form__input_type_due-date"});
+    const prioritySelect = this.createElement("select", {"name": "priority", "class": "add-task-form__input add-task-form__input_type_priority"});
+    const priorityHighOption = this.createElement("option", {"value": "high"});
+    priorityHighOption.textContent = "High";
+    const priorityMediumOption = this.createElement("option", {"value": "medium"});
+    priorityMediumOption.textContent = "Medium";
+    const priorityLowOption = this.createElement("option", {"value": "low"});
+    priorityLowOption.textContent = "Low";
+    prioritySelect.append(priorityHighOption, priorityMediumOption, priorityLowOption);
     prioritySelect.selectedIndex = 2;
     propertiesDiv.append(dueDateInput, prioritySelect);
     const hr = this.createElement("hr");
@@ -60,13 +60,6 @@ class View {
     // Add event listeners
     addTaskButton.addEventListener("click", () => this.addTaskDialog.showModal());
 
-    // this.addTaskForm.addEventListener("submit", (event) => {
-    //   event.preventDefault();
-    //   this.addTask();
-    // });
-
-
-    // Build DOM
     this.app.append(aside, main, this.addTaskDialog);
   }
 
@@ -91,9 +84,11 @@ class View {
 
       const taskName = this.addTaskForm.elements["name"].value;
       const taskDescription = this.addTaskForm.elements["description"].value;
+      const dueDate = this.addTaskForm.elements["due-date"].value;
+      const priority = this.addTaskForm.elements["priority"].value;
 
       if (taskName) {
-        handle(taskName, taskDescription);
+        handle(taskName, taskDescription, dueDate, priority);
 
         this.addTaskForm.reset();
         this.addTaskDialog.close();
@@ -114,16 +109,29 @@ class View {
       tasks.forEach(task => {
         const taskLi = this.createElement("li", {"class": "tasks__task"});
         const taskLeftSectionDiv = this.createElement("div", {"class": "tasks__task-section"});
-        const uncheckedCircleSpan = this.createElement("span", {"class": "material-symbols-outlined"});
+        const uncheckedCircleSpan = this.createElement("span", {"class": "material-symbols-outlined tasks__task-check-circle"});
+        switch (task["priority"].toLowerCase()) {
+          case "high":
+            uncheckedCircleSpan.classList.add("tasks__task-check-circle_priority_high");
+            break;
+          case "medium":
+            uncheckedCircleSpan.classList.add("tasks__task-check-circle_priority_medium");
+            break;
+          case "low":
+            uncheckedCircleSpan.classList.add("tasks__task-check-circle_priority_low");
+            break;
+        }
         uncheckedCircleSpan.textContent = "circle";
         taskLeftSectionDiv.append(uncheckedCircleSpan);
 
-        const taskRightSectionDiv = this.createElement("div", {"class": "tasks__task-section"});
+        const taskRightSectionDiv = this.createElement("div", {"class": "tasks__task-section tasks__task-section_position_right"});
         const taskNameP = this.createElement("p");
-        taskNameP.textContent = task.taskName;
+        taskNameP.textContent = task["taskName"];
         const taskDescriptionSpan = this.createElement("span");
-        taskDescriptionSpan.textContent = task.taskDescription;
-        taskRightSectionDiv.append(taskNameP, taskDescriptionSpan);
+        taskDescriptionSpan.textContent = task["taskDescription"];
+        const dueDateSpan = this.createElement("span");
+        dueDateSpan.textContent = task["dueDate"];
+        taskRightSectionDiv.append(taskNameP, taskDescriptionSpan, dueDateSpan);
         taskLi.append(taskLeftSectionDiv, taskRightSectionDiv);
 
         const hr = this.createElement("hr");

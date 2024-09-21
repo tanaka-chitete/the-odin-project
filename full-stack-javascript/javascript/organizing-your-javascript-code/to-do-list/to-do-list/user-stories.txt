@@ -62,3 +62,8 @@ As a user, I want my projects to be saved when I leave and loaded when I return
 so that I don't lose any data.
 Acceptance Criteria
 - System must persist all projects.
+
+User Story 11: UI/UX?
+...
+Acceptance Criteria
+- System must adhere to UI/UX guidelines.

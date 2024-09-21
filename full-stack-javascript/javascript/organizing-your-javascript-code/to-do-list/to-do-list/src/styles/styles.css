@@ -174,3 +174,24 @@ aside {
   gap: 1rem;
   padding: 0.5rem;
 }
+
+.tasks__task-check-circle {
+  color: var(--salt-700);
+}
+
+.tasks__task-check-circle_priority_low {
+  color: green;
+}
+
+.tasks__task-check-circle_priority_medium {
+  color: goldenrod;
+}
+
+.tasks__task-check-circle_priority_high {
+  color: red;
+}
+
+.tasks__task-section_position_right {
+  display: flex;
+  flex-direction: column;
+}

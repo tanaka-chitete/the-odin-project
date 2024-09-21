@@ -1,22 +1,28 @@
-import { Project } from "./project.js";
-
 class Model {
   constructor() {
-    this.projectNameToProject = {"General": new Project("General")};
+    this.projectNameToProject = {"General": []};
   }
 
-  addTask(taskName, taskDescription, ...properties) {
-    this.projectNameToProject["General"].addTask(
+  addTask(...properties) {
+    const [
       taskName, 
-      taskDescription, 
-      ...properties
-    );
+      taskDescription = "", // This is optional
+      dueDate = "", // This is optional
+      priority
+    ] = [...properties];
 
-    this.onTasksChanged(this.projectNameToProject["General"].tasks);
+    this.projectNameToProject["General"].push({
+      "taskName": taskName,
+      "taskDescription": taskDescription,
+      "dueDate": dueDate,
+      "priority": priority
+    });
+
+    this.onTasksChanged(this.projectNameToProject["General"]);
   }
 
   deleteTask(id) {
-    this.projectNameToProject["General"].deleteTask(id);
+    this.projectNameToProject["General"].splice(id);
 
     this.onTasksChanged(this.projectNameToProject["General"]);
   }
