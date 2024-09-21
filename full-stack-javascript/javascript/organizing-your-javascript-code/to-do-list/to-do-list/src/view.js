@@ -43,22 +43,27 @@ class View {
     priorityMediumOption.textContent = "Medium";
     const priorityLowOption = this.createElement("option", {"value": "low"});
     priorityLowOption.textContent = "Low";
-    prioritySelect.append(priorityHighOption, priorityMediumOption, priorityLowOption);
-    prioritySelect.selectedIndex = 2;
+    const priorityNoneOption = this.createElement("option", {"value": "none", "selected": "true"});
+    priorityNoneOption.textContent = "None";
+    prioritySelect.append(priorityHighOption, priorityMediumOption, priorityLowOption, priorityNoneOption);
     propertiesDiv.append(dueDateInput, prioritySelect);
     const hr = this.createElement("hr");
     const addTaskActionsDiv = this.createElement("div", {"class": "add-task-form__actions"});
-    const addTaskCancelButton = this.createElement("button", {"class": "add-task-form__button"});
+    const addTaskCancelButton = this.createElement("button", {"type": "reset", "class": "add-task-form__button"});
     addTaskCancelButton.textContent = "Cancel";
-    const addTaskSubmitButton = this.createElement("button", {"class": "add-task-form__button"});
+    const addTaskSubmitButton = this.createElement("button", {"type": "submit", "class": "add-task-form__button"});
     addTaskSubmitButton.textContent = "Submit";
     addTaskActionsDiv.append(addTaskCancelButton, addTaskSubmitButton);
-    this.addTaskForm.append(addTaskNameInput, addTaskDescriptionInput, hr, propertiesDiv, addTaskActionsDiv);
+    this.addTaskForm.append(addTaskNameInput, addTaskDescriptionInput, propertiesDiv, hr, addTaskActionsDiv);
     addTaskFormContainerDiv.append(this.addTaskForm);
     this.addTaskDialog.append(addTaskFormContainerDiv);
 
     // Add event listeners
-    addTaskButton.addEventListener("click", () => this.addTaskDialog.showModal());
+    addTaskButton.addEventListener("click", () => {
+      // Fetch current projects
+
+      this.addTaskDialog.showModal();
+    });
 
     this.app.append(aside, main, this.addTaskDialog);
   }
@@ -78,7 +83,7 @@ class View {
     return document.querySelector(selector);
   }
 
-  bindAddTask(handle) {
+  bindCreateTask(handle) {
     this.addTaskForm.addEventListener("submit", event => {
       event.preventDefault();
 
@@ -90,11 +95,24 @@ class View {
       if (taskName) {
         handle(taskName, taskDescription, dueDate, priority);
 
-        this.addTaskForm.reset();
         this.addTaskDialog.close();
+        this.addTaskForm.reset();
       }
     });
+
+    this.addTaskForm.addEventListener("reset", event => {
+      event.preventDefault();
+      
+      this.addTaskDialog.close();
+      this.addTaskForm.reset();
+    });
   }
+
+
+
+  // bindChangeProject(handle) {
+
+  // }
 
   displayTasks(tasks) {
     // Removes old tasks from the DOM

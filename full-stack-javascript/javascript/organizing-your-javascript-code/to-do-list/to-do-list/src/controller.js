@@ -3,7 +3,7 @@ class Controller {
     this.model = model;
     this.view = view;
 
-    this.view.bindAddTask(this.handleAddTask);
+    this.view.bindCreateTask(this.handleAddTask);
     this.model.bindTasksChanged(this.onTasksChanged);
   }
 
