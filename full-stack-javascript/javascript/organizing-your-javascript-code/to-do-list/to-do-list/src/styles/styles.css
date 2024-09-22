@@ -112,7 +112,7 @@ input {
 
 /* Add Task */
 
-.add-task-dialog {
+dialog {
   width: 32rem;
   border: none;
   border-radius: 0.5rem;

@@ -59,14 +59,13 @@ class View {
     contentContainerDiv.append(this.projectNameH1, this.tasksUl);
     main.append(contentContainerDiv);
 
-    // Create 'Dialog'
-    this.addTaskDialog = this.createElement("dialog", {"class": "add-task-dialog"});
-    this.addTaskForm = this.createElement("form", {"form": "", "class": "add-task-form"});
+    // Create 'Add Task' Dialog
+    this.addTaskDialog = this.createElement("dialog");
+    this.addTaskForm = this.createElement("form", {"class": "add-task-form"});
     const addTaskFormSectionTop = this.createElement("div", {"class": "add-task-form__section add-task-form__section_position_top"});
     const addTaskNameInput = this.createElement("input", {"type": "text", "name": "taskName", "placeholder": "Name", "class": "add-task-form__input add-task-form__input_type_task-name"});
     const addTaskDescriptionInput = this.createElement("input", {"type": "text", "name": "description", "placeholder": "Description", "class": "add-task-form__input add-task-form__input_type_task-description"});
     addTaskFormSectionTop.append(addTaskNameInput, addTaskDescriptionInput);
-    
     const addTaskFormSectionMiddle = this.createElement("div", {"class": "add-task-form__section add-task-form__section_position_middle"});
     const dueDateInput = this.createElement("input", {"type": "date", "name": "dueDate", "class": "add-task-form__input add-task-form__input_type_date"});
     const prioritySelect = this.createElement("select", {"name": "priority", "class": "add-task-form__input add-task-form__input_type_select"});
@@ -83,8 +82,8 @@ class View {
     const hr = this.createElement("hr");
     const addTaskFormSectionBottom = this.createElement("div", {"class": "add-task-form__section add-task-form__section_position_bottom"});
     this.projectSelect = this.createElement("select", {"name": "projectName", "class": "add-task-form__input add-task-form__input_type_select"});
-
     const addTaskFormSectionBottomRight = this.createElement("div", {"class": "add-task-form__section add-task-form__section_position_bottom-right"})
+    
     const addTaskCancelButton = this.createElement("button", {"type": "reset", "class": "add-task-form__button add-task-form__button_name_cancel"});
     addTaskCancelButton.textContent = "Cancel";
     const addTaskSubmitButton = this.createElement("button", {"type": "submit", "class": "add-task-form__button"});
@@ -94,10 +93,23 @@ class View {
     this.addTaskForm.append(addTaskFormSectionTop, addTaskFormSectionMiddle, hr, addTaskFormSectionBottom);
     this.addTaskDialog.append(this.addTaskForm);
 
+    // Create 'Add Project' Dialog
+    this.addProjectDialog = this.createElement("dialog");
+    this.addProjectForm = this.createElement("form", {"class": "add-task-form"});
+    const addProjectNameInput = this.createElement("input", {"type": "text", "name": "projectName", "placeholder": "Name", "class": "add-task-form__input add-task-form__input_type_task-name"});
+    const addProjectFormSectionBottom = this.createElement("div", {"class": "add-task-form__section add-task-form__section_position_bottom"});
+    const addProjectCancelButton = this.createElement("button", {"type": "reset", "class": "add-task-form__button add-task-form__button_name_cancel"});
+    addProjectCancelButton.textContent = "Cancel";
+    const addProjectSubmitButton = this.createElement("button", {"type": "submit", "class": "add-task-form__button"});
+    addProjectSubmitButton.textContent = "Add";
+    addProjectFormSectionBottom.append(addProjectCancelButton, addProjectSubmitButton);
+    this.addProjectForm.append(addProjectNameInput, addProjectFormSectionBottom);
+    this.addProjectDialog.append(this.addProjectForm);
+
     // Add event listeners
     addTaskButton.addEventListener("click", () => {
       this.addTaskDialog.showModal();
-
+      // Prompts event listener to populate 'Projects' list
       const openEvent = new Event("open");
       this.addTaskDialog.dispatchEvent(openEvent);
     });
@@ -106,7 +118,14 @@ class View {
       this.addTaskDialog.close()
     );
 
-    this.app.append(aside, main, this.addTaskDialog);
+    // Add event listeners
+    addProjectButton.addEventListener("click", () => this.addProjectDialog.showModal());
+
+    this.addProjectForm.addEventListener("reset", event => 
+      this.addProjectDialog.close()
+    );
+
+    this.app.append(aside, main, this.addTaskDialog, this.addProjectDialog);
   }
 
   createElement(tag, attributeNameToValue={}) {
@@ -129,7 +148,6 @@ class View {
   bindToAddTaskOpen(handle) {
     this.addTaskDialog.addEventListener("open", event => {
       event.preventDefault();
-
       handle();
     });
   }
@@ -138,19 +156,36 @@ class View {
     this.addTaskForm.addEventListener("submit", event => {
       event.preventDefault();
 
-      const taskName = this.addTaskForm.elements["taskName"].value;
-      const description = this.addTaskForm.elements["description"].value;
-      const projectName = this.addTaskForm.elements["projectName"].value;
-      const dueDate = this.addTaskForm.elements["dueDate"].value;
-      const priority = this.addTaskForm.elements["priority"].value;
+      const taskName = event.target.elements["taskName"].value;
+      const description = event.target.elements["description"].value;
+      const projectName = event.target.elements["projectName"].value;
+      const dueDate = event.target.elements["dueDate"].value;
+      const priority = event.target.elements["priority"].value;
 
       if (taskName) {
         handle(taskName, description, projectName, dueDate, priority);
-
-        this.addTaskForm.reset();
-        this.addTaskDialog.close();
+        event.target.reset();
+        event.target.parentElement.close();
       }
     });
+  }
+
+  bindToAddProjectSubmit(handle) {
+    this.addProjectForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const projectName = event.target.elements["projectName"].value;
+
+      if (projectName) {
+        handle(projectName);
+        event.target.reset();
+        event.target.parentElement.close();
+      }
+    })
+  }
+
+  bindToChangeProjectClick(handle) {
+    this.handleChangeProjectClick = handle;
   }
 
   displayProjects(projects) {
@@ -158,11 +193,15 @@ class View {
 
     projects.forEach((project) => {
       const projectLi = this.createElement("li", {"class": "actions__action"});
-      const projectButton = this.createElement("button", {"class": "actions__action-button"});
+      const projectButton = this.createElement("button", {"type": "button", "class": "actions__action-button"});
       const projectIcon = this.createElement("span", {"class": "material-symbols-outlined"});
       projectIcon.textContent = "tactic";
       const projectH3 = this.createElement("h3");
       projectH3.textContent = project;
+
+      projectButton.addEventListener("click", () => {
+        this.handleChangeProjectClick(project);
+      });
 
       projectButton.append(projectIcon, projectH3)
       projectLi.append(projectButton);

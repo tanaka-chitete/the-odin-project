@@ -7,6 +7,10 @@ class Model {
     this.onProjectsChanged(Object.keys(this.projectNameToTasks));
   }
 
+  pushTasks(project) {
+    this.onProjectChanged(project, this.projectNameToTasks[project]);
+  }
+
   createTask(taskName, description, projectName, dueDate, priority) {
     this.projectNameToTasks[projectName].push({
       "taskName": taskName,
@@ -15,7 +19,14 @@ class Model {
       "priority": priority
     });
 
-    this.onTasksChanged("General", this.projectNameToTasks["General"]);
+    this.onTasksChanged(projectName, this.projectNameToTasks[projectName]);
+  }
+
+  createProject(projectName) {
+    if (!this.projectNameToTasks.hasOwnProperty(projectName)) {
+      this.projectNameToTasks[projectName] = [];
+      this.onProjectsChanged(Object.keys(this.projectNameToTasks));
+    }
   }
 
   // deleteTask(id) {
@@ -30,6 +41,10 @@ class Model {
 
   bindToOnTasksChanged(callback) {
     this.onTasksChanged = callback;
+  }
+
+  bindToOnProjectChanged(callback) {
+    this.onProjectChanged = callback;
   }
 }
 

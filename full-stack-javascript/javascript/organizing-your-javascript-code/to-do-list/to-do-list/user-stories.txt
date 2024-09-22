@@ -25,10 +25,10 @@ Acceptance Criteria
 - System allows the user to view all projects
 
 User Story 5: View Tasks
-As a user, I want to view all tasks within a project so that I can more easily 
+As a user, I want to view all tasks in a project so that I can more easily 
 manage my tasks.
 Acceptance Criteria
-- System allows the user to view all tasks in each project.
+- System allows the user to view all tasks in any project.
 
 User Story 6: View Task Details
 As a user, I want to view detailed information for a task so that I can 
