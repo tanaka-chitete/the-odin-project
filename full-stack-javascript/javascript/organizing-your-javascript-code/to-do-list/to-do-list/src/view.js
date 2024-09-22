@@ -234,6 +234,7 @@ class View {
     tasks.forEach(task => {
       const taskLi = this.createElement("li", {"class": "tasks__task"});
       const taskLeftSectionDiv = this.createElement("div", {"class": "tasks__task-section"});
+      const uncheckedCircleButton = this.createElement("button", {"type": "button", "class": "invisible-button"});
       const uncheckedCircleSpan = this.createElement("span", {"class": "material-symbols-outlined tasks__task-check-circle"});
       switch (task["priority"].toLowerCase()) {
         case "high":
@@ -247,16 +248,19 @@ class View {
           break;
       }
       uncheckedCircleSpan.textContent = "circle";
-      taskLeftSectionDiv.append(uncheckedCircleSpan);
+      uncheckedCircleButton.append(uncheckedCircleSpan)
+      taskLeftSectionDiv.append(uncheckedCircleButton);
 
       const taskRightSectionDiv = this.createElement("div", {"class": "tasks__task-section tasks__task-section_position_right"});
       const taskNameP = this.createElement("p");
       taskNameP.textContent = task["taskName"];
-      const descriptionSpan = this.createElement("span");
+      const descriptionSpan = this.createElement("p");
       descriptionSpan.textContent = task["description"];
-      const dueDateSpan = this.createElement("span");
+      const dueDateSpan = this.createElement("p");
       dueDateSpan.textContent = task["dueDate"];
-      taskRightSectionDiv.append(taskNameP, descriptionSpan, dueDateSpan);
+      const taskRightSectionButton = this.createElement("button", {"type": "button", "class": "invisible-button"});
+      taskRightSectionButton.append(taskNameP, descriptionSpan, dueDateSpan);
+      taskRightSectionDiv.append(taskRightSectionButton);
       taskLi.append(taskLeftSectionDiv, taskRightSectionDiv);
 
       const hr = this.createElement("hr");

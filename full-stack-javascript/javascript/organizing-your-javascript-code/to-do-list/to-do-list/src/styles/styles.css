@@ -74,6 +74,16 @@ input {
   color: var(--salt-1000);
 }
 
+button[type="button"]:hover {
+  cursor: pointer;
+}
+
+.invisible-button {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
 #root {
   height: 100%;
   display: grid;
