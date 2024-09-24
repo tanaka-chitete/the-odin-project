@@ -72,8 +72,17 @@ class View {
     dueNextWeekH3.textContent = "Upcoming";
     dueNextWeekButton.append(dueNextWeekIcon, dueNextWeekH3);
     dueNextWeekLi.append(dueNextWeekButton);
+
+    const overdueLi = this.createElement("li");
+    const overdueButton = this.createElement("button", {"type": "button", "class": "sidebar-action"});
+    const overdueIcon = this.createElement("span", {"class": "material-symbols-outlined"});
+    overdueIcon.textContent = "event_busy";
+    const overdueH3 = this.createElement("h3");
+    overdueH3.textContent = "Overdue";
+    overdueButton.append(overdueIcon, overdueH3);
+    overdueLi.append(overdueButton);
   
-    actionsUl.append(dueTodayLi, dueNextWeekLi);
+    actionsUl.append(dueTodayLi, dueNextWeekLi, overdueLi);
     sidebarSectionMiddle.append(actionsUl);
   
     const sidebarSectionBottom = this.createElement("div", {"class": "sidebar-section"});
