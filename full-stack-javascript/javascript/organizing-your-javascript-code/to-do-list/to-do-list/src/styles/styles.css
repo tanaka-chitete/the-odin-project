@@ -43,7 +43,6 @@ body {
   height: 100vh;
 }
 
-
 h1 {
   font-size: 2rem;
   font-weight: bold;
@@ -70,13 +69,6 @@ hr {
   border: 1px solid var(--salt-400);
 }
 
-input {
-  color: var(--salt-1000);
-}
-
-button[type="button"]:hover {
-  cursor: pointer;
-}
 
 .invisible-button {
   border: none;
@@ -93,31 +85,34 @@ button[type="button"]:hover {
 
 /* Sidebar */
 
-.sidebar {
+aside {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0.5rem;
   background: var(--salt-200);
   gap: 2rem;
 }
 
-.sidebar__section {
+.sidebar-section {
   display: flex;
   flex-direction: column;
 }
 
-.actions__action-button {
+.action {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   background: none;
   border: none;
-  padding: 0;
+  padding: 0.5rem;
   width: 100%;
 }
 
-.actions__action-button:hover {
-  cursor: pointer;
+.action:hover {
   background: var(--salt-300);
+}
+
+button[type="button"]:hover {
+  cursor: pointer;
 }
 
 /* Dialogs */
@@ -155,6 +150,10 @@ form {
 .group {
   display: flex;
   gap: 0.5rem;
+}
+
+input {
+  color: var(--salt-1000);
 }
 
 input[type="text"] {

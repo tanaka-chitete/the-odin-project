@@ -3,20 +3,22 @@ class View {
     this.app = this.getElement("#root");
 
     // Create 'Sidebar'
-    const aside = this.createElement("aside", {"class": "sidebar"});
+    const aside = this.createElement("aside");
     
-    const addTaskButton = this.createElement("button", {"type": "button", "class": "actions__action-button actions__action-button_name_add-task"});
+    const sidebarSectionTop = this.createElement("div", {"class": "sidebar-section"});
+    const addTaskButton = this.createElement("button", {"type": "button", "class": "action"});
     const addTaskIconSpan = this.createElement("span", {"class": "material-symbols-outlined"});
     addTaskIconSpan.textContent = "add_circle";
     const addTaskH2 = this.createElement("h2");
     addTaskH2.textContent = "Add task";
     addTaskButton.append(addTaskIconSpan, addTaskH2);
+    sidebarSectionTop.append(addTaskButton);
     
-    const sidebarSectionMiddle = this.createElement("div", {"class": "sidebar__section"});
-    const actionsUl = this.createElement("ul", {"role": "list", "class": "actions"});
+    const sidebarSectionMiddle = this.createElement("div", {"class": "sidebar-section"});
+    const actionsUl = this.createElement("ul", {"role": "list"});
     
-    const dueTodayLi = this.createElement("li", {"class": "actions__action"});
-    const dueTodayButton = this.createElement("button", {"type": "button", "class": "actions__action-button"});
+    const dueTodayLi = this.createElement("li");
+    const dueTodayButton = this.createElement("button", {"type": "button", "class": "action"});
     const dueTodayIcon = this.createElement("span", {"class": "material-symbols-outlined"});
     dueTodayIcon.textContent = "today";
     const dueTodayH3 = this.createElement("h3");
@@ -24,8 +26,8 @@ class View {
     dueTodayButton.append(dueTodayIcon, dueTodayH3);
     dueTodayLi.append(dueTodayButton);
 
-    const dueNextWeekLi = this.createElement("li", {"class": "actions__action"});
-    const dueNextWeekButton = this.createElement("button", {"type": "button", "class": "actions__action-button"});
+    const dueNextWeekLi = this.createElement("li");
+    const dueNextWeekButton = this.createElement("button", {"type": "button", "class": "action"});
     const dueNextWeekIcon = this.createElement("span", {"class": "material-symbols-outlined"});
     dueNextWeekIcon.textContent = "date_range";
     const dueNextWeekH3 = this.createElement("h3");
@@ -36,20 +38,20 @@ class View {
     actionsUl.append(dueTodayLi, dueNextWeekLi);
     sidebarSectionMiddle.append(actionsUl);
 
-    const sidebarSectionBottom = this.createElement("div", {"class": "sidebar__section"});
+    const sidebarSectionBottom = this.createElement("div", {"class": "sidebar-section"});
 
     const projectsH2 = this.createElement("h2");
     projectsH2.textContent = "Projects";
 
-    const addProjectButton = this.createElement("button", {"type": "button", "class": "actions__action-button"});
+    const addProjectButton = this.createElement("button", {"type": "button", "class": "action"});
     const addProjectIcon = this.createElement("div", {"class": "material-symbols-outlined"});
     addProjectIcon.textContent = "add";
     addProjectButton.append(addProjectIcon, projectsH2);
 
-    this.projectsUl = this.createElement("ul", {"role": "list", "class": "actions"});
+    this.projectsUl = this.createElement("ul", {"role": "list"});
     sidebarSectionBottom.append(addProjectButton, this.projectsUl)
 
-    aside.append(addTaskButton, sidebarSectionMiddle, sidebarSectionBottom);
+    aside.append(sidebarSectionTop, sidebarSectionMiddle, sidebarSectionBottom);
 
     // Create 'Main'
     const main = this.createElement("main");
@@ -200,8 +202,8 @@ class View {
     this.projectsUl.replaceChildren();
 
     projects.forEach((project) => {
-      const projectLi = this.createElement("li", {"class": "actions__action"});
-      const projectButton = this.createElement("button", {"type": "button", "class": "actions__action-button"});
+      const projectLi = this.createElement("li");
+      const projectButton = this.createElement("button", {"type": "button", "class": "action"});
       const projectIcon = this.createElement("span", {"class": "material-symbols-outlined"});
       projectIcon.textContent = "tactic";
       const projectH3 = this.createElement("h3");
