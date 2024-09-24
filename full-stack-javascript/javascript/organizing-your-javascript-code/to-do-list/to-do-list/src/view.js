@@ -271,6 +271,12 @@ class View {
     });
   }
 
+  bindToDisplayOverdueClick(handle) {
+    this.sidebar.overdueButton.addEventListener("click", () => {
+      handle();
+    });
+  }
+
   displayProjects(projects) {
     this.projectsUl.replaceChildren();
 

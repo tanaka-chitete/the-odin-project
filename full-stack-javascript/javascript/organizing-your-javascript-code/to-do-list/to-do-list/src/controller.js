@@ -12,6 +12,7 @@ class Controller {
     this.view.bindToCompleteTaskClick(this.handleCompleteTaskClick);
     this.view.bindToDisplayDueTodayClick(this.handleDisplayDueToday);
     this.view.bindToDisplayDueThisWeekClick(this.handleDisplayDueThisWeek);
+    this.view.bindToDisplayOverdueClick(this.handleDisplayOverdue);
 
     this.model.bindToOnProjectsChanged(this.onProjectsChanged);
     this.model.bindToOnTasksChanged(this.onTasksChanged);
@@ -51,6 +52,10 @@ class Controller {
 
   handleDisplayDueThisWeek = () => {
     this.model.pushDueThisWeek();
+  }
+
+  handleDisplayOverdue = () => {
+    this.model.pushOverdue();
   }
 
   handleCompleteTaskClick = (projectName, id) => {

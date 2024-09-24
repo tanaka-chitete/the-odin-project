@@ -1,4 +1,4 @@
-import { compareAsc } from "date-fns";
+import { compareAsc, isTomorrow } from "date-fns";
 
 class Model {
   constructor() {
@@ -22,7 +22,7 @@ class Model {
       return (
         dueDate.getFullYear() === currentDate.getFullYear() &&
         dueDate.getMonth() === currentDate.getMonth() &&
-        dueDate.getDay() === currentDate.getDay()
+        dueDate.getDate() === currentDate.getDate()
       );
     });
 
@@ -38,10 +38,25 @@ class Model {
       const oneWeekInDays = 7;
       oneWeekFromNow.setDate(oneWeekFromNow.getDate() + oneWeekInDays);
 
-      return dueDate <= oneWeekFromNow;
+      return currentDate < dueDate && dueDate <= oneWeekFromNow;
     });
 
     this.onProjectChanged("Upcoming", tasksDueThisWeek);
+  }
+
+  pushOverdue() {
+    const allTasks = Object.values(this.projectNameToTasks).flat();
+    const overdueTasks = allTasks.filter((task) => {
+      const dueDate = new Date(task["dueDate"]);
+      const currentDate = new Date();
+      const yesterday = new Date(currentDate);
+      const oneDay = 1;
+      yesterday.setDate(yesterday.getDate() - oneDay);
+
+      return dueDate <= yesterday;
+    });
+
+    this.onProjectChanged("Overdue", overdueTasks);
   }
 
   createTask(taskName, description, projectName, dueDate, priority, id) {
