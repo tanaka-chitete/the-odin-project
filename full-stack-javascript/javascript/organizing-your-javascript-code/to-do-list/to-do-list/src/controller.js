@@ -5,6 +5,7 @@ class Controller {
 
     this.view.bindToAddTaskOpen(this.handleAddTaskOpen);
     this.view.bindToAddTaskSubmit(this.handleAddTaskSubmit);
+    this.view.bindToEditTaskOpen(this.handleAddTaskOpen);
     this.view.bindToEditTaskSubmit(this.handleAddTaskSubmit);
     this.view.bindToAddProjectSubmit(this.handleAddProjectSubmit);
     this.view.bindToChangeProjectClick(this.handleProjectChanged);

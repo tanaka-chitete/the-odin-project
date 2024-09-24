@@ -200,18 +200,11 @@ class View {
     });
   }
 
-  bindToAddProjectSubmit(handle) {
-    this.addProjectDialog.form.addEventListener("submit", event => {
+  bindToEditTaskOpen(handle) {
+    this.editTaskDialog.dialog.addEventListener("open", event => {
       event.preventDefault();
-
-      const projectName = event.target.elements["projectName"].value;
-
-      if (projectName) {
-        handle(projectName);
-        event.target.reset();
-        event.target.parentElement.close();
-      }
-    })
+      handle();
+    });
   }
 
   bindToEditTaskSubmit(handle) {
@@ -232,6 +225,21 @@ class View {
       }
     });
   }
+
+  bindToAddProjectSubmit(handle) {
+    this.addProjectDialog.form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const projectName = event.target.elements["projectName"].value;
+
+      if (projectName) {
+        handle(projectName);
+        event.target.reset();
+        event.target.parentElement.close();
+      }
+    })
+  }
+
 
   bindToChangeProjectClick(handle) {
     this.handleChangeProjectClick = handle;
@@ -330,7 +338,7 @@ class View {
 
         this.editTaskDialog.form.elements["taskName"].value = task["taskName"];
         this.editTaskDialog.form.elements["description"].value = task["description"];
-        this.editTaskDialog.form.elements["projectName"].value = task["projectName"];
+        this.editTaskDialog.form.elements["projectName"].disabled = true;
         this.editTaskDialog.form.elements["dueDate"].value = task["dueDate"];
         this.editTaskDialog.form.elements["priority"].value = task["priority"];
         this.editTaskDialog.form.elements["id"].value = id;
