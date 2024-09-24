@@ -1,8 +1,6 @@
-import { compareAsc, isTomorrow } from "date-fns";
-
 class Model {
   constructor() {
-    this.projectNameToTasks = {"General": []};
+    this.projectNameToTasks = JSON.parse(localStorage.getItem("projectNameToTasks")) || {"General": []};
   }
 
   pushProjects() {
@@ -74,17 +72,20 @@ class Model {
       this.projectNameToTasks[projectName][id] = newTask;
     }
 
+    localStorage.setItem("projectNameToTasks", JSON.stringify(this.projectNameToTasks));
     this.onTasksChanged(projectName, this.projectNameToTasks[projectName]);
   }
 
   deleteTask(projectName, id) {
     this.projectNameToTasks[projectName].splice(id, 1);
+    localStorage.setItem("projectNameToTasks", JSON.stringify(this.projectNameToTasks));
     this.onTasksChanged(projectName, this.projectNameToTasks[projectName]);
   }
 
   createProject(projectName) {
     if (!this.projectNameToTasks.hasOwnProperty(projectName)) {
       this.projectNameToTasks[projectName] = [];
+      localStorage.setItem("projectNameToTasks", JSON.stringify(this.projectNameToTasks));
       this.onProjectsChanged(Object.keys(this.projectNameToTasks));
     }
   }
