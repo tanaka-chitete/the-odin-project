@@ -1,6 +1,13 @@
 @import "./reset.css";
 
 :root {
+  /* Priority */
+
+  --priority-high: #d1453b;
+  --priority-medium: #eb8909;
+  --priority-low: #246fe0;
+  --priority-none: #666666;
+
   /* Error */
 
   --error-100: #fff7f5;
@@ -61,19 +68,20 @@ p {
 }
 
 span {
+  display: block;
   font-size: 0.8rem;
-  color: var(--salt-900);
+  color: var(--salt-800);
+  margin-bottom: 0.25rem;
 }
 
 hr {
   border: 1px solid var(--salt-400);
 }
 
-
-.invisible-button {
-  border: none;
-  background: none;
-  padding: 0;
+.material-symbols-outlined {
+  margin: 0;
+  /* Ensures container is the same size as any icon */
+  display: block;
 }
 
 #root {
@@ -98,7 +106,7 @@ aside {
   flex-direction: column;
 }
 
-.action {
+.sidebar-action {
   display: flex;
   gap: 1rem;
   background: none;
@@ -107,7 +115,7 @@ aside {
   width: 100%;
 }
 
-.action:hover {
+.sidebar-action:hover {
   background: var(--salt-300);
 }
 
@@ -122,6 +130,7 @@ dialog {
   border: none;
   border-radius: 0.5rem;
   margin: 16rem auto auto auto;
+  outline: none;
 }
 
 form {
@@ -135,15 +144,15 @@ form {
   gap: 0.5rem;
 }
 
-.form-section_column {
+.form-section_flex-direction_column {
   flex-direction: column;
 }
 
-.form-section_space-between {
+.form-section_justify-content_space-between {
   justify-content: space-between;
 }
 
-.form-section_flex-end {
+.form-section_justify-content_flex-end { 
   justify-content: flex-end;
 }
 
@@ -207,29 +216,37 @@ button:hover {
   padding: 4rem 2rem;
 }
 
+.tasks__task-action {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.tasks__task-action_type_edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
 .tasks__task {
   display: flex;
   gap: 1rem;
   padding: 0.5rem;
+  border-bottom: 1px solid var(--salt-400);
 }
 
-.tasks__task-check-circle {
-  color: var(--salt-700);
+.no-priority {
+  color: var(--priority-none);
 }
 
-.tasks__task-check-circle_priority_low {
-  color: green;
+.low-priority {
+  color: var(--priority-low);
 }
 
-.tasks__task-check-circle_priority_medium {
-  color: goldenrod;
+.medium-priority {
+  color: var(--priority-medium);
 }
 
-.tasks__task-check-circle_priority_high {
-  color: red;
-}
-
-.tasks__task-section_position_right {
-  display: flex;
-  flex-direction: column;
+.high-priority {
+  color: var(--priority-high);
 }
