@@ -357,7 +357,8 @@ class View {
       const descriptionSpan = this.createElement("span");
       descriptionSpan.textContent = task["description"];
       const dueDateSpan = this.createElement("span");
-      dueDateSpan.textContent = format(new Date(task["dueDate"]), "dd MMM");
+      if (task["dueDate"])
+        dueDateSpan.textContent = format(new Date(task["dueDate"]), "dd MMM");
       const taskRightSectionButton = this.createElement("button", {"type": "button", "class": "tasks__task-action tasks__task-action_type_edit"});
       taskRightSectionButton.append(taskNameP, descriptionSpan, dueDateSpan);
       taskRightSectionDiv.append(taskRightSectionButton);
