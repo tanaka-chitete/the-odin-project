@@ -125,6 +125,10 @@ button[type="button"]:hover {
   cursor: pointer;
 }
 
+aside span {
+  color: var(--salt-900);
+}
+
 /* Dialogs */
 
 dialog {

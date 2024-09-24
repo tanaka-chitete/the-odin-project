@@ -93,7 +93,7 @@ class View {
     projectsH2.textContent = "Projects";
   
     const addProjectButton = this.createElement("button", {"type": "button", "id": "add-project-open", "class": "sidebar-action"});
-    const addProjectIcon = this.createElement("div", {"class": "material-symbols-outlined"});
+    const addProjectIcon = this.createElement("span", {"class": "material-symbols-outlined"});
     addProjectIcon.textContent = "add";
     addProjectButton.append(addProjectIcon, projectsH2);
   
