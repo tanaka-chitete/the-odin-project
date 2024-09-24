@@ -1,79 +1,82 @@
 User Story 1: Create Tasks
-As a user, I can create tasks so that I can track the things I need to do.
+As a user, I want to create tasks so that I can track the things I need to do.
 Acceptance Criteria
 - System allows the user to create tasks.
 - System adds newly-created task to default project when the user first opens 
   the app.
 
 User Story 2: Specify Task Properties
-As a user, I can specify properties for any task so that I can better track 
+As a user, I want to specify properties for any task so that I can better track 
 the things I need to do.
 Acceptance Criteria
 - System allows the user to specify the following properties for any task: 
   title, description, due date, and priority.
 
 User Story 3: Create Projects
-As a user, I can create projects so that I can group related tasks.
+As a user, I want to create projects so that I can group related tasks.
 Acceptance Criteria
 - System allows the user to create projects.
 - System allows the user to specify associated project when creating a task.
 
 User Story 4: View Projects
-As a user, I can view all my projects so that I can easily navigate between 
+As a user, I want to view all my projects so that I can easily navigate between 
 different sets of tasks.
 Acceptance Criteria
 - System allows the user to view all projects
 
 User Story 5: View Tasks
-As a user, I can view all tasks in a project so that I can more easily 
+As a user, I want to view all tasks in a project so that I can more easily 
 manage my tasks.
 Acceptance Criteria
 - System allows the user to view all tasks in any project.
 
 User Story 6: View Task Details
-As a user, I can view detailed information for a task so that I can 
+As a user, I want to view detailed information for a task so that I can 
 understand its specific requirements.
 Acceptance Criteria
-- System must allow the user to view additional information of any task in a 
-  project.
+- System allow the user to view additional information of any task in a project.
 
 User Story 7: Edit Tasks
-As a user, I can edit tasks so that I can update or correct task 
+As a user, I want to edit tasks so that I can update or correct task 
 information.
 Acceptance Criteria
-- System must allow the user to edit the following properties for any task:
-  title, description, due date, priority, notes, and checklist.
+- System allow the user to edit the following properties for any task: title, 
+  description, due date, priority, notes, and checklist.
 
 User Story 8: Mark Tasks as 'Complete'
-As a user, I can mark tasks as 'Complete' so that I can focus on remaining 
-tasks.
+As a user, I want to mark tasks as 'Complete' so that I can focus on the
+remaining tasks.
 Acceptance Criteria
 - System allows the user to mark any task as complete.
 
 User Story 9: Delete Tasks
-As a user, I can delete tasks so that I can remove those which are no longer
+As a user, I want to delete tasks so that I can remove those which are no longer
 relevant.
 Acceptance Criteria
 - System allows the user to delete any task.
 
 User Story 10: View Tasks Due Today
-As a user, I can view tasks which are due today so that I can more easily manage
-my tasks.
+As a user, I want to view tasks which are due today so that I can more easily 
+manage my tasks.
 - System allows the user to view tasks which are due today.
 
 User Story 11: View Tasks Due This Week
-As a user, I can view tasks which are due this week so that I can more easily
-manage my tasks.
+As a user, I want to view tasks which are due this week so that I can more 
+easily manage my tasks.
 - System allows the user to view tasks which are due this week.
 
 User Story 12: Task Persistence
-As a user, I can have my tasks loaded when I re-open the app so that I don't
+As a user, I want to have my tasks loaded when I re-open the app so that I don't
 lose my data.
 Acceptance Criteria
-- System must persist all tasks.
+- System persists all tasks.
 
 User Story 13: Project Persistence
-As a user, I can have my projects loaded when I re-open the app so that I don't 
-lose my data.
+As a user, I want to have my projects loaded when I re-open the app so that I 
+don't lose my data.
 Acceptance Criteria
-- System must persist all projects.
+- System persists all projects.
+
+User Story 14: UI/UX
+As a user, I want the app to have a pleasing UI/UX so that I find it enjoyable
+to use.
