@@ -11,13 +11,19 @@ class Model {
     this.onProjectChanged(project, this.projectNameToTasks[project]);
   }
 
-  createTask(taskName, description, projectName, dueDate, priority) {
-    this.projectNameToTasks[projectName].push({
+  createTask(taskName, description, projectName, dueDate, priority, id) {
+    const newTask = {
       "taskName": taskName,
       "description": description,
       "dueDate": dueDate,
       "priority": priority
-    });
+    }
+
+    if (!id) {
+      this.projectNameToTasks[projectName].push(newTask);
+    } else {
+      this.projectNameToTasks[projectName][id] = newTask;
+    }
 
     this.onTasksChanged(projectName, this.projectNameToTasks[projectName]);
   }

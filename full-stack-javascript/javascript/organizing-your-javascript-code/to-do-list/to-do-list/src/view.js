@@ -19,6 +19,10 @@ class View {
       this.addTaskDialog.dialog.close()
     );
 
+    this.editTaskDialog.form.addEventListener("reset", event => 
+      this.editTaskDialog.dialog.close()
+    );
+
     sidebar.addProjectButton.addEventListener("click", () => 
       this.addProjectDialog.dialog.showModal()
     );
@@ -31,6 +35,7 @@ class View {
       sidebar.aside, 
       main, 
       this.addTaskDialog.dialog, 
+      this.editTaskDialog.dialog,
       this.addProjectDialog.dialog
     );
   }
@@ -123,7 +128,7 @@ class View {
     const hr = this.createElement("hr");
     const addTaskFormSectionBottom = this.createElement("div", {"class": "form-section form-section_justify-content_space-between"});
     const select = this.createElement("select", {"name": "projectName"});
-    const addTaskFormSectionBottomRight = this.createElement("div", {"class": "group"})
+    const addTaskFormSectionBottomRight = this.createElement("div", {"class": "group"});
     
     const addTaskCancelButton = this.createElement("button", {"type": "reset"});
     addTaskCancelButton.textContent = "Cancel";
@@ -131,14 +136,14 @@ class View {
     addTaskSubmitButton.textContent = "Add";
     addTaskFormSectionBottomRight.append(addTaskCancelButton, addTaskSubmitButton);
     addTaskFormSectionBottom.append(select, addTaskFormSectionBottomRight);
-    form.append(addTaskFormSectionTop, addTaskFormSectionMiddle, hr, addTaskFormSectionBottom);
+    const id = this.createElement("input", {"type": "number", "hidden": "true", "name": "id"});
+    form.append(addTaskFormSectionTop, addTaskFormSectionMiddle, hr, addTaskFormSectionBottom, id);
     dialog.append(form);
 
     return { dialog, form, select };
   }
 
   createAddProjectDialog() {
-    // Create 'Add Project' Dialog
     const dialog = this.createElement("dialog");
     const form = this.createElement("form");
     const addProjectNameInput = this.createElement("input", {"type": "text", "name": "projectName", "placeholder": "Name", "class": "emphasise"});
@@ -169,7 +174,6 @@ class View {
     return element;
   }
 
-
   bindToAddTaskOpen(handle) {
     this.addTaskDialog.dialog.addEventListener("open", event => {
       event.preventDefault();
@@ -186,9 +190,10 @@ class View {
       const projectName = event.target.elements["projectName"].value;
       const dueDate = event.target.elements["dueDate"].value;
       const priority = event.target.elements["priority"].value;
+      const id = event.target.elements["id"].value;
 
       if (taskName) {
-        handle(taskName, description, projectName, dueDate, priority);
+        handle(taskName, description, projectName, dueDate, priority, id);
         event.target.reset();
         event.target.parentElement.close();
       }
@@ -209,8 +214,23 @@ class View {
     })
   }
 
-  bindToUpdateTaskSubmit(handle) {
-    this.handleUpdateTaskSubmit = handle;
+  bindToEditTaskSubmit(handle) {
+    this.editTaskDialog.form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const taskName = event.target.elements["taskName"].value;
+      const description = event.target.elements["description"].value;
+      const projectName = event.target.elements["projectName"].value;
+      const dueDate = event.target.elements["dueDate"].value;
+      const priority = event.target.elements["priority"].value;
+      const id = event.target.elements["id"].value;
+
+      if (taskName) {
+        handle(taskName, description, projectName, dueDate, priority, id);
+        event.target.reset();
+        event.target.parentElement.close();
+      }
+    });
   }
 
   bindToChangeProjectClick(handle) {
@@ -245,6 +265,14 @@ class View {
       projectOption.textContent = project;
       this.addTaskDialog.select.append(projectOption);
     });
+
+    this.editTaskDialog.select.replaceChildren();
+  
+    projects.forEach((project) => {
+      const projectOption = this.createElement("option", {"value": project});
+      projectOption.textContent = project;
+      this.editTaskDialog.select.append(projectOption);
+    });
   }
 
   displayTasks(project, tasks) {
@@ -260,8 +288,8 @@ class View {
       return;
     } 
 
-    tasks.forEach(task => {
-      const taskLi = this.createElement("li", {"class": "tasks__task"});
+    tasks.forEach((task, id) => {
+      const taskLi = this.createElement("li", {"class": "tasks__task", "data-id": id});
       const taskLeftSectionDiv = this.createElement("div", {"class": "tasks__task-section"});
       const uncheckedCircleButton = this.createElement("button", {"type": "button", "class": "tasks__task-action tasks__task-action_type_complete"});
       const uncheckedCircleSpan = this.createElement("span", {"class": "material-symbols-outlined"});
@@ -291,22 +319,22 @@ class View {
       const dueDateSpan = this.createElement("span");
       dueDateSpan.textContent = task["dueDate"];
       const taskRightSectionButton = this.createElement("button", {"type": "button", "class": "tasks__task-action tasks__task-action_type_edit"});
-      taskRightSectionButton.addEventListener("click", () => {
-        this.addTaskDialog.showModal();
-
-        this.addTaskForm.elements["taskName"].value = task["taskName"];
-        this.addTaskForm.elements["description"].value = task["description"];
-        this.addTaskForm.elements["projectName"].value = task["projectName"];
-        this.addTaskForm.elements["dueDate"].value = task["dueDate"];
-        this.addTaskForm.elements["priority"].value = task["priority"];
-
-        this.handleUpdateTaskSubmit
-      });
       taskRightSectionButton.append(taskNameP, descriptionSpan, dueDateSpan);
       taskRightSectionDiv.append(taskRightSectionButton);
       taskLi.append(taskLeftSectionDiv, taskRightSectionDiv);
-
+      
       this.tasksUl.append(taskLi);
+
+      taskRightSectionButton.addEventListener("click", () => {
+        this.editTaskDialog.dialog.showModal();
+
+        this.editTaskDialog.form.elements["taskName"].value = task["taskName"];
+        this.editTaskDialog.form.elements["description"].value = task["description"];
+        this.editTaskDialog.form.elements["projectName"].value = task["projectName"];
+        this.editTaskDialog.form.elements["dueDate"].value = task["dueDate"];
+        this.editTaskDialog.form.elements["priority"].value = task["priority"];
+        this.editTaskDialog.form.elements["id"].value = id;
+      });
     });
   }
 }

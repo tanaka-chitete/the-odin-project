@@ -5,6 +5,7 @@ class Controller {
 
     this.view.bindToAddTaskOpen(this.handleAddTaskOpen);
     this.view.bindToAddTaskSubmit(this.handleAddTaskSubmit);
+    this.view.bindToEditTaskSubmit(this.handleAddTaskSubmit);
     this.view.bindToAddProjectSubmit(this.handleAddProjectSubmit);
     this.view.bindToChangeProjectClick(this.handleProjectChanged);
 
@@ -29,13 +30,15 @@ class Controller {
     description, 
     projectName, 
     dueDate, 
-    priority
+    priority,
+    id
   ) => this.model.createTask(
     taskName, 
     description, 
     projectName, 
     dueDate, 
-    priority
+    priority,
+    id
   );
 
   handleAddProjectSubmit = (projectName) => 
