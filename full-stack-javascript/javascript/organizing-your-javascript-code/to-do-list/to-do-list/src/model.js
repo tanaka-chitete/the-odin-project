@@ -28,18 +28,17 @@ class Model {
     this.onTasksChanged(projectName, this.projectNameToTasks[projectName]);
   }
 
+  deleteTask(projectName, id) {
+    this.projectNameToTasks[projectName].splice(id, 1);
+    this.onTasksChanged(projectName, this.projectNameToTasks[projectName]);
+  }
+
   createProject(projectName) {
     if (!this.projectNameToTasks.hasOwnProperty(projectName)) {
       this.projectNameToTasks[projectName] = [];
       this.onProjectsChanged(Object.keys(this.projectNameToTasks));
     }
   }
-
-  // deleteTask(id) {
-  //   this.projectNameToTasks["General"].splice(id);
-
-  //   this.onTasksChanged(this.projectNameToTasks["General"]);
-  // }
 
   bindToOnProjectsChanged(callback) {
     this.onProjectsChanged = callback;

@@ -240,9 +240,12 @@ class View {
     })
   }
 
-
   bindToChangeProjectClick(handle) {
     this.handleChangeProjectClick = handle;
+  }
+
+  bindToCompleteTaskClick(handle) {
+    this.handleCompleteTaskClick = handle;
   }
 
   displayProjects(projects) {
@@ -332,6 +335,10 @@ class View {
       taskLi.append(taskLeftSectionDiv, taskRightSectionDiv);
       
       this.tasksUl.append(taskLi);
+
+      uncheckedCircleButton.addEventListener("click", () => {
+        this.handleCompleteTaskClick(project, id);
+      });
 
       taskRightSectionButton.addEventListener("click", () => {
         this.editTaskDialog.dialog.showModal();
