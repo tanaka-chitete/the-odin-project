@@ -10,6 +10,7 @@ class Controller {
     this.view.bindToAddProjectSubmit(this.handleAddProjectSubmit);
     this.view.bindToChangeProjectClick(this.handleProjectChanged);
     this.view.bindToCompleteTaskClick(this.handleCompleteTaskClick);
+    this.view.bindToDisplayDueTodayClick(this.handleDisplayDueToday);
 
     this.model.bindToOnProjectsChanged(this.onProjectsChanged);
     this.model.bindToOnTasksChanged(this.onTasksChanged);
@@ -42,6 +43,10 @@ class Controller {
     priority,
     id
   );
+
+  handleDisplayDueToday = () => {
+    this.model.pushDueToday();
+  }
 
   handleCompleteTaskClick = (projectName, id) => {
     this.model.deleteTask(projectName, id);

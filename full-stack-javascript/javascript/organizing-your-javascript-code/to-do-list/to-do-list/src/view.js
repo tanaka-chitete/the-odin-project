@@ -1,14 +1,16 @@
+import { format } from "date-fns";;
+
 class View {
   constructor() {
     this.page = document.querySelector("#root");
     
-    const sidebar = this.createSidebar();
+    this.sidebar = this.createSidebar();
     const main = this.createMain();    
     this.addTaskDialog = this.createTaskDialog();
     this.editTaskDialog = this.createTaskDialog();
     this.addProjectDialog = this.createAddProjectDialog();
 
-    sidebar.addTaskButton.addEventListener("click", () => {
+    this.sidebar.addTaskButton.addEventListener("click", () => {
       this.addTaskDialog.dialog.showModal();
       // Prompts event listener to populate 'Projects' list
       const openEvent = new Event("open");
@@ -23,7 +25,7 @@ class View {
       this.editTaskDialog.dialog.close()
     );
 
-    sidebar.addProjectButton.addEventListener("click", () => 
+    this.sidebar.addProjectButton.addEventListener("click", () => 
       this.addProjectDialog.dialog.showModal()
     );
 
@@ -32,7 +34,7 @@ class View {
     );
 
     this.page.append(
-      sidebar.aside, 
+      this.sidebar.aside, 
       main, 
       this.addTaskDialog.dialog, 
       this.editTaskDialog.dialog,
@@ -100,7 +102,7 @@ class View {
   
     aside.append(sidebarSectionTop, sidebarSectionMiddle, sidebarSectionBottom);
 
-    return { aside, addTaskButton, addProjectButton };
+    return { aside, addTaskButton, addProjectButton, dueTodayButton, dueNextWeekButton, overdueButton };
   }
 
   createMain() {
@@ -197,7 +199,7 @@ class View {
       const taskName = event.target.elements["taskName"].value;
       const description = event.target.elements["description"].value;
       const projectName = event.target.elements["projectName"].value;
-      const dueDate = event.target.elements["dueDate"].value;
+      const dueDate = event.target.elements["dueDate"].valueAsNumber;
       const priority = event.target.elements["priority"].value;
       const id = event.target.elements["id"].value;
 
@@ -255,6 +257,12 @@ class View {
 
   bindToCompleteTaskClick(handle) {
     this.handleCompleteTaskClick = handle;
+  }
+
+  bindToDisplayDueTodayClick(handle) {
+    this.sidebar.dueTodayButton.addEventListener("click", () => {
+      handle();
+    });
   }
 
   displayProjects(projects) {
@@ -337,7 +345,7 @@ class View {
       const descriptionSpan = this.createElement("span");
       descriptionSpan.textContent = task["description"];
       const dueDateSpan = this.createElement("span");
-      dueDateSpan.textContent = task["dueDate"];
+      dueDateSpan.textContent = format(new Date(task["dueDate"]), "dd MMM");
       const taskRightSectionButton = this.createElement("button", {"type": "button", "class": "tasks__task-action tasks__task-action_type_edit"});
       taskRightSectionButton.append(taskNameP, descriptionSpan, dueDateSpan);
       taskRightSectionDiv.append(taskRightSectionButton);
@@ -346,7 +354,7 @@ class View {
       this.tasksUl.append(taskLi);
 
       uncheckedCircleButton.addEventListener("click", () => {
-        this.handleCompleteTaskClick(project, id);
+        this.handleCompleteTaskClick(task["projectName"], id);
       });
 
       taskRightSectionButton.addEventListener("click", () => {
@@ -355,7 +363,7 @@ class View {
         this.editTaskDialog.form.elements["taskName"].value = task["taskName"];
         this.editTaskDialog.form.elements["description"].value = task["description"];
         this.editTaskDialog.form.elements["projectName"].disabled = true;
-        this.editTaskDialog.form.elements["dueDate"].value = task["dueDate"];
+        this.editTaskDialog.form.elements["dueDate"].value = format(new Date(task["dueDate"]), "yyyy-MM-dd");
         this.editTaskDialog.form.elements["priority"].value = task["priority"];
         this.editTaskDialog.form.elements["id"].value = id;
       });
