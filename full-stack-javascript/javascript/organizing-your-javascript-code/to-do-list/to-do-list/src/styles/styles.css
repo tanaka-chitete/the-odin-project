@@ -120,7 +120,7 @@ button[type="button"]:hover {
   background: var(--salt-300);
 }
 
-/* Add Task */
+/* Dialogs */
 
 dialog {
   width: 32rem;
@@ -129,85 +129,82 @@ dialog {
   margin: 16rem auto auto auto;
 }
 
-.add-task-form {
+form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.add-task-form__section {
+.form-top {
   display: flex;
-}
-
-.add-task-form__section_position_top {
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.add-task-form__section_position_middle {
-  gap: 0.5rem;
-}
-
-.add-task-form__section_position_bottom {
-  justify-content: space-between;
-}
-
-.add-task-form__section_position_bottom-right {
-  gap: 0.5rem;
-}
-
-.add-task-form__input {
-  border: none;
-  outline: none;
-}
-
-.add-task-form__input_type_task-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.add-task-form__properties {
+.form-middle {
   display: flex;
   gap: 0.5rem;
 }
 
-.add-task-form__input_type_date {
+.form-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-bottom_justify-flex-end {
+  justify-content: flex-end;
+}
+
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+input[type="text"] {
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+input[type="date"] {
+  outline: none;
   border: 2px solid var(--salt-400);
   border-radius: 0.3rem;
   width: 8.4rem;
   padding: 0.2rem 0.4rem;
 }
 
-.add-task-form__input_type_select {
+select {
+  outline: none;
   border: 2px solid var(--salt-400);
   background: none;
   border-radius: 0.3rem;
   padding: 0.2rem 0.4rem;
 }
 
-.add-task-form__actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-}
-
-.add-task-form__button {
+button {
   border: none;
   border-radius: 0.3rem;
   padding: 0.2rem 1rem;
 }
 
-.add-task-form__button:hover {
+button[type="submit"] {
+  color: var(--salt-100);
+  background: var(--guava-500);
+}
+
+button:hover {
   cursor: pointer;
 }
 
-.add-task-form__button_name_cancel {
-  justify-self: flex-end;
-}
+/* Content */
 
-/* Project */
-
-.content-container {
+.content {
   height: 100%;
   margin: 0 auto;
   max-width: 80rem;
