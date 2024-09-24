@@ -15,7 +15,6 @@ class Model {
 
   pushDueToday() {
     const allTasks = Object.values(this.projectNameToTasks).flat();
-    console.log(allTasks);
     const tasksDueToday = allTasks.filter((task) => {
       const dueDate = new Date(task["dueDate"]);
       const currentDate = new Date();
@@ -23,11 +22,26 @@ class Model {
       return (
         dueDate.getFullYear() === currentDate.getFullYear() &&
         dueDate.getMonth() === currentDate.getMonth() &&
-        dueDate.getDate() === currentDate.getDate()
+        dueDate.getDay() === currentDate.getDay()
       );
     });
 
     this.onProjectChanged("Today", tasksDueToday);
+  }
+
+  pushDueThisWeek() {
+    const allTasks = Object.values(this.projectNameToTasks).flat();
+    const tasksDueThisWeek = allTasks.filter((task) => {
+      const dueDate = new Date(task["dueDate"]);
+      const currentDate = new Date();
+      const oneWeekFromNow = new Date(currentDate);
+      const oneWeekInDays = 7;
+      oneWeekFromNow.setDate(oneWeekFromNow.getDate() + oneWeekInDays);
+
+      return dueDate <= oneWeekFromNow;
+    });
+
+    this.onProjectChanged("Upcoming", tasksDueThisWeek);
   }
 
   createTask(taskName, description, projectName, dueDate, priority, id) {

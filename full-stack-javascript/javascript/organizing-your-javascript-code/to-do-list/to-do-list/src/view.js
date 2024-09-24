@@ -67,13 +67,13 @@ class View {
     dueTodayLi.append(dueTodayButton);
   
     const dueNextWeekLi = this.createElement("li");
-    const dueNextWeekButton = this.createElement("button", {"type": "button", "class": "sidebar-action"});
+    const dueThisWeekButton = this.createElement("button", {"type": "button", "class": "sidebar-action"});
     const dueNextWeekIcon = this.createElement("span", {"class": "material-symbols-outlined"});
     dueNextWeekIcon.textContent = "date_range";
     const dueNextWeekH3 = this.createElement("h3");
     dueNextWeekH3.textContent = "Upcoming";
-    dueNextWeekButton.append(dueNextWeekIcon, dueNextWeekH3);
-    dueNextWeekLi.append(dueNextWeekButton);
+    dueThisWeekButton.append(dueNextWeekIcon, dueNextWeekH3);
+    dueNextWeekLi.append(dueThisWeekButton);
 
     const overdueLi = this.createElement("li");
     const overdueButton = this.createElement("button", {"type": "button", "class": "sidebar-action"});
@@ -102,7 +102,7 @@ class View {
   
     aside.append(sidebarSectionTop, sidebarSectionMiddle, sidebarSectionBottom);
 
-    return { aside, addTaskButton, addProjectButton, dueTodayButton, dueNextWeekButton, overdueButton };
+    return { aside, addTaskButton, addProjectButton, dueTodayButton, dueThisWeekButton, overdueButton };
   }
 
   createMain() {
@@ -261,6 +261,12 @@ class View {
 
   bindToDisplayDueTodayClick(handle) {
     this.sidebar.dueTodayButton.addEventListener("click", () => {
+      handle();
+    });
+  }
+
+  bindToDisplayDueThisWeekClick(handle) {
+    this.sidebar.dueThisWeekButton.addEventListener("click", () => {
       handle();
     });
   }
