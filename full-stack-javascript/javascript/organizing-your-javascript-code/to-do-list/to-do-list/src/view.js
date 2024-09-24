@@ -1,12 +1,45 @@
 class View {
   constructor() {
-    this.app = this.getElement("#root");
+    this.page = document.querySelector("#root");
+    
+    const sidebar = this.createSidebar();
+    const main = this.createMain();    
+    this.addTaskDialog = this.createTaskDialog();
+    this.editTaskDialog = this.createTaskDialog();
+    this.addProjectDialog = this.createAddProjectDialog();
 
-    // Create 'Sidebar'
+    sidebar.addTaskButton.addEventListener("click", () => {
+      this.addTaskDialog.dialog.showModal();
+      // Prompts event listener to populate 'Projects' list
+      const openEvent = new Event("open");
+      this.addTaskDialog.dialog.dispatchEvent(openEvent);
+    });
+
+    this.addTaskDialog.form.addEventListener("reset", event => 
+      this.addTaskDialog.dialog.close()
+    );
+
+    sidebar.addProjectButton.addEventListener("click", () => 
+      this.addProjectDialog.dialog.showModal()
+    );
+
+    this.addProjectDialog.form.addEventListener("reset", event => 
+      this.addProjectDialog.dialog.close()
+    );
+
+    this.page.append(
+      sidebar.aside, 
+      main, 
+      this.addTaskDialog.dialog, 
+      this.addProjectDialog.dialog
+    );
+  }
+
+  createSidebar() {
     const aside = this.createElement("aside");
     
     const sidebarSectionTop = this.createElement("div", {"class": "sidebar-section"});
-    const addTaskButton = this.createElement("button", {"type": "button", "class": "sidebar-action"});
+    const addTaskButton = this.createElement("button", {"type": "button", "id": "add-task-open", "class": "sidebar-action"});
     const addTaskIconSpan = this.createElement("span", {"class": "material-symbols-outlined"});
     addTaskIconSpan.textContent = "add_circle";
     const addTaskH2 = this.createElement("h2");
@@ -25,7 +58,7 @@ class View {
     dueTodayH3.textContent = "Today";
     dueTodayButton.append(dueTodayIcon, dueTodayH3);
     dueTodayLi.append(dueTodayButton);
-
+  
     const dueNextWeekLi = this.createElement("li");
     const dueNextWeekButton = this.createElement("button", {"type": "button", "class": "sidebar-action"});
     const dueNextWeekIcon = this.createElement("span", {"class": "material-symbols-outlined"});
@@ -34,26 +67,29 @@ class View {
     dueNextWeekH3.textContent = "Upcoming";
     dueNextWeekButton.append(dueNextWeekIcon, dueNextWeekH3);
     dueNextWeekLi.append(dueNextWeekButton);
-
+  
     actionsUl.append(dueTodayLi, dueNextWeekLi);
     sidebarSectionMiddle.append(actionsUl);
-
+  
     const sidebarSectionBottom = this.createElement("div", {"class": "sidebar-section"});
-
+  
     const projectsH2 = this.createElement("h2");
     projectsH2.textContent = "Projects";
-
-    const addProjectButton = this.createElement("button", {"type": "button", "class": "sidebar-action"});
+  
+    const addProjectButton = this.createElement("button", {"type": "button", "id": "add-project-open", "class": "sidebar-action"});
     const addProjectIcon = this.createElement("div", {"class": "material-symbols-outlined"});
     addProjectIcon.textContent = "add";
     addProjectButton.append(addProjectIcon, projectsH2);
-
+  
     this.projectsUl = this.createElement("ul", {"role": "list"});
     sidebarSectionBottom.append(addProjectButton, this.projectsUl)
-
+  
     aside.append(sidebarSectionTop, sidebarSectionMiddle, sidebarSectionBottom);
 
-    // Create 'Main'
+    return { aside, addTaskButton, addProjectButton };
+  }
+
+  createMain() {
     const main = this.createElement("main");
     const contentContainerDiv = this.createElement("div", {"class": "content"});
     this.projectNameH1 = this.createElement("h1", {"class": "project-name"});
@@ -61,9 +97,12 @@ class View {
     contentContainerDiv.append(this.projectNameH1, this.tasksUl);
     main.append(contentContainerDiv);
 
-    // Create 'Add Task' Dialog
-    this.addTaskDialog = this.createElement("dialog");
-    this.addTaskForm = this.createElement("form");
+    return main;
+  }
+
+  createTaskDialog() {
+    const dialog = this.createElement("dialog");
+    const form = this.createElement("form");
     const addTaskFormSectionTop = this.createElement("div", {"class": "form-section form-section_flex-direction_column"});
     const addTaskNameInput = this.createElement("input", {"type": "text", "placeholder": "Name", "name": "taskName", "class": "emphasise"});
     const addTaskDescriptionInput = this.createElement("input", {"type": "text", "placeholder": "Description", "name": "description"});
@@ -83,21 +122,25 @@ class View {
     addTaskFormSectionMiddle.append(dueDateInput, prioritySelect);
     const hr = this.createElement("hr");
     const addTaskFormSectionBottom = this.createElement("div", {"class": "form-section form-section_justify-content_space-between"});
-    this.projectSelect = this.createElement("select", {"name": "projectName"});
+    const select = this.createElement("select", {"name": "projectName"});
     const addTaskFormSectionBottomRight = this.createElement("div", {"class": "group"})
     
     const addTaskCancelButton = this.createElement("button", {"type": "reset"});
     addTaskCancelButton.textContent = "Cancel";
-    const addTaskSubmitButton = this.createElement("button", {"type": "submit", "class": ""});
+    const addTaskSubmitButton = this.createElement("button", {"type": "submit"});
     addTaskSubmitButton.textContent = "Add";
     addTaskFormSectionBottomRight.append(addTaskCancelButton, addTaskSubmitButton);
-    addTaskFormSectionBottom.append(this.projectSelect, addTaskFormSectionBottomRight);
-    this.addTaskForm.append(addTaskFormSectionTop, addTaskFormSectionMiddle, hr, addTaskFormSectionBottom);
-    this.addTaskDialog.append(this.addTaskForm);
+    addTaskFormSectionBottom.append(select, addTaskFormSectionBottomRight);
+    form.append(addTaskFormSectionTop, addTaskFormSectionMiddle, hr, addTaskFormSectionBottom);
+    dialog.append(form);
 
+    return { dialog, form, select };
+  }
+
+  createAddProjectDialog() {
     // Create 'Add Project' Dialog
-    this.addProjectDialog = this.createElement("dialog");
-    this.addProjectForm = this.createElement("form");
+    const dialog = this.createElement("dialog");
+    const form = this.createElement("form");
     const addProjectNameInput = this.createElement("input", {"type": "text", "name": "projectName", "placeholder": "Name", "class": "emphasise"});
     const addProjectFormSectionBottom = this.createElement("div", {"class": "form-section form-section_justify-content_flex-end"});
     const addProjectCancelButton = this.createElement("button", {"type": "reset"});
@@ -108,35 +151,15 @@ class View {
     buttonGroup.append(addProjectCancelButton, addProjectSubmitButton);
     addProjectFormSectionBottom.append(buttonGroup);
     const hr2 = this.createElement("hr");
-    this.addProjectForm.append(addProjectNameInput, hr2, addProjectFormSectionBottom);
-    this.addProjectDialog.append(this.addProjectForm);
+    form.append(addProjectNameInput, hr2, addProjectFormSectionBottom);
+    dialog.append(form);
 
-    // Add event listeners
-    addTaskButton.addEventListener("click", () => {
-      this.addTaskDialog.showModal();
-      // Prompts event listener to populate 'Projects' list
-      const openEvent = new Event("open");
-      this.addTaskDialog.dispatchEvent(openEvent);
-    });
-
-    this.addTaskForm.addEventListener("reset", event => 
-      this.addTaskDialog.close()
-    );
-
-    // Add event listeners
-    addProjectButton.addEventListener("click", () => this.addProjectDialog.showModal());
-
-    this.addProjectForm.addEventListener("reset", event => 
-      this.addProjectDialog.close()
-    );
-
-    this.app.append(aside, main, this.addTaskDialog, this.addProjectDialog);
+    return { dialog, form };
   }
-
 
   createElement(tag, attributeNameToValue={}) {
     const element = document.createElement(tag);
-
+    
     Object.entries(attributeNameToValue).forEach(
       ([attributeName, attributeValue]) => {
         element.setAttribute(attributeName, attributeValue);
@@ -146,20 +169,16 @@ class View {
     return element;
   }
 
-  // TODO: Refactor to only get stored elements. so have a bunch of getters?
-  getElement(selector) { 
-    return document.querySelector(selector);
-  }
 
   bindToAddTaskOpen(handle) {
-    this.addTaskDialog.addEventListener("open", event => {
+    this.addTaskDialog.dialog.addEventListener("open", event => {
       event.preventDefault();
       handle();
     });
   }
 
   bindToAddTaskSubmit(handle) {
-    this.addTaskForm.addEventListener("submit", event => {
+    this.addTaskDialog.form.addEventListener("submit", event => {
       event.preventDefault();
 
       const taskName = event.target.elements["taskName"].value;
@@ -177,7 +196,7 @@ class View {
   }
 
   bindToAddProjectSubmit(handle) {
-    this.addProjectForm.addEventListener("submit", event => {
+    this.addProjectDialog.form.addEventListener("submit", event => {
       event.preventDefault();
 
       const projectName = event.target.elements["projectName"].value;
@@ -219,12 +238,12 @@ class View {
       this.projectsUl.append(projectLi);
     });
 
-    this.projectSelect.replaceChildren();
+    this.addTaskDialog.select.replaceChildren();
   
     projects.forEach((project) => {
       const projectOption = this.createElement("option", {"value": project});
       projectOption.textContent = project;
-      this.projectSelect.append(projectOption);
+      this.addTaskDialog.select.append(projectOption);
     });
   }
 
@@ -235,7 +254,7 @@ class View {
 
     if (tasks.length === 0) {
       const p = this.createElement("p");
-      p.textContent = "Nothing to do!";
+      p.textContent = "Out of sight, out of mind...right?";
       this.tasksUl.append(p);
 
       return;

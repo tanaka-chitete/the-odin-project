@@ -56,13 +56,23 @@ relevant.
 Acceptance Criteria
 - System allows the user to delete any task.
 
-User Story 10: Task Persistence
+User Story 10: View Tasks Due Today
+As a user, I can view tasks which are due today so that I can more easily manage
+my tasks.
+- System allows the user to view tasks which are due today.
+
+User Story 11: View Tasks Due This Week
+As a user, I can view tasks which are due this week so that I can more easily
+manage my tasks.
+- System allows the user to view tasks which are due this week.
+
+User Story 12: Task Persistence
 As a user, I can have my tasks loaded when I re-open the app so that I don't
 lose my data.
 Acceptance Criteria
 - System must persist all tasks.
 
-User Story 11: Project Persistence
+User Story 13: Project Persistence
 As a user, I can have my projects loaded when I re-open the app so that I don't 
 lose my data.
 Acceptance Criteria

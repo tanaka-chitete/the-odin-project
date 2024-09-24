@@ -75,7 +75,9 @@ span {
 }
 
 hr {
-  border: 1px solid var(--salt-400);
+  border: none;
+  height: 1px;
+  background: var(--salt-400);
 }
 
 .material-symbols-outlined {
@@ -108,7 +110,7 @@ aside {
 
 .sidebar-action {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   background: none;
   border: none;
   padding: 0.5rem;
