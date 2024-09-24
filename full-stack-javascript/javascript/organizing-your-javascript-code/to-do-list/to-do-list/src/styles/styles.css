@@ -135,27 +135,24 @@ form {
   gap: 1rem;
 }
 
-.form-top {
+.form-section {
   display: flex;
+  gap: 0.5rem;
+}
+
+.form-section_column {
   flex-direction: column;
-  gap: 0.5rem;
 }
 
-.form-middle {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.form-bottom {
-  display: flex;
+.form-section_space-between {
   justify-content: space-between;
 }
 
-.form-bottom_justify-flex-end {
+.form-section_flex-end {
   justify-content: flex-end;
 }
 
-.button-group {
+.group {
   display: flex;
   gap: 0.5rem;
 }
@@ -166,7 +163,7 @@ input[type="text"] {
   outline: none;
 }
 
-.name {
+.emphasise {
   font-size: 1.5rem;
   font-weight: bold;
 }

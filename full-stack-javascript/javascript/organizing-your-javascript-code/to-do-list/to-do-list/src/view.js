@@ -62,11 +62,11 @@ class View {
     // Create 'Add Task' Dialog
     this.addTaskDialog = this.createElement("dialog");
     this.addTaskForm = this.createElement("form");
-    const addTaskFormSectionTop = this.createElement("div", {"class": "form-top"});
-    const addTaskNameInput = this.createElement("input", {"type": "text", "placeholder": "Name", "name": "taskName", "class": "name"});
+    const addTaskFormSectionTop = this.createElement("div", {"class": "form-section form-section_column"});
+    const addTaskNameInput = this.createElement("input", {"type": "text", "placeholder": "Name", "name": "taskName", "class": "emphasise"});
     const addTaskDescriptionInput = this.createElement("input", {"type": "text", "placeholder": "Description", "name": "description"});
     addTaskFormSectionTop.append(addTaskNameInput, addTaskDescriptionInput);
-    const addTaskFormSectionMiddle = this.createElement("div", {"class": "form-middle"});
+    const addTaskFormSectionMiddle = this.createElement("div", {"class": "form-section"});
     const dueDateInput = this.createElement("input", {"type": "date", "name": "dueDate"});
     const prioritySelect = this.createElement("select", {"name": "priority"});
     const priorityHighOption = this.createElement("option", {"value": "high"});
@@ -80,9 +80,9 @@ class View {
     prioritySelect.append(priorityHighOption, priorityMediumOption, priorityLowOption, priorityNoneOption);
     addTaskFormSectionMiddle.append(dueDateInput, prioritySelect);
     const hr = this.createElement("hr");
-    const addTaskFormSectionBottom = this.createElement("div", {"class": "form-bottom"});
+    const addTaskFormSectionBottom = this.createElement("div", {"class": "form-section form-section_space-between"});
     this.projectSelect = this.createElement("select", {"name": "projectName"});
-    const addTaskFormSectionBottomRight = this.createElement("div", {"class": "button-group"})
+    const addTaskFormSectionBottomRight = this.createElement("div", {"class": "group"})
     
     const addTaskCancelButton = this.createElement("button", {"type": "reset"});
     addTaskCancelButton.textContent = "Cancel";
@@ -96,13 +96,13 @@ class View {
     // Create 'Add Project' Dialog
     this.addProjectDialog = this.createElement("dialog");
     this.addProjectForm = this.createElement("form");
-    const addProjectNameInput = this.createElement("input", {"type": "text", "name": "projectName", "placeholder": "Name", "class": "name"});
-    const addProjectFormSectionBottom = this.createElement("div", {"class": "form-bottom form-bottom_justify-flex-end"});
+    const addProjectNameInput = this.createElement("input", {"type": "text", "name": "projectName", "placeholder": "Name", "class": "emphasise"});
+    const addProjectFormSectionBottom = this.createElement("div", {"class": "form-section form-section_flex-end"});
     const addProjectCancelButton = this.createElement("button", {"type": "reset"});
     addProjectCancelButton.textContent = "Cancel";
     const addProjectSubmitButton = this.createElement("button", {"type": "submit"});
     addProjectSubmitButton.textContent = "Add";
-    const buttonGroup = this.createElement("div", {"class": "button-group"});
+    const buttonGroup = this.createElement("div", {"class": "group"});
     buttonGroup.append(addProjectCancelButton, addProjectSubmitButton);
     addProjectFormSectionBottom.append(buttonGroup);
     const hr2 = this.createElement("hr");
