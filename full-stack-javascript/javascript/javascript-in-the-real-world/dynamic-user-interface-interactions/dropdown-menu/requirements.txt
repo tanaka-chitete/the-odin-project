@@ -1,0 +1,3 @@
+System must show the menu either on click or on hover.
+System must hide/reveal menu items programmatically.
+System must support multiple menus using the same programming logic.
