@@ -4,6 +4,11 @@
   cursor: pointer;
 }
 
+.dropdown-menu-items {
+  position: absolute;
+  background: white;
+}
+
 .dropdown-menu-items_hidden {
   display: none;
 }
