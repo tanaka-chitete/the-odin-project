@@ -1,3 +1,17 @@
-System must show the menu either on click or on hover.
-System must hide/reveal menu items programmatically.
-System must support multiple menus using the same programming logic.
+User Story 1
+As a user, I want the menu items to appear and disappear as needed, so that I
+only see relevant options when necessary.
+Acceptance Criteria
+- System must hide/reveal menu items programmatically.
+--------------------------------------------------------------------------------
+User Story 2
+As a user, I want to access the menu with a single click, so that I can use it
+with minimal effort.
+Acceptance Criteria
+- System must show the menu on click.
+--------------------------------------------------------------------------------
+User Story 3
+As a user, I want consistent behaviour across all menus, so that I can navigate
+the app without learning different interactions.
+Acceptance Criteria
+- System must support multiple menus using the same programming logic.

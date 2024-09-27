@@ -12,10 +12,10 @@
   margin: 0;
 }
 
-h1, 
-h2, 
-h3, 
-h4, 
+h1,
+h2,
+h3,
+h4,
 h5,
 h6,
 p {
@@ -31,27 +31,26 @@ p {
 Prevents lists from being represented using numbers or bullets, 
 as it is rarely desired 
 */
-ol[role="list"], 
+ol[role="list"],
 ul[role="list"] {
   list-style: none;
   padding-inline: 0;
 }
 
 /* Prevents media overflow */
-img, 
-picture, 
-video, 
-canvas, 
+img,
+picture,
+video,
+canvas,
 svg {
   display: block;
   max-width: 100%;
 }
 
-
 /* Ensures form typography is consistent with global typography */
-input, 
-button, 
-textarea, 
+input,
+button,
+textarea,
 select {
   font: inherit;
 }
