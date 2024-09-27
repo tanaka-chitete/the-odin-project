@@ -1,6 +1,7 @@
 @import "./reset.css";
 
-.dropdown-menu-items {
+.dropdown-button:hover {
+  cursor: pointer;
 }
 
 .dropdown-menu-items_hidden {
