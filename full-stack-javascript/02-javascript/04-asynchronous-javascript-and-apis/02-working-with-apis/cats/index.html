@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" />
+    <button>Fetch</button>
+    <img src="#" />
+    <p style="display: none">No images found!</p>
+    <script>
+      const input = document.querySelector("input");
+      const button = document.querySelector("button");
+      const img = document.querySelector("img");
+      const p = document.querySelector("p");
+
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        getImage();
+      });
+
+      function getImage() {
+        fetch(
+          `https://api.giphy.com/v1/gifs/translate?api_key=FzsGFK7Dk6pmf8L2KBB2bJevF53iRgZf&s=${input.value}`,
+          { mode: "cors" }
+        )
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (response) {
+            if (response.ok) {
+              p.style.display = "none";
+              img.src = response.data.images.original.url;
+            } else {
+              p.style.display = "block";
+            }
+          })
+          .catch(function (error) {
+            p.style.display = "block";
+          });
+      }
+    </script>
+  </body>
+</html>
