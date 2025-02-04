@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <form novalidate>
+      <p>
+        <label for="email">
+          <span>Email:</span>
+          <input type="email" id="email" />
+          <span class="error error_field_email"></span>
+        </label>
+      </p>
+
+      <p>
+        <label for="country">
+          <span>Country:</span>
+          <select id="country">
+            <option value="fr">France</option>
+            <option value="de">Germany</option>
+            <option value="nl">The Netherlands</option>
+            <option value="ch">Switzerland</option>
+          </select>
+          <span class="error error_field_country"></span>
+        </label>
+      </p>
+
+      <p>
+        <label for="zip-code">
+          <span>Zip Code:</span>
+          <input type="text" id="zip-code" />
+          <span class="error error_field_zip-code"></span>
+        </label>
+      </p>
+
+      <p>
+        <label for="password">
+          <span>Password:</span>
+          <input type="password" id="password" />
+          <span class="error error_field_password"></span>
+        </label>
+      </p>
+
+      <p>
+        <label for="password-confirmation">
+          <span>Confirmation:</span>
+          <input type="password" id="password-confirmation" />
+          <span class="error error_field_password-confirmation"></span>
+        </label>
+      </p>
+
+      <button id="validate">Validate</button>
+    </form>
+  </body>
+</html>
