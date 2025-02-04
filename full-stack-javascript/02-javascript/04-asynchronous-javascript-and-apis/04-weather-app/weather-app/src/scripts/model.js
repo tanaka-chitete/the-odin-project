@@ -2,7 +2,7 @@ import { format } from "date-fns";
 
 const TIME_WINDOW_IN_DAYS = 10;
 const DATE_FORMAT = "yyyy-MM-dd";
-const API_KEY = "CWC4TD4CJ82Z885APFYDCYEFB";
+const API_KEY = "ULLZAVP98LHVZBLKNFM5PZGCM";
 
 class Model {
   async fetchWeatherData(location) {
@@ -17,19 +17,42 @@ class Model {
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}/${endDate}?key=${API_KEY}`,
         { mode: "cors" }
       );
+
       if (!response.ok) {
-        const error = await response.text();
-        this.onWeatherDataFetched(error);
-        return;
+        throw new Error(await response.text());
       }
 
       const weatherData = await response.json();
-      this.onWeatherDataFetched(weatherData);
+
+      this.onWeatherDataFetched(weatherData["description"]);
     } catch (error) {
-      console.log(error);
       this.onWeatherDataFetched(error);
     }
   }
+
+  // fetchWeatherData = (location) => {
+  //   const startDate = format(
+  //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS)),
+  //     DATE_FORMAT
+  //   );
+  //   const endDate = format(new Date(), DATE_FORMAT);
+
+  //   fetch(
+  //     `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}/${endDate}?key=${API_KEY}`,
+  //     { mode: "cors" }
+  //   )
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         return response.text().then((errorMessage) => {
+  //           throw new Error(errorMessage);
+  //         });
+  //       }
+
+  //       return response.json();
+  //     })
+  //     .then((data) => this.onWeatherDataFetched(data["description"]))
+  //     .catch((error) => this.onWeatherDataFetched(error));
+  // };
 
   bindToOnWeatherDataFetched = (callback) => {
     this.onWeatherDataFetched = callback;
