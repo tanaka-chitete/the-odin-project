@@ -7,11 +7,11 @@ import { CACHED_FORECAST } from "./constants";
 // const API_KEY = "ULLZAVP98LHVZBLKNFM5PZGCM";
 
 class Model {
-  fetchWeatherData = () => {
-    this.onWeatherDataFetched(CACHED_FORECAST["resolvedAddress"]);
+  fetchForecast = () => {
+    this.onForecastFetched(CACHED_FORECAST["resolvedAddress"]);
   };
 
-  // async fetchWeatherData(location) {
+  // async fetchForecast(location) {
   //   const startDate = format(
   //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS)),
   //     DATE_FORMAT
@@ -28,15 +28,15 @@ class Model {
   //       throw new Error(await response.text());
   //     }
 
-  //     const weatherData = await response.json();
+  //     const forecast = await response.json();
 
-  //     this.onWeatherDataFetched(weatherData["resolvedAddress"]);
+  //     this.onForecastFetched(forecast["resolvedAddress"]);
   //   } catch (error) {
-  //     this.onWeatherDataFetched(error);
+  //     this.onForecastFetched(error);
   //   }
   // }
 
-  // fetchWeatherData = (location) => {
+  // fetchForecast = (location) => {
   //   const startDate = format(
   //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS)),
   //     DATE_FORMAT
@@ -56,12 +56,12 @@ class Model {
 
   //       return response.json();
   //     })
-  //     .then((data) => this.onWeatherDataFetched(data["resolvedAddress"]))
-  //     .catch((error) => this.onWeatherDataFetched(error));
+  //     .then((data) => this.onForecastFetched(data["resolvedAddress"]))
+  //     .catch((error) => this.onForecastFetched(error));
   // };
 
-  bindToOnWeatherDataFetched = (callback) => {
-    this.onWeatherDataFetched = callback;
+  bindToOnForecastFetched = (callback) => {
+    this.onForecastFetched = callback;
   };
 }
 

@@ -5,7 +5,7 @@ const DATE_FORMAT = "yyyy-MM-dd";
 const API_KEY = "CWC4TD4CJ82Z885APFYDCYEFB";
 
 class Model {
-  fetchWeatherData = (location) => {
+  fetchForecast = (location) => {
     const startDate = format(
       new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS)),
       DATE_FORMAT
@@ -21,19 +21,19 @@ class Model {
       .then((response) => {
         console.log(response);
         if (response.ok) {
-          this.onWeatherDataFetched(response.json());
+          this.onForecastFetched(response.json());
         } else {
-          this.onWeatherDataFetched(response.status);
+          this.onForecastFetched(response.status);
         }
       })
       .catch((error) => {
         console.log(error);
-        this.onWeatherDataFetched(error);
+        this.onForecastFetched(error);
       });
   };
 
-  bindToOnWeatherDataFetched = (callback) => {
-    this.onWeatherDataFetched = callback;
+  bindToOnForecastFetched = (callback) => {
+    this.onForecastFetched = callback;
   };
 }
 

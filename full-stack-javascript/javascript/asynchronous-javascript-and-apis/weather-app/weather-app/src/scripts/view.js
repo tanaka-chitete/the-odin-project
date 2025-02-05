@@ -2,13 +2,13 @@ class View {
   constructor() {
     this.page = document.querySelector("#root");
 
-    this.weatherDataHTML = document.createElement("p");
+    this.forecastHTML = document.createElement("p");
 
-    this.page.append(this.weatherDataHTML);
+    this.page.append(this.forecastHTML);
   }
 
-  displayWeatherData = (weatherDataJSON) => {
-    this.weatherDataHTML.innerText = weatherDataJSON;
+  displayForecast = (forecastJSON) => {
+    this.forecastHTML.innerText = forecastJSON;
   };
 }
 

@@ -3,15 +3,15 @@ class Controller {
     this.model = model;
     this.view = view;
 
-    this.model.bindToOnWeatherDataFetched(this.onFetchedWeatherData);
+    this.model.bindToOnForecastFetched(this.onFetchedForecast);
   }
 
   handleSearch = (location) => {
-    this.model.fetchWeatherData(location);
+    this.model.fetchForecast(location);
   };
 
-  onFetchedWeatherData = (weatherData) => {
-    this.view.displayWeatherData(weatherData);
+  onFetchedForecast = (forecast) => {
+    this.view.displayForecast(forecast);
   };
 }
 
