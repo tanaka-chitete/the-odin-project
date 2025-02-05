@@ -1,6 +1,6 @@
 // import { format } from "date-fns";
 
-import { CACHED_FORECAST } from "./constants";
+import { CACHED_FORECAST } from "./cached-forecast";
 
 // const TIME_WINDOW_IN_DAYS = 9;
 // const DATE_FORMAT = "yyyy-MM-dd";
@@ -8,7 +8,7 @@ import { CACHED_FORECAST } from "./constants";
 
 class Model {
   fetchForecast = () => {
-    this.onForecastFetched(CACHED_FORECAST["resolvedAddress"]);
+    // this.onForecastFetched(CACHED_FORECAST["resolvedAddress"]);
   };
 
   // async fetchForecast(location) {
