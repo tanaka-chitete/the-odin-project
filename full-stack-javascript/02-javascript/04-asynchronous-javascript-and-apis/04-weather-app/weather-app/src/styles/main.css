@@ -29,6 +29,20 @@ body {
   grid-template-rows: 4rem 1fr 3fr 4rem;
 }
 
+hr {
+  border: none;
+  height: 1px;
+  background-color: var(--salt-600);
+}
+
+h4 {
+  font-weight: 600;
+}
+
+p {
+  color: var(--salt-1000);
+}
+
 /* Search */
 
 header {
@@ -40,19 +54,121 @@ header {
 aside {
   grid-template-areas: aside;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
-.location {
+.summary {
+  text-align: center;
+}
+
+.summary__location {
   font-size: 2rem;
 }
 
-.temperature {
+.summary__temperature {
   font-size: 4rem;
 }
 
-.conditions {
+.summary__conditions {
   font-size: 1.5rem;
+}
+
+/* Day Forecast */
+
+.tiles {
+  aspect-ratio: 1/1;
+  width: 52rem;
+  display: grid;
+  grid-template-areas:
+    "day-forecast day-forecast day-forecast day-forecast"
+    "week-forecast  week-forecast  feels-like     average-temperature"
+    "week-forecast  week-forecast  uv-index       wind-speed"
+    "week-forecast  week-forecast  sunrise-time   sunset-time";
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: 0 auto;
+}
+
+.tile {
+  background-color: var(--salt-500);
+  border-radius: 0.5rem;
+  display: grid;
+  grid-template-rows: 2rem auto 1fr;
+  grid-template-areas:
+    "heading"
+    "separator"
+    "body";
+  padding: 1rem;
+}
+
+.tile__heading {
+  grid-area: heading;
+}
+
+.tile__separator {
+  grid-area: separator;
+  margin-bottom: 0.5rem;
+}
+
+.tile__body {
+  grid-area: body;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hour-forecast {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tile_type_day-forecast {
+  grid-area: day-forecast;
+  display: grid;
+}
+
+/* 10-Day Forecast */
+
+.tile_type_week-forecast {
+  grid-area: week-forecast;
+}
+
+/* Feels Like */
+
+.tile_feels-like {
+  grid-area: feels-like;
+}
+
+/* Average Temperature */
+
+.tile_average-temperature {
+  grid-area: average-temperature;
+}
+
+/* UV-Index */
+
+.tile_uv-index {
+  grid-area: uv-index;
+}
+
+/* Wind Speed */
+
+.tile_wind-speed {
+  grid-area: wind-speed;
+}
+
+/* Sunrise Time */
+
+.tile_sunrise-time {
+  grid-area: sunrise-time;
+}
+
+/* Sunset Time */
+
+.tile_sunset-time {
+  grid-area: sunset-time;
 }

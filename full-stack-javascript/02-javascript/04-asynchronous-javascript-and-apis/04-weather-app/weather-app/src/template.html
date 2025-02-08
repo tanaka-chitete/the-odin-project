@@ -11,15 +11,123 @@
   </head>
   <body>
     <div id="root">
-      <footer></footer>
+      <header></header>
 
       <aside>
-        <p class="location"></p>
-        <p class="temperature"></p>
-        <p class="conditions"></p>
+        <div class="summary">
+          <p class="summary__location"></p>
+          <p class="summary__temperature"></p>
+          <p class="summary__conditions"></p>
+        </div>
       </aside>
+      <main>
+        <div class="tiles">
+          <div class="tile tile_type_day-forecast">
+            <p class="tile__heading"></p>
+            <hr class="tile__separator" />
+            <div class="tile__body">
+              <div class="hour-forecast">
+                <h4 class="hour-forecast__time"></h4>
+                <span
+                  class="material-symbols-outlined hour-forecast__icon"
+                ></span>
+                <h4 class="hour-forecast__temperature"></h4>
+              </div>
+              <div class="hour-forecast">
+                <h4 class="hour-forecast__time"></h4>
+                <span
+                  class="material-symbols-outlined hour-forecast__icon"
+                ></span>
+                <h4 class="hour-forecast__temperature"></h4>
+              </div>
+              <div class="hour-forecast">
+                <h4 class="hour-forecast__time"></h4>
+                <span
+                  class="material-symbols-outlined hour-forecast__icon"
+                ></span>
+                <h4 class="hour-forecast__temperature"></h4>
+              </div>
+              <div class="hour-forecast">
+                <h4 class="hour-forecast__time"></h4>
+                <span
+                  class="material-symbols-outlined hour-forecast__icon"
+                ></span>
+                <h4 class="hour-forecast__temperature"></h4>
+              </div>
+              <div class="hour-forecast">
+                <h4 class="hour-forecast__time"></h4>
+                <span
+                  class="material-symbols-outlined hour-forecast__icon"
+                ></span>
+                <h4 class="hour-forecast__temperature"></h4>
+              </div>
+              <div class="hour-forecast">
+                <h4 class="hour-forecast__time"></h4>
+                <span
+                  class="material-symbols-outlined hour-forecast__icon"
+                ></span>
+                <h4 class="hour-forecast__temperature"></h4>
+              </div>
+              <div class="hour-forecast">
+                <h4 class="hour-forecast__time"></h4>
+                <span
+                  class="material-symbols-outlined hour-forecast__icon"
+                ></span>
+                <h4 class="hour-forecast__temperature"></h4>
+              </div>
+              <div class="hour-forecast">
+                <h4 class="hour-forecast__time"></h4>
+                <span
+                  class="material-symbols-outlined hour-forecast__icon"
+                ></span>
+                <h4 class="hour-forecast__temperature"></h4>
+              </div>
+              <div class="hour-forecast">
+                <h4 class="hour-forecast__time"></h4>
+                <span
+                  class="material-symbols-outlined hour-forecast__icon"
+                ></span>
+                <h4 class="hour-forecast__temperature"></h4>
+              </div>
+            </div>
+          </div>
 
-      <main></main>
+          <div class="tile tile_type_week-forecast">
+            <h4 class="tile_heading">10-Day Forecast</h4>
+            <hr class="tile__separator" />
+          </div>
+
+          <div class="tile tile_feels-like">
+            <h4 class="tile_heading">Feels Like</h4>
+            <hr class="tile__separator" />
+          </div>
+
+          <div class="tile tile_average-temperature">
+            <h4 class="tile_heading">Average</h4>
+            <hr class="tile__separator" />
+          </div>
+
+          <div class="tile tile_uv-index">
+            <h4 class="tile_heading">UV Index</h4>
+            <hr class="tile__separator" />
+          </div>
+
+          <div class="tile tile_wind-speed">
+            <h4 class="tile_heading">Wind Speed</h4>
+            <hr class="tile__separator" />
+          </div>
+
+          <div class="tile tile_sunrise-time">
+            <h4 class="tile_heading">Sunrise Time</h4>
+            <hr class="tile__separator" />
+          </div>
+
+          <div class="tile tile_sunset-time">
+            <h4 class="tile_heading">Sunset Time</h4>
+            <hr class="tile__separator" />
+          </div>
+        </div>
+      </main>
 
       <footer></footer>
     </div>

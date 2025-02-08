@@ -1,9 +1,11 @@
-// import { format } from "date-fns";
+import { format } from "date-fns";
 
 import { CACHED_FORECAST } from "./cached-forecast";
 
 // const TIME_WINDOW_IN_DAYS = 9;
 // const DATE_FORMAT = "yyyy-MM-dd";
+const TIME_FORMAT = "haaa";
+const SECONDS_TO_MILLISECONDS_MULTIPLIER = 1_000;
 // const API_KEY = "ULLZAVP98LHVZBLKNFM5PZGCM";
 
 class Model {
@@ -11,8 +13,10 @@ class Model {
     const forecast = CACHED_FORECAST;
 
     const summary = this.getSummary(forecast);
+    const dayForecast = this.getDayForecast(forecast);
 
     this.onSummaryGotten(summary);
+    this.onDayForecastGotten(dayForecast);
   };
 
   getSummary(forecast) {
@@ -21,6 +25,36 @@ class Model {
       temperature: `${Math.round(forecast.currentConditions.temp)}°F`,
       conditions: forecast.currentConditions.conditions,
     };
+  }
+
+  getDayForecast(forecast) {
+    const extendedHourForecasts = forecast.days.at(-1).hours;
+
+    const simplifiedHourForecasts = extendedHourForecasts.map(
+      (extendedHourForecast) => {
+        const simplifiedHourForecast = {
+          time: format(
+            new Date(
+              extendedHourForecast.datetimeEpoch *
+                SECONDS_TO_MILLISECONDS_MULTIPLIER
+            ),
+            TIME_FORMAT
+          ),
+          icon: extendedHourForecast.icon,
+          temperature: `${Math.round(extendedHourForecast.temp)}°F`,
+        };
+
+        return simplifiedHourForecast;
+      }
+    );
+    console.log(simplifiedHourForecasts);
+
+    const dayForecast = {
+      description: forecast.description,
+      hourForecasts: simplifiedHourForecasts,
+    };
+
+    return dayForecast;
   }
 
   // async fetchForecast(location) {
@@ -74,6 +108,10 @@ class Model {
 
   bindToOnSummaryGotten = (callback) => {
     this.onSummaryGotten = callback;
+  };
+
+  bindToOnDayForecastGotten = (callback) => {
+    this.onDayForecastGotten = callback;
   };
 }
 

@@ -4,6 +4,7 @@ class Controller {
     this.view = view;
 
     this.model.bindToOnSummaryGotten(this.onSummaryGotten);
+    this.model.bindToOnDayForecastGotten(this.onDayForecastGotten);
   }
 
   onSearch = (location) => {
@@ -12,6 +13,10 @@ class Controller {
 
   onSummaryGotten = (summary) => {
     this.view.displaySummary(summary);
+  };
+
+  onDayForecastGotten = (dayForecast) => {
+    this.view.displayDayForecast(dayForecast);
   };
 }
 
