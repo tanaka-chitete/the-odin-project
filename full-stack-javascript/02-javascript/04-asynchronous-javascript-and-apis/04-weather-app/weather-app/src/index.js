@@ -6,4 +6,4 @@ import { Controller } from "./scripts/controller.js";
 
 const controller = new Controller(new Model(), new View());
 
-controller.handleSearch("Paris");
+controller.onSearch("Paris");

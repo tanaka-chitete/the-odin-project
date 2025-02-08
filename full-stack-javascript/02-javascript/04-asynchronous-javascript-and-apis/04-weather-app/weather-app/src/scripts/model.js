@@ -7,9 +7,21 @@ import { CACHED_FORECAST } from "./cached-forecast";
 // const API_KEY = "ULLZAVP98LHVZBLKNFM5PZGCM";
 
 class Model {
-  fetchForecast = () => {
-    // this.onForecastFetched(CACHED_FORECAST["resolvedAddress"]);
+  getForecast = () => {
+    const forecast = CACHED_FORECAST;
+
+    const summary = this.getSummary(forecast);
+
+    this.onSummaryGotten(summary);
   };
+
+  getSummary(forecast) {
+    return {
+      location: forecast.address,
+      temperature: `${Math.round(forecast.currentConditions.temp)}°F`,
+      conditions: forecast.currentConditions.conditions,
+    };
+  }
 
   // async fetchForecast(location) {
   //   const startDate = format(
@@ -60,8 +72,8 @@ class Model {
   //     .catch((error) => this.onForecastFetched(error));
   // };
 
-  bindToOnForecastFetched = (callback) => {
-    this.onForecastFetched = callback;
+  bindToOnSummaryGotten = (callback) => {
+    this.onSummaryGotten = callback;
   };
 }
 

@@ -3,15 +3,15 @@ class Controller {
     this.model = model;
     this.view = view;
 
-    this.model.bindToOnForecastFetched(this.onFetchedForecast);
+    this.model.bindToOnSummaryGotten(this.onSummaryGotten);
   }
 
-  handleSearch = (location) => {
-    this.model.fetchForecast(location);
+  onSearch = (location) => {
+    this.model.getForecast(location);
   };
 
-  onFetchedForecast = (forecast) => {
-    this.view.displayForecast(forecast);
+  onSummaryGotten = (summary) => {
+    this.view.displaySummary(summary);
   };
 }
 

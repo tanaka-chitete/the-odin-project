@@ -1,5 +1,58 @@
 @import "./reset.css";
 
+:root {
+  --salt-100: #ffffff;
+  --salt-200: #fbfafa;
+  --salt-300: #f4f4f3;
+  --salt-400: #eaeaea;
+  --salt-500: #dcdcdc;
+  --salt-600: #bababc;
+  --salt-700: #919197;
+  --salt-800: #6c6c72;
+  --salt-900: #525257;
+  --salt-1000: #1c1c1c;
+}
+
 body {
   height: 100vh;
+  background-color: var(--salt-200);
+}
+
+#root {
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+    "header"
+    "aside"
+    "main"
+    "footer";
+  grid-template-rows: 4rem 1fr 3fr 4rem;
+}
+
+/* Search */
+
+header {
+  grid-area: header;
+}
+
+/* Summary */
+
+aside {
+  grid-template-areas: aside;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.location {
+  font-size: 2rem;
+}
+
+.temperature {
+  font-size: 4rem;
+}
+
+.conditions {
+  font-size: 1.5rem;
 }
