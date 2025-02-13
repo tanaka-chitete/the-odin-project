@@ -82,9 +82,9 @@ aside {
   width: 52rem;
   display: grid;
   grid-template-areas:
-    "day-forecast  day-forecast  day-forecast day-forecast"
-    "fortnight-forecast fortnight-forecast feels-like   average-temp"
-    "fortnight-forecast fortnight-forecast uv-index     wind-speed"
+    "day-forecast       day-forecast       day-forecast day-forecast"
+    "fortnight-forecast fortnight-forecast feels-like   uv-index"
+    "fortnight-forecast fortnight-forecast wind-speed   visibility"
     "fortnight-forecast fortnight-forecast sunrise-time sunset-time";
   grid-template-rows: repeat(4, 1fr);
   grid-template-columns: repeat(4, 1fr);
@@ -177,14 +177,8 @@ aside {
   align-items: center;
 }
 
-.feels-like {
+.tile__body_centered > h1 {
   font-size: 4rem;
-}
-
-/* Average Temp */
-
-.tile_average-temp {
-  grid-area: average-temp;
 }
 
 /* UV-Index */
@@ -199,13 +193,19 @@ aside {
   grid-area: wind-speed;
 }
 
-/* Sunrise Time */
+/* Visibility */
+
+.tile_visibility {
+  grid-area: visibility;
+}
+
+/* Sunrise */
 
 .tile_sunrise-time {
   grid-area: sunrise-time;
 }
 
-/* Sunset Time */
+/* Sunset */
 
 .tile_sunset-time {
   grid-area: sunset-time;

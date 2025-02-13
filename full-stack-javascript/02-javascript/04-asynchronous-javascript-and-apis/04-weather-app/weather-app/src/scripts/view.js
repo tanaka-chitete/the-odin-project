@@ -24,6 +24,8 @@ class View {
     this.feelsLikeHTML = document.querySelector(
       ".tile_type_feels-like .feels-like"
     );
+
+    this.uvIndexHTML = document.querySelector(".tile_type_uv-index .uv-index");
   }
 
   displaySummary = (summaryJSON) => {
@@ -61,9 +63,13 @@ class View {
     });
   };
 
-  displayFeelsLike(feelsLikeString) {
+  displayFeelsLike = (feelsLikeString) => {
     this.feelsLikeHTML.innerText = feelsLikeString;
-  }
+  };
+
+  displayUvIndex = (uvIndexString) => {
+    this.uvIndexHTML.innerText = uvIndexString;
+  };
 }
 
 export { View };

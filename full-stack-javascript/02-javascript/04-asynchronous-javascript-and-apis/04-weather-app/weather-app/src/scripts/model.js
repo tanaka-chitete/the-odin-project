@@ -11,15 +11,6 @@ const DAY_FORMAT = "EEEE";
 // const API_KEY = "ULLZAVP98LHVZBLKNFM5PZGCM";
 
 class Model {
-  formatTemp(temp) {
-    return `${Math.round(temp)}°F`;
-  }
-
-  formatIcon(icon) {
-    // Google Material icons are hyphen-delineated
-    return icon.replaceAll("-", "_");
-  }
-
   getForecast = () => {
     const forecast = CACHED_FORECAST;
 
@@ -27,11 +18,13 @@ class Model {
     const dayForecast = this.getDayForecast(forecast);
     const fortnightForecast = this.getFortnightForecast(forecast);
     const feelsLike = this.getFeelsLike(forecast);
+    const uvIndex = this.getUvIndex(forecast);
 
     this.onSummaryGotten(summary);
     this.onDayForecastGotten(dayForecast);
     this.onFortnightForecastGotten(fortnightForecast);
     this.onFeelsLikeGotten(feelsLike);
+    this.onUvIndexGotten(uvIndex);
   };
 
   getSummary(forecast) {
@@ -99,6 +92,10 @@ class Model {
     return this.formatTemp(forecast.currentConditions.feelslike);
   }
 
+  getUvIndex(forecast) {
+    return forecast.currentConditions.uvindex;
+  }
+
   // async fetchForecast(location) {
   //   const startDate = format(
   //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS - 1)),
@@ -148,6 +145,15 @@ class Model {
   //     .catch((error) => this.onForecastFetched(error));
   // };
 
+  formatTemp(temp) {
+    return `${Math.round(temp)}°F`;
+  }
+
+  formatIcon(icon) {
+    // Google Material icons are hyphen-delineated
+    return icon.replaceAll("-", "_");
+  }
+
   bindToOnSummaryGotten = (callback) => {
     this.onSummaryGotten = callback;
   };
@@ -162,6 +168,10 @@ class Model {
 
   bindToOnFeelsLikeGotten = (callback) => {
     this.onFeelsLikeGotten = callback;
+  };
+
+  bindToOnUvIndexGotten = (callback) => {
+    this.onUvIndexGotten = callback;
   };
 }
 

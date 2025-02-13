@@ -7,6 +7,7 @@ class Controller {
     this.model.bindToOnDayForecastGotten(this.onDayForecastGotten);
     this.model.bindToOnFortnightForecastGotten(this.onFortnightForecastGotten);
     this.model.bindToOnFeelsLikeGotten(this.onFeelsLikeGotten);
+    this.model.bindToOnUvIndexGotten(this.onUvIndexGotten);
   }
 
   onSearch = (location) => {
@@ -27,6 +28,10 @@ class Controller {
 
   onFeelsLikeGotten = (feelsLike) => {
     this.view.displayFeelsLike(feelsLike);
+  };
+
+  onUvIndexGotten = (uvIndex) => {
+    this.view.displayUvIndex(uvIndex);
   };
 }
 
