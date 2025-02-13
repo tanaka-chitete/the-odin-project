@@ -19,12 +19,14 @@ class Model {
     const fortnightForecast = this.getFortnightForecast(forecast);
     const feelsLike = this.getFeelsLike(forecast);
     const uvIndex = this.getUvIndex(forecast);
+    const windSpeed = this.getWindSpeed(forecast);
 
     this.onSummaryGotten(summary);
     this.onDayForecastGotten(dayForecast);
     this.onFortnightForecastGotten(fortnightForecast);
     this.onFeelsLikeGotten(feelsLike);
     this.onUvIndexGotten(uvIndex);
+    this.onWindSpeedGotten(windSpeed);
   };
 
   getSummary(forecast) {
@@ -96,6 +98,10 @@ class Model {
     return forecast.currentConditions.uvindex;
   }
 
+  getWindSpeed(forecast) {
+    return this.formatSpeed(forecast.currentConditions.windspeed);
+  }
+
   // async fetchForecast(location) {
   //   const startDate = format(
   //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS - 1)),
@@ -154,6 +160,10 @@ class Model {
     return icon.replaceAll("-", "_");
   }
 
+  formatSpeed(speed) {
+    return `${Math.round(speed)}`;
+  }
+
   bindToOnSummaryGotten = (callback) => {
     this.onSummaryGotten = callback;
   };
@@ -172,6 +182,10 @@ class Model {
 
   bindToOnUvIndexGotten = (callback) => {
     this.onUvIndexGotten = callback;
+  };
+
+  bindToOnWindSpeedGotten = (callback) => {
+    this.onWindSpeedGotten = callback;
   };
 }
 

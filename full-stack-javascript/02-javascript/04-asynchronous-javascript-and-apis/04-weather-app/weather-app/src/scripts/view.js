@@ -26,6 +26,10 @@ class View {
     );
 
     this.uvIndexHTML = document.querySelector(".tile_type_uv-index .uv-index");
+
+    this.windSpeedHTML = document.querySelector(
+      ".tile_type_wind-speed .wind-speed"
+    );
   }
 
   displaySummary = (summaryJSON) => {
@@ -69,6 +73,10 @@ class View {
 
   displayUvIndex = (uvIndexString) => {
     this.uvIndexHTML.innerText = uvIndexString;
+  };
+
+  displayWindSpeed = (windSpeedString) => {
+    this.windSpeedHTML.innerText = windSpeedString;
   };
 }
 
