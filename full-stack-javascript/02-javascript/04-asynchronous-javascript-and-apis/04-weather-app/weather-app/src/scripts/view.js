@@ -2,7 +2,7 @@ class View {
   constructor() {
     this.summaryHTML = {
       location: document.querySelector(".summary__location"),
-      temperature: document.querySelector(".summary__temperature"),
+      temp: document.querySelector(".summary__temp"),
       conditions: document.querySelector(".summary__conditions"),
     };
 
@@ -14,25 +14,49 @@ class View {
         ...document.querySelectorAll(".tile_type_day-forecast .hour-forecast"),
       ],
     };
+
+    this.fortnightForecastHTML = [
+      ...document.querySelectorAll(
+        ".tile_type_fortnight-forecast .day-forecast"
+      ),
+    ];
+    console.log(this.fortnightForecastHTML);
   }
 
   displaySummary = (summaryJSON) => {
     this.summaryHTML.location.innerText = summaryJSON.location;
-    this.summaryHTML.temperature.innerText = summaryJSON.temperature;
+    this.summaryHTML.temp.innerText = summaryJSON.temp;
     this.summaryHTML.conditions.innerText = summaryJSON.conditions;
   };
 
   displayDayForecast = (dayForecastJSON) => {
     this.dayForecastHTML.description.innerText = dayForecastJSON.description;
     this.dayForecastHTML.hourForecasts.forEach((hourForecastHTML, index) => {
-      const time = hourForecastHTML.querySelector(".hour-forecast__time");
-      time.innerText = dayForecastJSON.hourForecasts[index].time;
-      const icon = hourForecastHTML.querySelector(".hour-forecast__icon");
-      icon.innerText = dayForecastJSON.hourForecasts[index].icon;
-      const temperature = hourForecastHTML.querySelector(
-        ".hour-forecast__temperature"
+      const hourHTML = hourForecastHTML.querySelector(".hour-forecast__hour");
+      hourHTML.innerText = dayForecastJSON.hourForecasts[index].hour;
+      const iconHTML = hourForecastHTML.querySelector(".hour-forecast__icon");
+      iconHTML.innerText = dayForecastJSON.hourForecasts[index].icon;
+      const tempHTML = hourForecastHTML.querySelector(".hour-forecast__temp");
+      tempHTML.innerText = dayForecastJSON.hourForecasts[index].temp;
+    });
+  };
+
+  displayFortnightForecast = (fortnightForecastJSON) => {
+    this.fortnightForecastHTML.forEach((dayForecastHTML, index) => {
+      const dayHTML = dayForecastHTML.querySelector(".day-forecast__day");
+      dayHTML.innerText = fortnightForecastJSON[index].day;
+      const iconHTML = dayForecastHTML.querySelector(
+        ".material-symbols-outlined"
       );
-      temperature.innerText = dayForecastJSON.hourForecasts[index].temperature;
+      iconHTML.innerText = fortnightForecastJSON[index].icon;
+      const minTempHTML = dayForecastHTML.querySelector(
+        ".day-forecast__min-temp"
+      );
+      minTempHTML.innerText = fortnightForecastJSON[index].minTemp;
+      const maxTempHTML = dayForecastHTML.querySelector(
+        ".day-forecast__max-temp"
+      );
+      maxTempHTML.innerText = fortnightForecastJSON[index].maxTemp;
     });
   };
 }

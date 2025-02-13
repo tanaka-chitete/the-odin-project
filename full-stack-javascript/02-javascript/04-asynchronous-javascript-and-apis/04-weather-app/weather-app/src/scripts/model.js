@@ -2,27 +2,40 @@ import { format } from "date-fns";
 
 import { CACHED_FORECAST } from "./cached-forecast";
 
-// const TIME_WINDOW_IN_DAYS = 9;
+// const TIME_WINDOW_IN_DAYS = 14;
 // const DATE_FORMAT = "yyyy-MM-dd";
-const TIME_FORMAT = "haaa";
 const SECONDS_TO_MILLISECONDS_MULTIPLIER = 1_000;
+const HOUR_FORMAT = "haaa";
+const DAY_FORMAT = "EEEE";
+// const UNIT_GROUP = "metric";
 // const API_KEY = "ULLZAVP98LHVZBLKNFM5PZGCM";
 
 class Model {
+  formatTemp(temp) {
+    return `${Math.round(temp)}°F`;
+  }
+
+  formatIcon(icon) {
+    // Google Material icons are hyphen-delineated
+    return icon.replaceAll("-", "_");
+  }
+
   getForecast = () => {
     const forecast = CACHED_FORECAST;
 
     const summary = this.getSummary(forecast);
     const dayForecast = this.getDayForecast(forecast);
+    const fortnightForecast = this.getFortnightForecast(forecast);
 
     this.onSummaryGotten(summary);
     this.onDayForecastGotten(dayForecast);
+    this.onFortnightForecastGotten(fortnightForecast);
   };
 
   getSummary(forecast) {
     return {
       location: forecast.address,
-      temperature: `${Math.round(forecast.currentConditions.temp)}°F`,
+      temp: this.formatTemp(forecast.currentConditions.temp),
       conditions: forecast.currentConditions.conditions,
     };
   }
@@ -33,21 +46,20 @@ class Model {
     const simplifiedHourForecasts = extendedHourForecasts.map(
       (extendedHourForecast) => {
         const simplifiedHourForecast = {
-          time: format(
+          hour: format(
             new Date(
               extendedHourForecast.datetimeEpoch *
                 SECONDS_TO_MILLISECONDS_MULTIPLIER
             ),
-            TIME_FORMAT
+            HOUR_FORMAT
           ),
-          icon: extendedHourForecast.icon,
-          temperature: `${Math.round(extendedHourForecast.temp)}°F`,
+          icon: this.formatIcon(extendedHourForecast.icon),
+          temp: this.formatTemp(extendedHourForecast.temp),
         };
 
         return simplifiedHourForecast;
       }
     );
-    console.log(simplifiedHourForecasts);
 
     const dayForecast = {
       description: forecast.description,
@@ -57,9 +69,33 @@ class Model {
     return dayForecast;
   }
 
+  getFortnightForecast(forecast) {
+    const extendedDayForecasts = forecast.days;
+    const simplifiedDayForecasts = extendedDayForecasts.map(
+      (extendedDayForecast) => {
+        const simplifiedDayForecast = {
+          day: format(
+            new Date(
+              extendedDayForecast.datetimeEpoch *
+                SECONDS_TO_MILLISECONDS_MULTIPLIER
+            ),
+            DAY_FORMAT
+          ),
+          icon: this.formatIcon(extendedDayForecast.icon),
+          minTemp: `L:${this.formatTemp(extendedDayForecast.tempmin)}`,
+          maxTemp: `H:${this.formatTemp(extendedDayForecast.tempmax)}`,
+        };
+
+        return simplifiedDayForecast;
+      }
+    );
+
+    return simplifiedDayForecasts;
+  }
+
   // async fetchForecast(location) {
   //   const startDate = format(
-  //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS)),
+  //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS - 1)),
   //     DATE_FORMAT
   //   );
   //   const endDate = format(new Date(), DATE_FORMAT);
@@ -112,6 +148,10 @@ class Model {
 
   bindToOnDayForecastGotten = (callback) => {
     this.onDayForecastGotten = callback;
+  };
+
+  bindToOnFortnightForecastGotten = (callback) => {
+    this.onFortnightForecastGotten = callback;
   };
 }
 

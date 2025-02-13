@@ -67,7 +67,7 @@ aside {
   font-size: 2rem;
 }
 
-.summary__temperature {
+.summary__temp {
   font-size: 4rem;
 }
 
@@ -82,10 +82,10 @@ aside {
   width: 52rem;
   display: grid;
   grid-template-areas:
-    "day-forecast day-forecast day-forecast day-forecast"
-    "week-forecast  week-forecast  feels-like     average-temperature"
-    "week-forecast  week-forecast  uv-index       wind-speed"
-    "week-forecast  week-forecast  sunrise-time   sunset-time";
+    "day-forecast  day-forecast  day-forecast day-forecast"
+    "fortnight-forecast fortnight-forecast feels-like   average-temp"
+    "fortnight-forecast fortnight-forecast uv-index     wind-speed"
+    "fortnight-forecast fortnight-forecast sunrise-time sunset-time";
   grid-template-rows: repeat(4, 1fr);
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
@@ -131,10 +131,38 @@ aside {
   display: grid;
 }
 
-/* 10-Day Forecast */
+/* Fortnight Forecast */
 
-.tile_type_week-forecast {
-  grid-area: week-forecast;
+.tile_type_fortnight-forecast {
+  grid-area: fortnight-forecast;
+}
+
+.tile__body_vertical {
+  flex-direction: column;
+}
+
+.fortnight-forecast {
+  height: 100%;
+}
+
+.day-forecast {
+  width: 100%;
+}
+
+.day-forecast__day,
+.day-forecast__min-temp,
+.day-forecast__max-temp {
+  font-weight: 600;
+}
+
+.day-forecast__min-temp,
+.day-forecast__max-temp {
+  text-align: right;
+}
+
+.day-forecast__icon {
+  /* The icons are positioned too high */
+  padding-top: 0.3rem;
 }
 
 /* Feels Like */
@@ -143,10 +171,10 @@ aside {
   grid-area: feels-like;
 }
 
-/* Average Temperature */
+/* Average Temp */
 
-.tile_average-temperature {
-  grid-area: average-temperature;
+.tile_average-temp {
+  grid-area: average-temp;
 }
 
 /* UV-Index */
