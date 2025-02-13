@@ -36,6 +36,10 @@ class View {
     this.sunriseTimeHTML = document.querySelector(
       ".tile_type_sunrise-time .sunrise-time"
     );
+
+    this.sunsetTimeHTML = document.querySelector(
+      ".tile_type_sunset-time .sunset-time"
+    );
   }
 
   displaySummary = (summaryJSON) => {
@@ -91,6 +95,10 @@ class View {
 
   displaySunriseTime = (sunriseTimeString) => {
     this.sunriseTimeHTML.innerText = sunriseTimeString;
+  };
+
+  displaySunsetTime = (sunsetTimeString) => {
+    this.sunsetTimeHTML.innerText = sunsetTimeString;
   };
 }
 

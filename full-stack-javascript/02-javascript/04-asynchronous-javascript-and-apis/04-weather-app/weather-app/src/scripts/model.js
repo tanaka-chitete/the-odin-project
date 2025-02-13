@@ -23,6 +23,7 @@ class Model {
     const windSpeed = this.getWindSpeed(forecast);
     const visibility = this.getVisibility(forecast);
     const sunriseTime = this.getSunriseTime(forecast);
+    const sunsetTime = this.getSunsetTime(forecast);
 
     this.onSummaryGotten(summary);
     this.onDayForecastGotten(dayForecast);
@@ -32,6 +33,7 @@ class Model {
     this.onWindSpeedGotten(windSpeed);
     this.onVisibilityGotten(visibility);
     this.onSunriseTimeGotten(sunriseTime);
+    this.onSunsetTimeGotten(sunsetTime);
   };
 
   getSummary(forecast) {
@@ -107,6 +109,10 @@ class Model {
       forecast.currentConditions.sunriseEpoch,
       TIME_FORMAT
     );
+  }
+
+  getSunsetTime(forecast) {
+    return this.formatDate(forecast.currentConditions.sunsetEpoch, TIME_FORMAT);
   }
 
   // async fetchForecast(location) {
@@ -208,6 +214,10 @@ class Model {
 
   bindToOnSunriseTimeGotten = (callback) => {
     this.onSunriseTimeGotten = callback;
+  };
+
+  bindToOnSunsetTimeGotten = (callback) => {
+    this.onSunsetTimeGotten = callback;
   };
 }
 
