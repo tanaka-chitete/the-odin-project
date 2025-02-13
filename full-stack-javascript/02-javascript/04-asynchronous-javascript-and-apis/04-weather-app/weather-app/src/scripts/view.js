@@ -100,6 +100,10 @@ class View {
   displaySunsetTime = (sunsetTimeString) => {
     this.sunsetTimeHTML.innerText = sunsetTimeString;
   };
+
+  displayError = (error) => {
+    alert(error);
+  };
 }
 
 export { View };

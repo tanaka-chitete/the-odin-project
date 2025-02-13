@@ -12,10 +12,11 @@ class Controller {
     this.model.bindToOnVisibilityGotten(this.onVisibilityGotten);
     this.model.bindToOnSunriseTimeGotten(this.onSunriseTimeGotten);
     this.model.bindToOnSunsetTimeGotten(this.onSunsetTimeGotten);
+    this.model.bindToOnErrorOccurred(this.onErrorOccurred);
   }
 
   onSearch = (location) => {
-    this.model.getForecast(location);
+    this.model.fetchForecast(location);
   };
 
   onSummaryGotten = (summary) => {
@@ -52,6 +53,10 @@ class Controller {
 
   onSunsetTimeGotten = (sunsetTime) => {
     this.view.displaySunsetTime(sunsetTime);
+  };
+
+  onErrorOccurred = (error) => {
+    this.view.displayError(error);
   };
 }
 

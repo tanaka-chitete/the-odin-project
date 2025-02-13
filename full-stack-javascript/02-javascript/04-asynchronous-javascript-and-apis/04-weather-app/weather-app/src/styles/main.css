@@ -193,6 +193,10 @@ aside {
   grid-area: wind-speed;
 }
 
+.tile__body_centered > h3 {
+  font-size: 2rem;
+}
+
 /* Visibility */
 
 .tile_visibility {
@@ -203,10 +207,6 @@ aside {
 
 .tile_sunrise-time-time {
   grid-area: sunrise-time;
-}
-
-.tile__body_centered > h3 {
-  font-size: 2rem;
 }
 
 /* Sunset Time */

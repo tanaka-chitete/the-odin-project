@@ -2,19 +2,74 @@ import { format } from "date-fns";
 
 import { CACHED_FORECAST } from "./cached-forecast";
 
-// const TIME_WINDOW_IN_DAYS = 14;
-// const DATE_FORMAT = "yyyy-MM-dd";
-const SECONDS_TO_MILLISECONDS_MULTIPLIER = 1_000;
-const HOUR_FORMAT = "haaa";
+const API_KEY = "ULLZAVP98LHVZBLKNFM5PZGCM";
+const DATE_FORMAT = "yyyy-MM-dd";
 const DAY_FORMAT = "EEEE";
-const TIME_FORMAT = "h:maaa";
-// const UNIT_GROUP = "metric";
-// const API_KEY = "ULLZAVP98LHVZBLKNFM5PZGCM";
+const HOUR_FORMAT = "haaa";
+const SECONDS_TO_MILLISECONDS_MULTIPLIER = 1_000;
+const TIME_FORMAT = "h:mmaaa";
+const TIME_WINDOW_IN_DAYS = 14;
+const UNIT_GROUP = "metric";
 
 class Model {
-  getForecast = () => {
-    const forecast = CACHED_FORECAST;
+  // async fetchForecast(location) {
+  //   const startDate = format(
+  //     new Date(
+  //       new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS - 2)
+  //     ),
+  //     DATE_FORMAT
+  //   );
+  //   const endDate = format(new Date(), DATE_FORMAT);
 
+  //   try {
+  //     const response = await fetch(
+  //       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}/${endDate}?unitGroup=${UNIT_GROUP}&key=${API_KEY}`,
+  //       { mode: "cors" }
+  //     );
+
+  //     if (!response.ok) {
+  //       throw new Error(await response.text());
+  //     }
+
+  //     const forecast = await response.json();
+  //     console.log(forecast);
+
+  //     this.processForecast(forecast);
+  //   } catch (error) {
+  //     console.error(error);
+  //     this.onErrorOccurred(`Unable to get weather for "${location}"`);
+  //   }
+  // }
+
+  // fetchForecast = (location) => {
+  //   const startDate = format(
+  //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS)),
+  //     DATE_FORMAT
+  //   );
+  //   const endDate = format(new Date(), DATE_FORMAT);
+
+  //   fetch(
+  //       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}/${endDate}?key=${API_KEY}`,
+  //       { mode: "cors" }
+  //   )
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         return response.text().then((errorMessage) => {
+  //             throw new Error(errorMessage);
+  //           });
+  //       }
+
+  //       return response.json();
+  //     })
+  //     .then((data) => this.onForecastFetched(data["resolvedAddress"]))
+  //     .catch((error) => this.onForecastFetched(error));
+  // };
+
+  fetchForecast(location) {
+    this.processForecast(CACHED_FORECAST);
+  }
+
+  processForecast(forecast) {
     const summary = this.getSummary(forecast);
     const dayForecast = this.getDayForecast(forecast);
     const fortnightForecast = this.getFortnightForecast(forecast);
@@ -34,14 +89,16 @@ class Model {
     this.onVisibilityGotten(visibility);
     this.onSunriseTimeGotten(sunriseTime);
     this.onSunsetTimeGotten(sunsetTime);
-  };
+  }
 
   getSummary(forecast) {
-    return {
+    const summary = {
       location: forecast.address,
       temp: this.formatTemp(forecast.currentConditions.temp),
       conditions: forecast.currentConditions.conditions,
     };
+
+    return summary;
   }
 
   getDayForecast(forecast) {
@@ -50,7 +107,7 @@ class Model {
     const simplifiedHourForecasts = extendedHourForecasts.map(
       (extendedHourForecast) => {
         const simplifiedHourForecast = {
-          hour: this.formatDate(
+          hour: this.formatTime(
             extendedHourForecast.datetimeEpoch,
             HOUR_FORMAT
           ),
@@ -75,7 +132,7 @@ class Model {
     const simplifiedDayForecasts = extendedDayForecasts.map(
       (extendedDayForecast) => {
         const simplifiedDayForecast = {
-          day: this.formatDate(extendedDayForecast.datetimeEpoch, DAY_FORMAT),
+          day: this.formatTime(extendedDayForecast.datetimeEpoch, DAY_FORMAT),
           icon: this.formatIcon(extendedDayForecast.icon),
           minTemp: `L:${this.formatTemp(extendedDayForecast.tempmin)}`,
           maxTemp: `H:${this.formatTemp(extendedDayForecast.tempmax)}`,
@@ -101,87 +158,72 @@ class Model {
   }
 
   getVisibility(forecast) {
-    return forecast.currentConditions.visibility;
+    return this.formatDistance(forecast.currentConditions.visibility);
   }
 
   getSunriseTime(forecast) {
-    return this.formatDate(
+    return this.formatTime(
       forecast.currentConditions.sunriseEpoch,
       TIME_FORMAT
     );
   }
 
   getSunsetTime(forecast) {
-    return this.formatDate(forecast.currentConditions.sunsetEpoch, TIME_FORMAT);
+    return this.formatTime(forecast.currentConditions.sunsetEpoch, TIME_FORMAT);
   }
-
-  // async fetchForecast(location) {
-  //   const startDate = format(
-  //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS - 1)),
-  //     DATE_FORMAT
-  //   );
-  //   const endDate = format(new Date(), DATE_FORMAT);
-
-  //   try {
-  //     const response = await fetch(
-  //       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}/${endDate}?key=${API_KEY}`,
-  //       { mode: "cors" }
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error(await response.text());
-  //     }
-
-  //     const forecast = await response.json();
-
-  //     this.onForecastFetched(forecast["resolvedAddress"]);
-  //   } catch (error) {
-  //     this.onForecastFetched(error);
-  //   }
-  // }
-
-  // fetchForecast = (location) => {
-  //   const startDate = format(
-  //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS)),
-  //     DATE_FORMAT
-  //   );
-  //   const endDate = format(new Date(), DATE_FORMAT);
-
-  //   fetch(
-  //     `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}/${endDate}?key=${API_KEY}`,
-  //     { mode: "cors" }
-  //   )
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         return response.text().then((errorMessage) => {
-  //           throw new Error(errorMessage);
-  //         });
-  //       }
-
-  //       return response.json();
-  //     })
-  //     .then((data) => this.onForecastFetched(data["resolvedAddress"]))
-  //     .catch((error) => this.onForecastFetched(error));
-  // };
 
   formatTemp(temp) {
-    return `${Math.round(temp)}°F`;
+    return `${Math.round(temp)}°`;
   }
 
-  formatDate(epochTime, formatString) {
+  formatTime(epochTime, timeFormat) {
     return format(
       new Date(epochTime * SECONDS_TO_MILLISECONDS_MULTIPLIER),
-      formatString
+      timeFormat
     );
   }
 
   formatIcon(icon) {
-    // Google Material icons are hyphen-delineated
-    return icon.replaceAll("-", "_");
+    let formattedIcon;
+
+    switch (icon) {
+      case "snow":
+        formattedIcon = "snowing";
+        break;
+      case "rain":
+        formattedIcon = "rainy";
+        break;
+      case "fog":
+        formattedIcon = "foggy";
+        break;
+      case "cloudy":
+        formattedIcon = "cloud";
+        break;
+      case "partly-cloudy-day":
+        formattedIcon = "partly_cloudy_day";
+        break;
+      case "partly-cloudy-night":
+        formattedIcon = "partly_cloudy_night";
+        break;
+      case "clear-day":
+        formattedIcon = "clear_day";
+        break;
+      case "clear-night":
+        formattedIcon = "bedtime";
+        break;
+      default:
+        formattedIcon = "error";
+    }
+
+    return formattedIcon;
   }
 
   formatSpeed(speed) {
-    return `${Math.round(speed)}`;
+    return `${Math.round(speed)} km/h`;
+  }
+
+  formatDistance(distance) {
+    return `${distance} km`;
   }
 
   bindToOnSummaryGotten = (callback) => {
@@ -218,6 +260,10 @@ class Model {
 
   bindToOnSunsetTimeGotten = (callback) => {
     this.onSunsetTimeGotten = callback;
+  };
+
+  bindToOnErrorOccurred = (callback) => {
+    this.onErrorOccurred = callback;
   };
 }
 
