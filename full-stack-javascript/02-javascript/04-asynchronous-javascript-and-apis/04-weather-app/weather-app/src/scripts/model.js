@@ -7,6 +7,7 @@ import { CACHED_FORECAST } from "./cached-forecast";
 const SECONDS_TO_MILLISECONDS_MULTIPLIER = 1_000;
 const HOUR_FORMAT = "haaa";
 const DAY_FORMAT = "EEEE";
+const TIME_FORMAT = "h:maaa";
 // const UNIT_GROUP = "metric";
 // const API_KEY = "ULLZAVP98LHVZBLKNFM5PZGCM";
 
@@ -21,6 +22,7 @@ class Model {
     const uvIndex = this.getUvIndex(forecast);
     const windSpeed = this.getWindSpeed(forecast);
     const visibility = this.getVisibility(forecast);
+    const sunriseTime = this.getSunriseTime(forecast);
 
     this.onSummaryGotten(summary);
     this.onDayForecastGotten(dayForecast);
@@ -29,6 +31,7 @@ class Model {
     this.onUvIndexGotten(uvIndex);
     this.onWindSpeedGotten(windSpeed);
     this.onVisibilityGotten(visibility);
+    this.onSunriseTimeGotten(sunriseTime);
   };
 
   getSummary(forecast) {
@@ -45,11 +48,8 @@ class Model {
     const simplifiedHourForecasts = extendedHourForecasts.map(
       (extendedHourForecast) => {
         const simplifiedHourForecast = {
-          hour: format(
-            new Date(
-              extendedHourForecast.datetimeEpoch *
-                SECONDS_TO_MILLISECONDS_MULTIPLIER
-            ),
+          hour: this.formatDate(
+            extendedHourForecast.datetimeEpoch,
             HOUR_FORMAT
           ),
           icon: this.formatIcon(extendedHourForecast.icon),
@@ -73,13 +73,7 @@ class Model {
     const simplifiedDayForecasts = extendedDayForecasts.map(
       (extendedDayForecast) => {
         const simplifiedDayForecast = {
-          day: format(
-            new Date(
-              extendedDayForecast.datetimeEpoch *
-                SECONDS_TO_MILLISECONDS_MULTIPLIER
-            ),
-            DAY_FORMAT
-          ),
+          day: this.formatDate(extendedDayForecast.datetimeEpoch, DAY_FORMAT),
           icon: this.formatIcon(extendedDayForecast.icon),
           minTemp: `L:${this.formatTemp(extendedDayForecast.tempmin)}`,
           maxTemp: `H:${this.formatTemp(extendedDayForecast.tempmax)}`,
@@ -106,6 +100,13 @@ class Model {
 
   getVisibility(forecast) {
     return forecast.currentConditions.visibility;
+  }
+
+  getSunriseTime(forecast) {
+    return this.formatDate(
+      forecast.currentConditions.sunriseEpoch,
+      TIME_FORMAT
+    );
   }
 
   // async fetchForecast(location) {
@@ -161,6 +162,13 @@ class Model {
     return `${Math.round(temp)}°F`;
   }
 
+  formatDate(epochTime, formatString) {
+    return format(
+      new Date(epochTime * SECONDS_TO_MILLISECONDS_MULTIPLIER),
+      formatString
+    );
+  }
+
   formatIcon(icon) {
     // Google Material icons are hyphen-delineated
     return icon.replaceAll("-", "_");
@@ -196,6 +204,10 @@ class Model {
 
   bindToOnVisibilityGotten = (callback) => {
     this.onVisibilityGotten = callback;
+  };
+
+  bindToOnSunriseTimeGotten = (callback) => {
+    this.onSunriseTimeGotten = callback;
   };
 }
 

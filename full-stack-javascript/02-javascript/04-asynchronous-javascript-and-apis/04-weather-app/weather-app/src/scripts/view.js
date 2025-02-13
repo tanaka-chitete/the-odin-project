@@ -27,12 +27,14 @@ class View {
 
     this.uvIndexHTML = document.querySelector(".tile_type_uv-index .uv-index");
 
-    this.windSpeedHTML = document.querySelector(
-      ".tile_type_wind-speed .wind-speed"
-    );
+    this.windSpeedHTML = document.querySelector(".tile_type_wind .wind-speed");
 
     this.visibilityHTML = document.querySelector(
       ".tile_type_visibility .visibility"
+    );
+
+    this.sunriseTimeHTML = document.querySelector(
+      ".tile_type_sunrise-time .sunrise-time"
     );
   }
 
@@ -85,6 +87,10 @@ class View {
 
   displayVisibility = (visibilityString) => {
     this.visibilityHTML.innerText = visibilityString;
+  };
+
+  displaySunriseTime = (sunriseTimeString) => {
+    this.sunriseTimeHTML.innerText = sunriseTimeString;
   };
 }
 

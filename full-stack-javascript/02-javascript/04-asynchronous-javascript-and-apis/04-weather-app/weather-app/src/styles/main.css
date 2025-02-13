@@ -199,13 +199,17 @@ aside {
   grid-area: visibility;
 }
 
-/* Sunrise */
+/* Sunrise Time */
 
-.tile_sunrise-time {
+.tile_sunrise-time-time {
   grid-area: sunrise-time;
 }
 
-/* Sunset */
+.tile__body_centered > h3 {
+  font-size: 2rem;
+}
+
+/* Sunset Time */
 
 .tile_sunset-time {
   grid-area: sunset-time;

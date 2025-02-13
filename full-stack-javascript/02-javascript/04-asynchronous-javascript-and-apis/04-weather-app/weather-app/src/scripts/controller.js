@@ -10,6 +10,7 @@ class Controller {
     this.model.bindToOnUvIndexGotten(this.onUvIndexGotten);
     this.model.bindToOnWindSpeedGotten(this.onWindSpeedGotten);
     this.model.bindToOnVisibilityGotten(this.onVisibilityGotten);
+    this.model.bindToOnSunriseTimeGotten(this.onSunriseTimeGotten);
   }
 
   onSearch = (location) => {
@@ -42,6 +43,10 @@ class Controller {
 
   onVisibilityGotten = (visibility) => {
     this.view.displayVisibility(visibility);
+  };
+
+  onSunriseTimeGotten = (sunriseTime) => {
+    this.view.displaySunriseTime(sunriseTime);
   };
 }
 
