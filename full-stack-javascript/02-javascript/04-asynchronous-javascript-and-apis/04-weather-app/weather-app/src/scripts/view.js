@@ -30,6 +30,10 @@ class View {
     this.windSpeedHTML = document.querySelector(
       ".tile_type_wind-speed .wind-speed"
     );
+
+    this.visibilityHTML = document.querySelector(
+      ".tile_type_visibility .visibility"
+    );
   }
 
   displaySummary = (summaryJSON) => {
@@ -77,6 +81,10 @@ class View {
 
   displayWindSpeed = (windSpeedString) => {
     this.windSpeedHTML.innerText = windSpeedString;
+  };
+
+  displayVisibility = (visibilityString) => {
+    this.visibilityHTML.innerText = visibilityString;
   };
 }
 

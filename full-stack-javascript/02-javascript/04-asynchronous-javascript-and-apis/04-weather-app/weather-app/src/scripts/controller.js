@@ -9,6 +9,7 @@ class Controller {
     this.model.bindToOnFeelsLikeGotten(this.onFeelsLikeGotten);
     this.model.bindToOnUvIndexGotten(this.onUvIndexGotten);
     this.model.bindToOnWindSpeedGotten(this.onWindSpeedGotten);
+    this.model.bindToOnVisibilityGotten(this.onVisibilityGotten);
   }
 
   onSearch = (location) => {
@@ -37,6 +38,10 @@ class Controller {
 
   onWindSpeedGotten = (windSpeed) => {
     this.view.displayWindSpeed(windSpeed);
+  };
+
+  onVisibilityGotten = (visibility) => {
+    this.view.displayVisibility(visibility);
   };
 }
 

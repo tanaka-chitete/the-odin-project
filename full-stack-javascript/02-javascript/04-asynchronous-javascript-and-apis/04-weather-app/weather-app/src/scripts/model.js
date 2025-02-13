@@ -20,6 +20,7 @@ class Model {
     const feelsLike = this.getFeelsLike(forecast);
     const uvIndex = this.getUvIndex(forecast);
     const windSpeed = this.getWindSpeed(forecast);
+    const visibility = this.getVisibility(forecast);
 
     this.onSummaryGotten(summary);
     this.onDayForecastGotten(dayForecast);
@@ -27,6 +28,7 @@ class Model {
     this.onFeelsLikeGotten(feelsLike);
     this.onUvIndexGotten(uvIndex);
     this.onWindSpeedGotten(windSpeed);
+    this.onVisibilityGotten(visibility);
   };
 
   getSummary(forecast) {
@@ -100,6 +102,10 @@ class Model {
 
   getWindSpeed(forecast) {
     return this.formatSpeed(forecast.currentConditions.windspeed);
+  }
+
+  getVisibility(forecast) {
+    return forecast.currentConditions.visibility;
   }
 
   // async fetchForecast(location) {
@@ -186,6 +192,10 @@ class Model {
 
   bindToOnWindSpeedGotten = (callback) => {
     this.onWindSpeedGotten = callback;
+  };
+
+  bindToOnVisibilityGotten = (callback) => {
+    this.onVisibilityGotten = callback;
   };
 }
 
