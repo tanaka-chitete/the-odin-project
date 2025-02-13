@@ -6,6 +6,7 @@ class Controller {
     this.model.bindToOnSummaryGotten(this.onSummaryGotten);
     this.model.bindToOnDayForecastGotten(this.onDayForecastGotten);
     this.model.bindToOnFortnightForecastGotten(this.onFortnightForecastGotten);
+    this.model.bindToOnFeelsLikeGotten(this.onFeelsLikeGotten);
   }
 
   onSearch = (location) => {
@@ -22,6 +23,10 @@ class Controller {
 
   onFortnightForecastGotten = (fortnightForecast) => {
     this.view.displayFortnightForecast(fortnightForecast);
+  };
+
+  onFeelsLikeGotten = (feelsLike) => {
+    this.view.displayFeelsLike(feelsLike);
   };
 }
 

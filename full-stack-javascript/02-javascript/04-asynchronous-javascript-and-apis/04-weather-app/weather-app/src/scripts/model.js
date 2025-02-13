@@ -26,10 +26,12 @@ class Model {
     const summary = this.getSummary(forecast);
     const dayForecast = this.getDayForecast(forecast);
     const fortnightForecast = this.getFortnightForecast(forecast);
+    const feelsLike = this.getFeelsLike(forecast);
 
     this.onSummaryGotten(summary);
     this.onDayForecastGotten(dayForecast);
     this.onFortnightForecastGotten(fortnightForecast);
+    this.onFeelsLikeGotten(feelsLike);
   };
 
   getSummary(forecast) {
@@ -93,6 +95,10 @@ class Model {
     return simplifiedDayForecasts;
   }
 
+  getFeelsLike(forecast) {
+    return this.formatTemp(forecast.currentConditions.feelslike);
+  }
+
   // async fetchForecast(location) {
   //   const startDate = format(
   //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS - 1)),
@@ -152,6 +158,10 @@ class Model {
 
   bindToOnFortnightForecastGotten = (callback) => {
     this.onFortnightForecastGotten = callback;
+  };
+
+  bindToOnFeelsLikeGotten = (callback) => {
+    this.onFeelsLikeGotten = callback;
   };
 }
 

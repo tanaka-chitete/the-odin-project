@@ -171,6 +171,16 @@ aside {
   grid-area: feels-like;
 }
 
+.tile__body_centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.feels-like {
+  font-size: 4rem;
+}
+
 /* Average Temp */
 
 .tile_average-temp {

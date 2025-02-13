@@ -20,7 +20,10 @@ class View {
         ".tile_type_fortnight-forecast .day-forecast"
       ),
     ];
-    console.log(this.fortnightForecastHTML);
+
+    this.feelsLikeHTML = document.querySelector(
+      ".tile_type_feels-like .feels-like"
+    );
   }
 
   displaySummary = (summaryJSON) => {
@@ -45,9 +48,7 @@ class View {
     this.fortnightForecastHTML.forEach((dayForecastHTML, index) => {
       const dayHTML = dayForecastHTML.querySelector(".day-forecast__day");
       dayHTML.innerText = fortnightForecastJSON[index].day;
-      const iconHTML = dayForecastHTML.querySelector(
-        ".material-symbols-outlined"
-      );
+      const iconHTML = dayForecastHTML.querySelector(".day-forecast__icon");
       iconHTML.innerText = fortnightForecastJSON[index].icon;
       const minTempHTML = dayForecastHTML.querySelector(
         ".day-forecast__min-temp"
@@ -59,6 +60,10 @@ class View {
       maxTempHTML.innerText = fortnightForecastJSON[index].maxTemp;
     });
   };
+
+  displayFeelsLike(feelsLikeString) {
+    this.feelsLikeHTML.innerText = feelsLikeString;
+  }
 }
 
 export { View };
