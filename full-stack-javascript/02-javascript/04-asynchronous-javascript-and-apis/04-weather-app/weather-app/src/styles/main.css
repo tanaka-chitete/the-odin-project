@@ -49,6 +49,35 @@ header {
   grid-area: header;
 }
 
+.search {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.search__input {
+  width: 24rem;
+  color: var(--salt-1000);
+  background-color: var(--salt-100);
+  border: 1px solid var(--salt-500);
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.search__submit {
+  cursor: pointer;
+  width: 5rem;
+  border: 1px solid var(--salt-500);
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.search__input:focus {
+  outline: solid 1px var(--salt-700);
+}
+
 /* Summary */
 
 aside {
@@ -79,7 +108,7 @@ aside {
 
 .tiles {
   aspect-ratio: 1/1;
-  width: 52rem;
+  width: 55rem;
   display: grid;
   grid-template-areas:
     "day-forecast       day-forecast       day-forecast day-forecast"

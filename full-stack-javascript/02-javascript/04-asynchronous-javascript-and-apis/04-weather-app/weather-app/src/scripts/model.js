@@ -1,7 +1,5 @@
 import { format } from "date-fns";
 
-import { CACHED_FORECAST } from "./cached-forecast";
-
 const API_KEY = "ULLZAVP98LHVZBLKNFM5PZGCM";
 const DATE_FORMAT = "yyyy-MM-dd";
 const DAY_FORMAT = "EEEE";
@@ -12,7 +10,35 @@ const TIME_WINDOW_IN_DAYS = 14;
 const UNIT_GROUP = "metric";
 
 class Model {
-  // async fetchForecast(location) {
+  async fetchForecast(location) {
+    const startDate = format(
+      new Date(
+        new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS - 2)
+      ),
+      DATE_FORMAT
+    );
+    const endDate = format(new Date(), DATE_FORMAT);
+
+    try {
+      const response = await fetch(
+        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}/${endDate}?unitGroup=${UNIT_GROUP}&key=${API_KEY}`,
+        { mode: "cors" }
+      );
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      const forecast = await response.json();
+
+      this.processForecast(forecast);
+    } catch (error) {
+      console.log(error);
+      this.onErrorOccurred(`Unable to get forecast for "${location}"`);
+    }
+  }
+
+  // fetchForecast = (location) => {
   //   const startDate = format(
   //     new Date(
   //       new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS - 2)
@@ -21,53 +47,25 @@ class Model {
   //   );
   //   const endDate = format(new Date(), DATE_FORMAT);
 
-  //   try {
-  //     const response = await fetch(
-  //       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}/${endDate}?unitGroup=${UNIT_GROUP}&key=${API_KEY}`,
-  //       { mode: "cors" }
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error(await response.text());
-  //     }
-
-  //     const forecast = await response.json();
-  //     console.log(forecast);
-
-  //     this.processForecast(forecast);
-  //   } catch (error) {
-  //     console.error(error);
-  //     this.onErrorOccurred(`Unable to get weather for "${location}"`);
-  //   }
-  // }
-
-  // fetchForecast = (location) => {
-  //   const startDate = format(
-  //     new Date(new Date().setDate(new Date().getDate() - TIME_WINDOW_IN_DAYS)),
-  //     DATE_FORMAT
-  //   );
-  //   const endDate = format(new Date(), DATE_FORMAT);
-
   //   fetch(
-  //       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}/${endDate}?key=${API_KEY}`,
-  //       { mode: "cors" }
+  //     `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}/${endDate}?unitGroup=${UNIT_GROUP}&key=${API_KEY}`,
+  //     { mode: "cors" }
   //   )
   //     .then((response) => {
   //       if (!response.ok) {
   //         return response.text().then((errorMessage) => {
-  //             throw new Error(errorMessage);
-  //           });
+  //           throw new Error(errorMessage);
+  //         });
   //       }
 
   //       return response.json();
   //     })
-  //     .then((data) => this.onForecastFetched(data["resolvedAddress"]))
-  //     .catch((error) => this.onForecastFetched(error));
+  //     .then((forecast) => this.processForecast(forecast))
+  //     .catch((error) => {
+  //       console.log(error);
+  //       this.onErrorOccurred(`Unable to get forecast for "${location}"`);
+  //     });
   // };
-
-  fetchForecast(location) {
-    this.processForecast(CACHED_FORECAST);
-  }
 
   processForecast(forecast) {
     const summary = this.getSummary(forecast);
@@ -93,7 +91,7 @@ class Model {
 
   getSummary(forecast) {
     const summary = {
-      location: forecast.address,
+      location: forecast.resolvedAddress,
       temp: this.formatTemp(forecast.currentConditions.temp),
       conditions: forecast.currentConditions.conditions,
     };

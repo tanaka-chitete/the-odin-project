@@ -1,5 +1,7 @@
 class View {
   constructor() {
+    this.searchHTML = document.querySelector(".search");
+
     this.summaryHTML = {
       location: document.querySelector(".summary__location"),
       temp: document.querySelector(".summary__temp"),
@@ -40,6 +42,19 @@ class View {
     this.sunsetTimeHTML = document.querySelector(
       ".tile_type_sunset-time .sunset-time"
     );
+  }
+
+  bindToOnSearch(callback) {
+    this.onSearch = callback;
+
+    this.searchHTML.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const location = event.target.elements["search__input"].value;
+      if (location) {
+        this.onSearch(location);
+      }
+    });
   }
 
   displaySummary = (summaryJSON) => {

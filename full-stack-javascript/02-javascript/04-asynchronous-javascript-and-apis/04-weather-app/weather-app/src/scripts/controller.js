@@ -3,6 +3,8 @@ class Controller {
     this.model = model;
     this.view = view;
 
+    this.view.bindToOnSearch(this.onSearch);
+
     this.model.bindToOnSummaryGotten(this.onSummaryGotten);
     this.model.bindToOnDayForecastGotten(this.onDayForecastGotten);
     this.model.bindToOnFortnightForecastGotten(this.onFortnightForecastGotten);

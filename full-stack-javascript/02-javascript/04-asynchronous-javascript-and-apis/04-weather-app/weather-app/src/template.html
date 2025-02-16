@@ -11,15 +11,27 @@
   </head>
   <body>
     <div id="root">
-      <header></header>
+      <header>
+        <form action="" class="search">
+          <input
+            type="text"
+            name="search__input"
+            id="search__input"
+            placeholder="Location"
+            class="search__input"
+          />
+          <button type="submit" class="search__submit">Search</button>
+        </form>
+      </header>
 
       <aside>
         <div class="summary">
-          <p class="summary__location"></p>
-          <p class="summary__temp"></p>
-          <p class="summary__conditions"></p>
+          <p class="summary__location">__________</p>
+          <p class="summary__temp">__</p>
+          <p class="summary__conditions">__________</p>
         </div>
       </aside>
+
       <main>
         <div class="tiles">
           <div class="tile tile_type_day-forecast">
