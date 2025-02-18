@@ -1,0 +1,131 @@
+Question 1: Sum all numbers
+Write a function called sumRange. It will take a number and return the sum of 
+all numbers from 1 up to the number passed in.
+
+Answer:
+function sumRange(number) {
+  if (number == 1)
+	return number
+
+  return number + sumRange(number - 1)
+}
+
+--------------------------------------------------------------------------------
+Question 2: Power function
+Write a function called power which takes in a base and an exponent. If the 
+exponent is 0, return 1.
+
+Answer:
+function power(base, exponent) {
+  if (exponent == 0) 
+	return 1
+
+  return base * power(base, exponent - 1)
+}
+
+--------------------------------------------------------------------------------
+Question 3: Calculate factorial
+Write a function that returns the factorial of a number.
+
+Answer:
+function calculateFactorial(number) {
+  if (number == 0 || number == 1)
+	return 1
+
+  return number * calculateFactorial(number - 1)
+}
+
+--------------------------------------------------------------------------------
+Question 4: Check all values in an array
+Write a function called all which accepts an array and a callback and returns 
+true if every value in the array returns true when passed as parameter to the 
+callback function.
+
+Answer:
+function all(array, callback) {
+  if (array.length == 0)
+	return true
+
+  return callback(array[0]) && all(array.slice(1), callback)
+}
+
+--------------------------------------------------------------------------------
+Question 5: Product of an array
+Write a function called productOfArray which takes in an array of numbers and 
+returns the product of them all.
+
+Answer:
+function productOfArray(array) {
+  if (array.length == 0) 
+    return 1
+
+  return array.shift() * productOfArray(array)
+}
+
+--------------------------------------------------------------------------------
+Question 6: Search JS object
+Write a function called contains that searches for a value in a nested object. 
+It returns true if the object contains that value.
+
+Answer:
+function contains(object, target) {
+  if (typeof object !== "object")
+    return object === target
+
+  for (const value of Object.values(object)) {
+    if (contains(value, target))
+      return true
+  }
+
+  return false
+}
+
+--------------------------------------------------------------------------------
+Question 7: Parse a multi-dimensional array
+Given a multi-dimensional integer array, return the total number of integers 
+stored inside this array
+
+Answer:
+function totalIntegers(value) {
+  if (!Array.isArray(value))
+    return Number.isInteger(value) ? 1 : 0
+
+  let numIntegers = 0
+  value.forEach((item) => 
+    numIntegers += totalIntegers(item)
+  )
+
+  return numIntegers;
+}
+
+--------------------------------------------------------------------------------
+Question 8:
+Write a function that sums squares of numbers in list that may contain more 
+lists.
+
+Answer:
+function sumSquares(value) {
+  if (!Array.isArray(value))
+    return value ** 2
+
+  let sum = 0
+  value.forEach((item) =>
+    sum += sumSquares(item)
+  )
+
+  return sum
+}
+
+--------------------------------------------------------------------------------
+Question 9:
+The function should return an array containing repetitions of the number 
+argument. For instance, replicate(3, 5) should return [5,5,5]. If the times 
+argument is negative, return an empty array.
+
+Answer:
+function replicate(times, number) {
+  if (times <= 0)
+    return []
+
+  return [number].concat(replicate(times - 1, number))
+}
