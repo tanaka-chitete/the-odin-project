@@ -20,22 +20,7 @@ const MOVES = [
  * @param {Array} endCoordinates
  */
 export function knightMoves(startCoordinates, endCoordinates) {
-  // If inputs are invalid, throw error
-  //
-  // Initialise toVisit queue with start coordinates
-  // Initialise shortestPath queue with start coordinates
-  //
-  // While toVisit isn't empty
-  //  Dequeue current coordinates from queue
-  //  If current coordinates equal end coordinates, return shortestPath
-  //
-  //  Print coordinates
-  //  Return if coordinates equal targetCoordinates
-  //  Enqueue coordinates of top move, if valid
-  //  Enqueue coordinates of right move, if valid
-  //  Enqueue coordinates of bottom move, if valid
-  //  Enqueue coordinates of left move, if valid
-  const toVisit = [startCoordinates, startCoordinates];
+  const toVisit = [[startCoordinates, [startCoordinates]]];
   const visited = new Set();
 
   while (toVisit.length !== 0) {
@@ -63,7 +48,10 @@ export function knightMoves(startCoordinates, endCoordinates) {
         ];
 
         if (!visited.has(`${nextCoordinates[0]},${nextCoordinates[1]}`)) {
-          toVisit.push([nextCoordinates, currentPath + nextCoordinates]);
+          toVisit.push([
+            nextCoordinates,
+            currentPath.concat([nextCoordinates]),
+          ]);
         }
       }
     });
