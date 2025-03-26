@@ -155,3 +155,35 @@ export function encipher(plaintext, shiftFactor) {
 
   return ciphertext;
 }
+
+/**
+ * Determines the following values for an array: average, minimum, maximum, and
+ * length
+ * @param {Array} array
+ */
+export function analyseArray(array) {
+  if (array.length === 0) {
+    return {};
+  }
+
+  const average =
+    array.reduce((currentSum, currentNumber) => currentSum + currentNumber, 0) /
+    array.length;
+
+  const min = array.reduce((currentMin, currentNumber) =>
+    currentNumber < currentMin ? currentNumber : currentMin
+  );
+
+  const max = array.reduce((currentMax, currentNumber) =>
+    currentNumber > currentMax ? currentNumber : currentMax
+  );
+
+  const length = array.length;
+
+  return {
+    average,
+    min,
+    max,
+    length,
+  };
+}

@@ -1,4 +1,10 @@
-import { capitalise, reverseString, Calculator, encipher } from "./utilities";
+import {
+  capitalise,
+  reverseString,
+  Calculator,
+  encipher,
+  analyseArray,
+} from "./utilities";
 
 // TODO: Validate inputs
 describe("capitalise()", () => {
@@ -144,4 +150,22 @@ describe("encipher()", () => {
     expect(encipher("HeLLo", 3)).toBe("KhOOr"));
   it('enciphers "Hello, World!" with a shift factor of 3', () =>
     expect(encipher("Hello, World!", 3)).toBe("Khoor, Zruog!"));
+});
+
+describe("analyseArray()", () => {
+  it("analyses []", () => expect(analyseArray([])).toEqual({}));
+  it("analyses [3]", () =>
+    expect(analyseArray([3])).toEqual({
+      average: 3,
+      min: 3,
+      max: 3,
+      length: 1,
+    }));
+  it("analyses [1, 8, 3, 4, 2, 6]", () =>
+    expect(analyseArray([1, 8, 3, 4, 2, 6])).toEqual({
+      average: 4,
+      min: 1,
+      max: 8,
+      length: 6,
+    }));
 });
