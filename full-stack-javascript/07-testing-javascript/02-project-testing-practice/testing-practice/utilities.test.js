@@ -1,32 +1,35 @@
-import { capitalise, reverseString, Calculator } from "./utilities";
+import { capitalise, reverseString, Calculator, encipher } from "./utilities";
 
+// TODO: Validate inputs
 describe("capitalise()", () => {
-  it(`processes null as ""`, () => expect(capitalise(null)).toBe(""));
-  it(`processes "" as ""`, () => expect(capitalise("")).toBe(""));
-  it(`processes "a" as "A"`, () => expect(capitalise("a")).toBe("A"));
-  it(`processes "A" as "A"`, () => expect(capitalise("A")).toBe("A"));
-  it(`processes "anna" as "Anna"`, () =>
+  it('processes null as ""', () => expect(capitalise(null)).toBe(""));
+  it('processes "" as ""', () => expect(capitalise("")).toBe(""));
+  it('processes "a" as "A"', () => expect(capitalise("a")).toBe("A"));
+  it('processes "A" as "A"', () => expect(capitalise("A")).toBe("A"));
+  it('processes "anna" as "Anna"', () =>
     expect(capitalise("anna")).toBe("Anna"));
-  it(`processes "Anna" as "Anna"`, () =>
+  it('processes "Anna" as "Anna"', () =>
     expect(capitalise("Anna")).toBe("Anna"));
-  it(`processes "hello, my name is Anna!" as "Hello, my name is Anna!"`, () =>
+  it('processes "hello, my name is Anna!" as "Hello, my name is Anna!"', () =>
     expect(capitalise("hello, my name is Anna!")).toBe(
       "Hello, my name is Anna!"
     ));
 });
 
+// TODO: Validate inputs
 describe("reverseString()", () => {
-  it(`processes null as ""`, () => expect(reverseString(null)).toBe(""));
-  it(`processes "" as ""`, () => expect(reverseString("")).toBe(""));
-  it(`processes "a" as "a"`, () => expect(reverseString("a")).toBe("a"));
-  it(`processes "Anna" as "annA"`, () =>
+  it('processes null as ""', () => expect(reverseString(null)).toBe(""));
+  it('processes "" as ""', () => expect(reverseString("")).toBe(""));
+  it('processes "a" as "a"', () => expect(reverseString("a")).toBe("a"));
+  it('processes "Anna" as "annA"', () =>
     expect(reverseString("Anna")).toBe("annA"));
-  it(`processes "Hello, my name is Anna! as "!annA si eman ym ,olleH"`, () =>
+  it('processes "Hello, my name is Anna!" as "!annA si eman ym ,olleH"', () =>
     expect(reverseString("Hello, my name is Anna!")).toBe(
       "!annA si eman ym ,olleH"
     ));
 });
 
+// TODO: Validate inputs
 describe("Calculator", () => {
   describe("add()", () => {
     it("adds 0 and 0", () => expect(Calculator.add(0, 0)).toBe(0));
@@ -50,6 +53,7 @@ describe("Calculator", () => {
       expect(Calculator.add(-1, -1)).toBe(-2));
   });
 
+  // TODO: Validate inputs
   describe("subtract()", () => {
     it("subtracts 0 and 0", () => expect(Calculator.subtract(0, 0)).toBe(0));
     it("subtracts 0 and a positive integer", () =>
@@ -72,6 +76,7 @@ describe("Calculator", () => {
       expect(Calculator.subtract(-1, -1)).toBe(0));
   });
 
+  // TODO: Validate inputs
   describe("divide()", () => {
     it("does not divide 0 and 0", () =>
       expect(Calculator.divide(0, 0)).toBeUndefined());
@@ -99,6 +104,7 @@ describe("Calculator", () => {
       expect(Calculator.divide(-1, 3)).toBeCloseTo(-0.3, 1));
   });
 
+  // TODO: Validate inputs
   describe("multiply()", () => {
     it("multiplies 0 and 0", () => expect(Calculator.multiply(0, 0)).toBe(0));
     it("multiplies 0 and a positive number", () =>
@@ -120,4 +126,22 @@ describe("Calculator", () => {
     it("multiplies a negative number and a negative number", () =>
       expect(Calculator.multiply(-2, -3)).toBe(6));
   });
+});
+
+// TODO: Validate inputs
+describe("encipher()", () => {
+  it('enciphers "" with a shift factor of 1', () =>
+    expect(encipher("", 1)).toBe(""));
+  it('enciphers "a" with a shift factor of 1', () =>
+    expect(encipher("a", 1)).toBe("b"));
+  it('enciphers "z" with a shift factor of 1', () =>
+    expect(encipher("z", 1)).toBe("a"));
+  it('enciphers "A" with a shift factor of 1', () =>
+    expect(encipher("A", 1)).toBe("B"));
+  it('enciphers "xyz" with a shift factor of 3', () =>
+    expect(encipher("xyz", 3)).toBe("abc"));
+  it('enciphers "HeLLo" with a shift factor of 3', () =>
+    expect(encipher("HeLLo", 3)).toBe("KhOOr"));
+  it('enciphers "Hello, World!" with a shift factor of 3', () =>
+    expect(encipher("Hello, World!", 3)).toBe("Khoor, Zruog!"));
 });
