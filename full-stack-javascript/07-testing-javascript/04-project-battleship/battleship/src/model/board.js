@@ -1,6 +1,7 @@
 "use strict";
 
 import { Coordinate } from "./coordinate";
+import { Ship } from "./ship";
 
 export class Board {
   #LENGTH_OF_BOARD = 10;
@@ -14,43 +15,54 @@ export class Board {
     }
   }
 
-  // TODO: Mark places using "x" and "o" for each player
-  place(start, end) {
-    // TODO: Check for equality using utilities.equals()
-    // if (start === end) {
-    //   return false;
-    // }
-
-    if (!this.#isInBound(start) || !this.#isInBound(end)) {
-      return false;
+  place(startCoordinate, endCoordinate) {
+    if (
+      !this.#isInBounds(startCoordinate) ||
+      !this.#isInBounds(endCoordinate)
+    ) {
+      throw new Error("Path must be in-bounds");
     }
 
-    if (!this.#isInline(start, end)) {
-      return false;
+    if (!this.#doesAlign(startCoordinate, endCoordinate)) {
+      throw new Error("Path must align with board spaces");
     }
 
-    // TODO: Check if coordinates would place a ship of length >5
-    if (!this.#isOfSize(start, end)) {
-      return false;
+    const path = this.#makePath(startCoordinate, endCoordinate);
+
+    if (!this.#isWellSized(path)) {
+      throw new Error("Path must be 2 to 5 spaces in length");
     }
 
-    const path = this.#makePath(start, end);
-    if (!this.#isFree(path)) {
-      return false;
+    if (!this.#isVacant(path)) {
+      throw new Error("Path must be vacant");
     }
 
+    const ship = new Ship(path.length);
     path.forEach(
-      (coordinate) => (this.#board[coordinate.y][coordinate.x] = "x")
+      (coordinate) => (this.#board[coordinate.y][coordinate.x] = ship)
     );
-
-    return true; // TODO: Return the ship
   }
 
-  #isInline(start, end) {
-    return start.x === end.x || start.y === end.y;
+  fire(coordinate) {
+    if (!this.#isInBounds(coordinate)) {
+      throw new Error("Coordinate must be in-bounds");
+    }
+
+    if (this.#board[coordinate.y][coordinate.x] === "x") {
+      throw new Error("Coordinate must not have already been fired at");
+    }
+
+    const hit =
+      typeof this.#board[coordinate.y][coordinate.x] === "undefined"
+        ? false
+        : true;
+
+    this.#board[coordinate.y][coordinate.x] = "x";
+
+    return hit;
   }
 
-  #isInBound(coordinate) {
+  #isInBounds(coordinate) {
     return (
       coordinate.x >= 0 &&
       coordinate.x < this.#LENGTH_OF_BOARD &&
@@ -59,44 +71,47 @@ export class Board {
     );
   }
 
-  #isOfSize(start, end) {
+  #doesAlign(startCoordinate, endCoordinate) {
     return (
-      (start.x === end.x && Math.abs(end.y - start.y) <= 5) ||
-      (start.y === end.y && Math.abs(end.x - start.x) <= 5)
+      startCoordinate.x === endCoordinate.x ||
+      startCoordinate.y === endCoordinate.y
     );
   }
 
-  #isFree(path) {
-    return path.every(
-      (coordinate) => this.#board[coordinate.y][coordinate.x] === ""
-    );
-  }
-
-  #makePath(start, end) {
+  #makePath(startCoordinate, endCoordinate) {
     const path = [];
 
-    if (start.x === end.x) {
-      if (start.y > end.y) {
-        // Coordinates need to be swapped to avoid confusion
-        [start, end] = [end, start];
+    // Intuitively, the start coordinate should be "before" the end coordinate
+    if (
+      startCoordinate.y > endCoordinate.y ||
+      startCoordinate.x > endCoordinate.x
+    ) {
+      [startCoordinate, endCoordinate] = [endCoordinate, startCoordinate];
+    }
 
-        // Path needs to be made using coordinates on shared vertical
-        for (let row = start.y; row <= end.y; row++) {
-          path.push(new Coordinate(start.x, row));
-        }
+    // A shared x-axis means that the path is vertical
+    if (startCoordinate.x === endCoordinate.x) {
+      for (let row = startCoordinate.y; row <= endCoordinate.y; row++) {
+        path.push(new Coordinate(startCoordinate.x, row));
       }
     } else {
-      if (start.x > end.x) {
-        // Coordinates need to be swapped to avoid confusion
-        [start, end] = [end, start];
-
-        // Path needs to be made using coordinates on shared horizontal
-        for (let column = start.x; column <= end.x; column++) {
-          path.push(new Coordinate(column, start.y));
-        }
+      for (
+        let column = startCoordinate.x;
+        column <= endCoordinate.x;
+        column++
+      ) {
+        path.push(new Coordinate(column, startCoordinate.y));
       }
     }
 
-    return [start, ...path, end];
+    return path;
+  }
+
+  #isWellSized(path) {
+    return 2 <= path.length && path.length <= 5;
+  }
+
+  #isVacant(path) {
+    return path.every((coordinate) => !this.#board[coordinate.y][coordinate.x]);
   }
 }

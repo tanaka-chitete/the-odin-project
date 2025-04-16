@@ -5,156 +5,238 @@ import { Coordinate } from "./coordinate";
 
 describe("Board", () => {
   describe("place()", () => {
-    it("does not place a ship at an under-dimensions (negative) position", () => {
-      expect(
-        new Board().place(new Coordinate(-1, 0), new Coordinate(0, 0))
-      ).toBe(false);
+    it("places a ship on a valid path: (1) in-bounds, (2) aligns with board spaces, (3) well-sized (2 to 5 spaces in length), and (4) vacant", () => {
+      expect(() =>
+        new Board().place(new Coordinate(0, 0), new Coordinate(0, 1))
+      ).not.toThrow();
 
-      // expect(
-      //   new Board().place(new Ship(2), [
-      //     new Coordinate(0, -1),
-      //     new Coordinate(0, 0),
-      //   ])
-      // ).toBe(false);
+      expect(() =>
+        new Board().place(new Coordinate(0, 0), new Coordinate(1, 0))
+      ).not.toThrow();
 
-      // expect(
-      //   new Board().place(new Ship(2), [
-      //     new Coordinate(0, 0),
-      //     new Coordinate(-1, 0),
-      //   ])
-      // ).toBe(false);
+      expect(() =>
+        new Board().place(new Coordinate(9, 0), new Coordinate(8, 0))
+      ).not.toThrow();
 
-      // expect(
-      //   new Board().place(new Ship(2), [
-      //     new Coordinate(0, 0),
-      //     new Coordinate(0, -1),
-      //   ])
-      // ).toBe(false);
+      expect(() =>
+        new Board().place(new Coordinate(9, 0), new Coordinate(9, 1))
+      ).not.toThrow();
+
+      expect(() =>
+        new Board().place(new Coordinate(9, 9), new Coordinate(9, 8))
+      ).not.toThrow();
+
+      expect(() =>
+        new Board().place(new Coordinate(9, 9), new Coordinate(8, 9))
+      ).not.toThrow();
+
+      expect(() =>
+        new Board().place(new Coordinate(0, 9), new Coordinate(1, 9))
+      ).not.toThrow();
+
+      expect(() =>
+        new Board().place(new Coordinate(0, 9), new Coordinate(0, 8))
+      ).not.toThrow();
     });
 
-    // it("only places the ship at linear coordinates", () => {
-    //   // Doesn't place diagonally
-    //   // Doesn't place scattered
-    //   // Doesn't place in a box
-    // })
+    it("does not place a ship on an out-of-bounds path", () => {
+      expect(() =>
+        new Board().place(new Coordinate(-1, 0), new Coordinate(0, 0))
+      ).toThrow();
 
-    // it("does not place a ship at an over-dimensions (>=10) position", () => {
-    //   expect(
-    //     new Board().place(new Ship(2), [
-    //       new Coordinate(10, 0),
-    //       new Coordinate(0, 0),
-    //     ])
-    //   ).toBe(false);
+      expect(() =>
+        new Board().place(new Coordinate(0, -1), new Coordinate(0, 0))
+      ).toThrow();
 
-    //   // expect(
-    //   //   new Board().place(new Ship(2), [
-    //   //     new Coordinate(0, 10),
-    //   //     new Coordinate(0, 0),
-    //   //   ])
-    //   // ).toBe(false);
+      expect(() =>
+        new Board().place(new Coordinate(9, -1), new Coordinate(9, 0))
+      ).toThrow();
 
-    //   // expect(
-    //   //   new Board().place(new Ship(2), [
-    //   //     new Coordinate(0, 0),
-    //   //     new Coordinate(10, 0),
-    //   //   ])
-    //   // ).toBe(false);
+      expect(() =>
+        new Board().place(new Coordinate(10, 0), new Coordinate(9, 0))
+      ).toThrow();
 
-    //   // expect(
-    //   //   new Board().place(new Ship(2), [
-    //   //     new Coordinate(0, 0),
-    //   //     new Coordinate(0, 10),
-    //   //   ])
-    //   // ).toBe(false);
-    // });
+      expect(() =>
+        new Board().place(new Coordinate(10, 9), new Coordinate(9, 9))
+      ).toThrow();
 
-    // it("places ship at in-bound position", () => {
-    //   expect(
-    //     new Board().place(new Ship(2), [
-    //       new Coordinate(0, 0),
-    //       new Coordinate(0, 1),
-    //     ])
-    //   ).toBe(true);
+      expect(() =>
+        new Board().place(new Coordinate(9, 10), new Coordinate(9, 9))
+      ).toThrow();
 
-    //   // expect(
-    //   //   new Board().place(new Ship(2), [
-    //   //     new Coordinate(0, 0),
-    //   //     new Coordinate(1, 0),
-    //   //   ])
-    //   // ).toBe(true);
+      expect(() =>
+        new Board().place(new Coordinate(0, 10), new Coordinate(0, 9))
+      ).toThrow();
 
-    //   // expect(
-    //   //   new Board().place(new Ship(2), [
-    //   //     new Coordinate(0, 9),
-    //   //     new Coordinate(0, 8),
-    //   //   ])
-    //   // ).toBe(true);
+      expect(() =>
+        new Board().place(new Coordinate(-1, 9), new Coordinate(0, 9))
+      ).toThrow();
+    });
 
-    //   // expect(
-    //   //   new Board().place(new Ship(2), [
-    //   //     new Coordinate(0, 9),
-    //   //     new Coordinate(1, 9),
-    //   //   ])
-    //   // ).toBe(true);
+    it("does not place a ship on a path that doesn't align with board spaces", () => {
+      expect(() => new Board().place(new Coordinate(0, 0), (1, 1))).toThrow();
 
-    //   // expect(
-    //   //   new Board().place(new Ship(2), [
-    //   //     new Coordinate(9, 9),
-    //   //     new Coordinate(8, 9),
-    //   //   ])
-    //   // ).toBe(true);
+      expect(() => new Board.place(new Coordinate(9, 0), (8, 1))).toThrow();
 
-    //   // expect(
-    //   //   new Board().place(new Ship(2), [
-    //   //     new Coordinate(9, 9),
-    //   //     new Coordinate(9, 8),
-    //   //   ])
-    //   // ).toBe(true);
+      expect(() => new Board().place(new Coordinate(9, 9), (8, 8))).toThrow();
 
-    //   // expect(
-    //   //   new Board().place(new Ship(2), [
-    //   //     new Coordinate(9, 0),
-    //   //     new Coordinate(9, 1),
-    //   //   ])
-    //   // ).toBe(true);
+      expect(() => new Board().place(new Coordinate(0, 9), (1, 8))).toThrow();
+    });
 
-    //   // expect(
-    //   //   new Board().place(new Ship(2), [
-    //   //     new Coordinate(9, 0),
-    //   //     new Coordinate(8, 0),
-    //   //   ])
-    //   // ).toBe(true);
-    // });
+    it("does not place a ship on a path that isn't well-sized", () => {
+      expect(() =>
+        new Board().place(new Coordinate(0, 0), new Coordinate(0, 5))
+      ).toThrow();
 
-    // it("does not place ship at currently-occupied position", () => {
-    //   const board = new Board();
+      expect(() =>
+        new Board().place(new Coordinate(0, 0), new Coordinate(5, 0))
+      ).toThrow();
 
-    //   expect(
-    //     board.place(new Ship(2), [new Coordinate(0, 0), new Coordinate(0, 1)])
-    //   ).toBe(true);
+      expect(() =>
+        new Board().place(new Coordinate(9, 0), new Coordinate(4, 0))
+      ).toThrow();
 
-    //   // expect(
-    //   //   board.place(new Ship(2), [new Coordinate(0, 0), new Coordinate(0, 1)])
-    //   // ).toBe(false);
-    // });
+      expect(() =>
+        new Board().place(new Coordinate(9, 0), new Coordinate(9, 5))
+      ).toThrow();
 
-    // it("does not place ship at non-inline coordinates", () => {
-    //   expect(
-    //     new Board().place(new Ship(3), [
-    //       new Coordinate(0, 0),
-    //       new Coordinate(1, 0),
-    //       new Coordinate(1, 1),
-    //     ])
-    //   ).toBe(false);
-    // });
+      expect(() =>
+        new Board().place(new Coordinate(9, 9), new Coordinate(9, 4))
+      ).toThrow();
 
-    // it("does not place ship at non-consecutive coordinates", () => {
-    //   expect(
-    //     new Board().place(new Ship(2), [
-    //       new Coordinate(0, 0),
-    //       new Coordinate(2, 0),
-    //     ])
-    //   ).toBe(false);
-    // });
+      expect(() =>
+        new Board().place(new Coordinate(9, 9), new Coordinate(4, 9))
+      ).toThrow();
+
+      expect(() =>
+        new Board().place(new Coordinate(0, 9), new Coordinate(5, 9))
+      ).toThrow();
+
+      expect(() =>
+        new Board().place(new Coordinate(0, 9), new Coordinate(0, 4))
+      ).toThrow();
+    });
+
+    it("does not place a ship on an occupied path", () => {
+      let board = new Board();
+      expect(() =>
+        board.place(new Coordinate(0, 0), new Coordinate(0, 1))
+      ).not.toThrow();
+      expect(() =>
+        board.place(new Coordinate(0, 1), new Coordinate(0, 2))
+      ).toThrow();
+
+      board = new Board();
+      expect(() =>
+        board.place(new Coordinate(0, 0), new Coordinate(1, 0))
+      ).not.toThrow();
+      expect(() =>
+        board.place(new Coordinate(1, 0), new Coordinate(2, 0))
+      ).toThrow();
+
+      board = new Board();
+      expect(() =>
+        board.place(new Coordinate(9, 0), new Coordinate(8, 0))
+      ).not.toThrow();
+      expect(() =>
+        board.place(new Coordinate(8, 0), new Coordinate(7, 0))
+      ).toThrow();
+
+      board = new Board();
+      expect(() =>
+        board.place(new Coordinate(9, 0), new Coordinate(9, 1))
+      ).not.toThrow();
+      expect(() =>
+        board.place(new Coordinate(9, 1), new Coordinate(9, 2))
+      ).toThrow();
+
+      board = new Board();
+      expect(() =>
+        board.place(new Coordinate(9, 9), new Coordinate(9, 8))
+      ).not.toThrow();
+      expect(() =>
+        board.place(new Coordinate(9, 8), new Coordinate(9, 7))
+      ).toThrow();
+
+      board = new Board();
+      expect(() =>
+        board.place(new Coordinate(9, 9), new Coordinate(8, 9))
+      ).not.toThrow();
+      expect(() =>
+        board.place(new Coordinate(8, 9), new Coordinate(7, 9))
+      ).toThrow();
+
+      board = new Board();
+      expect(() =>
+        board.place(new Coordinate(0, 9), new Coordinate(1, 9))
+      ).not.toThrow();
+      expect(() =>
+        board.place(new Coordinate(1, 9), new Coordinate(2, 9))
+      ).toThrow();
+
+      board = new Board();
+      expect(() =>
+        board.place(new Coordinate(0, 9), new Coordinate(0, 8))
+      ).not.toThrow();
+      expect(() =>
+        board.place(new Coordinate(0, 8), new Coordinate(0, 7))
+      ).toThrow();
+    });
+  });
+
+  describe("fire()", () => {
+    it("does not fire at an out-of-bounds coordinate", () => {
+      expect(() => new Board().fire(new Coordinate(-1, 0))).toThrow();
+      expect(() => new Board().fire(new Coordinate(0, -1))).toThrow();
+      expect(() => new Board().fire(new Coordinate(9, -1))).toThrow();
+      expect(() => new Board().fire(new Coordinate(10, 0))).toThrow();
+      expect(() => new Board().fire(new Coordinate(10, 9))).toThrow();
+      expect(() => new Board().fire(new Coordinate(9, 10))).toThrow();
+      expect(() => new Board().fire(new Coordinate(0, 10))).toThrow();
+      expect(() => new Board().fire(new Coordinate(-1, 9))).toThrow();
+    });
+
+    it("does not fire at a previously-hit coordinate", () => {
+      let board = new Board();
+      board.fire(new Coordinate(0, 0));
+      expect(() => board.fire(new Coordinate(0, 0))).toThrow();
+
+      board = new Board();
+      board.fire(new Coordinate(9, 0));
+      expect(() => board.fire(new Coordinate(9, 0))).toThrow();
+
+      board = new Board();
+      board.fire(new Coordinate(9, 9));
+      expect(() => board.fire(new Coordinate(9, 9))).toThrow();
+
+      board = new Board();
+      board.fire(new Coordinate(0, 9));
+      expect(() => board.fire(new Coordinate(0, 9))).toThrow();
+    });
+
+    it("it fires at an in-bounds coordinate, hitting a ship", () => {
+      let board = new Board();
+      board.place(new Coordinate(0, 0), new Coordinate(1, 0));
+      expect(board.fire(new Coordinate(0, 0))).toBe(true);
+
+      board = new Board();
+      board.place(new Coordinate(9, 0), new Coordinate(9, 1));
+      expect(board.fire(new Coordinate(9, 0))).toBe(true);
+
+      board = new Board();
+      board.place(new Coordinate(9, 9), new Coordinate(8, 9));
+      expect(board.fire(new Coordinate(9, 9))).toBe(true);
+
+      board = new Board();
+      board.place(new Coordinate(0, 9), new Coordinate(0, 8));
+      expect(board.fire(new Coordinate(0, 9))).toBe(true);
+    });
+
+    it("it fires at an in-bound coordinate, missing a ship", () => {
+      expect(new Board().fire(new Coordinate(0, 0))).toBe(false);
+      expect(new Board().fire(new Coordinate(9, 0))).toBe(false);
+      expect(new Board().fire(new Coordinate(9, 9))).toBe(false);
+      expect(new Board().fire(new Coordinate(0, 9))).toBe(false);
+    });
   });
 });

@@ -2,19 +2,6 @@
 
 import { Ship } from "./ship";
 
-/**
- * Test the interface, not the implementation.
- * so, we can think of the method as being the interface, and the property as
- * the underlying implementation
- * e.g. hit() -> interface
- * e.g. hits -> implementation
- *
- * So, test hit() (since we will always need this function to play the game!).
- * But, don't test hits, since it's a glimpse into the implementation and we
- * don't want to test that. What if the hits variable is removed in the future???
- *
- */
-
 describe("Ship", () => {
   describe("constructor()", () => {
     it("constructs object with an in-range length", () => {
@@ -39,25 +26,17 @@ describe("Ship", () => {
   });
 
   describe("hit()", () => {
-    it("hits the ship only once at a time", () => {
-      const ship = new Ship(2);
-      expect(ship.hit()).toBe(1);
-    });
-    it("does not hit a previously-sunk ship", () => {
+    it("hits the ship once at a time, sinking it", () => {
       const ship = new Ship(3);
-      ship.hit();
-      ship.hit();
-      ship.hit();
+      expect(ship.hit()).toBe(2);
+      expect(ship.hit()).toBe(1);
+      expect(ship.hit()).toBe(0);
       expect(() => ship.hit()).toThrow();
     });
   });
 
   describe("isSunk()", () => {
-    it("is initially false", () => {
-      const ship = new Ship(2);
-      expect(ship.isSunk()).toBe(false);
-    });
-    it("is true when the ship is completely hit", () => {
+    it("is only true once the ship is sunk", () => {
       const ship = new Ship(3);
       expect(ship.isSunk()).toBe(false);
       ship.hit();

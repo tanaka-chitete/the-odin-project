@@ -15,7 +15,7 @@ export class Ship {
     }
 
     this.#_length = length;
-    this.hits = 0;
+    this.health = this.#_length;
   }
 
   get length() {
@@ -23,14 +23,14 @@ export class Ship {
   }
 
   isSunk() {
-    return this.hits === this.length;
+    return this.health === 0;
   }
 
   hit() {
     if (this.isSunk()) {
-      throw new Error("ship has already been sunk");
+      throw new Error("ship already sank");
     }
 
-    return ++this.hits;
+    return --this.health;
   }
 }
