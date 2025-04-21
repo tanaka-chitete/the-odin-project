@@ -12,4 +12,8 @@ export class Player {
   get board() {
     return this.#_board;
   }
+
+  isLoser() {
+    return this.#_board.isEmpty();
+  }
 }

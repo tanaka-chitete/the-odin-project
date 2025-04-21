@@ -53,13 +53,23 @@ export class Board {
     }
 
     const hit =
-      typeof this.#board[coordinate.y][coordinate.x] === "undefined"
-        ? false
-        : true;
+      this.#board[coordinate.y][coordinate.x] instanceof Ship ? true : false;
 
     this.#board[coordinate.y][coordinate.x] = "x";
 
     return hit;
+  }
+
+  isEmpty() {
+    for (let i = 0; i < this.#board.length; i++) {
+      for (let j = 0; j < this.#board[i].length; j++) {
+        if (this.#board[i][j] instanceof Ship) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   #isInBounds(coordinate) {

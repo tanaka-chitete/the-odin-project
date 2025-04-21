@@ -239,4 +239,44 @@ describe("Board", () => {
       expect(new Board().fire(new Coordinate(0, 9))).toBe(false);
     });
   });
+
+  describe("isEmpty()", () => {
+    it("returns false if there is at least one ship", () => {
+      let board = new Board();
+      board.place(new Coordinate(0, 0), new Coordinate(0, 1));
+      expect(board.isEmpty()).toBe(false);
+
+      board = new Board();
+      board.place(new Coordinate(0, 0), new Coordinate(1, 0));
+      expect(board.isEmpty()).toBe(false);
+
+      board = new Board();
+      board.place(new Coordinate(9, 0), new Coordinate(8, 0));
+      expect(board.isEmpty()).toBe(false);
+
+      board = new Board();
+      board.place(new Coordinate(9, 0), new Coordinate(9, 1));
+      expect(board.isEmpty()).toBe(false);
+
+      board = new Board();
+      board.place(new Coordinate(9, 9), new Coordinate(9, 8));
+      expect(board.isEmpty()).toBe(false);
+
+      board = new Board();
+      board.place(new Coordinate(9, 9), new Coordinate(8, 9));
+      expect(board.isEmpty()).toBe(false);
+
+      board = new Board();
+      board.place(new Coordinate(0, 9), new Coordinate(1, 9));
+      expect(board.isEmpty()).toBe(false);
+
+      board = new Board();
+      board.place(new Coordinate(0, 9), new Coordinate(0, 8));
+      expect(board.isEmpty()).toBe(false);
+    });
+
+    it("returns false if there are no ships", () => {
+      expect(new Board().isEmpty()).toBe(true);
+    });
+  });
 });
