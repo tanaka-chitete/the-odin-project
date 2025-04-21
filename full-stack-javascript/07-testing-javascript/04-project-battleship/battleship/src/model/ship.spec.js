@@ -3,7 +3,7 @@
 import { Ship } from "./ship";
 
 describe("Ship", () => {
-  describe("constructor()", () => {
+  describe("constructor", () => {
     it("constructs object with an in-range length", () => {
       expect(() => new Ship(2)).not.toThrow();
       expect(() => new Ship(3)).not.toThrow();

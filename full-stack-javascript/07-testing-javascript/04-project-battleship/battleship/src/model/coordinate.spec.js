@@ -3,7 +3,7 @@
 import { Coordinate } from "./coordinate";
 
 describe("Coordinate", () => {
-  describe("constructor()", () => {
+  describe("constructor", () => {
     it("constructs object with only integer axes", () => {
       expect(
         () => new Coordinate(Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER)
