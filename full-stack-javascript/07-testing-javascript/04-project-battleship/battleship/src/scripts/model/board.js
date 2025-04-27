@@ -20,36 +20,38 @@ export class Board {
       !this.#isInBounds(startCoordinate) ||
       !this.#isInBounds(endCoordinate)
     ) {
-      throw new Error("Path must be in-bounds");
+      return false;
     }
 
-    if (!this.#doesAlign(startCoordinate, endCoordinate)) {
-      throw new Error("Path must align with board spaces");
+    if (!this.#isAlignedWithSpaces(startCoordinate, endCoordinate)) {
+      return false;
     }
 
     const path = this.#makePath(startCoordinate, endCoordinate);
 
     if (!this.#isWellSized(path)) {
-      throw new Error("Path must be 2 to 5 spaces in length");
+      return false;
     }
 
     if (!this.#isVacant(path)) {
-      throw new Error("Path must be vacant");
+      return false;
     }
 
     const ship = new Ship(path.length);
     path.forEach(
       (coordinate) => (this.#board[coordinate.y][coordinate.x] = ship)
     );
+
+    return true;
   }
 
   fire(coordinate) {
     if (!this.#isInBounds(coordinate)) {
-      throw new Error("Coordinate must be in-bounds");
+      return false;
     }
 
     if (this.#board[coordinate.y][coordinate.x] === "x") {
-      throw new Error("Coordinate must not have already been fired at");
+      return false;
     }
 
     const hit =
@@ -81,7 +83,7 @@ export class Board {
     );
   }
 
-  #doesAlign(startCoordinate, endCoordinate) {
+  #isAlignedWithSpaces(startCoordinate, endCoordinate) {
     return (
       startCoordinate.x === endCoordinate.x ||
       startCoordinate.y === endCoordinate.y
