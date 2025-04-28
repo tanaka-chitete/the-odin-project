@@ -4,58 +4,42 @@ import { Board } from "./board";
 
 describe("Board", () => {
   describe("place()", () => {
-    test.each([
-      [0, 0, 0, 1],
-      [0, 0, 1, 0],
-      [9, 0, 8, 0],
-      [9, 0, 9, 1],
-      [9, 9, 9, 8],
-      [9, 9, 8, 9],
-      [0, 9, 1, 9],
-      [0, 9, 0, 8],
-    ])(
-      "places a ship at x1 = %i, y1 = %i, x2 = %i, y2 = %i",
-      (x1, y1, x2, y2) => expect(new Board().place(x1, y1, x2, y2)).toBe(true)
-    );
-
-    // it("places a ship on a valid path: (1) integer-only (2) in-bounds, (3) aligns with board spaces, (4) well-sized (2 to 5 spaces in length), and (5) vacant", () => {
-    //   const tests = ;
-    //   tests.forEach(([x1, y1, x2, y2]) =>
-    //     expect(new Board().place(x1, y1, x2, y2)).toBe(true)
-    //   );
-    // });
+    it("places a ship on a valid path (integer-only, in-bounds, space-aligned, well-sized, and vacant)", () => {
+      expect(new Board().place(0, 0, 0, 1)).toBe(true);
+      expect(new Board().place(0, 0, 1, 0)).toBe(true);
+      expect(new Board().place(9, 0, 8, 0)).toBe(true);
+      expect(new Board().place(9, 0, 9, 1)).toBe(true);
+      expect(new Board().place(9, 9, 9, 8)).toBe(true);
+      expect(new Board().place(9, 9, 8, 9)).toBe(true);
+      expect(new Board().place(0, 9, 1, 9)).toBe(true);
+      expect(new Board().place(0, 9, 0, 8)).toBe(true);
+    });
 
     it("does not place a ship on a non-integer path", () => {
-      const tests = [
-        [0.1, 0, 0, 1],
-        ["0", 0, 0, 1],
-        [Infinity, 0, 0, 1],
-        [NaN, 0, 0, 1],
-        [null, 0, 0, 1],
-        [undefined, 0, 0, 1],
-        [0, 0.1, 0, 1],
-        [0, "0", 0, 1],
-        [0, Infinity, 0, 1],
-        [0, NaN, 0, 1],
-        [0, null, 0, 1],
-        [0, undefined, 0, 1],
-        [0, 0, 0.1, 1],
-        [0, 0, "0", 1],
-        [0, 0, Infinity, 1],
-        [0, 0, NaN, 1],
-        [0, 0, null, 1],
-        [0, 0, undefined, 1],
-        [0, 0, 0, 1.1],
-        [0, 0, 0, "1"],
-        [0, 0, 0, Infinity],
-        [0, 0, 0, NaN],
-        [0, 0, 0, null],
-        [0, 0, 0, undefined],
-      ];
-
-      tests.forEach(([x1, y1, x2, y2]) =>
-        expect(new Board().place(x1, y1, x2, y2)).toBe(false)
-      );
+      expect(new Board().place(0.1, 0, 0, 1)).toBe(false);
+      expect(new Board().place("0", 0, 0, 1)).toBe(false);
+      expect(new Board().place(Infinity, 0, 0, 1)).toBe(false);
+      expect(new Board().place(NaN, 0, 0, 1)).toBe(false);
+      expect(new Board().place(null, 0, 0, 1)).toBe(false);
+      expect(new Board().place(undefined, 0, 0, 1)).toBe(false);
+      expect(new Board().place(0, 0.1, 0, 1)).toBe(false);
+      expect(new Board().place(0, "0", 0, 1)).toBe(false);
+      expect(new Board().place(0, Infinity, 0, 1)).toBe(false);
+      expect(new Board().place(0, NaN, 0, 1)).toBe(false);
+      expect(new Board().place(0, null, 0, 1)).toBe(false);
+      expect(new Board().place(0, undefined, 0, 1)).toBe(false);
+      expect(new Board().place(0, 0, 0.1, 1)).toBe(false);
+      expect(new Board().place(0, 0, "0", 1)).toBe(false);
+      expect(new Board().place(0, 0, Infinity, 1)).toBe(false);
+      expect(new Board().place(0, 0, NaN, 1)).toBe(false);
+      expect(new Board().place(0, 0, null, 1)).toBe(false);
+      expect(new Board().place(0, 0, undefined, 1)).toBe(false);
+      expect(new Board().place(0, 0, 0, 1.1)).toBe(false);
+      expect(new Board().place(0, 0, 0, "1")).toBe(false);
+      expect(new Board().place(0, 0, 0, Infinity)).toBe(false);
+      expect(new Board().place(0, 0, 0, NaN)).toBe(false);
+      expect(new Board().place(0, 0, 0, null)).toBe(false);
+      expect(new Board().place(0, 0, 0, undefined)).toBe(false);
     });
 
     it("does not place a ship on an out-of-bounds path", () => {
