@@ -1,16 +1,13 @@
 "use strict";
 
 export class Ship {
-  #LENGTH_OF_SMALLEST_SHIP = 2;
-  #LENGTH_OF_BIGGEST_SHIP = 5;
+  #LOWER_LENGTH = 2;
+  #UPPER_LENGTH = 5;
 
   #_length;
 
   constructor(length) {
-    if (
-      length < this.#LENGTH_OF_SMALLEST_SHIP ||
-      length > this.#LENGTH_OF_BIGGEST_SHIP
-    ) {
+    if (length < this.#LOWER_LENGTH || length > this.#UPPER_LENGTH) {
       throw new Error("length must be between 2 and 5, inclusive");
     }
 
@@ -28,9 +25,11 @@ export class Ship {
 
   hit() {
     if (this.isSunk()) {
-      throw new Error("ship already sank");
+      return false;
     }
 
-    return --this.health;
+    this.health--;
+
+    return true;
   }
 }
