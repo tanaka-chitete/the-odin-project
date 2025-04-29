@@ -107,14 +107,47 @@ describe("Board", () => {
   });
 
   describe("fire()", () => {
-    it("it fires at an in-bound coordinate", () => {
-      expect(new Board().fire(0, 0)).toBe(false);
-      expect(new Board().fire(9, 0)).toBe(false);
-      expect(new Board().fire(9, 9)).toBe(false);
-      expect(new Board().fire(0, 9)).toBe(false);
+    it("it fires at a valid space (integer-only, in-bounds, and un-hit)", () => {
+      expect(new Board().fire(0, 0)).toBe(true);
+      expect(new Board().fire(9, 0)).toBe(true);
+      expect(new Board().fire(9, 9)).toBe(true);
+      expect(new Board().fire(0, 9)).toBe(true);
     });
 
-    it("does not fire at a previously-hit coordinate", () => {
+    expect(new Board().place(0.1, 0, 0, 1)).toBe(false);
+    expect(new Board().place("0", 0, 0, 1)).toBe(false);
+    expect(new Board().place(Infinity, 0, 0, 1)).toBe(false);
+    expect(new Board().place(NaN, 0, 0, 1)).toBe(false);
+    expect(new Board().place(null, 0, 0, 1)).toBe(false);
+    expect(new Board().place(undefined, 0, 0, 1)).toBe(false);
+
+    it("does not fire at a non-integer space", () => {
+      expect(new Board().fire(0.1, 0)).toBe(false);
+      expect(new Board().fire("0", 0)).toBe(false);
+      expect(new Board().fire(Infinity, 0)).toBe(false);
+      expect(new Board().fire(NaN, 0)).toBe(false);
+      expect(new Board().fire(null, 0)).toBe(false);
+      expect(new Board().fire(undefined, 0)).toBe(false);
+      expect(new Board().fire(0, 0.1)).toBe(false);
+      expect(new Board().fire(0, "0")).toBe(false);
+      expect(new Board().fire(0, Infinity)).toBe(false);
+      expect(new Board().fire(0, NaN)).toBe(false);
+      expect(new Board().fire(0, null)).toBe(false);
+      expect(new Board().fire(0, undefined)).toBe(false);
+    });
+
+    it("does not fire at an out-of-bounds space", () => {
+      expect(new Board().fire(-1, 0)).toBe(false);
+      expect(new Board().fire(0, -1)).toBe(false);
+      expect(new Board().fire(9, -1)).toBe(false);
+      expect(new Board().fire(10, 0)).toBe(false);
+      expect(new Board().fire(10, 9)).toBe(false);
+      expect(new Board().fire(9, 10)).toBe(false);
+      expect(new Board().fire(0, 10)).toBe(false);
+      expect(new Board().fire(-1, 9)).toBe(false);
+    });
+
+    it("does not fire at a previously-hit space", () => {
       let board = new Board();
       board.fire(0, 0);
       expect(board.fire(0, 0)).toBe(false);
@@ -130,17 +163,6 @@ describe("Board", () => {
       board = new Board();
       board.fire(0, 9);
       expect(board.fire(0, 9)).toBe(false);
-    });
-
-    it("does not fire at an out-of-bounds coordinate", () => {
-      expect(new Board().fire(-1, 0)).toBe(false);
-      expect(new Board().fire(0, -1)).toBe(false);
-      expect(new Board().fire(9, -1)).toBe(false);
-      expect(new Board().fire(10, 0)).toBe(false);
-      expect(new Board().fire(10, 9)).toBe(false);
-      expect(new Board().fire(9, 10)).toBe(false);
-      expect(new Board().fire(0, 10)).toBe(false);
-      expect(new Board().fire(-1, 9)).toBe(false);
     });
   });
 

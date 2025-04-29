@@ -2,77 +2,88 @@
 
 import { Ship } from "./ship";
 
-class Space {
-  constructor(x, y) {
-    if (!Number.isInteger(x) || !Number.isInteger(y)) {
-      throw new Error("coordinates must be integers");
-    }
-
-    this.x = x;
-    this.y = y;
-  }
-}
-
 export class Board {
-  #LENGTH_OF_BOARD = 10;
+  #BOARD_LENGTH = 10;
 
   #board;
 
   constructor() {
-    this.#board = new Array(this.#LENGTH_OF_BOARD);
-    for (let row = 0; row < this.#LENGTH_OF_BOARD; row++) {
-      this.#board[row] = new Array(this.#LENGTH_OF_BOARD);
+    this.#board = new Array(this.#BOARD_LENGTH);
+    for (let row = 0; row < this.#BOARD_LENGTH; row++) {
+      this.#board[row] = new Array(this.#BOARD_LENGTH);
     }
   }
 
   place(x1, y1, x2, y2) {
-    let startSpace;
-    let endSpace;
-    try {
-      startSpace = new Space(x1, y1);
-      endSpace = new Space(x2, y2);
-    } catch (Error) {
+    if (
+      !Number.isInteger(x1) ||
+      !Number.isInteger(y1) ||
+      !Number.isInteger(x2) ||
+      !Number.isInteger(y2)
+    ) {
       return false;
     }
 
-    if (!this.#isInBounds(startSpace) || !this.#isInBounds(endSpace)) {
+    if (
+      x1 < 0 ||
+      x1 >= this.#board.length ||
+      x2 < 0 ||
+      x2 >= this.#board.length ||
+      y1 < 0 ||
+      y1 >= this.#board[0].length ||
+      y2 < 0 ||
+      y2 >= this.#board[0].length
+    ) {
       return false;
     }
 
-    if (!this.#isAlignedWithSpaces(startSpace, endSpace)) {
+    // The path must align with board spaces
+    if (x1 !== x2 && y1 !== y2) {
       return false;
     }
 
-    const path = this.#makePath(startSpace, endSpace);
+    const path = this.#makePath(x1, y1, x2, y2);
 
-    if (!this.#isWellSized(path)) {
+    if (path.length < 2 || path.length > 5) {
       return false;
     }
 
-    if (!this.#isVacant(path)) {
+    // The path must be vacant
+    if (path.some(([x, y]) => this.#board[y][x])) {
       return false;
     }
 
     const ship = new Ship(path.length);
-    path.forEach((space) => (this.#board[space.y][space.x] = ship));
+    path.forEach(([x, y]) => (this.#board[y][x] = ship));
 
     return true;
   }
 
-  fire(space) {
-    if (!this.#isInBounds(space)) {
+  fire(x, y) {
+    if (!Number.isInteger(x) || !Number.isInteger(y)) {
       return false;
     }
 
-    if (this.#board[space.y][space.x] === "x") {
+    if (
+      x < 0 ||
+      x >= this.#board.length ||
+      y < 0 ||
+      y >= this.#board[0].length
+    ) {
       return false;
     }
 
-    const hit = this.#board[space.y][space.x] instanceof Ship ? true : false;
+    if (this.#board[y][x] === "x") {
+      return false;
+    }
 
-    this.#board[space.y][space.x] = "x";
+    if (this.#board[y][x] instanceof Ship) {
+      this.#board[y][x].hit();
+    }
 
-    return hit;
+    this.#board[y][x] = "x";
+
+    return true;
   }
 
   isEmpty() {
@@ -87,46 +98,25 @@ export class Board {
     return true;
   }
 
-  #isInBounds(space) {
-    return (
-      space.x >= 0 &&
-      space.x < this.#LENGTH_OF_BOARD &&
-      space.y >= 0 &&
-      space.y < this.#LENGTH_OF_BOARD
-    );
-  }
-
-  #isAlignedWithSpaces(startSpace, endSpace) {
-    return startSpace.x === endSpace.x || startSpace.y === endSpace.y;
-  }
-
-  #makePath(startSpace, endSpace) {
+  #makePath(x1, y1, x2, y2) {
     const path = [];
 
     // Intuitively, the start space should be "before" the end space
-    if (startSpace.y > endSpace.y || startSpace.x > endSpace.x) {
-      [startSpace, endSpace] = [endSpace, startSpace];
+    if (y1 > y2 || x1 > x2) {
+      [x1, y1, x2, y2] = [x2, y2, x1, y1];
     }
 
     // A shared x-axis means that the path is vertical
-    if (startSpace.x === endSpace.x) {
-      for (let row = startSpace.y; row <= endSpace.y; row++) {
-        path.push(new Space(startSpace.x, row));
+    if (x1 === x2) {
+      for (let row = y1; row <= y2; row++) {
+        path.push([x1, row]);
       }
     } else {
-      for (let column = startSpace.x; column <= endSpace.x; column++) {
-        path.push(new Space(column, startSpace.y));
+      for (let column = x1; column <= x2; column++) {
+        path.push([column, y1]);
       }
     }
 
     return path;
-  }
-
-  #isWellSized(path) {
-    return 2 <= path.length && path.length <= 5;
-  }
-
-  #isVacant(path) {
-    return path.every((space) => !this.#board[space.y][space.x]);
   }
 }
