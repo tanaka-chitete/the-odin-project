@@ -4,14 +4,14 @@ import { Ship } from "./ship";
 
 describe("Ship", () => {
   describe("constructor", () => {
-    it("constructs an object with an in-range length", () => {
+    it("constructs an object with a valid length (in-range)", () => {
       expect(() => new Ship(2)).not.toThrow();
       expect(() => new Ship(3)).not.toThrow();
       expect(() => new Ship(4)).not.toThrow();
       expect(() => new Ship(5)).not.toThrow();
     });
 
-    it("does not construct an object with an out-of-range length", () => {
+    it("does not construct an object with an invalid length (out-of-range)", () => {
       expect(() => new Ship(1)).toThrow();
       expect(() => new Ship(6)).toThrow();
     });

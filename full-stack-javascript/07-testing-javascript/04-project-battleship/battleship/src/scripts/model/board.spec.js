@@ -15,7 +15,7 @@ describe("Board", () => {
       expect(new Board().place(0, 9, 0, 8)).toBe(true);
     });
 
-    it("does not place a ship on a non-integer path", () => {
+    it("does not place a ship on an invalid path (non-integer)", () => {
       expect(new Board().place(0.1, 0, 0, 1)).toBe(false);
       expect(new Board().place("0", 0, 0, 1)).toBe(false);
       expect(new Board().place(Infinity, 0, 0, 1)).toBe(false);
@@ -42,7 +42,7 @@ describe("Board", () => {
       expect(new Board().place(0, 0, 0, undefined)).toBe(false);
     });
 
-    it("does not place a ship on an out-of-bounds path", () => {
+    it("does not place a ship on an invalid path (out-of-bounds)", () => {
       expect(new Board().place(-1, 0, 0, 0)).toBe(false);
       expect(new Board().place(0, -1, 0, 0)).toBe(false);
       expect(new Board().place(9, -1, 9, 0)).toBe(false);
@@ -53,14 +53,14 @@ describe("Board", () => {
       expect(new Board().place(-1, 9, 0, 9)).toBe(false);
     });
 
-    it("does not place a ship on a non-aligned path", () => {
+    it("does not place a ship on an invalid path (non-aligned)", () => {
       expect(new Board().place(0, 0, 1, 1)).toBe(false);
       expect(new Board().place(9, 0, 8, 1)).toBe(false);
       expect(new Board().place(9, 9, 8, 8)).toBe(false);
       expect(new Board().place(0, 9, 1, 8)).toBe(false);
     });
 
-    it("does not place a ship on a poorly-sized path", () => {
+    it("does not place a ship on an invalid path (poorly-sized)", () => {
       expect(new Board().place(0, 0, 0, 5)).toBe(false);
       expect(new Board().place(0, 0, 5, 0)).toBe(false);
       expect(new Board().place(9, 0, 4, 0)).toBe(false);
@@ -71,7 +71,7 @@ describe("Board", () => {
       expect(new Board().place(0, 9, 0, 4)).toBe(false);
     });
 
-    it("does not place a ship on an occupied path", () => {
+    it("does not place a ship on an invalid path (occupied)", () => {
       let board = new Board();
       expect(board.place(0, 0, 0, 1)).toBe(true);
       expect(board.place(0, 1, 0, 2)).toBe(false);
@@ -107,7 +107,7 @@ describe("Board", () => {
   });
 
   describe("fire()", () => {
-    it("it fires at a valid space (integer-only, in-bounds, and un-hit)", () => {
+    it("it fires at a valid coordinate (integer-only, in-bounds, and un-hit)", () => {
       expect(new Board().fire(0, 0)).toBe(true);
       expect(new Board().fire(9, 0)).toBe(true);
       expect(new Board().fire(9, 9)).toBe(true);
@@ -121,7 +121,7 @@ describe("Board", () => {
     expect(new Board().place(null, 0, 0, 1)).toBe(false);
     expect(new Board().place(undefined, 0, 0, 1)).toBe(false);
 
-    it("does not fire at a non-integer space", () => {
+    it("does not fire at an invalid coordinate (non-integer)", () => {
       expect(new Board().fire(0.1, 0)).toBe(false);
       expect(new Board().fire("0", 0)).toBe(false);
       expect(new Board().fire(Infinity, 0)).toBe(false);
@@ -136,7 +136,7 @@ describe("Board", () => {
       expect(new Board().fire(0, undefined)).toBe(false);
     });
 
-    it("does not fire at an out-of-bounds space", () => {
+    it("does not fire at an invalid coordinate (out-of-bounds)", () => {
       expect(new Board().fire(-1, 0)).toBe(false);
       expect(new Board().fire(0, -1)).toBe(false);
       expect(new Board().fire(9, -1)).toBe(false);
@@ -147,7 +147,7 @@ describe("Board", () => {
       expect(new Board().fire(-1, 9)).toBe(false);
     });
 
-    it("does not fire at a previously-hit space", () => {
+    it("does not fire at an invalid coordinate (previously-hit)", () => {
       let board = new Board();
       board.fire(0, 0);
       expect(board.fire(0, 0)).toBe(false);
