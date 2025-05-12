@@ -106,12 +106,12 @@ describe("Board", () => {
     });
   });
 
-  describe("fire()", () => {
-    it("it fires at a valid coordinate (integer-only, in-bounds, and un-hit)", () => {
-      expect(new Board().fire(0, 0)).toBe(true);
-      expect(new Board().fire(9, 0)).toBe(true);
-      expect(new Board().fire(9, 9)).toBe(true);
-      expect(new Board().fire(0, 9)).toBe(true);
+  describe("receive()", () => {
+    it("it receives a shot at a valid coordinate (integer-only, in-bounds, and un-hit)", () => {
+      expect(new Board().receive(0, 0)).toBe(true);
+      expect(new Board().receive(9, 0)).toBe(true);
+      expect(new Board().receive(9, 9)).toBe(true);
+      expect(new Board().receive(0, 9)).toBe(true);
     });
 
     expect(new Board().place(0.1, 0, 0, 1)).toBe(false);
@@ -121,48 +121,48 @@ describe("Board", () => {
     expect(new Board().place(null, 0, 0, 1)).toBe(false);
     expect(new Board().place(undefined, 0, 0, 1)).toBe(false);
 
-    it("does not fire at an invalid coordinate (non-integer)", () => {
-      expect(new Board().fire(0.1, 0)).toBe(false);
-      expect(new Board().fire("0", 0)).toBe(false);
-      expect(new Board().fire(Infinity, 0)).toBe(false);
-      expect(new Board().fire(NaN, 0)).toBe(false);
-      expect(new Board().fire(null, 0)).toBe(false);
-      expect(new Board().fire(undefined, 0)).toBe(false);
-      expect(new Board().fire(0, 0.1)).toBe(false);
-      expect(new Board().fire(0, "0")).toBe(false);
-      expect(new Board().fire(0, Infinity)).toBe(false);
-      expect(new Board().fire(0, NaN)).toBe(false);
-      expect(new Board().fire(0, null)).toBe(false);
-      expect(new Board().fire(0, undefined)).toBe(false);
+    it("does not receive shot at an invalid coordinate (non-integer)", () => {
+      expect(new Board().receive(0.1, 0)).toBe(false);
+      expect(new Board().receive("0", 0)).toBe(false);
+      expect(new Board().receive(Infinity, 0)).toBe(false);
+      expect(new Board().receive(NaN, 0)).toBe(false);
+      expect(new Board().receive(null, 0)).toBe(false);
+      expect(new Board().receive(undefined, 0)).toBe(false);
+      expect(new Board().receive(0, 0.1)).toBe(false);
+      expect(new Board().receive(0, "0")).toBe(false);
+      expect(new Board().receive(0, Infinity)).toBe(false);
+      expect(new Board().receive(0, NaN)).toBe(false);
+      expect(new Board().receive(0, null)).toBe(false);
+      expect(new Board().receive(0, undefined)).toBe(false);
     });
 
-    it("does not fire at an invalid coordinate (out-of-bounds)", () => {
-      expect(new Board().fire(-1, 0)).toBe(false);
-      expect(new Board().fire(0, -1)).toBe(false);
-      expect(new Board().fire(9, -1)).toBe(false);
-      expect(new Board().fire(10, 0)).toBe(false);
-      expect(new Board().fire(10, 9)).toBe(false);
-      expect(new Board().fire(9, 10)).toBe(false);
-      expect(new Board().fire(0, 10)).toBe(false);
-      expect(new Board().fire(-1, 9)).toBe(false);
+    it("does not receive a shot at an invalid coordinate (out-of-bounds)", () => {
+      expect(new Board().receive(-1, 0)).toBe(false);
+      expect(new Board().receive(0, -1)).toBe(false);
+      expect(new Board().receive(9, -1)).toBe(false);
+      expect(new Board().receive(10, 0)).toBe(false);
+      expect(new Board().receive(10, 9)).toBe(false);
+      expect(new Board().receive(9, 10)).toBe(false);
+      expect(new Board().receive(0, 10)).toBe(false);
+      expect(new Board().receive(-1, 9)).toBe(false);
     });
 
-    it("does not fire at an invalid coordinate (previously-hit)", () => {
+    it("does not receive a shot at an invalid coordinate (previously-hit)", () => {
       let board = new Board();
-      board.fire(0, 0);
-      expect(board.fire(0, 0)).toBe(false);
+      board.receive(0, 0);
+      expect(board.receive(0, 0)).toBe(false);
 
       board = new Board();
-      board.fire(9, 0);
-      expect(board.fire(9, 0)).toBe(false);
+      board.receive(9, 0);
+      expect(board.receive(9, 0)).toBe(false);
 
       board = new Board();
-      board.fire(9, 9);
-      expect(board.fire(9, 9)).toBe(false);
+      board.receive(9, 9);
+      expect(board.receive(9, 9)).toBe(false);
 
       board = new Board();
-      board.fire(0, 9);
-      expect(board.fire(0, 9)).toBe(false);
+      board.receive(0, 9);
+      expect(board.receive(0, 9)).toBe(false);
     });
   });
 

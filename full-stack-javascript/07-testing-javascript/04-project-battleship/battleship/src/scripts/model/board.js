@@ -1,16 +1,15 @@
 "use strict";
 
+import { BOARD_LENGTH, MAX_SHIP_LENGTH, MIN_SHIP_LENGTH } from "../constants";
 import { Ship } from "./ship";
 
 export class Board {
-  #BOARD_LENGTH = 10;
-
   #board;
 
   constructor() {
-    this.#board = new Array(this.#BOARD_LENGTH);
-    for (let row = 0; row < this.#BOARD_LENGTH; row++) {
-      this.#board[row] = new Array(this.#BOARD_LENGTH);
+    this.#board = new Array(BOARD_LENGTH);
+    for (let row = 0; row < BOARD_LENGTH; row++) {
+      this.#board[row] = new Array(BOARD_LENGTH);
     }
   }
 
@@ -44,7 +43,7 @@ export class Board {
 
     const path = this.#makePath(x1, y1, x2, y2);
 
-    if (path.length < 2 || path.length > 5) {
+    if (path.length < MIN_SHIP_LENGTH || path.length > MAX_SHIP_LENGTH) {
       return false;
     }
 
@@ -59,7 +58,7 @@ export class Board {
     return true;
   }
 
-  fire(x, y) {
+  receive(x, y) {
     if (!Number.isInteger(x) || !Number.isInteger(y)) {
       return false;
     }

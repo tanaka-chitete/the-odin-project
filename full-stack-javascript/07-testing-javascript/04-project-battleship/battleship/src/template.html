@@ -10,6 +10,242 @@
     <title>Battleship</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <header>
+        <h1>Battleship</h1>
+        <h3 class="message"></h3>
+      </header>
+
+      <main>
+        <div class="left">
+          <div class="fleet">
+            <div
+              id="s4"
+              class="ship ship_type_s4"
+              draggable="true"
+              data-length="4"
+              data-orientation="horizontal"
+            ></div>
+
+            <div
+              id="s3-1"
+              class="ship ship_type_s3"
+              draggable="true"
+              data-length="3"
+              data-orientation="horizontal"
+            ></div>
+            <div
+              id="s3-2"
+              class="ship ship_type_s3"
+              draggable="true"
+              data-length="3"
+              data-orientation="horizontal"
+            ></div>
+
+            <div
+              id="s2-1"
+              class="ship ship_type_s2"
+              draggable="true"
+              data-length="2"
+              data-orientation="horizontal"
+            ></div>
+            <div
+              id="s2-2"
+              class="ship ship_type_s2"
+              draggable="true"
+              data-length="2"
+              data-orientation="horizontal"
+            ></div>
+            <div
+              id="s2-3"
+              class="ship ship_type_s2"
+              draggable="true"
+              data-length="2"
+              data-orientation="horizontal"
+            ></div>
+
+            <div
+              id="s1-1"
+              class="ship ship_type_s1"
+              draggable="true"
+              data-length="1"
+              data-orientation="horizontal"
+            ></div>
+            <div
+              id="s1-2"
+              class="ship ship_type_s1"
+              draggable="true"
+              data-length="1"
+              data-orientation="horizontal"
+            ></div>
+            <div
+              id="s1-3"
+              class="ship ship_type_s1"
+              draggable="true"
+              data-length="1"
+              data-orientation="horizontal"
+            ></div>
+            <div
+              id="s1-4"
+              class="ship ship_type_s1"
+              draggable="true"
+              data-length="1"
+              data-orientation="horizontal"
+            ></div>
+          </div>
+        </div>
+
+        <div class="middle">
+          <table class="board">
+            <tr class="board__row">
+              <td class="board__cell" data-row="0" data-column="0"></td>
+              <td class="board__cell" data-row="0" data-column="1"></td>
+              <td class="board__cell" data-row="0" data-column="2"></td>
+              <td class="board__cell" data-row="0" data-column="3"></td>
+              <td class="board__cell" data-row="0" data-column="4"></td>
+              <td class="board__cell" data-row="0" data-column="5"></td>
+              <td class="board__cell" data-row="0" data-column="6"></td>
+              <td class="board__cell" data-row="0" data-column="7"></td>
+              <td class="board__cell" data-row="0" data-column="8"></td>
+              <td class="board__cell" data-row="0" data-column="9"></td>
+            </tr>
+            <tr class="board__row">
+              <td class="board__cell" data-row="1" data-column="0"></td>
+              <td class="board__cell" data-row="1" data-column="1"></td>
+              <td class="board__cell" data-row="1" data-column="2"></td>
+              <td class="board__cell" data-row="1" data-column="3"></td>
+              <td class="board__cell" data-row="1" data-column="4"></td>
+              <td class="board__cell" data-row="1" data-column="5"></td>
+              <td class="board__cell" data-row="1" data-column="6"></td>
+              <td class="board__cell" data-row="1" data-column="7"></td>
+              <td class="board__cell" data-row="1" data-column="8"></td>
+              <td class="board__cell" data-row="1" data-column="9"></td>
+            </tr>
+            <tr class="board__row">
+              <td class="board__cell" data-row="2" data-column="0"></td>
+              <td class="board__cell" data-row="2" data-column="1"></td>
+              <td class="board__cell" data-row="2" data-column="2"></td>
+              <td class="board__cell" data-row="2" data-column="3"></td>
+              <td class="board__cell" data-row="2" data-column="4"></td>
+              <td class="board__cell" data-row="2" data-column="5"></td>
+              <td class="board__cell" data-row="2" data-column="6"></td>
+              <td class="board__cell" data-row="2" data-column="7"></td>
+              <td class="board__cell" data-row="2" data-column="8"></td>
+              <td class="board__cell" data-row="2" data-column="9"></td>
+            </tr>
+            <tr class="board__row">
+              <td class="board__cell" data-row="3" data-column="0"></td>
+              <td class="board__cell" data-row="3" data-column="1"></td>
+              <td class="board__cell" data-row="3" data-column="2"></td>
+              <td class="board__cell" data-row="3" data-column="3"></td>
+              <td class="board__cell" data-row="3" data-column="4"></td>
+              <td class="board__cell" data-row="3" data-column="5"></td>
+              <td class="board__cell" data-row="3" data-column="6"></td>
+              <td class="board__cell" data-row="3" data-column="7"></td>
+              <td class="board__cell" data-row="3" data-column="8"></td>
+              <td class="board__cell" data-row="3" data-column="9"></td>
+            </tr>
+            <tr class="board__row">
+              <td class="board__cell" data-row="4" data-column="0"></td>
+              <td class="board__cell" data-row="4" data-column="1"></td>
+              <td class="board__cell" data-row="4" data-column="2"></td>
+              <td class="board__cell" data-row="4" data-column="3"></td>
+              <td class="board__cell" data-row="4" data-column="4"></td>
+              <td class="board__cell" data-row="4" data-column="5"></td>
+              <td class="board__cell" data-row="4" data-column="6"></td>
+              <td class="board__cell" data-row="4" data-column="7"></td>
+              <td class="board__cell" data-row="4" data-column="8"></td>
+              <td class="board__cell" data-row="4" data-column="9"></td>
+            </tr>
+            <tr class="board__row">
+              <td class="board__cell" data-row="5" data-column="0"></td>
+              <td class="board__cell" data-row="5" data-column="1"></td>
+              <td class="board__cell" data-row="5" data-column="2"></td>
+              <td class="board__cell" data-row="5" data-column="3"></td>
+              <td class="board__cell" data-row="5" data-column="4"></td>
+              <td class="board__cell" data-row="5" data-column="5"></td>
+              <td class="board__cell" data-row="5" data-column="6"></td>
+              <td class="board__cell" data-row="5" data-column="7"></td>
+              <td class="board__cell" data-row="5" data-column="8"></td>
+              <td class="board__cell" data-row="5" data-column="9"></td>
+            </tr>
+            <tr class="board__row">
+              <td class="board__cell" data-row="6" data-column="0"></td>
+              <td class="board__cell" data-row="6" data-column="1"></td>
+              <td class="board__cell" data-row="6" data-column="2"></td>
+              <td class="board__cell" data-row="6" data-column="3"></td>
+              <td class="board__cell" data-row="6" data-column="4"></td>
+              <td class="board__cell" data-row="6" data-column="5"></td>
+              <td class="board__cell" data-row="6" data-column="6"></td>
+              <td class="board__cell" data-row="6" data-column="7"></td>
+              <td class="board__cell" data-row="6" data-column="8"></td>
+              <td class="board__cell" data-row="6" data-column="9"></td>
+            </tr>
+            <tr class="board__row">
+              <td class="board__cell" data-row="7" data-column="0"></td>
+              <td class="board__cell" data-row="7" data-column="1"></td>
+              <td class="board__cell" data-row="7" data-column="2"></td>
+              <td class="board__cell" data-row="7" data-column="3"></td>
+              <td class="board__cell" data-row="7" data-column="4"></td>
+              <td class="board__cell" data-row="7" data-column="5"></td>
+              <td class="board__cell" data-row="7" data-column="6"></td>
+              <td class="board__cell" data-row="7" data-column="7"></td>
+              <td class="board__cell" data-row="7" data-column="8"></td>
+              <td class="board__cell" data-row="7" data-column="9"></td>
+            </tr>
+            <tr class="board__row">
+              <td class="board__cell" data-row="8" data-column="0"></td>
+              <td class="board__cell" data-row="8" data-column="1"></td>
+              <td class="board__cell" data-row="8" data-column="2"></td>
+              <td class="board__cell" data-row="8" data-column="3"></td>
+              <td class="board__cell" data-row="8" data-column="4"></td>
+              <td class="board__cell" data-row="8" data-column="5"></td>
+              <td class="board__cell" data-row="8" data-column="6"></td>
+              <td class="board__cell" data-row="8" data-column="7"></td>
+              <td class="board__cell" data-row="8" data-column="8"></td>
+              <td class="board__cell" data-row="8" data-column="9"></td>
+            </tr>
+            <tr class="board__row">
+              <td class="board__cell" data-row="9" data-column="0"></td>
+              <td class="board__cell" data-row="9" data-column="1"></td>
+              <td class="board__cell" data-row="9" data-column="2"></td>
+              <td class="board__cell" data-row="9" data-column="3"></td>
+              <td class="board__cell" data-row="9" data-column="4"></td>
+              <td class="board__cell" data-row="9" data-column="5"></td>
+              <td class="board__cell" data-row="9" data-column="6"></td>
+              <td class="board__cell" data-row="9" data-column="7"></td>
+              <td class="board__cell" data-row="9" data-column="8"></td>
+              <td class="board__cell" data-row="9" data-column="9"></td>
+            </tr>
+          </table>
+
+          <div class="controls controls_type_start">
+            <button type="button" class="button button_type_start">
+              Start
+            </button>
+          </div>
+
+          <div class="controls controls_type_place" hidden>
+            <button type="button" class="button button_type_reset">
+              Reset
+            </button>
+            <button type="button" class="button button_type_rotate">
+              Rotate
+            </button>
+            <button type="button" class="button button_type_submit">
+              Submit
+            </button>
+          </div>
+
+          <div class="controls controls_type_fire" hidden>
+            <button type="button" class="button button_type_fire">Fire</button>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <p>Developed by Tanaka Chitete</p>
+      </footer>
+    </div>
   </body>
 </html>

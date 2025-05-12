@@ -3,10 +3,16 @@
 import { Board } from "./board";
 
 export class Player {
+  #_name;
   #_board;
 
-  constructor() {
+  constructor(name = "") {
+    this.#_name = name;
     this.#_board = new Board();
+  }
+
+  get name() {
+    return this.#_name;
   }
 
   get board() {
@@ -17,8 +23,8 @@ export class Player {
     return this.board.place(x1, y1, x2, y2);
   }
 
-  fire(x, y) {
-    return this.board.fire(x, y);
+  receive(x, y) {
+    return this.board.receive(x, y);
   }
 
   isLoser() {
