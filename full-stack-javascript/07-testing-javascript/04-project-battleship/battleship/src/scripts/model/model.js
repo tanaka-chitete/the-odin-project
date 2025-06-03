@@ -1,5 +1,13 @@
 "use strict";
 
+import {
+  CARRIER,
+  BATTLESHIP,
+  CRUISER,
+  SUBMARINE,
+  DESTROYER,
+} from "../constants";
+
 import { Player } from "./player";
 
 export class Model {
@@ -11,11 +19,24 @@ export class Model {
     this.#defender = new Player("Player 2");
   }
 
-  start = () => {
-    this.onStartEnd(`Your turn, ${this.#attacker.name}`);
+  handleStart = () => {
+    const allocation = {
+      CARRIER: 0,
+      BATTLESHIP: 1,
+      CRUISER: 2,
+      SUBMARINE: 3,
+      DESTROYER: 2,
+    };
+
+    const response = {
+      message: `Place your ships, ${this.#attacker.name}`,
+      allocation,
+    };
+
+    this.onAllocationGenerated(response);
   };
 
-  bindToOnStartEnd(callback) {
-    this.onStartEnd = callback;
-  }
+  bindToOnAllocationGenerated = (callback) => {
+    this.onAllocationGenerated = callback;
+  };
 }

@@ -1,7 +1,7 @@
 {
   "name": "battleship",
   "version": "1.0.0",
-  "description": "Battleship is a strategy type guessing game for two players. It is played on ruled grids on which each player's fleet of warships is marked, where the location of each ship is hidden from the other player. Players alternate turns taking \"shots\" at the other player's ships, and the objective of the game is to destroy the opposing player's fleet.",
+  "description": "Battleship is a strategy type guessing game for two players. It is played on ruled grids on which each player's warships are marked, where the location of each ship is hidden from the other player. Players alternate turns taking \"shots\" at the other player's ships, and the objective of the game is to destroy the opposing player's ships.",
   "main": "index.js",
   "scripts": {
     "test": "jest",

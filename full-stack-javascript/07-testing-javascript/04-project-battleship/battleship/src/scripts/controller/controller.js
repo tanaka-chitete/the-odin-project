@@ -8,15 +8,15 @@ export class Controller {
     this.#model = model;
     this.#view = view;
 
-    this.#view.bindToOnStart(this.onStart);
-    this.#model.bindToOnStartEnd(this.onStartEnd);
+    this.#view.bindToOnStart(this.forwardStart);
+    this.#model.bindToOnAllocationGenerated(this.forwardAllocation);
   }
 
-  onStart = () => {
-    this.#model.start();
+  forwardStart = () => {
+    this.#model.handleStart();
   };
 
-  onStartEnd = (message) => {
-    this.#view.showMessage(message);
+  forwardAllocation = (response) => {
+    this.#view.handleAllocation(response);
   };
 }

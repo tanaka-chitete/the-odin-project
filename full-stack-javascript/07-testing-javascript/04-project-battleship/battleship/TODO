@@ -1,3 +1,4 @@
 Dynamically create board cells
-Update fleet to display ships of length 2 to 5
+Dynamically display ships for placement
 Write controller.js (using remote)
+Write view.js (using remote)

@@ -43,7 +43,7 @@ main {
   grid-area: left;
 }
 
-.fleet {
+.ships {
   width: 426.672px;
   aspect-ratio: 1 / 1;
   display: grid;
@@ -51,9 +51,10 @@ main {
   grid-template-columns: repeat(10, 1fr);
 }
 
-.ship {
-  visibility: hidden; /* Becomes visible once game starts */
+.ships__ship {
+  visibility: visible; /* Becomes visible once game starts */
   background-color: var(--salt-500);
+  border: 0.5px solid var(--salt-700);
   cursor: pointer;
 }
 
@@ -114,7 +115,7 @@ main {
 
 .board,
 .board__cell {
-  border: 1px solid var(--salt-1000);
+  border: 1px solid var(--salt-700);
 }
 
 .board__cell_occupied {
