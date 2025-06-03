@@ -2,6 +2,8 @@
 
 import "./styles/main.css";
 
-import { DisplayController } from "./scripts/controller/display-controller";
+import { Controller } from "./scripts/controller/controller";
+import { Model } from "./scripts/model/model";
+import { View } from "./scripts/view/view";
 
-new DisplayController();
+const app = new Controller(new Model(), new View());

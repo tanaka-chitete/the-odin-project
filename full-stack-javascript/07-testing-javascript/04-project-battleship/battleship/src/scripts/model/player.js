@@ -26,8 +26,4 @@ export class Player {
   receive(x, y) {
     return this.board.receive(x, y);
   }
-
-  isLoser() {
-    return this.board.isEmpty();
-  }
 }

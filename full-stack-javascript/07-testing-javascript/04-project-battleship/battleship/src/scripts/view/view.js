@@ -1,23 +1,21 @@
 "use strict";
 
 import { BOARD_LENGTH } from "../constants";
-import { GameController } from "./game-controller";
 
-export class DisplayController {
+export class View {
   #board;
-
-  #gameController;
+  #message;
 
   constructor() {
     this.#board = document.querySelector(".board");
-    this.#gameController = new GameController();
+    this.#message = document.querySelector(".message");
     this.#initialiseDisplay();
   }
 
   #initialiseDisplay() {
     this.#initialiseFleet();
     this.#initialiseBoard();
-    this.#initialiseStartControls();
+    this.#initialiseControls();
   }
 
   #initialiseFleet() {
@@ -35,8 +33,6 @@ export class DisplayController {
         event.dataTransfer.setData("orientation", ship.dataset.orientation);
         event.dataTransfer.setData("offsetX", offsetX);
         event.dataTransfer.setData("offsetY", offsetY);
-
-        console.log(event.dataTransfer);
       });
     });
   }
@@ -89,10 +85,18 @@ export class DisplayController {
     });
   }
 
-  #initialiseStartControls() {
+  #initialiseControls() {
     const startButton = document.querySelector(".button_type_start");
-    startButton.addEventListener("click", () => console.log("hey"));
+    startButton.addEventListener("click", () => this.onStart());
   }
 
   updateDisplay() {}
+
+  bindToOnStart = (callback) => {
+    this.onStart = callback;
+  };
+
+  showMessage(message) {
+    this.#message.textContent = message;
+  }
 }
