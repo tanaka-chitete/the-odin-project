@@ -10,7 +10,7 @@ export class View {
     this.#board = document.querySelector(".board");
     this.#message = document.querySelector(".message");
 
-    this.#initialiseControls();
+    this.#handlePageLoaded();
   }
 
   // #initialiseFleet() {
@@ -80,9 +80,25 @@ export class View {
   //   });
   // }
 
-  #initialiseControls() {
+  #handlePageLoaded() {
     const startButton = document.querySelector(".button_type_start");
     startButton.addEventListener("click", () => this.onStart());
+
+    for (let row = 0; row < 10; row++) {
+      const boardRow = document.createElement("tr");
+      boardRow.setAttribute("class", "board__row");
+
+      for (let column = 0; column < 10; column++) {
+        const boardCell = document.createElement("td");
+        boardCell.setAttribute("class", "board__cell");
+        boardCell.setAttribute("data-row", row);
+        boardCell.setAttribute("data-column", column);
+
+        boardRow.append(boardCell);
+      }
+
+      this.#board.append(boardRow);
+    }
   }
 
   bindToOnStart = (callback) => {
