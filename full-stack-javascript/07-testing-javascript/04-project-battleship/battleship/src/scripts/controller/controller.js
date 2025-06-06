@@ -9,14 +9,14 @@ export class Controller {
     this.#view = view;
 
     this.#view.bindToOnStart(this.forwardStart);
-    this.#model.bindToOnAllocationGenerated(this.forwardAllocation);
+    this.#model.bindToOnDockGenerated(this.forwardDockGenerated);
   }
 
   forwardStart = () => {
     this.#model.handleStart();
   };
 
-  forwardAllocation = (response) => {
-    this.#view.handleAllocation(response);
+  forwardDockGenerated = (response) => {
+    this.#view.handleDockGenerated(response);
   };
 }

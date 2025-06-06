@@ -43,7 +43,7 @@ main {
   grid-area: left;
 }
 
-.allocation {
+.dock {
   width: 426.672px;
   aspect-ratio: 1 / 1;
   display: grid;
@@ -51,36 +51,61 @@ main {
   grid-template-columns: repeat(10, 1fr);
 }
 
-.allocation__ship {
+.dock__ship {
   visibility: visible; /* Becomes visible once game starts */
   background-color: var(--salt-500);
   border: 0.5px solid var(--salt-700);
   cursor: pointer;
 }
 
-.allocation__ship_length_5 {
+.dock__ship_length_5 {
   grid-row: 1;
   grid-column: 1 / 6;
 }
 
-.allocation__ship_length_4 {
+.dock__quantity_length_5 {
+  grid-row: 1;
+  grid-column: 6 / 7;
+}
+
+.dock__ship_length_4 {
   grid-row: 3;
   grid-column: 1 / 5;
 }
 
-.allocation__ship_length_3 {
+.dock__quantity_length_4 {
+  grid-row: 3;
+  grid-column: 5 / 6;
+}
+
+.dock__ship_length_3 {
   grid-row: 5;
   grid-column: 1 / 4;
 }
 
-.allocation__ship_length_2 {
+.dock__quantity_length_3 {
+  grid-row: 5;
+  grid-column: 4 / 5;
+}
+
+.dock__ship_length_2 {
   grid-row: 7;
   grid-column: 1 / 3;
 }
 
-.allocation__ship_length_1 {
+.dock__quantity_length_2 {
+  grid-row: 7;
+  grid-column: 3 / 4;
+}
+
+.dock__ship_length_1 {
   grid-row: 9;
   grid-column: 1 / 2;
+}
+
+.dock__quantity_length_1 {
+  grid-row: 9;
+  grid-column: 2 / 3;
 }
 
 .middle {

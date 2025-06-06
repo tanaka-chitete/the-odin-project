@@ -12,38 +12,38 @@ export class Model {
   }
 
   handleStart = () => {
-    const allocation = [
+    const dock = [
       {
-        id: shipLength5,
+        length: 5,
         quantity: 1,
       },
       {
-        id: shipLength4,
+        length: 4,
         quantity: 2,
       },
       {
-        id: shipLength3,
+        length: 3,
         quantity: 3,
       },
       {
-        id: shipLength2,
+        length: 2,
         quantity: 4,
       },
       {
-        id: shipLength1,
+        length: 1,
         quantity: 5,
       },
     ];
 
     const response = {
       message: `Place your ships, ${this.#attacker.name}`,
-      allocation,
+      data: dock,
     };
 
-    this.onAllocationGenerated(response);
+    this.onDockGenerated(response);
   };
 
-  bindToOnAllocationGenerated = (callback) => {
-    this.onAllocationGenerated = callback;
+  bindToOnDockGenerated = (callback) => {
+    this.onDockGenerated = callback;
   };
 }

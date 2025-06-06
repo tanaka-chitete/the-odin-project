@@ -1,10 +1,12 @@
 "use strict";
 
 export class View {
+  #dock;
   #board;
   #message;
 
   constructor() {
+    this.#dock = document.querySelector(".dock");
     this.#board = document.querySelector(".board");
     this.#message = document.querySelector(".message");
 
@@ -87,8 +89,31 @@ export class View {
     this.onStart = callback;
   };
 
-  handleAllocation(response) {
+  handleDockGenerated(response) {
     this.#message.textContent = response.message;
-    console.log(response.allocation);
+
+    response.data.forEach((shipClass) => {
+      for (let i = 0; i < shipClass.quantity; i++) {
+        const ship = document.createElement("div");
+
+        ship.setAttribute(
+          "class",
+          `dock__ship dock__ship_length_${shipClass.length}`
+        );
+        ship.setAttribute("draggable", "true");
+        ship.setAttribute("data-length", shipClass.length);
+        ship.setAttribute("data-orientation", "horizontal");
+
+        this.#dock.append(ship);
+      }
+
+      const quantity = document.createElement("span");
+      quantity.setAttribute(
+        "class",
+        `dock__quantity dock__quantity_length_${shipClass.length}`
+      );
+      quantity.textContent = shipClass.length;
+      this.#dock.append(quantity);
+    });
   }
 }
