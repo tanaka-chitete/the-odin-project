@@ -1,13 +1,5 @@
 "use strict";
 
-import {
-  CARRIER,
-  BATTLESHIP,
-  CRUISER,
-  SUBMARINE,
-  DESTROYER,
-} from "../constants";
-
 import { Player } from "./player";
 
 export class Model {
@@ -20,13 +12,28 @@ export class Model {
   }
 
   handleStart = () => {
-    const allocation = {
-      CARRIER: 0,
-      BATTLESHIP: 1,
-      CRUISER: 2,
-      SUBMARINE: 3,
-      DESTROYER: 2,
-    };
+    const allocation = [
+      {
+        id: shipLength5,
+        quantity: 1,
+      },
+      {
+        id: shipLength4,
+        quantity: 2,
+      },
+      {
+        id: shipLength3,
+        quantity: 3,
+      },
+      {
+        id: shipLength2,
+        quantity: 4,
+      },
+      {
+        id: shipLength1,
+        quantity: 5,
+      },
+    ];
 
     const response = {
       message: `Place your ships, ${this.#attacker.name}`,

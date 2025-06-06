@@ -1,7 +1,5 @@
 "use strict";
 
-import { BOARD_LENGTH } from "../constants";
-
 export class View {
   #board;
   #message;
@@ -57,9 +55,9 @@ export class View {
 
   //     if (
   //       (shipOrientation === "horizontal" &&
-  //         startColumn + shipLength - 1 >= BOARD_LENGTH) ||
+  //         startColumn + shipLength - 1 >= boardLength) ||
   //       (shipOrientation === "vertical" &&
-  //         startRow + shipLength - 1 >= BOARD_LENGTH)
+  //         startRow + shipLength - 1 >= boardLength)
   //     ) {
   //       return;
   //     }

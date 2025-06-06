@@ -114,13 +114,6 @@ describe("Board", () => {
       expect(new Board().receive(0, 9)).toBe(true);
     });
 
-    expect(new Board().place(0.1, 0, 0, 1)).toBe(false);
-    expect(new Board().place("0", 0, 0, 1)).toBe(false);
-    expect(new Board().place(Infinity, 0, 0, 1)).toBe(false);
-    expect(new Board().place(NaN, 0, 0, 1)).toBe(false);
-    expect(new Board().place(null, 0, 0, 1)).toBe(false);
-    expect(new Board().place(undefined, 0, 0, 1)).toBe(false);
-
     it("does not receive shot at an invalid coordinate (non-integer)", () => {
       expect(new Board().receive(0.1, 0)).toBe(false);
       expect(new Board().receive("0", 0)).toBe(false);

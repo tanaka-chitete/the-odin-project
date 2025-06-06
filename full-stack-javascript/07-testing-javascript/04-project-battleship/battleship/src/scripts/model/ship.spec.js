@@ -9,11 +9,12 @@ describe("Ship", () => {
       expect(() => new Ship(2)).not.toThrow();
       expect(() => new Ship(3)).not.toThrow();
       expect(() => new Ship(4)).not.toThrow();
+      expect(() => new Ship(5)).not.toThrow();
     });
 
     it("does not construct an object with an invalid length (out-of-range)", () => {
       expect(() => new Ship(0)).toThrow();
-      expect(() => new Ship(5)).toThrow();
+      expect(() => new Ship(6)).toThrow();
     });
   });
 
@@ -25,12 +26,21 @@ describe("Ship", () => {
   });
 
   describe("hit()", () => {
-    it("hits the ship once at a time, sinking it", () => {
+    it("hits the ship if it's in a valid state (afloat)", () => {
       const ship = new Ship(3);
-      expect(ship.hit()).toBe(true);
-      expect(ship.hit()).toBe(true);
-      expect(ship.hit()).toBe(true);
-      expect(ship.hit()).toBe(false);
+      expect(ship.hit()).toBe(2);
+      expect(ship.hit()).toBe(1);
+      expect(ship.hit()).toBe(0);
+    });
+
+    it("does not hit the ship if it's sunk", () => {
+      const ship = new Ship(3);
+      ship.hit();
+      ship.hit();
+      ship.hit();
+      expect(ship.hit()).toBe(0);
+      expect(ship.hit()).toBe(0);
+      expect(ship.hit()).toBe(0);
     });
   });
 

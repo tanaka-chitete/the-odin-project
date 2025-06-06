@@ -19,6 +19,10 @@ export class Player {
     return this.#_board;
   }
 
+  isLoser() {
+    return this.board.isEmpty();
+  }
+
   place(x1, y1, x2, y2) {
     return this.board.place(x1, y1, x2, y2);
   }

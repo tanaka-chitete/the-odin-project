@@ -1,14 +1,12 @@
 "use strict";
 
-import { MIN_SHIP_LENGTH, MAX_SHIP_LENGTH } from "../constants";
-
 export class Ship {
   #_length;
 
   constructor(length) {
-    if (length < MIN_SHIP_LENGTH || length > MAX_SHIP_LENGTH) {
+    if (length < 1 || length > 5) {
       throw new Error(
-        `length must be between ${MIN_SHIP_LENGTH} and ${MAX_SHIP_LENGTH}, inclusive`
+        `length must be between ${minShipLength} and ${maxShipLength}, inclusive`
       );
     }
 
@@ -26,11 +24,9 @@ export class Ship {
 
   hit() {
     if (this.isSunk()) {
-      return false;
+      return 0;
     }
 
-    this.health--;
-
-    return true;
+    return --this.health;
   }
 }
