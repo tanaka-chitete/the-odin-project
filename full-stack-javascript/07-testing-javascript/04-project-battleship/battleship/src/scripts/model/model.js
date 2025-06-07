@@ -11,7 +11,7 @@ export class Model {
     this.#defender = new Player("Player 2");
   }
 
-  handleStart = () => {
+  handleGetDock = () => {
     const dock = [
       {
         length: 5,
@@ -40,10 +40,27 @@ export class Model {
       data: dock,
     };
 
-    this.onDockGenerated(response);
+    this.onDockGotten(response);
   };
 
-  bindToOnDockGenerated = (callback) => {
-    this.onDockGenerated = callback;
+  handlePlaceShip = (x1, y1, x2, y2) => {
+    if (!this.#attacker.place(x1, y1, x2, y2)) {
+      return;
+    }
+
+    const response = {
+      message: `Place your ships, ${this.#attacker.name}`,
+      data: this.#attacker.board.board,
+    };
+
+    this.onShipPlaced(response);
+  };
+
+  bindToOnDockGotten = (callback) => {
+    this.onDockGotten = callback;
+  };
+
+  bindToOnShipPlaced = (callback) => {
+    this.onShipPlaced = callback;
   };
 }

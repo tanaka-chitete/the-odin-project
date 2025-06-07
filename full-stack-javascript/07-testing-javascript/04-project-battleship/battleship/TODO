@@ -1,4 +1,2 @@
-Dynamically create board cells
-Dynamically display ships for placement
-Write controller.js (using remote)
-Write view.js (using remote)
+Initialise "Placement" buttons (i.e. "Remove", "Rotate Left", "Rotate Right", and "Submit")
+Instead of moving one of the multiple ships, copy it instead

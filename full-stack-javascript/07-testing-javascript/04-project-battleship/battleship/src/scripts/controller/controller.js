@@ -8,15 +8,25 @@ export class Controller {
     this.#model = model;
     this.#view = view;
 
-    this.#view.bindToOnStart(this.forwardStart);
-    this.#model.bindToOnDockGenerated(this.forwardDockGenerated);
+    this.#view.bindToOnGetDock(this.forwardGetDock);
+    this.#model.bindToOnDockGotten(this.forwardDockGotten);
+    this.#view.bindToOnPlaceShip(this.forwardPlaceShip);
+    this.#model.bindToOnShipPlaced(this.forwardShipPlaced);
   }
 
-  forwardStart = () => {
-    this.#model.handleStart();
+  forwardGetDock = () => {
+    this.#model.handleGetDock();
   };
 
-  forwardDockGenerated = (response) => {
-    this.#view.handleDockGenerated(response);
+  forwardDockGotten = (response) => {
+    this.#view.handleDockGotten(response);
+  };
+
+  forwardPlaceShip = (x1, y1, x2, y2) => {
+    this.#model.handlePlaceShip(x1, y1, x2, y2);
+  };
+
+  forwardShipPlaced = (response) => {
+    this.#view.handleShipPlaced(response);
   };
 }

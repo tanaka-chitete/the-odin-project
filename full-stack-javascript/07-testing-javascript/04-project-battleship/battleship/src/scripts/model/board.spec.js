@@ -3,6 +3,14 @@
 import { Board } from "./board";
 
 describe("Board", () => {
+  describe("board", () => {
+    it("is retrievable", () => expect(new Board().board).toBeDefined());
+
+    it("is immutable", () => {
+      expect(() => (new Board().board = null)).toThrow();
+    });
+  });
+
   describe("place()", () => {
     it("places a ship on a valid path (integer-only, in-bounds, space-aligned, well-sized, and vacant)", () => {
       expect(new Board().place(0, 0, 0, 1)).toBe(true);
