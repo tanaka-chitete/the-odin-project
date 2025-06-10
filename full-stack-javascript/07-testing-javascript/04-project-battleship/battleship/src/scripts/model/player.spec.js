@@ -4,27 +4,31 @@ import { Player } from "./player";
 
 describe("Player", () => {
   describe("name", () => {
-    it("is retrievable", () => expect(new Player().name).toBeDefined());
+    it("is retrievable", () =>
+      expect(new Player("Player 1").name).toBe("Player 1"));
 
     it("is immutable", () => {
-      expect(() => (new Player().name = null)).toThrow();
+      expect(() => (new Player("Player 1").name = null)).toThrow();
     });
   });
 
   describe("board", () => {
-    it("is retrievable", () => expect(new Player().board).toBeDefined());
+    it("is retrievable", () =>
+      expect(new Player("Player 1").board).toBeDefined());
 
     it("is immutable", () => {
-      expect(() => (new Player().board = null)).toThrow();
+      expect(() => (new Player("Player 1").board = null)).toThrow();
     });
   });
 
   describe("place()", () =>
-    it("is defined", () => expect(new Player().place).toBeDefined()));
+    it("is defined", () => expect(new Player("Player 1").place).toBeDefined()));
 
   describe("receive()", () =>
-    it("is defined", () => expect(new Player().receive).toBeDefined()));
+    it("is defined", () =>
+      expect(new Player("Player 1").receive).toBeDefined()));
 
   describe("isLoser()", () =>
-    it("is defined", () => expect(new Player().isLoser).toBeDefined()));
+    it("is defined", () =>
+      expect(new Player("Player 1").isLoser).toBeDefined()));
 });

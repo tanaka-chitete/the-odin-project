@@ -6,7 +6,7 @@ export class Player {
   #_name;
   #_board;
 
-  constructor(name = "") {
+  constructor(name) {
     this.#_name = name;
     this.#_board = new Board();
   }

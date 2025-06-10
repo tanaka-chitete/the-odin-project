@@ -4,16 +4,28 @@ import { Ship } from "./ship";
 
 export class Board {
   #_board;
+  #_allocation;
 
   constructor() {
     this.#_board = new Array(10);
     for (let row = 0; row < this.#_board.length; row++) {
       this.#_board[row] = new Array(this.#_board.length);
     }
+    this.#_allocation = {
+      length5: 1,
+      length4: 2,
+      length3: 3,
+      length2: 4,
+      length1: 5,
+    };
   }
 
   get board() {
     return this.#_board;
+  }
+
+  get allocation() {
+    return this.#_allocation;
   }
 
   place(x1, y1, x2, y2) {
@@ -46,9 +58,12 @@ export class Board {
 
     const path = this.#makePath(x1, y1, x2, y2);
 
-    if (path.length < 1 || path.length > 5) {
+    // The path must correspond with an available ship
+    if (!this.allocation[`length${path.length}`]) {
       return false;
     }
+
+    this.allocation[`length${path.length}`]--;
 
     // The path must be vacant
     if (path.some(([x, y]) => this.board[y][x])) {

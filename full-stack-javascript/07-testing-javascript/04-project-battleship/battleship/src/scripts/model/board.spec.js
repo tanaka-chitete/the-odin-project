@@ -11,8 +11,16 @@ describe("Board", () => {
     });
   });
 
+  describe("allocation", () => {
+    it("is retrievable", () => expect(new Board().allocation).toBeDefined());
+
+    it("is immutable", () => {
+      expect(() => (new Board().allocation = null)).toThrow();
+    });
+  });
+
   describe("place()", () => {
-    it("places a ship on a valid path (integer-only, in-bounds, space-aligned, well-sized, and vacant)", () => {
+    it("places a ship on a valid path (integer-only, in-bounds, space-aligned, allocation-adherent, and vacant)", () => {
       expect(new Board().place(0, 0, 0, 1)).toBe(true);
       expect(new Board().place(0, 0, 1, 0)).toBe(true);
       expect(new Board().place(9, 0, 8, 0)).toBe(true);
@@ -68,15 +76,36 @@ describe("Board", () => {
       expect(new Board().place(0, 9, 1, 8)).toBe(false);
     });
 
-    it("does not place a ship on an invalid path (poorly-sized)", () => {
-      expect(new Board().place(0, 0, 0, 5)).toBe(false);
-      expect(new Board().place(0, 0, 5, 0)).toBe(false);
-      expect(new Board().place(9, 0, 4, 0)).toBe(false);
-      expect(new Board().place(9, 0, 9, 5)).toBe(false);
-      expect(new Board().place(9, 9, 9, 4)).toBe(false);
-      expect(new Board().place(9, 9, 4, 9)).toBe(false);
-      expect(new Board().place(0, 9, 5, 9)).toBe(false);
-      expect(new Board().place(0, 9, 0, 4)).toBe(false);
+    it("does not place a ship on an invalid path (allocation-violating)", () => {
+      let board = new Board();
+      expect(board.place(0, 0, 4, 0)).toBe(true);
+      expect(board.place(0, 1, 4, 1)).toBe(false);
+
+      board = new Board();
+      expect(board.place(0, 0, 3, 0)).toBe(true);
+      expect(board.place(0, 1, 3, 1)).toBe(true);
+      expect(board.place(0, 2, 3, 2)).toBe(false);
+
+      board = new Board();
+      expect(board.place(0, 0, 2, 0)).toBe(true);
+      expect(board.place(0, 1, 2, 1)).toBe(true);
+      expect(board.place(0, 2, 2, 2)).toBe(true);
+      expect(board.place(0, 3, 2, 3)).toBe(false);
+
+      board = new Board();
+      expect(board.place(0, 0, 1, 0)).toBe(true);
+      expect(board.place(0, 1, 1, 1)).toBe(true);
+      expect(board.place(0, 2, 1, 2)).toBe(true);
+      expect(board.place(0, 3, 1, 3)).toBe(true);
+      expect(board.place(0, 4, 1, 4)).toBe(false);
+
+      board = new Board();
+      expect(board.place(0, 0, 0, 0)).toBe(true);
+      expect(board.place(0, 1, 0, 1)).toBe(true);
+      expect(board.place(0, 2, 0, 2)).toBe(true);
+      expect(board.place(0, 3, 0, 3)).toBe(true);
+      expect(board.place(0, 4, 0, 4)).toBe(true);
+      expect(board.place(0, 5, 0, 5)).toBe(false);
     });
 
     it("does not place a ship on an invalid path (occupied)", () => {

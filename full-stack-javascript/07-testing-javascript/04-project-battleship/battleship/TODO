@@ -1,2 +1,4 @@
 Initialise "Placement" buttons (i.e. "Remove", "Rotate Left", "Rotate Right", and "Submit")
-Instead of moving one of the multiple ships, copy it instead
+Instead of moving one of the multiple ships, copy it instead, and use the model to update the dock
+During placement, make ships clickable so they can be selected for "Placement" actions (use memory address of underlying ship object to group cells)
+During placement, make ships draggable so they can be moved
