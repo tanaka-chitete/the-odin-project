@@ -21,6 +21,14 @@ describe("Player", () => {
     });
   });
 
+  describe("allocation", () => {
+    it("is retrievable", () => expect(new Player().allocation).toBeDefined());
+
+    it("is immutable", () => {
+      expect(() => (new Player().allocation = null)).toThrow();
+    });
+  });
+
   describe("place()", () =>
     it("is defined", () => expect(new Player("Player 1").place).toBeDefined()));
 

@@ -1,12 +1,12 @@
 "use strict";
 
 export class View {
-  #dock;
+  #allocation;
   #board;
   #message;
 
   constructor() {
-    this.#dock = document.querySelector(".dock");
+    this.#allocation = document.querySelector(".allocation");
     this.#board = document.querySelector(".board");
     this.#message = document.querySelector(".message");
 
@@ -32,7 +32,7 @@ export class View {
 
   #handlePageLoaded() {
     const startButton = document.querySelector(".button_type_start");
-    startButton.addEventListener("click", () => this.onGetDock());
+    startButton.addEventListener("click", () => this.onGetAllocation());
 
     for (let row = 0; row < 10; row++) {
       const boardRow = document.createElement("tr");
@@ -52,7 +52,7 @@ export class View {
 
     this.#board.addEventListener("dragover", (event) => {
       event.preventDefault();
-      event.dataTransfer.dropEffect = "move";
+      event.dataTransfer.dropEffect = "copy";
     });
 
     this.#board.addEventListener("drop", (event) => {
@@ -79,6 +79,11 @@ export class View {
       const ship = document.querySelector(`#${shipId}`);
       const shipLength = +ship.getAttribute("data-length");
 
+      console.debug("startColumn = " + startColumn);
+      console.debug("startRow = " + startRow);
+      console.debug("endColumn = " + (startColumn + shipLength - 1));
+      console.debug("endRow = " + startRow);
+
       this.onPlaceShip(
         startColumn,
         startRow,
@@ -88,64 +93,60 @@ export class View {
     });
   }
 
-  handleDockGotten(response) {
+  handleAllocationGotten(response) {
     this.#message.textContent = response.message;
 
-    response.data.forEach((group) => {
-      for (let i = 0; i < group.quantity; i++) {
-        const ship = document.createElement("div");
+    for (const [length, quantity] of Object.entries(response.data)) {
+      const ship = document.createElement("div");
 
-        ship.setAttribute("id", `ship-length-${group.length}_${i}`);
-        ship.setAttribute(
-          "class",
-          `dock__ship dock__ship_length_${group.length}`
-        );
-        ship.setAttribute("draggable", "true");
-        ship.setAttribute("data-length", group.length);
-        ship.setAttribute("data-orientation", "horizontal");
-
-        ship.addEventListener("dragstart", (event) => {
-          event.dataTransfer.effectAllowed = "move";
-
-          const mouseXRelativeToViewport = event.clientX;
-          const mouseYRelativeToViewport = event.clientY;
-          const shipBoundingBox = ship.getBoundingClientRect();
-          const mouseXRelativeToShip =
-            mouseXRelativeToViewport - shipBoundingBox.x;
-          const mouseYRelativeToShip =
-            mouseYRelativeToViewport - shipBoundingBox.y;
-
-          event.dataTransfer.setData("id", ship.getAttribute("id"));
-          event.dataTransfer.setData(
-            "mouseXRelativeToShip",
-            mouseXRelativeToShip
-          );
-          event.dataTransfer.setData(
-            "mouseYRelativeToShip",
-            mouseYRelativeToShip
-          );
-        });
-
-        this.#dock.append(ship);
-      }
-
-      const quantity = document.createElement("span");
-      quantity.setAttribute(
+      ship.setAttribute("id", `length-${length}`);
+      ship.setAttribute(
         "class",
-        `dock__quantity dock__quantity_length_${group.length}`
+        `allocation__ship allocation__ship_length_${length}`
       );
-      quantity.textContent = group.quantity;
-      this.#dock.append(quantity);
-    });
+      ship.setAttribute("draggable", "true");
+      ship.setAttribute("data-length", length);
+      ship.setAttribute("data-orientation", "horizontal");
+
+      ship.addEventListener("dragstart", (event) => {
+        event.dataTransfer.effectAllowed = "copy";
+
+        const mouseXRelativeToViewport = event.clientX;
+        const mouseYRelativeToViewport = event.clientY;
+        const shipBoundingBox = ship.getBoundingClientRect();
+        const mouseXRelativeToShip =
+          mouseXRelativeToViewport - shipBoundingBox.x;
+        const mouseYRelativeToShip =
+          mouseYRelativeToViewport - shipBoundingBox.y;
+
+        event.dataTransfer.setData("id", ship.getAttribute("id"));
+        event.dataTransfer.setData(
+          "mouseXRelativeToShip",
+          mouseXRelativeToShip
+        );
+        event.dataTransfer.setData(
+          "mouseYRelativeToShip",
+          mouseYRelativeToShip
+        );
+      });
+
+      this.#allocation.append(ship);
+
+      const quantityHTML = document.createElement("span");
+      quantityHTML.setAttribute(
+        "class",
+        `allocation__quantity allocation__quantity_length_${length}`
+      );
+      quantityHTML.textContent = quantity;
+      this.#allocation.append(quantityHTML);
+    }
   }
 
-  // This response object should contain a board AND the dock
+  // This response object should contain a board AND the allocation
   handleShipPlaced(response) {
     this.#message = response.message;
-    this.refreshBoard(response.data);
-  }
 
-  refreshBoard(board) {
+    const board = response.data.board;
     for (let row = 0; row < board.length; row++) {
       for (let column = 0; column < board[row].length; column++) {
         const cell = document.querySelector(
@@ -161,10 +162,18 @@ export class View {
         }
       }
     }
+
+    const allocation = response.data.allocation;
+    for (const [length, quantity] of Object.entries(allocation)) {
+      const quantityHTML = document.querySelector(
+        `.allocation__quantity_length_${length}`
+      );
+      quantityHTML.textContent = quantity;
+    }
   }
 
-  bindToOnGetDock = (callback) => {
-    this.onGetDock = callback;
+  bindToOnGetAllocation = (callback) => {
+    this.onGetAllocation = callback;
   };
 
   bindToOnPlaceShip = (callback) => {

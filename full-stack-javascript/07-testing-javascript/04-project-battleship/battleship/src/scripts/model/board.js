@@ -12,11 +12,11 @@ export class Board {
       this.#_board[row] = new Array(this.#_board.length);
     }
     this.#_allocation = {
-      length5: 1,
-      length4: 2,
-      length3: 3,
-      length2: 4,
-      length1: 5,
+      5: 1,
+      4: 2,
+      3: 3,
+      2: 4,
+      1: 5,
     };
   }
 
@@ -59,11 +59,11 @@ export class Board {
     const path = this.#makePath(x1, y1, x2, y2);
 
     // The path must correspond with an available ship
-    if (!this.allocation[`length${path.length}`]) {
+    if (!this.allocation[path.length]) {
       return false;
     }
 
-    this.allocation[`length${path.length}`]--;
+    this.allocation[path.length]--;
 
     // The path must be vacant
     if (path.some(([x, y]) => this.board[y][x])) {

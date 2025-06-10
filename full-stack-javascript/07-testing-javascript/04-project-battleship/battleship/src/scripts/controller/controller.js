@@ -8,18 +8,18 @@ export class Controller {
     this.#model = model;
     this.#view = view;
 
-    this.#view.bindToOnGetDock(this.forwardGetDock);
-    this.#model.bindToOnDockGotten(this.forwardDockGotten);
+    this.#view.bindToOnGetAllocation(this.forwardGetAllocation);
+    this.#model.bindToOnAllocationGotten(this.forwardAllocationGotten);
     this.#view.bindToOnPlaceShip(this.forwardPlaceShip);
     this.#model.bindToOnShipPlaced(this.forwardShipPlaced);
   }
 
-  forwardGetDock = () => {
-    this.#model.handleGetDock();
+  forwardGetAllocation = () => {
+    this.#model.handleGetAllocation();
   };
 
-  forwardDockGotten = (response) => {
-    this.#view.handleDockGotten(response);
+  forwardAllocationGotten = (response) => {
+    this.#view.handleAllocationGotten(response);
   };
 
   forwardPlaceShip = (x1, y1, x2, y2) => {
