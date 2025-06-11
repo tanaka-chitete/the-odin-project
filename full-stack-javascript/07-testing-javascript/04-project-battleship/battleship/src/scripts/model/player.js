@@ -16,22 +16,6 @@ export class Player {
   }
 
   get board() {
-    return this.#_board.board;
-  }
-
-  get allocation() {
-    return this.#_board.allocation;
-  }
-
-  get isLoser() {
-    return this.#_board.isEmpty();
-  }
-
-  place(x1, y1, x2, y2) {
-    return this.#_board.place(x1, y1, x2, y2);
-  }
-
-  receive(x, y) {
-    return this.#_board.receive(x, y);
+    return this.#_board;
   }
 }

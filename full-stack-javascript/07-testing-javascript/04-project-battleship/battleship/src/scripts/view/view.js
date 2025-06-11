@@ -1,14 +1,14 @@
 "use strict";
 
 export class View {
+  #message;
   #allocation;
   #board;
-  #message;
 
   constructor() {
+    this.#message = document.querySelector(".message");
     this.#allocation = document.querySelector(".allocation");
     this.#board = document.querySelector(".board");
-    this.#message = document.querySelector(".message");
 
     this.#handlePageLoaded();
   }
@@ -96,6 +96,32 @@ export class View {
   handleAllocationGotten(response) {
     this.#message.textContent = response.message;
 
+    const startControls = document.querySelector(".controls_type_start");
+    startControls.remove();
+
+    const placeControls = document.createElement("div");
+    placeControls.setAttribute("class", "controls controls_type_place");
+
+    const resetButton = document.createElement("button");
+    resetButton.setAttribute("class", "button button_type_reset");
+    resetButton.textContent = "Reset";
+
+    const rotateButton = document.createElement("button");
+    rotateButton.setAttribute("class", "button_type_rotate");
+    rotateButton.textContent = "Rotate";
+
+    const submitButton = document.createElement("button");
+    submitButton.setAttribute("class", "button_type_submit");
+    submitButton.textContent = "Submit";
+    submitButton.addEventListener("click", () => this.onSubmitBoard());
+
+    placeControls.append(resetButton);
+    placeControls.append(rotateButton);
+    placeControls.append(submitButton);
+
+    const middle = document.querySelector(".middle");
+    middle.append(placeControls);
+
     for (const [length, quantity] of Object.entries(response.data)) {
       const ship = document.createElement("div");
 
@@ -142,9 +168,8 @@ export class View {
     }
   }
 
-  // This response object should contain a board AND the allocation
   handleShipPlaced(response) {
-    this.#message = response.message;
+    this.#message.textContent = response.message;
 
     const board = response.data.board;
     for (let row = 0; row < board.length; row++) {
@@ -172,11 +197,22 @@ export class View {
     }
   }
 
+  handleBoardSubmitted(response) {
+    if (response.message === "Place your ships, Player 2") {
+    }
+    // If Player 1 submitted their board, leave the controls as is
+    // If player 2 submitted their board, remove the current controls and add the fire ones
+  }
+
   bindToOnGetAllocation = (callback) => {
     this.onGetAllocation = callback;
   };
 
   bindToOnPlaceShip = (callback) => {
     this.onPlaceShip = callback;
+  };
+
+  bindToOnSubmitBoard = (callback) => {
+    this.onSubmitBoard = callback;
   };
 }

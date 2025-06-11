@@ -1,3 +1,5 @@
-Initialise "Placement" buttons (i.e. "Remove", "Rotate Left", "Rotate Right", and "Submit")
+During placement, display ships in allocation with a line for each unit of length (e.g. [  |  |  ] )
 During placement, make ships clickable so they can be selected for "Placement" actions (use memory address of underlying ship object to group cells)
 During placement, make ships draggable so they can be moved
+Make board droppable
+Make ships on board draggable

@@ -5,9 +5,7 @@ export class Ship {
 
   constructor(length) {
     if (length < 1 || length > 5) {
-      throw new Error(
-        `length must be between ${minShipLength} and ${maxShipLength}, inclusive`
-      );
+      throw new Error(`length must be between 1 and 5, inclusive`);
     }
 
     this.#_length = length;

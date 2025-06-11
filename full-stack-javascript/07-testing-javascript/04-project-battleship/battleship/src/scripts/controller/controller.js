@@ -12,6 +12,8 @@ export class Controller {
     this.#model.bindToOnAllocationGotten(this.forwardAllocationGotten);
     this.#view.bindToOnPlaceShip(this.forwardPlaceShip);
     this.#model.bindToOnShipPlaced(this.forwardShipPlaced);
+    this.#view.bindToOnSubmitBoard(this.forwardSubmitBoard);
+    this.#model.bindToOnBoardSubmitted(this.forwardBoardSubmitted);
   }
 
   forwardGetAllocation = () => {
@@ -28,5 +30,13 @@ export class Controller {
 
   forwardShipPlaced = (response) => {
     this.#view.handleShipPlaced(response);
+  };
+
+  forwardSubmitBoard = () => {
+    this.#model.handleSubmitBoard();
+  };
+
+  forwardBoardSubmitted = (response) => {
+    this.#view.handleBoardSubmitted(response);
   };
 }

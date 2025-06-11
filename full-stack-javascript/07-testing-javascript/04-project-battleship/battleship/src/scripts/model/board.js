@@ -3,13 +3,13 @@
 import { Ship } from "./ship";
 
 export class Board {
-  #_board;
+  #_array;
   #_allocation;
 
   constructor() {
-    this.#_board = new Array(10);
-    for (let row = 0; row < this.#_board.length; row++) {
-      this.#_board[row] = new Array(this.#_board.length);
+    this.#_array = new Array(10);
+    for (let row = 0; row < this.#_array.length; row++) {
+      this.#_array[row] = new Array(this.#_array.length);
     }
     this.#_allocation = {
       5: 1,
@@ -20,8 +20,8 @@ export class Board {
     };
   }
 
-  get board() {
-    return this.#_board;
+  get array() {
+    return this.#_array;
   }
 
   get allocation() {
@@ -40,13 +40,13 @@ export class Board {
 
     if (
       x1 < 0 ||
-      x1 >= this.board.length ||
+      x1 >= this.array.length ||
       x2 < 0 ||
-      x2 >= this.board.length ||
+      x2 >= this.array.length ||
       y1 < 0 ||
-      y1 >= this.board[0].length ||
+      y1 >= this.array[0].length ||
       y2 < 0 ||
-      y2 >= this.board[0].length
+      y2 >= this.array[0].length
     ) {
       return false;
     }
@@ -66,12 +66,12 @@ export class Board {
     this.allocation[path.length]--;
 
     // The path must be vacant
-    if (path.some(([x, y]) => this.board[y][x])) {
+    if (path.some(([x, y]) => this.array[y][x])) {
       return false;
     }
 
     const ship = new Ship(path.length);
-    path.forEach(([x, y]) => (this.board[y][x] = ship));
+    path.forEach(([x, y]) => (this.array[y][x] = ship));
 
     return true;
   }
@@ -81,29 +81,39 @@ export class Board {
       return false;
     }
 
-    if (x < 0 || x >= this.board.length || y < 0 || y >= this.board[0].length) {
+    if (x < 0 || x >= this.array.length || y < 0 || y >= this.array[0].length) {
       return false;
     }
 
-    if (this.board[y][x] === "x") {
+    if (this.array[y][x] === "x") {
       return false;
     }
 
-    if (this.board[y][x] instanceof Ship) {
-      this.board[y][x].hit();
+    if (this.array[y][x] instanceof Ship) {
+      this.array[y][x].hit();
     }
 
-    this.board[y][x] = "x";
+    this.array[y][x] = "x";
 
     return true;
   }
 
   isEmpty() {
-    for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board[i].length; j++) {
-        if (this.board[i][j] instanceof Ship) {
+    for (let i = 0; i < this.array.length; i++) {
+      for (let j = 0; j < this.array[i].length; j++) {
+        if (this.array[i][j] instanceof Ship) {
           return false;
         }
+      }
+    }
+
+    return true;
+  }
+
+  isFull() {
+    for (const quantity of Object.values(this.allocation)) {
+      if (quantity) {
+        return false;
       }
     }
 

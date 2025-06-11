@@ -58,6 +58,10 @@ main {
   cursor: pointer;
 }
 
+.allocation__ship_exhausted {
+  cursor: pointer;
+}
+
 .allocation__ship_length_5 {
   grid-row: 1;
   grid-column: 2 / 7;

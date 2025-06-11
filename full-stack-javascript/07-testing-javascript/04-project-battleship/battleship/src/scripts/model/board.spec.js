@@ -3,11 +3,11 @@
 import { Board } from "./board";
 
 describe("Board", () => {
-  describe("board", () => {
-    it("is retrievable", () => expect(new Board().board).toBeDefined());
+  describe("array", () => {
+    it("is retrievable", () => expect(new Board().array).toBeDefined());
 
     it("is immutable", () => {
-      expect(() => (new Board().board = null)).toThrow();
+      expect(() => (new Board().array = null)).toThrow();
     });
   });
 
@@ -197,8 +197,11 @@ describe("Board", () => {
   });
 
   describe("isEmpty()", () => {
-    it("returns false if there is at least one ship", () => {
+    it("only returns true if no ships have been placed", () => {
       let board = new Board();
+      expect(new Board().isEmpty()).toBe(true);
+
+      board = new Board();
       board.place(0, 0, 0, 1);
       expect(board.isEmpty()).toBe(false);
 
@@ -230,9 +233,45 @@ describe("Board", () => {
       board.place(0, 9, 0, 8);
       expect(board.isEmpty()).toBe(false);
     });
+  });
 
-    it("returns true if there are no ships", () => {
-      expect(new Board().isEmpty()).toBe(true);
+  describe("isFull()", () => {
+    it("only returns true if all ships have been placed", () => {
+      const board = new Board();
+      board.place(0, 0, 4, 0);
+      expect(board.isFull()).toBe(false);
+
+      board.place(0, 0, 3, 0);
+      expect(board.isFull()).toBe(false);
+      board.place(0, 1, 3, 1);
+      expect(board.isFull()).toBe(false);
+
+      board.place(0, 0, 2, 0);
+      expect(board.isFull()).toBe(false);
+      board.place(0, 1, 2, 1);
+      expect(board.isFull()).toBe(false);
+      board.place(0, 2, 2, 2);
+      expect(board.isFull()).toBe(false);
+
+      board.place(0, 0, 1, 0);
+      expect(board.isFull()).toBe(false);
+      board.place(0, 1, 1, 1);
+      expect(board.isFull()).toBe(false);
+      board.place(0, 2, 1, 2);
+      expect(board.isFull()).toBe(false);
+      board.place(0, 3, 1, 3);
+      expect(board.isFull()).toBe(false);
+
+      board.place(0, 0, 0, 0);
+      expect(board.isFull()).toBe(false);
+      board.place(0, 1, 0, 1);
+      expect(board.isFull()).toBe(false);
+      board.place(0, 2, 0, 2);
+      expect(board.isFull()).toBe(false);
+      board.place(0, 3, 0, 3);
+      expect(board.isFull()).toBe(false);
+      board.place(0, 4, 0, 4);
+      expect(board.isFull()).toBe(true);
     });
   });
 });
