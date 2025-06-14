@@ -10,185 +10,203 @@ export class View {
     this.#allocation = document.querySelector(".allocation");
     this.#board = document.querySelector(".board");
 
-    this.#handlePageLoaded();
+    this.#initialiseStartControls();
+    this.#initialiseBoard();
   }
 
-  // #initialiseBoard() {
-  //     for (let i = 0; i < shipLength; i++) {
-  //       const currentRow =
-  //         shipOrientation === "horizontal" ? startRow : startRow + i;
-  //       const currentColumn =
-  //         shipOrientation === "horizontal" ? startColumn + i : startColumn;
-
-  //       const currentCell = this.#board.rows[currentRow].cells[currentColumn];
-  //       currentCell.classList.add("board__cell_occupied");
-  //     }
-
-  //     const id = event.dataTransfer.getData("id");
-  //     const ship = document.querySelector(`#${id}`);
-  //     ship.style.visibility = "hidden";
-  //   });
-  // }
-
-  #handlePageLoaded() {
+  #initialiseStartControls() {
     const startButton = document.querySelector(".button_type_start");
     startButton.addEventListener("click", () => this.onGetAllocation());
+  }
 
-    for (let row = 0; row < 10; row++) {
-      const boardRow = document.createElement("tr");
-      boardRow.setAttribute("class", "board__row");
+  #destroyStartControls() {
+    document.querySelector(".controls_type_start").remove();
+  }
 
-      for (let column = 0; column < 10; column++) {
-        const boardCell = document.createElement("td");
-        boardCell.setAttribute("class", "board__cell");
-        boardCell.setAttribute("data-row", row);
-        boardCell.setAttribute("data-column", column);
+  #initialisePositionControls() {
+    const initialiseStructure = () => {
+      const positionControls = document.createElement("div");
+      positionControls.setAttribute("class", "controls controls_type_position");
 
-        boardRow.append(boardCell);
+      const resetButton = document.createElement("button");
+      resetButton.setAttribute("class", "button button_type_reset");
+      resetButton.textContent = "Reset";
+
+      const rotateButton = document.createElement("button");
+      rotateButton.setAttribute("class", "button_type_rotate");
+      rotateButton.textContent = "Rotate";
+
+      const submitButton = document.createElement("button");
+      submitButton.setAttribute("class", "button_type_submit");
+      submitButton.textContent = "Submit";
+
+      positionControls.append(resetButton);
+      positionControls.append(rotateButton);
+      positionControls.append(submitButton);
+
+      const middle = document.querySelector(".middle");
+      middle.append(positionControls);
+    };
+
+    const initialiseBehaviour = () => {
+      const submitButton = document.querySelector(".button_type_submit");
+      submitButton.addEventListener("click", this.onSubmitBoard);
+    };
+
+    initialiseStructure();
+    initialiseBehaviour();
+  }
+
+  #destroyPositionControls() {
+    document.querySelector(".controls_type_position").remove();
+  }
+
+  #initialiseAllocation(allocation) {
+    const initialiseStructure = () => {
+      for (const [length, quantity] of Object.entries(allocation)) {
+        const ship = document.createElement("div");
+        ship.setAttribute("id", `length-${length}`);
+        ship.setAttribute(
+          "class",
+          `allocation__ship allocation__ship_length_${length}`
+        );
+        ship.setAttribute("draggable", "true");
+        ship.setAttribute("data-length", length);
+
+        this.#allocation.append(ship);
+
+        const quantityHTML = document.createElement("span");
+        quantityHTML.setAttribute(
+          "class",
+          `allocation__quantity allocation__quantity_length_${length}`
+        );
+        quantityHTML.textContent = quantity;
+        this.#allocation.append(quantityHTML);
       }
+    };
 
-      this.#board.append(boardRow);
-    }
+    const initialiseBehaviour = () => {
+      for (const [length, _] of Object.entries(allocation)) {
+        const ship = document.querySelector(
+          `.allocation__ship_length_${length}`
+        );
+        ship.addEventListener("dragstart", (event) => {
+          event.dataTransfer.effectAllowed = "copy";
 
-    this.#board.addEventListener("dragover", (event) => {
-      event.preventDefault();
-      event.dataTransfer.dropEffect = "copy";
-    });
+          const mouseXRelativeToViewport = event.clientX;
+          const mouseYRelativeToViewport = event.clientY;
+          const shipBoundingBox = ship.getBoundingClientRect();
+          const mouseXRelativeToShip =
+            mouseXRelativeToViewport - shipBoundingBox.x;
+          const mouseYRelativeToShip =
+            mouseYRelativeToViewport - shipBoundingBox.y;
 
-    this.#board.addEventListener("drop", (event) => {
-      event.preventDefault();
+          event.dataTransfer.setData("id", ship.getAttribute("id"));
+          event.dataTransfer.setData(
+            "mouseXRelativeToShip",
+            mouseXRelativeToShip
+          );
+          event.dataTransfer.setData(
+            "mouseYRelativeToShip",
+            mouseYRelativeToShip
+          );
+        });
+      }
+    };
 
-      const mouseXRelativeToViewport = event.clientX;
-      const mouseYRelativeToViewport = event.clientY;
-      const boardBoundingBox = this.#board.getBoundingClientRect();
-      const mouseXRelativeToBoard =
-        mouseXRelativeToViewport - boardBoundingBox.x;
-      const mouseYRelativeToBoard =
-        mouseYRelativeToViewport - boardBoundingBox.y;
+    initialiseStructure();
+    initialiseBehaviour();
+  }
 
-      const cellBoundingBox =
-        this.#board.rows[0].cells[0].getBoundingClientRect();
-      const startRow = Math.floor(
-        mouseYRelativeToBoard / cellBoundingBox.height
-      );
-      const startColumn = Math.floor(
-        mouseXRelativeToBoard / cellBoundingBox.width
-      );
+  #initialiseBoard() {
+    const initialiseStructure = () => {
+      for (let row = 0; row < 10; row++) {
+        const boardRow = document.createElement("tr");
+        boardRow.setAttribute("class", "board__row");
 
-      const shipId = event.dataTransfer.getData("id");
-      const ship = document.querySelector(`#${shipId}`);
-      const shipLength = +ship.getAttribute("data-length");
+        for (let column = 0; column < 10; column++) {
+          const boardCell = document.createElement("td");
+          boardCell.setAttribute("class", "board__cell");
+          boardCell.setAttribute("data-row", row);
+          boardCell.setAttribute("data-column", column);
 
-      console.debug("startColumn = " + startColumn);
-      console.debug("startRow = " + startRow);
-      console.debug("endColumn = " + (startColumn + shipLength - 1));
-      console.debug("endRow = " + startRow);
+          boardRow.append(boardCell);
+        }
 
-      this.onPlaceShip(
-        startColumn,
-        startRow,
-        startColumn + shipLength - 1,
-        startRow
-      );
-    });
+        this.#board.append(boardRow);
+      }
+    };
+
+    const initialiseBehaviour = () => {
+      this.#board.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "copy";
+      });
+
+      this.#board.addEventListener("drop", (event) => {
+        event.preventDefault();
+
+        const mouseXRelativeToViewport = event.clientX;
+        const mouseYRelativeToViewport = event.clientY;
+        const boardBoundingBox = this.#board.getBoundingClientRect();
+        const mouseXRelativeToBoard =
+          mouseXRelativeToViewport - boardBoundingBox.x;
+        const mouseYRelativeToBoard =
+          mouseYRelativeToViewport - boardBoundingBox.y;
+
+        const cellBoundingBox =
+          this.#board.rows[0].cells[0].getBoundingClientRect();
+        const startRow = Math.floor(
+          mouseYRelativeToBoard / cellBoundingBox.height
+        );
+        const startColumn = Math.floor(
+          mouseXRelativeToBoard / cellBoundingBox.width
+        );
+
+        const shipId = event.dataTransfer.getData("id");
+        const ship = document.querySelector(`#${shipId}`);
+        const shipLength = +ship.getAttribute("data-length");
+
+        this.onPlaceShip(
+          startColumn,
+          startRow,
+          startColumn + shipLength - 1,
+          startRow
+        );
+      });
+    };
+
+    initialiseStructure();
+    initialiseBehaviour();
   }
 
   handleAllocationGotten(response) {
     this.#message.textContent = response.message;
 
-    const startControls = document.querySelector(".controls_type_start");
-    startControls.remove();
+    this.#destroyStartControls();
 
-    const placeControls = document.createElement("div");
-    placeControls.setAttribute("class", "controls controls_type_place");
-
-    const resetButton = document.createElement("button");
-    resetButton.setAttribute("class", "button button_type_reset");
-    resetButton.textContent = "Reset";
-
-    const rotateButton = document.createElement("button");
-    rotateButton.setAttribute("class", "button_type_rotate");
-    rotateButton.textContent = "Rotate";
-
-    const submitButton = document.createElement("button");
-    submitButton.setAttribute("class", "button_type_submit");
-    submitButton.textContent = "Submit";
-    submitButton.addEventListener("click", () => this.onSubmitBoard());
-
-    placeControls.append(resetButton);
-    placeControls.append(rotateButton);
-    placeControls.append(submitButton);
-
-    const middle = document.querySelector(".middle");
-    middle.append(placeControls);
-
-    for (const [length, quantity] of Object.entries(response.data)) {
-      const ship = document.createElement("div");
-
-      ship.setAttribute("id", `length-${length}`);
-      ship.setAttribute(
-        "class",
-        `allocation__ship allocation__ship_length_${length}`
-      );
-      ship.setAttribute("draggable", "true");
-      ship.setAttribute("data-length", length);
-      ship.setAttribute("data-orientation", "horizontal");
-
-      ship.addEventListener("dragstart", (event) => {
-        event.dataTransfer.effectAllowed = "copy";
-
-        const mouseXRelativeToViewport = event.clientX;
-        const mouseYRelativeToViewport = event.clientY;
-        const shipBoundingBox = ship.getBoundingClientRect();
-        const mouseXRelativeToShip =
-          mouseXRelativeToViewport - shipBoundingBox.x;
-        const mouseYRelativeToShip =
-          mouseYRelativeToViewport - shipBoundingBox.y;
-
-        event.dataTransfer.setData("id", ship.getAttribute("id"));
-        event.dataTransfer.setData(
-          "mouseXRelativeToShip",
-          mouseXRelativeToShip
-        );
-        event.dataTransfer.setData(
-          "mouseYRelativeToShip",
-          mouseYRelativeToShip
-        );
-      });
-
-      this.#allocation.append(ship);
-
-      const quantityHTML = document.createElement("span");
-      quantityHTML.setAttribute(
-        "class",
-        `allocation__quantity allocation__quantity_length_${length}`
-      );
-      quantityHTML.textContent = quantity;
-      this.#allocation.append(quantityHTML);
-    }
+    this.#initialisePositionControls();
+    this.#initialiseAllocation(response.data);
   }
 
   handleShipPlaced(response) {
     this.#message.textContent = response.message;
 
-    const board = response.data.board;
-    for (let row = 0; row < board.length; row++) {
-      for (let column = 0; column < board[row].length; column++) {
-        const cell = document.querySelector(
-          `[data-row="${row}"][data-column="${column}"]`
-        );
+    this.#refreshAllocation(response.data.allocation);
+    this.#refreshBoard(response.data.board);
+  }
 
-        if (!board[row][column]) {
-          cell.setAttribute("class", "board__cell");
-        } else if (board[row][column] === "x") {
-          cell.setAttribute("class", "board__cell board__cell_type_hit");
-        } else {
-          cell.setAttribute("class", "board__cell board__cell_type_ship");
-        }
-      }
+  handleBoardSubmitted(response) {
+    this.#message.textContent = response.message;
+
+    // If Player 1 submitted their board, leave the controls as is
+    // If player 2 submitted their board, remove the current controls and add the fire ones
+
+    if (response.message === "Place your ships, Player 2") {
     }
+  }
 
-    const allocation = response.data.allocation;
+  #refreshAllocation(allocation) {
     for (const [length, quantity] of Object.entries(allocation)) {
       const quantityHTML = document.querySelector(
         `.allocation__quantity_length_${length}`
@@ -197,11 +215,20 @@ export class View {
     }
   }
 
-  handleBoardSubmitted(response) {
-    if (response.message === "Place your ships, Player 2") {
+  #refreshBoard(board) {
+    for (let row = 0; row < board.length; row++) {
+      for (let column = 0; column < board[row].length; column++) {
+        const cell = document.querySelector(
+          `[data-row="${row}"][data-column="${column}"]`
+        );
+
+        if (board[row][column]) {
+          cell.setAttribute("class", "board__cell board__cell_type_ship");
+        } else {
+          cell.setAttribute("class", "board__cell");
+        }
+      }
     }
-    // If Player 1 submitted their board, leave the controls as is
-    // If player 2 submitted their board, remove the current controls and add the fire ones
   }
 
   bindToOnGetAllocation = (callback) => {

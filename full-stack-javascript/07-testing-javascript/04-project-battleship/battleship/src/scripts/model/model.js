@@ -37,7 +37,7 @@ export class Model {
   };
 
   handleSubmitBoard = () => {
-    if (!this.#attacker.board.isFull) {
+    if (!this.#attacker.board.isFull()) {
       return;
     }
 
