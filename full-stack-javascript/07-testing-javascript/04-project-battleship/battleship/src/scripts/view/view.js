@@ -24,7 +24,7 @@ export class View {
   }
 
   #initialisePositionControls() {
-    const initialiseStructure = () => {
+    const initialiseForm = () => {
       const positionControls = document.createElement("div");
       positionControls.setAttribute("class", "controls controls_type_position");
 
@@ -48,21 +48,47 @@ export class View {
       middle.append(positionControls);
     };
 
-    const initialiseBehaviour = () => {
+    const initialiseFunction = () => {
       const submitButton = document.querySelector(".button_type_submit");
       submitButton.addEventListener("click", this.onSubmitBoard);
     };
 
-    initialiseStructure();
-    initialiseBehaviour();
+    initialiseForm();
+    initialiseFunction();
   }
 
   #destroyPositionControls() {
     document.querySelector(".controls_type_position").remove();
   }
 
+  #initialiseBattleControls() {
+    const initialiseForm = () => {
+      const battleControls = document.createElement("div");
+      battleControls.setAttribute("class", "controls controls_type_battle");
+
+      const launchMissileButton = document.createElement("button");
+      launchMissileButton.setAttribute(
+        "class",
+        "button button_type_launch-missile"
+      );
+
+      const middle = document.querySelector(".middle");
+      middle.append(battleControls);
+    };
+
+    const initialiseFunction = () => {
+      const launchMissileButton = document.querySelector(
+        ".button_type_launch-missile"
+      );
+      launchMissileButton.addEventListener("click", this.onLaunchMissile);
+    };
+
+    initialiseForm();
+    initialiseFunction();
+  }
+
   #initialiseAllocation(allocation) {
-    const initialiseStructure = () => {
+    const initialiseForm = () => {
       for (const [length, quantity] of Object.entries(allocation)) {
         const ship = document.createElement("div");
         ship.setAttribute("id", `length-${length}`);
@@ -85,7 +111,7 @@ export class View {
       }
     };
 
-    const initialiseBehaviour = () => {
+    const initialiseFunction = () => {
       for (const [length, _] of Object.entries(allocation)) {
         const ship = document.querySelector(
           `.allocation__ship_length_${length}`
@@ -114,12 +140,16 @@ export class View {
       }
     };
 
-    initialiseStructure();
-    initialiseBehaviour();
+    initialiseForm();
+    initialiseFunction();
+  }
+
+  #destroyAllocation() {
+    this.#allocation.remove();
   }
 
   #initialiseBoard() {
-    const initialiseStructure = () => {
+    const initialiseForm = () => {
       for (let row = 0; row < 10; row++) {
         const boardRow = document.createElement("tr");
         boardRow.setAttribute("class", "board__row");
@@ -137,7 +167,7 @@ export class View {
       }
     };
 
-    const initialiseBehaviour = () => {
+    const initialiseFunction = () => {
       this.#board.addEventListener("dragover", (event) => {
         event.preventDefault();
         event.dataTransfer.dropEffect = "copy";
@@ -176,8 +206,8 @@ export class View {
       });
     };
 
-    initialiseStructure();
-    initialiseBehaviour();
+    initialiseForm();
+    initialiseFunction();
   }
 
   handleAllocationGotten(response) {
@@ -185,25 +215,35 @@ export class View {
 
     this.#destroyStartControls();
 
-    this.#initialisePositionControls();
     this.#initialiseAllocation(response.data);
+    this.#initialisePositionControls();
   }
 
   handleShipPlaced(response) {
     this.#message.textContent = response.message;
 
     this.#refreshAllocation(response.data.allocation);
-    this.#refreshBoard(response.data.board);
+    this.#refreshDeploymentBoard(response.data.board);
   }
 
+  // This should only get called once (after player 1 submits)
+  // When player 2 submits, the handleBattleStarted event should start
   handleBoardSubmitted(response) {
     this.#message.textContent = response.message;
 
-    // If Player 1 submitted their board, leave the controls as is
-    // If player 2 submitted their board, remove the current controls and add the fire ones
+    this.#refreshAllocation(response.data.allocation);
+    this.#refreshDeploymentBoard(response.data.board);
+  }
 
-    if (response.message === "Place your ships, Player 2") {
-    }
+  handleBattleStarted(response) {
+    this.#message.textContent = response.message;
+
+    this.#destroyAllocation();
+    this.#destroyPositionControls();
+
+    this.#initialiseBattleControls();
+
+    this.#refreshBattleBoard(response.data.board);
   }
 
   #refreshAllocation(allocation) {
@@ -215,7 +255,23 @@ export class View {
     }
   }
 
-  #refreshBoard(board) {
+  #refreshBattleBoard(board) {
+    for (let row = 0; row < board.length; row++) {
+      for (let column = 0; column < board[row].length; column++) {
+        const cell = document.querySelector(
+          `[data-row="${row}"][data-column="${column}"]`
+        );
+
+        if (board[row][column] === "x") {
+          cell.setAttribute("class", "board__cell board__cell_type_missile");
+        } else {
+          cell.setAttribute("class", "board__cell");
+        }
+      }
+    }
+  }
+
+  #refreshDeploymentBoard(board) {
     for (let row = 0; row < board.length; row++) {
       for (let column = 0; column < board[row].length; column++) {
         const cell = document.querySelector(
@@ -231,15 +287,19 @@ export class View {
     }
   }
 
-  bindToOnGetAllocation = (callback) => {
+  bindToOnGetAllocation(callback) {
     this.onGetAllocation = callback;
-  };
+  }
 
-  bindToOnPlaceShip = (callback) => {
+  bindToOnPlaceShip(callback) {
     this.onPlaceShip = callback;
-  };
+  }
 
-  bindToOnSubmitBoard = (callback) => {
+  bindToOnSubmitBoard(callback) {
     this.onSubmitBoard = callback;
-  };
+  }
+
+  bindToOnLaunchMissile(callback) {
+    this.onLaunchMissile = callback;
+  }
 }

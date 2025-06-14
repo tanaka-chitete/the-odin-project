@@ -3,3 +3,16 @@ During placement, make ships clickable so they can be selected for "Placement" a
 During placement, make ships draggable so they can be moved
 Make board droppable
 Make ships on board draggable
+Standardise view methods: initialise__________View(), refresh__________View(), and destroy__________View()
+^^^ Deployment View (this includes board and allocation though)?
+^^^ Battle View?
+Rename onStart() to onStartDeployment()
+Rename onSubmit() to onEndDeployment()
+Introduce onStartBattle()
+Rename onGetAllocation() to onGetFleet()
+Rename onPlaceShip() to onDeploy()
+Rename allocation to fleet
+Rename hit to missile
+Rename fire to launch
+Rename "Position Controls" to "Deployment Controls"
+Rename "Fire Controls" to "Battle Controls"

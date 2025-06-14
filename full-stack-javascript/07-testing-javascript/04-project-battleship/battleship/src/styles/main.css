@@ -12,6 +12,10 @@
   --salt-800: #6c6c72;
   --salt-900: #525257;
   --salt-1000: #1c1c1c;
+
+  --error-100: #fff7f5;
+  --error-500: #d5351f;
+  --error-800: #b41d08;
 }
 
 body {
@@ -129,6 +133,10 @@ main {
 
 .board__cell_type_ship {
   background: var(--salt-500);
+}
+
+.board__cell_type_missile {
+  background: var(--error-500);
 }
 
 .controls {

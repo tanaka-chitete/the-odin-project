@@ -41,25 +41,36 @@ export class Model {
       return;
     }
 
-    const response = {
-      message: `Place your ships, ${this.#defender.name}`,
-      data: this.#defender.board.allocation,
-    };
-
-    [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
-
-    this.onBoardSubmitted(response);
+    if (this.#attacker.name === "Player 1") {
+      [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
+      const response = {
+        message: `Place your ships, ${this.#attacker.name}`,
+        data: this.#attacker.board.allocation,
+      };
+      this.onBoardSubmitted(response);
+    } else {
+      [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
+      const response = {
+        message: `Fire a shot, ${this.#attacker.name}`,
+        data: this.#defender.board.board,
+      };
+      this.onBattleStarted(response);
+    }
   };
 
-  bindToOnAllocationGotten = (callback) => {
+  bindToOnAllocationGotten(callback) {
     this.onAllocationGotten = callback;
-  };
+  }
 
-  bindToOnShipPlaced = (callback) => {
+  bindToOnShipPlaced(callback) {
     this.onShipPlaced = callback;
-  };
+  }
 
-  bindToOnBoardSubmitted = (callback) => {
+  bindToOnBoardSubmitted(callback) {
     this.onBoardSubmitted = callback;
-  };
+  }
+
+  bindToOnBattleStarted(callback) {
+    this.onBattleStarted = callback;
+  }
 }
