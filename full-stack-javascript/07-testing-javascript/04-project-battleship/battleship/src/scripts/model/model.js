@@ -11,7 +11,7 @@ export class Model {
     this.#defender = new Player("Player 2");
   }
 
-  handleStartPlacement = () => {
+  handleStartShipPlacement = () => {
     const response = {
       message: `Place your ships, ${this.#attacker.name}`,
       data: {
@@ -20,7 +20,7 @@ export class Model {
       },
     };
 
-    this.onPlacementStarted(response);
+    this.onShipPlacementStarted(response);
   };
 
   handlePlaceShip = (x1, y1, x2, y2) => {
@@ -66,8 +66,8 @@ export class Model {
     }
   };
 
-  bindToOnPlacementStarted(callback) {
-    this.onPlacementStarted = callback;
+  bindToOnShipPlacementStarted(callback) {
+    this.onShipPlacementStarted = callback;
   }
 
   bindToOnShipPlaced(callback) {

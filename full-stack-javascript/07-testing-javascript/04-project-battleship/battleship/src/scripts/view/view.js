@@ -183,8 +183,7 @@ export class View {
   }
 
   #destroyStartControls() {
-    const startButton = document.querySelector(".controls_type_start");
-    startButton.remove();
+    this.#startControls.remove();
   }
 
   #initialisePlacementControls() {
@@ -236,7 +235,7 @@ export class View {
     placementControls.remove();
   }
 
-  handlePlacementStarted(response) {
+  handleShipPlacementStarted(response) {
     this.#destroyStartControls();
 
     this.#fleetView = this.#initialiseFleetView();
@@ -283,7 +282,7 @@ export class View {
   #refreshBattleBoardView(board) {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
-        const cell = document.querySelector(
+        const cell = this.#boardView.querySelector(
           `[data-row="${i}"][data-column="${j}"]`
         );
 
@@ -299,7 +298,7 @@ export class View {
   #refreshPlacementBoardView(board) {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
-        const cell = document.querySelector(
+        const cell = this.#boardView.querySelector(
           `[data-row="${i}"][data-column="${j}"]`
         );
 
@@ -312,7 +311,7 @@ export class View {
     }
   }
 
-  bindToOnStartPlacement(callback) {
+  bindToOnStartShipPlacement(callback) {
     this.onStartDeployment = callback;
   }
 

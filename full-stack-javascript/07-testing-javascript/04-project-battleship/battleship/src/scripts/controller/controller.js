@@ -8,8 +8,8 @@ export class Controller {
     this.#model = model;
     this.#view = view;
 
-    this.#view.bindToOnStartPlacement(this.forwardStartPlacement);
-    this.#model.bindToOnPlacementStarted(this.forwardPlacementStarted);
+    this.#view.bindToOnStartShipPlacement(this.forwardStartShipPlacement);
+    this.#model.bindToOnShipPlacementStarted(this.forwardShipPlacementStarted);
 
     this.#view.bindToOnPlaceShip(this.forwardPlaceShip);
     this.#model.bindToOnShipPlaced(this.forwardShipPlaced);
@@ -23,12 +23,12 @@ export class Controller {
     this.#view.bindToOnLaunchMissile(this.forwardLaunchMissile);
   }
 
-  forwardStartPlacement = () => {
-    this.#model.handleStartPlacement();
+  forwardStartShipPlacement = () => {
+    this.#model.handleStartShipPlacement();
   };
 
-  forwardPlacementStarted = (response) => {
-    this.#view.handlePlacementStarted(response);
+  forwardShipPlacementStarted = (response) => {
+    this.#view.handleShipPlacementStarted(response);
   };
 
   forwardPlaceShip = (x1, y1, x2, y2) => {

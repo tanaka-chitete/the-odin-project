@@ -1,17 +1,5 @@
-During placement, display ships in allocation with a line for each unit of length (e.g. [  |  |  ] )
-During placement, make ships clickable so they can be selected for "Placement" actions (use memory address of underlying ship object to group cells)
-During placement, make ships draggable so they can be moved
-Make board droppable
-Make ships on board draggable
-Standardise view methods: initialise__________View(), refresh__________View(), and destroy__________View()
-^^^ Deployment View (this includes board and allocation though)?
-^^^ Battle View?
-Rename onStart() to onStartDeployment()
-Rename onSubmit() to onEndDeployment()
-Introduce onStartBattle()
-
-Rename onLaunch to onLaunchMissile
-Rename onRotate to onRotateShip
-
-Clear the board when the "Clear" button is clicked
-Rotate the clicked ship when the "Rotate" button is clicked
+Select ship when user clicks on it
+Drag ship when user moves the cursor
+Rotate ship when user clicks the "Rotate" button
+Clear board when user clicks the "Clear" button
+Style ships in fleet with a vertical line for each unit of length
