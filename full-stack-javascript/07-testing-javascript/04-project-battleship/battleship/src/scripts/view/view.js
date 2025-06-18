@@ -5,111 +5,51 @@ export class View {
   #fleetView;
   #boardView;
 
+  #startControls;
+
   constructor() {
     this.#messageView = this.#initialiseMessageView();
     this.#boardView = this.#initialiseBoardView();
-    
-
-
-    this.#initialiseStartControls();
-  }
-
-  #initialiseFleetView() {
-    const fleetView = document.createElement("div");
-    fleetView.setAttribute("class", "fleet");
-    document.querySelector(".left").append(fleetView);
-    
-    return document.querySelector(".fleet");
+    this.#startControls = this.#initialiseStartControls();
   }
 
   #initialiseMessageView() {
     const messageView = document.createElement("h3");
     messageView.setAttribute("class", "message");
+
     document.querySelector("header").append(messageView);
 
     return document.querySelector(".message");
   }
 
-  #initialiseStartControls() {
-    this.#fleetView = this.#initialiseFleetView();
-    
-    const startButton = document.querySelector(".button_type_start");
-    startButton.addEventListener("click", () => this.onStartDeployment());
-  }
-
-  #destroyStartControls() {
-    const startButton = document.querySelector(".controls_type_start");
-    startButton.remove();
-  }
-
-  #initialisePlacementControls() {
+  #initialiseFleetView() {
     const initialiseForm = () => {
-      const placementControls = document.createElement("div");
-      placementControls.setAttribute(
-        "class",
-        "controls controls_type_placement"
-      );
+      const fleetView = document.createElement("div");
+      fleetView.setAttribute("class", "fleet");
 
-      const clearButton = document.createElement("button");
-      clearButton.setAttribute("class", "button button_type_clear");
-      clearButton.textContent = "Clear";
-
-      const rotateButton = document.createElement("button");
-      rotateButton.setAttribute("class", "button_type_rotate");
-      rotateButton.textContent = "Rotate";
-
-      const submitButton = document.createElement("button");
-      submitButton.setAttribute("class", "button_type_submit");
-      submitButton.textContent = "Submit";
-
-      placementControls.append(clearButton);
-      placementControls.append(rotateButton);
-      placementControls.append(submitButton);
-
-      const middle = document.querySelector(".middle");
-      middle.append(placementControls);
-    };
-
-    const initialiseFunction = () => {
-      const submitButton = document.querySelector(".button_type_submit");
-      submitButton.addEventListener("click", this.onSubmitBoard);
-    };
-
-    initialiseForm();
-    initialiseFunction();
-  }
-
-  #destroyPlacementControls() {
-    const placementControls = document.querySelector(
-      ".controls_type_placement"
-    );
-    placementControls.remove();
-  }
-
-  #initialiseFleetView(fleet) {
-    const initialiseForm = () => {
-      for (const [_class, quantity] of Object.entries(fleet)) {
+      for (let i = 5; i >= 1; i--) {
         const ship = document.createElement("div");
-        ship.setAttribute("id", `class-${_class}`);
-        ship.setAttribute("class", `fleet__ship fleet__ship_class_${_class}`);
+        ship.setAttribute("id", `class-${i}`);
+        ship.setAttribute("class", `fleet__ship fleet__ship_class_${i}`);
         ship.setAttribute("draggable", "true");
-        ship.setAttribute("data-class", _class);
+        ship.setAttribute("data-class", i);
+        fleetView.append(ship);
 
-        this.#fleetView.append(ship);
-
-        const quantityView = document.createElement("span");
-        quantityView.setAttribute(
+        const quantity = document.createElement("span");
+        quantity.setAttribute(
           "class",
-          `allocation__quantity allocation__quantity_class_${_class}`
+          `fleet__quantity fleet__quantity_class_${i}`
         );
-        quantityView.textContent = quantity;
-        this.#fleetView.append(quantityView);
+        fleetView.append(quantity);
       }
+
+      document.querySelector(".left").append(fleetView);
+
+      return document.querySelector(".fleet");
     };
 
-    const initialiseFunction = () => {
-      for (const [_class, _quantity] of Object.entries(fleet)) {
-        const ship = document.querySelector(`.fleet__ship_class_${_class}`);
+    const initialiseFunction = (fleetView) => {
+      fleetView.querySelectorAll(".fleet__ship").forEach((ship) => {
         ship.addEventListener("dragstart", (event) => {
           event.dataTransfer.effectAllowed = "copy";
 
@@ -131,11 +71,12 @@ export class View {
             mouseYRelativeToShip
           );
         });
-      }
+      });
+
+      return fleetView;
     };
 
-    initialiseForm();
-    initialiseFunction();
+    return initialiseFunction(initialiseForm());
   }
 
   #destroyFleetView() {
@@ -198,7 +139,7 @@ export class View {
         const ship = document.querySelector(`#${id}`);
         const class_ = +ship.getAttribute("data-class");
 
-        this.onDeployShip(
+        this.onPlaceShip(
           startColumn,
           startRow,
           startColumn + class_ - 1,
@@ -212,29 +153,113 @@ export class View {
     return initialiseFunction(initialiseForm());
   }
 
+  #initialiseStartControls() {
+    const initialiseForm = () => {
+      const startControls = document.createElement("div");
+      startControls.setAttribute("class", "controls controls_type_start");
+
+      const startButton = document.createElement("button");
+      startButton.setAttribute("class", "controls__button_type_start");
+      startButton.textContent = "Start";
+
+      startControls.append(startButton);
+
+      const middle = document.querySelector(".middle");
+      middle.append(startControls);
+
+      return document.querySelector(".controls_type_start");
+    };
+
+    const initialiseFunction = (startControls) => {
+      const startButton = startControls.querySelector(
+        ".controls__button_type_start"
+      );
+      startButton.addEventListener("click", () => this.onStartDeployment());
+
+      return startControls;
+    };
+
+    return initialiseFunction(initialiseForm());
+  }
+
+  #destroyStartControls() {
+    const startButton = document.querySelector(".controls_type_start");
+    startButton.remove();
+  }
+
+  #initialisePlacementControls() {
+    const initialiseForm = () => {
+      const placementControls = document.createElement("div");
+      placementControls.setAttribute(
+        "class",
+        "controls controls_type_placement"
+      );
+
+      const clearButton = document.createElement("button");
+      clearButton.setAttribute("class", "controls__button_type_start");
+      clearButton.textContent = "Clear";
+
+      const rotateButton = document.createElement("button");
+      rotateButton.setAttribute("class", "controls__button_type_rotate");
+      rotateButton.textContent = "Rotate";
+
+      const submitButton = document.createElement("button");
+      submitButton.setAttribute("class", "controls__button_type_submit");
+      submitButton.textContent = "Submit";
+
+      placementControls.append(clearButton);
+      placementControls.append(rotateButton);
+      placementControls.append(submitButton);
+
+      const middle = document.querySelector(".middle");
+      middle.append(placementControls);
+
+      return document.querySelector(".controls_type_placement");
+    };
+
+    const initialiseFunction = (placementControls) => {
+      const submitButton = placementControls.querySelector(
+        ".controls__button_type_submit"
+      );
+      submitButton.addEventListener("click", this.onSubmitBoard);
+
+      return placementControls;
+    };
+
+    return initialiseFunction(initialiseForm());
+  }
+
+  #destroyPlacementControls() {
+    const placementControls = document.querySelector(
+      ".controls_type_placement"
+    );
+    placementControls.remove();
+  }
+
   handlePlacementStarted(response) {
     this.#destroyStartControls();
 
+    this.#fleetView = this.#initialiseFleetView();
+    this.#initialisePlacementControls();
+
     this.#messageView.textContent = response.message;
 
-    this.#initialiseFleetView(response.data.fleet);
-    this.#initialiseBoardView(response.data.board);
-
-    this.#initialisePlacementControls();
+    this.#refreshFleetView(response.data.fleet);
+    this.#refreshPlacementBoardView(response.data.board);
   }
 
   handleShipPlaced(response) {
     this.#messageView.textContent = response.message;
 
     this.#refreshFleetView(response.data.fleet);
-    this.#refreshDeploymentBoardView(response.data.board);
+    this.#refreshPlacementBoardView(response.data.board);
   }
 
   handleBoardSubmitted(response) {
     this.#messageView.textContent = response.message;
 
     this.#refreshFleetView(response.data.fleet);
-    this.#refreshDeploymentBoardView(response.data.board);
+    this.#refreshPlacementBoardView(response.data.board);
   }
 
   handleBattleStarted(response) {
@@ -248,10 +273,10 @@ export class View {
 
   #refreshFleetView(fleet) {
     for (const [length, quantity] of Object.entries(fleet)) {
-      const quantityView = document.querySelector(
-        `.allocation__quantity_class_${length}`
+      const quantityElement = this.#fleetView.querySelector(
+        `.fleet__quantity_class_${length}`
       );
-      quantityView.textContent = quantity;
+      quantityElement.textContent = quantity;
     }
   }
 
@@ -271,7 +296,7 @@ export class View {
     }
   }
 
-  #refreshDeploymentBoardView(board) {
+  #refreshPlacementBoardView(board) {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
         const cell = document.querySelector(
@@ -292,7 +317,7 @@ export class View {
   }
 
   bindToOnPlaceShip(callback) {
-    this.onDeployShip = callback;
+    this.onPlaceShip = callback;
   }
 
   bindToOnSubmitBoard(callback) {
