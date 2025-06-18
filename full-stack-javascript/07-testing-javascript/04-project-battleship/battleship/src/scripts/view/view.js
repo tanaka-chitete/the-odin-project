@@ -6,6 +6,7 @@ export class View {
   #boardView;
 
   #startControls;
+  #placementControls;
 
   constructor() {
     this.#messageView = this.#initialiseMessageView();
@@ -229,48 +230,45 @@ export class View {
   }
 
   #destroyPlacementControls() {
-    const placementControls = document.querySelector(
-      ".controls_type_placement"
-    );
-    placementControls.remove();
+    this.#placementControls.remove();
   }
 
   handleShipPlacementStarted(response) {
     this.#destroyStartControls();
 
     this.#fleetView = this.#initialiseFleetView();
-    this.#initialisePlacementControls();
+    this.#placementControls = this.#initialisePlacementControls();
 
-    this.#messageView.textContent = response.message;
-
-    this.#refreshFleetView(response.data.fleet);
-    this.#refreshPlacementBoardView(response.data.board);
+    this.#updateMessageView(response.message);
+    this.#updateFleetView(response.data.fleet);
+    this.#updateBoardViewForPlacement(response.data.board);
   }
 
   handleShipPlaced(response) {
-    this.#messageView.textContent = response.message;
-
-    this.#refreshFleetView(response.data.fleet);
-    this.#refreshPlacementBoardView(response.data.board);
+    this.#updateMessageView(response.message);
+    this.#updateFleetView(response.data.fleet);
+    this.#updateBoardViewForPlacement(response.data.board);
   }
 
   handleBoardSubmitted(response) {
-    this.#messageView.textContent = response.message;
-
-    this.#refreshFleetView(response.data.fleet);
-    this.#refreshPlacementBoardView(response.data.board);
+    this.#updateMessageView(response.message);
+    this.#updateFleetView(response.data.fleet);
+    this.#updateBoardViewForPlacement(response.data.board);
   }
 
   handleBattleStarted(response) {
-    this.#messageView.textContent = response.message;
-
     this.#destroyFleetView();
     this.#destroyPlacementControls();
 
-    this.#refreshBattleBoardView(response.data.board);
+    this.#updateMessageView(response.message);
+    this.#updateBoardViewForBattle(response.data.board);
   }
 
-  #refreshFleetView(fleet) {
+  #updateMessageView(message) {
+    this.#messageView.textContent = message;
+  }
+
+  #updateFleetView(fleet) {
     for (const [length, quantity] of Object.entries(fleet)) {
       const quantityElement = this.#fleetView.querySelector(
         `.fleet__quantity_class_${length}`
@@ -279,23 +277,7 @@ export class View {
     }
   }
 
-  #refreshBattleBoardView(board) {
-    for (let i = 0; i < board.length; i++) {
-      for (let j = 0; j < board[i].length; j++) {
-        const cell = this.#boardView.querySelector(
-          `[data-row="${i}"][data-column="${j}"]`
-        );
-
-        if (board[i][j] === "x") {
-          cell.setAttribute("class", "board__cell board__cell_type_missile");
-        } else {
-          cell.setAttribute("class", "board__cell");
-        }
-      }
-    }
-  }
-
-  #refreshPlacementBoardView(board) {
+  #updateBoardViewForPlacement(board) {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
         const cell = this.#boardView.querySelector(
@@ -304,6 +286,22 @@ export class View {
 
         if (board[i][j]) {
           cell.setAttribute("class", "board__cell board__cell_type_ship");
+        } else {
+          cell.setAttribute("class", "board__cell");
+        }
+      }
+    }
+  }
+
+  #updateBoardViewForBattle(board) {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        const cell = this.#boardView.querySelector(
+          `[data-row="${i}"][data-column="${j}"]`
+        );
+
+        if (board[i][j] === "x") {
+          cell.setAttribute("class", "board__cell board__cell_type_missile");
         } else {
           cell.setAttribute("class", "board__cell");
         }
