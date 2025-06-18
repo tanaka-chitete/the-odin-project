@@ -1,36 +1,58 @@
 "use strict";
 
 export class View {
-  #message;
-  #allocation;
-  #board;
+  #messageView;
+  #fleetView;
+  #boardView;
 
   constructor() {
-    this.#message = document.querySelector(".message");
-    this.#allocation = document.querySelector(".allocation");
-    this.#board = document.querySelector(".board");
+    this.#messageView = this.#initialiseMessageView();
+    this.#boardView = this.#initialiseBoardView();
+    
+
 
     this.#initialiseStartControls();
-    this.#initialiseBoard();
+  }
+
+  #initialiseFleetView() {
+    const fleetView = document.createElement("div");
+    fleetView.setAttribute("class", "fleet");
+    document.querySelector(".left").append(fleetView);
+    
+    return document.querySelector(".fleet");
+  }
+
+  #initialiseMessageView() {
+    const messageView = document.createElement("h3");
+    messageView.setAttribute("class", "message");
+    document.querySelector("header").append(messageView);
+
+    return document.querySelector(".message");
   }
 
   #initialiseStartControls() {
+    this.#fleetView = this.#initialiseFleetView();
+    
     const startButton = document.querySelector(".button_type_start");
-    startButton.addEventListener("click", () => this.onGetAllocation());
+    startButton.addEventListener("click", () => this.onStartDeployment());
   }
 
   #destroyStartControls() {
-    document.querySelector(".controls_type_start").remove();
+    const startButton = document.querySelector(".controls_type_start");
+    startButton.remove();
   }
 
-  #initialisePositionControls() {
+  #initialisePlacementControls() {
     const initialiseForm = () => {
-      const positionControls = document.createElement("div");
-      positionControls.setAttribute("class", "controls controls_type_position");
+      const placementControls = document.createElement("div");
+      placementControls.setAttribute(
+        "class",
+        "controls controls_type_placement"
+      );
 
-      const resetButton = document.createElement("button");
-      resetButton.setAttribute("class", "button button_type_reset");
-      resetButton.textContent = "Reset";
+      const clearButton = document.createElement("button");
+      clearButton.setAttribute("class", "button button_type_clear");
+      clearButton.textContent = "Clear";
 
       const rotateButton = document.createElement("button");
       rotateButton.setAttribute("class", "button_type_rotate");
@@ -40,12 +62,12 @@ export class View {
       submitButton.setAttribute("class", "button_type_submit");
       submitButton.textContent = "Submit";
 
-      positionControls.append(resetButton);
-      positionControls.append(rotateButton);
-      positionControls.append(submitButton);
+      placementControls.append(clearButton);
+      placementControls.append(rotateButton);
+      placementControls.append(submitButton);
 
       const middle = document.querySelector(".middle");
-      middle.append(positionControls);
+      middle.append(placementControls);
     };
 
     const initialiseFunction = () => {
@@ -57,65 +79,37 @@ export class View {
     initialiseFunction();
   }
 
-  #destroyPositionControls() {
-    document.querySelector(".controls_type_position").remove();
+  #destroyPlacementControls() {
+    const placementControls = document.querySelector(
+      ".controls_type_placement"
+    );
+    placementControls.remove();
   }
 
-  #initialiseBattleControls() {
+  #initialiseFleetView(fleet) {
     const initialiseForm = () => {
-      const battleControls = document.createElement("div");
-      battleControls.setAttribute("class", "controls controls_type_battle");
-
-      const launchMissileButton = document.createElement("button");
-      launchMissileButton.setAttribute(
-        "class",
-        "button button_type_launch-missile"
-      );
-
-      const middle = document.querySelector(".middle");
-      middle.append(battleControls);
-    };
-
-    const initialiseFunction = () => {
-      const launchMissileButton = document.querySelector(
-        ".button_type_launch-missile"
-      );
-      launchMissileButton.addEventListener("click", this.onLaunchMissile);
-    };
-
-    initialiseForm();
-    initialiseFunction();
-  }
-
-  #initialiseAllocation(allocation) {
-    const initialiseForm = () => {
-      for (const [length, quantity] of Object.entries(allocation)) {
+      for (const [_class, quantity] of Object.entries(fleet)) {
         const ship = document.createElement("div");
-        ship.setAttribute("id", `length-${length}`);
-        ship.setAttribute(
-          "class",
-          `allocation__ship allocation__ship_length_${length}`
-        );
+        ship.setAttribute("id", `class-${_class}`);
+        ship.setAttribute("class", `fleet__ship fleet__ship_class_${_class}`);
         ship.setAttribute("draggable", "true");
-        ship.setAttribute("data-length", length);
+        ship.setAttribute("data-class", _class);
 
-        this.#allocation.append(ship);
+        this.#fleetView.append(ship);
 
-        const quantityHTML = document.createElement("span");
-        quantityHTML.setAttribute(
+        const quantityView = document.createElement("span");
+        quantityView.setAttribute(
           "class",
-          `allocation__quantity allocation__quantity_length_${length}`
+          `allocation__quantity allocation__quantity_class_${_class}`
         );
-        quantityHTML.textContent = quantity;
-        this.#allocation.append(quantityHTML);
+        quantityView.textContent = quantity;
+        this.#fleetView.append(quantityView);
       }
     };
 
     const initialiseFunction = () => {
-      for (const [length, _] of Object.entries(allocation)) {
-        const ship = document.querySelector(
-          `.allocation__ship_length_${length}`
-        );
+      for (const [_class, _quantity] of Object.entries(fleet)) {
+        const ship = document.querySelector(`.fleet__ship_class_${_class}`);
         ship.addEventListener("dragstart", (event) => {
           event.dataTransfer.effectAllowed = "copy";
 
@@ -144,48 +138,55 @@ export class View {
     initialiseFunction();
   }
 
-  #destroyAllocation() {
-    this.#allocation.remove();
+  #destroyFleetView() {
+    this.#fleetView.remove();
   }
 
-  #initialiseBoard() {
+  #initialiseBoardView() {
     const initialiseForm = () => {
-      for (let row = 0; row < 10; row++) {
-        const boardRow = document.createElement("tr");
-        boardRow.setAttribute("class", "board__row");
+      const boardView = document.createElement("table");
+      boardView.setAttribute("class", "board");
 
-        for (let column = 0; column < 10; column++) {
-          const boardCell = document.createElement("td");
-          boardCell.setAttribute("class", "board__cell");
-          boardCell.setAttribute("data-row", row);
-          boardCell.setAttribute("data-column", column);
+      for (let i = 0; i < 10; i++) {
+        const row = document.createElement("tr");
+        row.setAttribute("class", "board__row");
 
-          boardRow.append(boardCell);
+        for (let j = 0; j < 10; j++) {
+          const cell = document.createElement("td");
+          cell.setAttribute("class", "board__cell");
+          cell.setAttribute("data-row", i);
+          cell.setAttribute("data-column", j);
+
+          row.append(cell);
         }
 
-        this.#board.append(boardRow);
+        boardView.append(row);
       }
+
+      document.querySelector(".middle").append(boardView);
+
+      return document.querySelector(".board");
     };
 
-    const initialiseFunction = () => {
-      this.#board.addEventListener("dragover", (event) => {
+    const initialiseFunction = (boardView) => {
+      boardView.addEventListener("dragover", (event) => {
         event.preventDefault();
         event.dataTransfer.dropEffect = "copy";
       });
 
-      this.#board.addEventListener("drop", (event) => {
+      boardView.addEventListener("drop", (event) => {
         event.preventDefault();
 
         const mouseXRelativeToViewport = event.clientX;
         const mouseYRelativeToViewport = event.clientY;
-        const boardBoundingBox = this.#board.getBoundingClientRect();
+        const boardBoundingBox = boardView.getBoundingClientRect();
         const mouseXRelativeToBoard =
           mouseXRelativeToViewport - boardBoundingBox.x;
         const mouseYRelativeToBoard =
           mouseYRelativeToViewport - boardBoundingBox.y;
 
         const cellBoundingBox =
-          this.#board.rows[0].cells[0].getBoundingClientRect();
+          boardView.rows[0].cells[0].getBoundingClientRect();
         const startRow = Math.floor(
           mouseYRelativeToBoard / cellBoundingBox.height
         );
@@ -193,76 +194,75 @@ export class View {
           mouseXRelativeToBoard / cellBoundingBox.width
         );
 
-        const shipId = event.dataTransfer.getData("id");
-        const ship = document.querySelector(`#${shipId}`);
-        const shipLength = +ship.getAttribute("data-length");
+        const id = event.dataTransfer.getData("id");
+        const ship = document.querySelector(`#${id}`);
+        const class_ = +ship.getAttribute("data-class");
 
-        this.onPlaceShip(
+        this.onDeployShip(
           startColumn,
           startRow,
-          startColumn + shipLength - 1,
+          startColumn + class_ - 1,
           startRow
         );
       });
+
+      return boardView;
     };
 
-    initialiseForm();
-    initialiseFunction();
+    return initialiseFunction(initialiseForm());
   }
 
-  handleAllocationGotten(response) {
-    this.#message.textContent = response.message;
-
+  handlePlacementStarted(response) {
     this.#destroyStartControls();
 
-    this.#initialiseAllocation(response.data);
-    this.#initialisePositionControls();
+    this.#messageView.textContent = response.message;
+
+    this.#initialiseFleetView(response.data.fleet);
+    this.#initialiseBoardView(response.data.board);
+
+    this.#initialisePlacementControls();
   }
 
   handleShipPlaced(response) {
-    this.#message.textContent = response.message;
+    this.#messageView.textContent = response.message;
 
-    this.#refreshAllocation(response.data.allocation);
-    this.#refreshDeploymentBoard(response.data.board);
+    this.#refreshFleetView(response.data.fleet);
+    this.#refreshDeploymentBoardView(response.data.board);
   }
 
-  // This should only get called once (after player 1 submits)
-  // When player 2 submits, the handleBattleStarted event should start
   handleBoardSubmitted(response) {
-    this.#message.textContent = response.message;
+    this.#messageView.textContent = response.message;
 
-    this.#refreshAllocation(response.data.allocation);
-    this.#refreshDeploymentBoard(response.data.board);
+    this.#refreshFleetView(response.data.fleet);
+    this.#refreshDeploymentBoardView(response.data.board);
   }
 
   handleBattleStarted(response) {
-    this.#message.textContent = response.message;
+    this.#messageView.textContent = response.message;
 
-    this.#destroyAllocation();
-    this.#destroyPositionControls();
+    this.#destroyFleetView();
+    this.#destroyPlacementControls();
 
-    this.#initialiseBattleControls();
-
-    this.#refreshBattleBoard(response.data.board);
+    this.#refreshBattleBoardView(response.data.board);
   }
 
-  #refreshAllocation(allocation) {
-    for (const [length, quantity] of Object.entries(allocation)) {
-      const quantityHTML = document.querySelector(
-        `.allocation__quantity_length_${length}`
+  #refreshFleetView(fleet) {
+    for (const [length, quantity] of Object.entries(fleet)) {
+      const quantityView = document.querySelector(
+        `.allocation__quantity_class_${length}`
       );
-      quantityHTML.textContent = quantity;
+      quantityView.textContent = quantity;
     }
   }
 
-  #refreshBattleBoard(board) {
-    for (let row = 0; row < board.length; row++) {
-      for (let column = 0; column < board[row].length; column++) {
+  #refreshBattleBoardView(board) {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
         const cell = document.querySelector(
-          `[data-row="${row}"][data-column="${column}"]`
+          `[data-row="${i}"][data-column="${j}"]`
         );
 
-        if (board[row][column] === "x") {
+        if (board[i][j] === "x") {
           cell.setAttribute("class", "board__cell board__cell_type_missile");
         } else {
           cell.setAttribute("class", "board__cell");
@@ -271,14 +271,14 @@ export class View {
     }
   }
 
-  #refreshDeploymentBoard(board) {
-    for (let row = 0; row < board.length; row++) {
-      for (let column = 0; column < board[row].length; column++) {
+  #refreshDeploymentBoardView(board) {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
         const cell = document.querySelector(
-          `[data-row="${row}"][data-column="${column}"]`
+          `[data-row="${i}"][data-column="${j}"]`
         );
 
-        if (board[row][column]) {
+        if (board[i][j]) {
           cell.setAttribute("class", "board__cell board__cell_type_ship");
         } else {
           cell.setAttribute("class", "board__cell");
@@ -287,12 +287,12 @@ export class View {
     }
   }
 
-  bindToOnGetAllocation(callback) {
-    this.onGetAllocation = callback;
+  bindToOnStartPlacement(callback) {
+    this.onStartDeployment = callback;
   }
 
   bindToOnPlaceShip(callback) {
-    this.onPlaceShip = callback;
+    this.onDeployShip = callback;
   }
 
   bindToOnSubmitBoard(callback) {

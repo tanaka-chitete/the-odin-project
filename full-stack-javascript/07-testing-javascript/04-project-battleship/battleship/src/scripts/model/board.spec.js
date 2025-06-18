@@ -3,19 +3,19 @@
 import { Board } from "./board";
 
 describe("Board", () => {
-  describe("array", () => {
-    it("is retrievable", () => expect(new Board().array).toBeDefined());
+  describe("board", () => {
+    it("is retrievable", () => expect(new Board().board).toBeDefined());
 
     it("is immutable", () => {
-      expect(() => (new Board().array = null)).toThrow();
+      expect(() => (new Board().board = null)).toThrow();
     });
   });
 
-  describe("allocation", () => {
-    it("is retrievable", () => expect(new Board().allocation).toBeDefined());
+  describe("fleet", () => {
+    it("is retrievable", () => expect(new Board().fleet).toBeDefined());
 
     it("is immutable", () => {
-      expect(() => (new Board().allocation = null)).toThrow();
+      expect(() => (new Board().fleet = null)).toThrow();
     });
   });
 
@@ -144,14 +144,14 @@ describe("Board", () => {
   });
 
   describe("receive()", () => {
-    it("it receives a shot at a valid coordinate (integer-only, in-bounds, and un-hit)", () => {
+    it("it receives a missile launched at a valid coordinate (integer-only, in-bounds, and un-hit)", () => {
       expect(new Board().receive(0, 0)).toBe(true);
       expect(new Board().receive(9, 0)).toBe(true);
       expect(new Board().receive(9, 9)).toBe(true);
       expect(new Board().receive(0, 9)).toBe(true);
     });
 
-    it("does not receive shot at an invalid coordinate (non-integer)", () => {
+    it("does not receive a missile launched at an invalid coordinate (non-integer)", () => {
       expect(new Board().receive(0.1, 0)).toBe(false);
       expect(new Board().receive("0", 0)).toBe(false);
       expect(new Board().receive(Infinity, 0)).toBe(false);
@@ -166,7 +166,7 @@ describe("Board", () => {
       expect(new Board().receive(0, undefined)).toBe(false);
     });
 
-    it("does not receive a shot at an invalid coordinate (out-of-bounds)", () => {
+    it("does not receive a missile launched at an invalid coordinate (out-of-bounds)", () => {
       expect(new Board().receive(-1, 0)).toBe(false);
       expect(new Board().receive(0, -1)).toBe(false);
       expect(new Board().receive(9, -1)).toBe(false);
@@ -177,7 +177,7 @@ describe("Board", () => {
       expect(new Board().receive(-1, 9)).toBe(false);
     });
 
-    it("does not receive a shot at an invalid coordinate (previously-hit)", () => {
+    it("does not receive a missile launched at an invalid coordinate (previously-hit)", () => {
       let board = new Board();
       board.receive(0, 0);
       expect(board.receive(0, 0)).toBe(false);

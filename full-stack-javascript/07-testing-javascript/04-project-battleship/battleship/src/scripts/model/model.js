@@ -11,13 +11,16 @@ export class Model {
     this.#defender = new Player("Player 2");
   }
 
-  handleGetAllocation = () => {
+  handleStartPlacement = () => {
     const response = {
       message: `Place your ships, ${this.#attacker.name}`,
-      data: this.#attacker.board.allocation,
+      data: {
+        board: this.#attacker.board.board,
+        fleet: this.#attacker.board.fleet,
+      },
     };
 
-    this.onAllocationGotten(response);
+    this.onPlacementStarted(response);
   };
 
   handlePlaceShip = (x1, y1, x2, y2) => {
@@ -28,8 +31,8 @@ export class Model {
     const response = {
       message: `Place your ships, ${this.#attacker.name}`,
       data: {
-        board: this.#attacker.board.array,
-        allocation: this.#attacker.board.allocation,
+        board: this.#attacker.board.board,
+        fleet: this.#attacker.board.fleet,
       },
     };
 
@@ -45,21 +48,26 @@ export class Model {
       [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
       const response = {
         message: `Place your ships, ${this.#attacker.name}`,
-        data: this.#attacker.board.allocation,
+        data: {
+          board: this.#attacker.board.board,
+          fleet: this.#attacker.board.fleet,
+        },
       };
       this.onBoardSubmitted(response);
     } else {
       [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
       const response = {
-        message: `Fire a shot, ${this.#attacker.name}`,
-        data: this.#defender.board.board,
+        message: `Launch a missile, ${this.#attacker.name}`,
+        data: {
+          board: this.#defender.board.board,
+        },
       };
       this.onBattleStarted(response);
     }
   };
 
-  bindToOnAllocationGotten(callback) {
-    this.onAllocationGotten = callback;
+  bindToOnPlacementStarted(callback) {
+    this.onPlacementStarted = callback;
   }
 
   bindToOnShipPlaced(callback) {

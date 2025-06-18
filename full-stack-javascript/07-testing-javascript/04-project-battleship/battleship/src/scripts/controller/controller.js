@@ -8,21 +8,27 @@ export class Controller {
     this.#model = model;
     this.#view = view;
 
-    this.#view.bindToOnGetAllocation(this.forwardGetAllocation);
-    this.#model.bindToOnAllocationGotten(this.forwardAllocationGotten);
+    this.#view.bindToOnStartPlacement(this.forwardStartPlacement);
+    this.#model.bindToOnPlacementStarted(this.forwardPlacementStarted);
+
     this.#view.bindToOnPlaceShip(this.forwardPlaceShip);
     this.#model.bindToOnShipPlaced(this.forwardShipPlaced);
+
     this.#view.bindToOnSubmitBoard(this.forwardSubmitBoard);
     this.#model.bindToOnBoardSubmitted(this.forwardBoardSubmitted);
+
+    // The battle automatically starts after Player 2 ends placement
     this.#model.bindToOnBattleStarted(this.forwardBattleStarted);
+
+    this.#view.bindToOnLaunchMissile(this.forwardLaunchMissile);
   }
 
-  forwardGetAllocation = () => {
-    this.#model.handleGetAllocation();
+  forwardStartPlacement = () => {
+    this.#model.handleStartPlacement();
   };
 
-  forwardAllocationGotten = (response) => {
-    this.#view.handleAllocationGotten(response);
+  forwardPlacementStarted = (response) => {
+    this.#view.handlePlacementStarted(response);
   };
 
   forwardPlaceShip = (x1, y1, x2, y2) => {
@@ -39,6 +45,10 @@ export class Controller {
 
   forwardBoardSubmitted = (response) => {
     this.#view.handleBoardSubmitted(response);
+  };
+
+  forwardLaunchMissile = (x, y) => {
+    this.#model.handleLaunchMissile(x, y);
   };
 
   forwardBattleStarted = (response) => {

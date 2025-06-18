@@ -3,29 +3,37 @@
 import { Ship } from "./ship";
 
 export class Board {
-  #_array;
-  #_allocation;
+  #_board;
+  #_fleet;
 
   constructor() {
-    this.#_array = new Array(10);
-    for (let row = 0; row < this.#_array.length; row++) {
-      this.#_array[row] = new Array(this.#_array.length);
+    this.#_board = new Array(10);
+    for (let row = 0; row < this.#_board.length; row++) {
+      this.#_board[row] = new Array(this.#_board.length);
     }
-    this.#_allocation = {
-      5: 1,
-      4: 2,
-      3: 3,
-      2: 4,
-      1: 5,
+
+    // this.#_fleet = {
+    //   5: 1,
+    //   4: 2,
+    //   3: 3,
+    //   2: 4,
+    //   1: 5,
+    // };
+    this.#_fleet = {
+      5: 0,
+      4: 1,
+      3: 1,
+      2: 1,
+      1: 0,
     };
   }
 
-  get array() {
-    return this.#_array;
+  get board() {
+    return this.#_board;
   }
 
-  get allocation() {
-    return this.#_allocation;
+  get fleet() {
+    return this.#_fleet;
   }
 
   place(x1, y1, x2, y2) {
@@ -40,13 +48,13 @@ export class Board {
 
     if (
       x1 < 0 ||
-      x1 >= this.array.length ||
+      x1 >= this.board.length ||
       x2 < 0 ||
-      x2 >= this.array.length ||
+      x2 >= this.board.length ||
       y1 < 0 ||
-      y1 >= this.array[0].length ||
+      y1 >= this.board[0].length ||
       y2 < 0 ||
-      y2 >= this.array[0].length
+      y2 >= this.board[0].length
     ) {
       return false;
     }
@@ -59,19 +67,19 @@ export class Board {
     const path = this.#makePath(x1, y1, x2, y2);
 
     // The path must correspond with an available ship
-    if (!this.allocation[path.length]) {
+    if (!this.fleet[path.length]) {
       return false;
     }
 
-    this.allocation[path.length]--;
+    this.fleet[path.length]--;
 
     // The path must be vacant
-    if (path.some(([x, y]) => this.array[y][x])) {
+    if (path.some(([x, y]) => this.board[y][x])) {
       return false;
     }
 
     const ship = new Ship(path.length);
-    path.forEach(([x, y]) => (this.array[y][x] = ship));
+    path.forEach(([x, y]) => (this.board[y][x] = ship));
 
     return true;
   }
@@ -81,27 +89,27 @@ export class Board {
       return false;
     }
 
-    if (x < 0 || x >= this.array.length || y < 0 || y >= this.array[0].length) {
+    if (x < 0 || x >= this.board.length || y < 0 || y >= this.board[0].length) {
       return false;
     }
 
-    if (this.array[y][x] === "x") {
+    if (this.board[y][x] === "x") {
       return false;
     }
 
-    if (this.array[y][x] instanceof Ship) {
-      this.array[y][x].hit();
+    if (this.board[y][x] instanceof Ship) {
+      this.board[y][x].hit();
     }
 
-    this.array[y][x] = "x";
+    this.board[y][x] = "x";
 
     return true;
   }
 
   isEmpty() {
-    for (let i = 0; i < this.array.length; i++) {
-      for (let j = 0; j < this.array[i].length; j++) {
-        if (this.array[i][j] instanceof Ship) {
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board[i].length; j++) {
+        if (this.board[i][j] instanceof Ship) {
           return false;
         }
       }
@@ -111,7 +119,7 @@ export class Board {
   }
 
   isFull() {
-    for (const quantity of Object.values(this.allocation)) {
+    for (const quantity of Object.values(this.fleet)) {
       if (quantity) {
         return false;
       }

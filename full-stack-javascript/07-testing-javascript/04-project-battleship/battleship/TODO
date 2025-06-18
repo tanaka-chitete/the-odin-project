@@ -9,10 +9,9 @@ Standardise view methods: initialise__________View(), refresh__________View(), a
 Rename onStart() to onStartDeployment()
 Rename onSubmit() to onEndDeployment()
 Introduce onStartBattle()
-Rename onGetAllocation() to onGetFleet()
-Rename onPlaceShip() to onDeploy()
-Rename allocation to fleet
-Rename hit to missile
-Rename fire to launch
-Rename "Position Controls" to "Deployment Controls"
-Rename "Fire Controls" to "Battle Controls"
+
+Rename onLaunch to onLaunchMissile
+Rename onRotate to onRotateShip
+
+Clear the board when the "Clear" button is clicked
+Rotate the clicked ship when the "Rotate" button is clicked
