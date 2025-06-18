@@ -1,5 +1,16 @@
 "use strict";
 
+import {
+  BOARD_LENGTH,
+  CLASS_5,
+  CLASS_4,
+  CLASS_3,
+  CLASS_2,
+  CLASS_1,
+  MISS,
+  HIT,
+} from "../constants";
+
 import { Ship } from "./ship";
 
 export class Board {
@@ -7,24 +18,17 @@ export class Board {
   #_fleet;
 
   constructor() {
-    this.#_board = new Array(10);
-    for (let row = 0; row < this.#_board.length; row++) {
-      this.#_board[row] = new Array(this.#_board.length);
+    this.#_board = new Array(BOARD_LENGTH);
+    for (let i = 0; i < this.#_board.length; i++) {
+      this.#_board[i] = new Array(this.#_board.length);
     }
 
-    // this.#_fleet = {
-    //   5: 1,
-    //   4: 2,
-    //   3: 3,
-    //   2: 4,
-    //   1: 5,
-    // };
     this.#_fleet = {
-      5: 0,
-      4: 1,
-      3: 1,
-      2: 1,
-      1: 0,
+      [CLASS_5]: 0,
+      [CLASS_4]: 1,
+      [CLASS_3]: 1,
+      [CLASS_2]: 1,
+      [CLASS_1]: 0,
     };
   }
 
@@ -93,15 +97,15 @@ export class Board {
       return false;
     }
 
-    if (this.board[y][x] === "x") {
+    if (this.board[y][x] === HIT || this.board[y][x] === MISS) {
       return false;
     }
 
     if (this.board[y][x] instanceof Ship) {
-      this.board[y][x].hit();
+      this.board[y][x] = HIT;
+    } else {
+      this.board[y][x] = MISS;
     }
-
-    this.board[y][x] = "x";
 
     return true;
   }

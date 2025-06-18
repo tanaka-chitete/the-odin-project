@@ -16,11 +16,10 @@ export class Controller {
 
     this.#view.bindToOnSubmitBoard(this.forwardSubmitBoard);
     this.#model.bindToOnBoardSubmitted(this.forwardBoardSubmitted);
-
-    // The battle automatically starts after Player 2 ends placement
     this.#model.bindToOnBattleStarted(this.forwardBattleStarted);
 
     this.#view.bindToOnLaunchMissile(this.forwardLaunchMissile);
+    this.#model.bindToOnMissileLaunched(this.forwardMissileLaunched);
   }
 
   forwardStartShipPlacement = () => {
@@ -47,11 +46,15 @@ export class Controller {
     this.#view.handleBoardSubmitted(response);
   };
 
+  forwardBattleStarted = (response) => {
+    this.#view.handleBattleStarted(response);
+  };
+
   forwardLaunchMissile = (x, y) => {
     this.#model.handleLaunchMissile(x, y);
   };
 
-  forwardBattleStarted = (response) => {
-    this.#view.handleBattleStarted(response);
+  forwardMissileLaunched = (response) => {
+    this.#view.handleMissileLaunched(response);
   };
 }

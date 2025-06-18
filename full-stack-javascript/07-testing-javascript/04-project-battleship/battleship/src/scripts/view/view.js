@@ -1,5 +1,7 @@
 "use strict";
 
+import { HIT, MISS } from "../constants";
+
 export class View {
   #messageView;
   #fleetView;
@@ -82,6 +84,7 @@ export class View {
 
   #destroyFleetView() {
     this.#fleetView.remove();
+    this.#fleetView = null;
   }
 
   #initialiseBoardView() {
@@ -154,6 +157,22 @@ export class View {
     return initialiseFunction(initialiseForm());
   }
 
+  #extendBoardView() {
+    for (const rowElement of this.#boardView.rows) {
+      for (const cellElement of rowElement.cells) {
+        cellElement.setAttribute("class", "board__cell board__cell_clickable");
+        cellElement.addEventListener("click", () => {
+          const row = +cellElement.getAttribute("data-row");
+          const column = +cellElement.getAttribute("data-column");
+          console.log("row = " + row);
+          console.log("column = " + column);
+
+          this.onLaunchMissile(column, row);
+        });
+      }
+    }
+  }
+
   #initialiseStartControls() {
     const initialiseForm = () => {
       const startControls = document.createElement("div");
@@ -185,6 +204,7 @@ export class View {
 
   #destroyStartControls() {
     this.#startControls.remove();
+    this.#startControls = null;
   }
 
   #initialisePlacementControls() {
@@ -231,6 +251,7 @@ export class View {
 
   #destroyPlacementControls() {
     this.#placementControls.remove();
+    this.#placementControls = null;
   }
 
   handleShipPlacementStarted(response) {
@@ -260,6 +281,13 @@ export class View {
     this.#destroyFleetView();
     this.#destroyPlacementControls();
 
+    this.#extendBoardView();
+
+    this.#updateMessageView(response.message);
+    this.#updateBoardViewForBattle(response.data.board);
+  }
+
+  handleMissileLaunched(response) {
     this.#updateMessageView(response.message);
     this.#updateBoardViewForBattle(response.data.board);
   }
@@ -294,16 +322,22 @@ export class View {
   }
 
   #updateBoardViewForBattle(board) {
+    console.log(board);
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
         const cell = this.#boardView.querySelector(
           `[data-row="${i}"][data-column="${j}"]`
         );
 
-        if (board[i][j] === "x") {
-          cell.setAttribute("class", "board__cell board__cell_type_missile");
-        } else {
-          cell.setAttribute("class", "board__cell");
+        switch (board[i][j]) {
+          case HIT:
+            cell.setAttribute("class", "board__cell board__cell_type_hit");
+            break;
+          case MISS:
+            cell.setAttribute("class", "board__cell board__cell_type_miss");
+            break;
+          default:
+            cell.setAttribute("class", "board__cell board__cell_type_unknown");
         }
       }
     }

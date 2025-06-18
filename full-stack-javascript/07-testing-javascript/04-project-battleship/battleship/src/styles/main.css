@@ -13,9 +13,27 @@
   --salt-900: #525257;
   --salt-1000: #1c1c1c;
 
-  --error-100: #fff7f5;
-  --error-500: #d5351f;
-  --error-800: #b41d08;
+  --rose-100: #fff5f5;
+  --rose-200: #ffeaea;
+  --rose-300: #ffd6d6;
+  --rose-400: #ffbfbf;
+  --rose-500: #ff9999;
+  --rose-600: #e06666;
+  --rose-700: #b34747;
+  --rose-800: #802828;
+  --rose-900: #661d1d;
+  --rose-1000: #330d0d;
+
+  --fern-100: #f5fff5;
+  --fern-200: #eaffea;
+  --fern-300: #d6ffd6;
+  --fern-400: #bfffbf;
+  --fern-500: #99ff99;
+  --fern-600: #66e066;
+  --fern-700: #47b347;
+  --fern-800: #288028;
+  --fern-900: #1d661d;
+  --fern-1000: #0d330d;
 }
 
 body {
@@ -47,6 +65,10 @@ main {
   grid-area: left;
 }
 
+.middle {
+  grid-area: middle;
+}
+
 .fleet {
   width: 426.672px;
   aspect-ratio: 1 / 1;
@@ -71,19 +93,9 @@ main {
   grid-column: 2 / 7;
 }
 
-.fleet__quantity_class_5 {
-  grid-row: 1;
-  grid-column: 1 / 2;
-}
-
 .fleet__ship_class_4 {
   grid-row: 3;
   grid-column: 2 / 6;
-}
-
-.fleet__quantity_class_4 {
-  grid-row: 3;
-  grid-column: 1 / 2;
 }
 
 .fleet__ship_class_3 {
@@ -91,19 +103,9 @@ main {
   grid-column: 2 / 5;
 }
 
-.fleet__quantity_class_3 {
-  grid-row: 5;
-  grid-column: 1 / 2;
-}
-
 .fleet__ship_class_2 {
   grid-row: 7;
   grid-column: 2 / 4;
-}
-
-.fleet__quantity_class_2 {
-  grid-row: 7;
-  grid-column: 1 / 2;
 }
 
 .fleet__ship_class_1 {
@@ -111,13 +113,38 @@ main {
   grid-column: 2 / 3;
 }
 
+.fleet__quantity {
+  user-select: none;
+}
+
+.fleet__quantity_class_5 {
+  grid-row: 1;
+  grid-column: 1 / 2;
+}
+
+.fleet__quantity_class_4 {
+  grid-row: 3;
+  grid-column: 1 / 2;
+}
+
+.fleet__quantity_class_3 {
+  grid-row: 5;
+  grid-column: 1 / 2;
+}
+
+.fleet__quantity_class_2 {
+  grid-row: 7;
+  grid-column: 1 / 2;
+}
+
 .fleet__quantity_class_1 {
   grid-row: 9;
   grid-column: 1 / 2;
 }
 
-.middle {
-  grid-area: middle;
+.board,
+.board__cell {
+  border: 1px solid var(--salt-700);
 }
 
 .board {
@@ -126,17 +153,24 @@ main {
   border-collapse: collapse;
 }
 
-.board,
-.board__cell {
-  border: 1px solid var(--salt-700);
-}
-
 .board__cell_type_ship {
-  background: var(--salt-500);
+  background-color: var(--salt-500);
 }
 
-.board__cell_type_missile {
-  background: var(--error-500);
+.board__cell_type_unknown {
+  cursor: pointer;
+}
+
+.board__cell_type_unknown:hover {
+  background-color: var(--salt-300);
+}
+
+.board__cell_type_hit {
+  background-color: var(--fern-300);
+}
+
+.board__cell_type_miss {
+  background-color: var(--rose-300);
 }
 
 .controls {

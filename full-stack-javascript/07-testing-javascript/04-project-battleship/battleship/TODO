@@ -3,3 +3,6 @@ Drag ship when user moves the cursor
 Rotate ship when user clicks the "Rotate" button
 Clear board when user clicks the "Clear" button
 Style ships in fleet with a vertical line for each unit of length
+Store constants in the Board class: BOARD_LENGTH, MIN_SHIP_LENGTH, CLASS_3 etc
+Rename data-row to data-y
+Rename data-column to data-x

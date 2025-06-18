@@ -66,6 +66,32 @@ export class Model {
     }
   };
 
+  handleLaunchMissile = (x, y) => {
+    if (this.#defender.board.isEmpty()) {
+      return;
+    }
+
+    let message;
+    if (this.#defender.board.receive(x, y)) {
+      message = `That's a hit, ${this.#attacker.name}`;
+    } else {
+      message = `That's a miss, ${this.#attacker.name}`;
+    }
+
+    if (this.#defender.board.isEmpty()) {
+      message = `You win, ${this.#attacker.name}`;
+    }
+
+    const response = {
+      message,
+      data: {
+        board: this.#defender.board.board,
+      },
+    };
+
+    this.onMissileLaunched(response);
+  };
+
   bindToOnShipPlacementStarted(callback) {
     this.onShipPlacementStarted = callback;
   }
@@ -80,5 +106,9 @@ export class Model {
 
   bindToOnBattleStarted(callback) {
     this.onBattleStarted = callback;
+  }
+
+  bindToOnMissileLaunched(callback) {
+    this.onMissileLaunched = callback;
   }
 }
