@@ -13,6 +13,17 @@
   --salt-900: #525257;
   --salt-1000: #1c1c1c;
 
+  --sky-100: #f5faff;
+  --sky-200: #eaf6ff;
+  --sky-300: #d6eeff;
+  --sky-400: #bfe3ff;
+  --sky-500: #99d4ff;
+  --sky-600: #66b2e0;
+  --sky-700: #4790b3;
+  --sky-800: #286d80;
+  --sky-900: #1d5166;
+  --sky-1000: #0d2a33;
+
   --rose-100: #fff5f5;
   --rose-200: #ffeaea;
   --rose-300: #ffd6d6;
@@ -157,20 +168,24 @@ main {
   background-color: var(--salt-500);
 }
 
+#board__cell_type_tagged {
+  background-color: var(--sky-400);
+}
+
 .board__cell_type_unknown {
   cursor: pointer;
 }
 
 .board__cell_type_unknown:hover {
-  background-color: var(--salt-300);
+  background-color: var(--salt-400);
 }
 
-.board__cell_type_hit {
-  background-color: var(--fern-300);
+.board__cell_type_missile-hit {
+  background-color: var(--fern-400);
 }
 
-.board__cell_type_miss {
-  background-color: var(--rose-300);
+.board__cell_type_missile-miss {
+  background-color: var(--rose-400);
 }
 
 .controls {

@@ -1,6 +1,6 @@
 "use strict";
 
-import { HIT, MISS } from "../constants";
+import { MISSILE_HIT, MISSILE_MISS } from "../constants";
 
 export class View {
   #messageView;
@@ -8,7 +8,8 @@ export class View {
   #boardView;
 
   #startControls;
-  #placementControls;
+  #preparationControls;
+  #battleControls;
 
   constructor() {
     this.#messageView = this.#initialiseMessageView();
@@ -154,10 +155,14 @@ export class View {
       for (const cell of row.cells) {
         cell.setAttribute("class", "board__cell board__cell_clickable");
         cell.addEventListener("click", () => {
-          const x = +cell.getAttribute("data-x");
-          const y = +cell.getAttribute("data-y");
+          const currentTaggedCell = document.querySelector(
+            "#board__cell_type_tagged"
+          );
+          if (currentTaggedCell) {
+            currentTaggedCell.setAttribute("id", "");
+          }
 
-          this.onLaunchMissile(x, y);
+          cell.setAttribute("id", "board__cell_type_tagged");
         });
       }
     }
@@ -197,58 +202,112 @@ export class View {
     this.#startControls = null;
   }
 
-  #initialisePlacementControls() {
+  #initialisePreparationControls() {
     const initialiseForm = () => {
-      const placementControls = document.createElement("div");
-      placementControls.setAttribute(
+      const preparationControls = document.createElement("div");
+      preparationControls.setAttribute(
         "class",
-        "controls controls_type_placement"
+        "controls controls_type_preparation"
       );
 
-      const clearButton = document.createElement("button");
-      clearButton.setAttribute("class", "controls__button_type_start");
-      clearButton.textContent = "Clear";
+      const clearShipsButton = document.createElement("button");
+      clearShipsButton.setAttribute(
+        "class",
+        "controls__button_type_clear-ships"
+      );
+      clearShipsButton.textContent = "Clear";
 
-      const rotateButton = document.createElement("button");
-      rotateButton.setAttribute("class", "controls__button_type_rotate");
-      rotateButton.textContent = "Rotate";
+      const rotateShipButton = document.createElement("button");
+      rotateShipButton.setAttribute(
+        "class",
+        "controls__button_type_rotate-ship"
+      );
+      rotateShipButton.textContent = "Rotate";
 
-      const submitButton = document.createElement("button");
-      submitButton.setAttribute("class", "controls__button_type_submit");
-      submitButton.textContent = "Submit";
+      const endPreparationButton = document.createElement("button");
+      endPreparationButton.setAttribute(
+        "class",
+        "controls__button_type_end-preparation"
+      );
+      endPreparationButton.textContent = "Submit";
 
-      placementControls.append(clearButton);
-      placementControls.append(rotateButton);
-      placementControls.append(submitButton);
+      preparationControls.append(clearShipsButton);
+      preparationControls.append(rotateShipButton);
+      preparationControls.append(endPreparationButton);
 
       const middle = document.querySelector(".middle");
-      middle.append(placementControls);
+      middle.append(preparationControls);
 
-      return document.querySelector(".controls_type_placement");
+      return document.querySelector(".controls_type_preparation");
     };
 
-    const initialiseFunction = (placementControls) => {
-      const submitButton = placementControls.querySelector(
-        ".controls__button_type_submit"
+    const initialiseFunction = (preparationControls) => {
+      const endPreparationButton = preparationControls.querySelector(
+        ".controls__button_type_end-preparation"
       );
-      submitButton.addEventListener("click", this.onSubmitBoard);
+      endPreparationButton.addEventListener("click", () =>
+        this.onEndPreparation()
+      );
 
-      return placementControls;
+      return preparationControls;
     };
 
     return initialiseFunction(initialiseForm());
   }
 
-  #destroyPlacementControls() {
-    this.#placementControls.remove();
-    this.#placementControls = null;
+  #destroyPreparationControls() {
+    this.#preparationControls.remove();
+    this.#preparationControls = null;
+  }
+
+  #initialiseBattleControls() {
+    const initialiseForm = () => {
+      const battleControls = document.createElement("div");
+      battleControls.setAttribute("class", "controls controls_type_battle");
+
+      const clearTagButton = document.createElement("button");
+      clearTagButton.setAttribute(
+        "class",
+        "controls__button_type_clear-placements-tag"
+      );
+      clearTagButton.textContent = "Clear";
+
+      const launchMissileButton = document.createElement("button");
+      launchMissileButton.setAttribute(
+        "class",
+        "controls__button_type_launch-missile"
+      );
+      launchMissileButton.textContent = "Launch";
+
+      battleControls.append(clearTagButton);
+      battleControls.append(launchMissileButton);
+
+      const middle = document.querySelector(".middle");
+      middle.append(battleControls);
+
+      return document.querySelector(".controls_type_battle");
+    };
+
+    const initialiseFunction = (battleControls) => {
+      const launchMissileButton = battleControls.querySelector(
+        ".controls__button_type_launch-missile"
+      );
+      launchMissileButton.addEventListener("click", () => {
+        const taggedCell = document.querySelector("#board__cell_type_tagged");
+        const x = +taggedCell.getAttribute("data-x");
+        const y = +taggedCell.getAttribute("data-y");
+        this.onLaunchMissile(x, y);
+      });
+    };
+
+    return initialiseFunction(initialiseForm());
   }
 
   handlePreparationStarted(response) {
     this.#destroyStartControls();
 
     this.#fleetView = this.#initialiseFleetView();
-    this.#placementControls = this.#initialisePlacementControls();
+    this.#preparationControls = this.#initialisePreparationControls();
 
     this.#updateMessageView(response.message);
     this.#updateFleetView(response.data.fleet);
@@ -269,11 +328,12 @@ export class View {
 
   handleBattleStarted(response) {
     this.#destroyFleetView();
-    this.#destroyPlacementControls();
+    this.#destroyPreparationControls();
 
     this.#extendBoardView();
 
     this.#updateMessageView(response.message);
+    this.#battleControls = this.#initialiseBattleControls();
     this.#updateBoardViewForBattle(response.data.board);
   }
 
@@ -319,11 +379,17 @@ export class View {
         );
 
         switch (board[i][j]) {
-          case HIT:
-            cell.setAttribute("class", "board__cell board__cell_type_hit");
+          case MISSILE_HIT:
+            cell.setAttribute(
+              "class",
+              "board__cell board__cell_type_missile-hit"
+            );
             break;
-          case MISS:
-            cell.setAttribute("class", "board__cell board__cell_type_miss");
+          case MISSILE_MISS:
+            cell.setAttribute(
+              "class",
+              "board__cell board__cell_type_missile-miss"
+            );
             break;
           default:
             cell.setAttribute("class", "board__cell board__cell_type_unknown");
@@ -341,7 +407,7 @@ export class View {
   }
 
   bindToOnEndPreparation(callback) {
-    this.onSubmitBoard = callback;
+    this.onEndPreparation = callback;
   }
 
   bindToOnLaunchMissile(callback) {

@@ -2,14 +2,19 @@
 
 import {
   BOARD_LENGTH,
-  CLASS_5,
-  CLASS_4,
-  CLASS_3,
-  CLASS_2,
-  CLASS_1,
-  MISS,
-  HIT,
-  NOTHING,
+  CLASS_1_LENGTH,
+  CLASS_2_LENGTH,
+  CLASS_3_LENGTH,
+  CLASS_4_LENGTH,
+  CLASS_5_LENGTH,
+  CLASS_1_QUANTITY,
+  CLASS_2_QUANTITY,
+  CLASS_3_QUANTITY,
+  CLASS_4_QUANTITY,
+  CLASS_5_QUANTITY,
+  MISSILE_HIT,
+  MISSILE_MISS,
+  EMPTY,
 } from "../constants";
 
 import { Ship } from "./ship";
@@ -26,16 +31,16 @@ export class Board {
 
     for (let i = 0; i < this.#_board.length; i++) {
       for (let j = 0; j < this.#_board[i].length; j++) {
-        this.#_board[i][j] = null;
+        this.#_board[i][j] = EMPTY;
       }
     }
 
     this.#_fleet = {
-      [CLASS_5]: 0,
-      [CLASS_4]: 1,
-      [CLASS_3]: 1,
-      [CLASS_2]: 1,
-      [CLASS_1]: 0,
+      [CLASS_5_LENGTH]: CLASS_5_QUANTITY,
+      [CLASS_4_LENGTH]: CLASS_4_QUANTITY,
+      [CLASS_3_LENGTH]: CLASS_3_QUANTITY,
+      [CLASS_2_LENGTH]: CLASS_2_QUANTITY,
+      [CLASS_1_LENGTH]: CLASS_1_QUANTITY,
     };
   }
 
@@ -105,14 +110,14 @@ export class Board {
     }
 
     if (
-      this.board[y][x] === HIT ||
-      this.board[y][x] === MISS ||
-      this.board[y][x] === NOTHING
+      this.board[y][x] === MISSILE_HIT ||
+      this.board[y][x] === MISSILE_MISS ||
+      this.board[y][x] === EMPTY
     ) {
       return false;
     }
 
-    this.board[y][x] = HIT;
+    this.board[y][x] = MISSILE_HIT;
 
     return true;
   }
