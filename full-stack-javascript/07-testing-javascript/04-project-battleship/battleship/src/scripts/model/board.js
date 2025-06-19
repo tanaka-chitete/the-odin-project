@@ -9,6 +9,7 @@ import {
   CLASS_1,
   MISS,
   HIT,
+  NOTHING,
 } from "../constants";
 
 import { Ship } from "./ship";
@@ -21,6 +22,12 @@ export class Board {
     this.#_board = new Array(BOARD_LENGTH);
     for (let i = 0; i < this.#_board.length; i++) {
       this.#_board[i] = new Array(this.#_board.length);
+    }
+
+    for (let i = 0; i < this.#_board.length; i++) {
+      for (let j = 0; j < this.#_board[i].length; j++) {
+        this.#_board[i][j] = null;
+      }
     }
 
     this.#_fleet = {
@@ -97,15 +104,15 @@ export class Board {
       return false;
     }
 
-    if (this.board[y][x] === HIT || this.board[y][x] === MISS) {
+    if (
+      this.board[y][x] === HIT ||
+      this.board[y][x] === MISS ||
+      this.board[y][x] === NOTHING
+    ) {
       return false;
     }
 
-    if (this.board[y][x] instanceof Ship) {
-      this.board[y][x] = HIT;
-    } else {
-      this.board[y][x] = MISS;
-    }
+    this.board[y][x] = HIT;
 
     return true;
   }

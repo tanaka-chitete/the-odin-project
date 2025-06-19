@@ -8,3 +8,4 @@ export const CLASS_1 = 1;
 
 export const HIT = 1;
 export const MISS = 0;
+export const NOTHING = null;

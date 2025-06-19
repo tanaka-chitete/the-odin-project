@@ -144,11 +144,29 @@ describe("Board", () => {
   });
 
   describe("receive()", () => {
-    it("it receives a missile launched at a valid coordinate (integer-only, in-bounds, and un-hit)", () => {
-      expect(new Board().receive(0, 0)).toBe(true);
-      expect(new Board().receive(9, 0)).toBe(true);
-      expect(new Board().receive(9, 9)).toBe(true);
-      expect(new Board().receive(0, 9)).toBe(true);
+    it("receives a missile launched at a valid coordinate, hitting a ship (integer-only, in-bound, and un-hit)", () => {
+      let board = new Board();
+      board.place(0, 0, 1, 0);
+      expect(board.receive(0, 0)).toBe(true);
+
+      board = new Board();
+      board.place(9, 0, 9, 1);
+      expect(board.receive(9, 0)).toBe(true);
+
+      board = new Board();
+      board.place(9, 9, 8, 9);
+      expect(board.receive(9, 9)).toBe(true);
+
+      board = new Board();
+      board.place(0, 9, 0, 8);
+      expect(board.receive(0, 9)).toBe(true);
+    });
+
+    it("receives a missile launched at a valid coordinate, missing a ship (integer-only, in-bounds, and un-hit)", () => {
+      expect(new Board().receive(0, 0)).toBe(false);
+      expect(new Board().receive(9, 0)).toBe(false);
+      expect(new Board().receive(9, 9)).toBe(false);
+      expect(new Board().receive(0, 9)).toBe(false);
     });
 
     it("does not receive a missile launched at an invalid coordinate (non-integer)", () => {
