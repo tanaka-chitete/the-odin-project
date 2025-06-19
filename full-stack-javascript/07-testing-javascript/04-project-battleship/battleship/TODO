@@ -1,7 +1,16 @@
-Select ship when user clicks on it
-Drag ship when user moves the cursor
-Rotate ship when user clicks the "Rotate" button
-Clear board when user clicks the "Clear" button
-Style ships in fleet with a vertical line for each unit of length
-Store constants in the Board class: BOARD_LENGTH, MIN_SHIP_LENGTH, CLASS_3 etc
-Test for the expected shape of a Class member
+Let the user change missile placement
+	Let them tag a location
+	Let them clear the tag
+	Let them fire at the tag
+Let the user change ship placement
+	Let them rotate each ship
+	Let them move each ship
+	Let them clear all ships
+Style the UI
+	Display ships on-top of board borders
+	Style the logo
+	Style the "Message" view
+	Style the "Start" controls
+	Style the "Placement" controls
+	Style the "Battle" controls
+Miscellaneous

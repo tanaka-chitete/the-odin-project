@@ -244,7 +244,7 @@ export class View {
     this.#placementControls = null;
   }
 
-  handleShipPlacementStarted(response) {
+  handlePreparationStarted(response) {
     this.#destroyStartControls();
 
     this.#fleetView = this.#initialiseFleetView();
@@ -261,7 +261,7 @@ export class View {
     this.#updateBoardViewForPlacement(response.data.board);
   }
 
-  handleBoardSubmitted(response) {
+  handlePreparationEnded(response) {
     this.#updateMessageView(response.message);
     this.#updateFleetView(response.data.fleet);
     this.#updateBoardViewForPlacement(response.data.board);
@@ -332,7 +332,7 @@ export class View {
     }
   }
 
-  bindToOnStartShipPlacement(callback) {
+  bindToOnStartPreparation(callback) {
     this.onStartDeployment = callback;
   }
 
@@ -340,7 +340,7 @@ export class View {
     this.onPlaceShip = callback;
   }
 
-  bindToOnSubmitBoard(callback) {
+  bindToOnEndPreparation(callback) {
     this.onSubmitBoard = callback;
   }
 

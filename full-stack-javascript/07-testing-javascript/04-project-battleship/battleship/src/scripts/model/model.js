@@ -11,7 +11,7 @@ export class Model {
     this.#defender = new Player("Player 2");
   }
 
-  handleStartShipPlacement = () => {
+  handleStartPreparation = () => {
     const response = {
       message: `Place your ships, ${this.#attacker.name}`,
       data: {
@@ -20,7 +20,7 @@ export class Model {
       },
     };
 
-    this.onShipPlacementStarted(response);
+    this.onPreparationStarted(response);
   };
 
   handlePlaceShip = (x1, y1, x2, y2) => {
@@ -39,7 +39,7 @@ export class Model {
     this.onShipPlaced(response);
   };
 
-  handleSubmitBoard = () => {
+  handleEndPreparation = () => {
     if (!this.#attacker.board.isFull()) {
       return;
     }
@@ -53,7 +53,7 @@ export class Model {
           fleet: this.#attacker.board.fleet,
         },
       };
-      this.onBoardSubmitted(response);
+      this.onPreparationEnded(response);
     } else {
       [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
       const response = {
@@ -71,37 +71,39 @@ export class Model {
       return;
     }
 
-    let message;
-    if (this.#defender.board.receive(x, y)) {
-      message = `That's a hit, ${this.#attacker.name}`;
-    } else {
-      message = `That's a miss, ${this.#attacker.name}`;
-    }
+    this.#defender.board.receive(x, y);
 
+    let response;
     if (this.#defender.board.isEmpty()) {
-      message = `You win, ${this.#attacker.name}`;
+      response = {
+        message: `You win, ${this.#attacker.name}`,
+        data: {
+          board: this.#defender.board.board,
+        },
+      };
+    } else {
+      [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
+      response = {
+        message: `Launch a missile, ${this.#attacker.name}`,
+        data: {
+          board: this.#defender.board.board,
+        },
+      };
     }
-
-    const response = {
-      message,
-      data: {
-        board: this.#defender.board.board,
-      },
-    };
 
     this.onMissileLaunched(response);
   };
 
-  bindToOnShipPlacementStarted(callback) {
-    this.onShipPlacementStarted = callback;
+  bindToOnPreparationStarted(callback) {
+    this.onPreparationStarted = callback;
   }
 
   bindToOnShipPlaced(callback) {
     this.onShipPlaced = callback;
   }
 
-  bindToOnBoardSubmitted(callback) {
-    this.onBoardSubmitted = callback;
+  bindToOnPreparationEnded(callback) {
+    this.onPreparationEnded = callback;
   }
 
   bindToOnBattleStarted(callback) {

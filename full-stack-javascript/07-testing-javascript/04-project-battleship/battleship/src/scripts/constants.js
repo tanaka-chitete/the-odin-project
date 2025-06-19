@@ -1,5 +1,8 @@
 export const BOARD_LENGTH = 10;
 
+export const MIN_SHIP_LENGTH = 1;
+export const MAX_SHIP_LENGTH = 5;
+
 export const CLASS_5 = 5;
 export const CLASS_4 = 4;
 export const CLASS_3 = 3;

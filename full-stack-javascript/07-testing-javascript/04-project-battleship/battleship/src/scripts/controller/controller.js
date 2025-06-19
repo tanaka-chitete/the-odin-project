@@ -8,26 +8,26 @@ export class Controller {
     this.#model = model;
     this.#view = view;
 
-    this.#view.bindToOnStartShipPlacement(this.forwardStartShipPlacement);
-    this.#model.bindToOnShipPlacementStarted(this.forwardShipPlacementStarted);
+    this.#view.bindToOnStartPreparation(this.forwardStartPreparation);
+    this.#model.bindToOnPreparationStarted(this.forwardPreparationStarted);
 
     this.#view.bindToOnPlaceShip(this.forwardPlaceShip);
     this.#model.bindToOnShipPlaced(this.forwardShipPlaced);
 
-    this.#view.bindToOnSubmitBoard(this.forwardSubmitBoard);
-    this.#model.bindToOnBoardSubmitted(this.forwardBoardSubmitted);
+    this.#view.bindToOnEndPreparation(this.forwardEndPreparation);
+    this.#model.bindToOnPreparationEnded(this.forwardPreparationEnded);
     this.#model.bindToOnBattleStarted(this.forwardBattleStarted);
 
     this.#view.bindToOnLaunchMissile(this.forwardLaunchMissile);
     this.#model.bindToOnMissileLaunched(this.forwardMissileLaunched);
   }
 
-  forwardStartShipPlacement = () => {
-    this.#model.handleStartShipPlacement();
+  forwardStartPreparation = () => {
+    this.#model.handleStartPreparation();
   };
 
-  forwardShipPlacementStarted = (response) => {
-    this.#view.handleShipPlacementStarted(response);
+  forwardPreparationStarted = (response) => {
+    this.#view.handlePreparationStarted(response);
   };
 
   forwardPlaceShip = (x1, y1, x2, y2) => {
@@ -38,12 +38,12 @@ export class Controller {
     this.#view.handleShipPlaced(response);
   };
 
-  forwardSubmitBoard = () => {
-    this.#model.handleSubmitBoard();
+  forwardEndPreparation = () => {
+    this.#model.handleEndPreparation();
   };
 
-  forwardBoardSubmitted = (response) => {
-    this.#view.handleBoardSubmitted(response);
+  forwardPreparationEnded = (response) => {
+    this.#view.handlePreparationEnded(response);
   };
 
   forwardBattleStarted = (response) => {

@@ -149,12 +149,12 @@ export class Board {
 
     // A shared x-axis means that the path is vertical
     if (x1 === x2) {
-      for (let row = y1; row <= y2; row++) {
-        path.push([x1, row]);
+      for (let i = y1; i <= y2; i++) {
+        path.push([x1, i]);
       }
     } else {
-      for (let column = x1; column <= x2; column++) {
-        path.push([column, y1]);
+      for (let j = x1; j <= x2; j++) {
+        path.push([j, y1]);
       }
     }
 
