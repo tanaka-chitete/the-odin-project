@@ -99,8 +99,8 @@ export class View {
         for (let j = 0; j < 10; j++) {
           const cell = document.createElement("td");
           cell.setAttribute("class", "board__cell");
-          cell.setAttribute("data-row", i);
-          cell.setAttribute("data-column", j);
+          cell.setAttribute("data-x", j);
+          cell.setAttribute("data-y", i);
 
           row.append(cell);
         }
@@ -130,25 +130,17 @@ export class View {
         const mouseYRelativeToBoard =
           mouseYRelativeToViewport - boardBoundingBox.y;
 
-        const cellBoundingBox =
-          boardView.rows[0].cells[0].getBoundingClientRect();
-        const startRow = Math.floor(
-          mouseYRelativeToBoard / cellBoundingBox.height
-        );
-        const startColumn = Math.floor(
-          mouseXRelativeToBoard / cellBoundingBox.width
-        );
-
         const id = event.dataTransfer.getData("id");
         const ship = document.querySelector(`#${id}`);
-        const class_ = +ship.getAttribute("data-class");
 
-        this.onPlaceShip(
-          startColumn,
-          startRow,
-          startColumn + class_ - 1,
-          startRow
-        );
+        const cellBoundingBox =
+          boardView.rows[0].cells[0].getBoundingClientRect();
+        const x1 = Math.floor(mouseXRelativeToBoard / cellBoundingBox.width);
+        const y1 = Math.floor(mouseYRelativeToBoard / cellBoundingBox.height);
+        const x2 = x1 + +ship.getAttribute("data-class") - 1;
+        const y2 = y1;
+
+        this.onPlaceShip(x1, y1, x2, y2);
       });
 
       return boardView;
@@ -158,16 +150,14 @@ export class View {
   }
 
   #extendBoardView() {
-    for (const rowElement of this.#boardView.rows) {
-      for (const cellElement of rowElement.cells) {
-        cellElement.setAttribute("class", "board__cell board__cell_clickable");
-        cellElement.addEventListener("click", () => {
-          const row = +cellElement.getAttribute("data-row");
-          const column = +cellElement.getAttribute("data-column");
-          console.log("row = " + row);
-          console.log("column = " + column);
+    for (const row of this.#boardView.rows) {
+      for (const cell of row.cells) {
+        cell.setAttribute("class", "board__cell board__cell_clickable");
+        cell.addEventListener("click", () => {
+          const x = +cell.getAttribute("data-x");
+          const y = +cell.getAttribute("data-y");
 
-          this.onLaunchMissile(column, row);
+          this.onLaunchMissile(x, y);
         });
       }
     }
@@ -309,7 +299,7 @@ export class View {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
         const cell = this.#boardView.querySelector(
-          `[data-row="${i}"][data-column="${j}"]`
+          `[data-x="${j}"][data-y="${i}"]`
         );
 
         if (board[i][j]) {
@@ -322,11 +312,10 @@ export class View {
   }
 
   #updateBoardViewForBattle(board) {
-    console.log(board);
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
         const cell = this.#boardView.querySelector(
-          `[data-row="${i}"][data-column="${j}"]`
+          `[data-x="${j}"][data-y="${i}"]`
         );
 
         switch (board[i][j]) {
