@@ -7,14 +7,14 @@ export class View {
   #fleetView;
   #boardView;
 
-  #startControls;
+  #welcomeControls;
   #preparationControls;
   #battleControls;
 
   constructor() {
     this.#messageView = this.#initialiseMessageView();
     this.#boardView = this.#initialiseBoardView();
-    this.#startControls = this.#initialiseStartControls();
+    this.#welcomeControls = this.#initialiseWelcomeControls();
   }
 
   #initialiseMessageView() {
@@ -168,38 +168,38 @@ export class View {
     }
   }
 
-  #initialiseStartControls() {
+  #initialiseWelcomeControls() {
     const initialiseForm = () => {
-      const startControls = document.createElement("div");
-      startControls.setAttribute("class", "controls controls_type_start");
+      const welcomeControls = document.createElement("div");
+      welcomeControls.setAttribute("class", "controls controls_type_welcome");
 
-      const startButton = document.createElement("button");
-      startButton.setAttribute("class", "controls__button_type_start");
-      startButton.textContent = "Start";
+      const startGameButton = document.createElement("button");
+      startGameButton.setAttribute("class", "controls__button_type_start-game");
+      startGameButton.textContent = "Start";
 
-      startControls.append(startButton);
+      welcomeControls.append(startGameButton);
 
       const middle = document.querySelector(".middle");
-      middle.append(startControls);
+      middle.append(welcomeControls);
 
-      return document.querySelector(".controls_type_start");
+      return document.querySelector(".controls_type_welcome");
     };
 
-    const initialiseFunction = (startControls) => {
-      const startButton = startControls.querySelector(
-        ".controls__button_type_start"
+    const initialiseFunction = (welcomeControls) => {
+      const startGameButton = welcomeControls.querySelector(
+        ".controls__button_type_start-game"
       );
-      startButton.addEventListener("click", () => this.onStartDeployment());
+      startGameButton.addEventListener("click", () => this.onStartDeployment());
 
-      return startControls;
+      return welcomeControls;
     };
 
     return initialiseFunction(initialiseForm());
   }
 
   #destroyStartControls() {
-    this.#startControls.remove();
-    this.#startControls = null;
+    this.#welcomeControls.remove();
+    this.#welcomeControls = null;
   }
 
   #initialisePreparationControls() {
