@@ -16,3 +16,4 @@ Style the UI
 Miscellaneous
 	If allocation is exhausted, don't let the user drag a ship onto the board
 	Remove "click" event listener from cells which have already been clicked
+	Disable "Launch" button if no cell is tagged

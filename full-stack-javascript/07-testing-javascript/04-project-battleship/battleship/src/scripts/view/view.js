@@ -265,13 +265,6 @@ export class View {
       const battleControls = document.createElement("div");
       battleControls.setAttribute("class", "controls controls_type_battle");
 
-      const clearTagButton = document.createElement("button");
-      clearTagButton.setAttribute(
-        "class",
-        "controls__button_type_clear-placements-tag"
-      );
-      clearTagButton.textContent = "Clear";
-
       const launchMissileButton = document.createElement("button");
       launchMissileButton.setAttribute(
         "class",
@@ -279,7 +272,6 @@ export class View {
       );
       launchMissileButton.textContent = "Launch";
 
-      battleControls.append(clearTagButton);
       battleControls.append(launchMissileButton);
 
       const middle = document.querySelector(".middle");
@@ -294,6 +286,7 @@ export class View {
       );
       launchMissileButton.addEventListener("click", () => {
         const taggedCell = document.querySelector("#board__cell_type_tagged");
+        taggedCell.setAttribute("id", "");
         const x = +taggedCell.getAttribute("data-x");
         const y = +taggedCell.getAttribute("data-y");
         this.onLaunchMissile(x, y);
