@@ -109,11 +109,12 @@ export class Board {
       return false;
     }
 
-    if (
-      this.board[y][x] === MISSILE_HIT ||
-      this.board[y][x] === MISSILE_MISS ||
-      this.board[y][x] === EMPTY
-    ) {
+    if (this.board[y][x] === MISSILE_HIT || this.board[y][x] === MISSILE_MISS) {
+      return false;
+    }
+
+    if (this.board[y][x] === EMPTY) {
+      this.board[y][x] = MISSILE_MISS;
       return false;
     }
 

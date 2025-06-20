@@ -1,3 +1,10 @@
+// Model
+export const PLAYER_1_NAME = "Player 1";
+export const PLAYER_2_NAME = "Player 2";
+
+export const ACCEPTED = true;
+export const REJECTED = !ACCEPTED;
+
 // Board
 export const BOARD_LENGTH = 10;
 
@@ -13,8 +20,8 @@ export const CLASS_3_QUANTITY = 0;
 export const CLASS_4_QUANTITY = 0;
 export const CLASS_5_QUANTITY = 1;
 
-export const MISSILE_HIT = "missile (hit)";
-export const MISSILE_MISS = "missile (miss)";
+export const MISSILE_HIT = "h";
+export const MISSILE_MISS = "m";
 export const EMPTY = "";
 
 // Ship

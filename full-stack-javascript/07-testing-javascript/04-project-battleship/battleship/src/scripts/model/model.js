@@ -1,5 +1,7 @@
 "use strict";
 
+import { PLAYER_1_NAME, PLAYER_2_NAME } from "../constants";
+
 import { Player } from "./player";
 
 export class Model {
@@ -7,16 +9,24 @@ export class Model {
   #defender;
 
   constructor() {
-    this.#attacker = new Player("Player 1");
-    this.#defender = new Player("Player 2");
+    this.#attacker = new Player(PLAYER_1_NAME);
+    this.#defender = new Player(PLAYER_2_NAME);
   }
+
+  handleStartGame = () => {
+    const response = {
+      message: `Start preparation, ${this.#attacker.name}`,
+    };
+
+    this.onGameStarted(response);
+  };
 
   handleStartPreparation = () => {
     const response = {
-      message: `Place your ships, ${this.#attacker.name}`,
-      data: {
-        board: this.#attacker.board.board,
+      message: `Place ships, ${this.#attacker.name}`,
+      attacker: {
         allocation: this.#attacker.board.allocation,
+        board: this.#attacker.board.board,
       },
     };
 
@@ -24,46 +34,60 @@ export class Model {
   };
 
   handlePlaceShip = (x1, y1, x2, y2) => {
+    let response;
+    let callback;
     if (!this.#attacker.board.place(x1, y1, x2, y2)) {
-      return;
+      response = {
+        message: `Place ships, ${this.#attacker.name}`,
+      };
+      callback = this.onErrorOccurred;
+    } else {
+      response = {
+        message: `Place ships, ${this.#attacker.name}`,
+        attacker: {
+          allocation: this.#attacker.board.allocation,
+          board: this.#attacker.board.board,
+        },
+      };
+      callback = this.onShipPlaced;
     }
 
-    const response = {
-      message: `Place your ships, ${this.#attacker.name}`,
-      data: {
-        board: this.#attacker.board.board,
-        allocation: this.#attacker.board.allocation,
-      },
-    };
-
-    this.onShipPlaced(response);
+    callback(response);
   };
 
   handleEndPreparation = () => {
-    if (!this.#attacker.board.isFull()) {
-      return;
-    }
-
-    if (this.#attacker.name === "Player 1") {
+    let response;
+    if (this.#attacker.name === PLAYER_1_NAME) {
       [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
-      const response = {
-        message: `Place your ships, ${this.#attacker.name}`,
-        data: {
-          board: this.#attacker.board.board,
-          allocation: this.#attacker.board.allocation,
+
+      response = {
+        message: `Start preparation, ${this.#attacker.name}`,
+        attacker: {
+          name: this.#attacker.name,
         },
       };
-      this.onPreparationEnded(response);
     } else {
       [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
-      const response = {
-        message: `Launch a missile, ${this.#attacker.name}`,
-        data: {
-          board: this.#defender.board.board,
+      response = {
+        message: `Start battle, ${this.#attacker.name}`,
+        attacker: {
+          name: this.#attacker.name,
         },
       };
-      this.onBattleStarted(response);
     }
+
+    this.onPreparationEnded(response);
+  };
+
+  handleStartBattle = () => {
+    const response = {
+      message: `Launch missile, ${this.#attacker.name}`,
+      defender: {
+        board: this.#defender.board.board,
+      },
+    };
+
+    this.onBattleStarted(response);
   };
 
   handleLaunchMissile = (x, y) => {
@@ -71,28 +95,56 @@ export class Model {
       return;
     }
 
-    this.#defender.board.receive(x, y);
+    const hit = this.#defender.board.receive(x, y);
 
     let response;
+    let callback;
     if (this.#defender.board.isEmpty()) {
       response = {
         message: `You win, ${this.#attacker.name}`,
-        data: {
+        defender: {
           board: this.#defender.board.board,
         },
       };
+      callback = this.onGameEnded;
     } else {
-      [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
-      response = {
-        message: `Launch a missile, ${this.#attacker.name}`,
-        data: {
-          board: this.#defender.board.board,
-        },
-      };
+      if (hit) {
+        response = {
+          message: `Successful missile, ${this.#attacker.name}`,
+          defender: {
+            board: this.#defender.board.board,
+          },
+        };
+      } else {
+        response = {
+          message: `Unsuccessful missile, ${this.#attacker.name}`,
+          defender: {
+            board: this.#defender.board.board,
+          },
+        };
+      }
+
+      callback = this.onMissileLaunched;
     }
 
-    this.onMissileLaunched(response);
+    callback(response);
   };
+
+  handleEndBattle = () => {
+    [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
+    const response = {
+      message: `Start battle, ${this.#attacker.name}`,
+      attacker: {
+        name: this.#attacker.name,
+      },
+    };
+
+    this.onBattleEnded(response);
+  };
+
+  bindToOnGameStarted(callback) {
+    this.onGameStarted = callback;
+  }
 
   bindToOnPreparationStarted(callback) {
     this.onPreparationStarted = callback;
@@ -112,5 +164,9 @@ export class Model {
 
   bindToOnMissileLaunched(callback) {
     this.onMissileLaunched = callback;
+  }
+
+  bindToOnBattleEnded(callback) {
+    this.onBattleEnded = callback;
   }
 }

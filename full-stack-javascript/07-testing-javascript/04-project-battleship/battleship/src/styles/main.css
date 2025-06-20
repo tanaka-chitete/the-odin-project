@@ -48,7 +48,7 @@
 }
 
 body {
-  height: calc(100vh + 64px); /* Only shows footer on-scroll */
+  height: calc(100vh + 64px); /* The footer should only be shown on-scroll */
   background-color: var(--salt-200);
 }
 
@@ -89,7 +89,7 @@ main {
 }
 
 .allocation__ship {
-  visibility: visible; /* Becomes visible once game starts */
+  visibility: visible; /* The allocation should only be shown once the game starts */
   background-color: var(--salt-500);
   border: 0.5px solid var(--salt-700);
   cursor: pointer;
@@ -186,8 +186,4 @@ main {
 
 .board__cell_type_missile-miss {
   background-color: var(--rose-400);
-}
-
-.controls {
-  grid-area: middle;
 }

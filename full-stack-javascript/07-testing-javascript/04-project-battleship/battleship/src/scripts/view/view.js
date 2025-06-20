@@ -1,20 +1,21 @@
 "use strict";
 
-import { MISSILE_HIT, MISSILE_MISS } from "../constants";
+import { MISSILE_HIT, MISSILE_MISS, PLAYER_2_NAME } from "../constants";
 
 export class View {
   #messageView;
   #allocationView;
   #boardView;
 
-  #welcomeControls;
+  #gameStartControls;
+  #preparationStartControls;
   #preparationControls;
+  #battleStartControls;
   #battleControls;
 
   constructor() {
     this.#messageView = this.#initialiseMessageView();
-    this.#boardView = this.#initialiseBoardView();
-    this.#welcomeControls = this.#initialiseWelcomeControls();
+    this.#gameStartControls = this.#initialiseGameStartControls();
   }
 
   #initialiseMessageView() {
@@ -155,10 +156,15 @@ export class View {
     return initialiseFunction(initialiseForm());
   }
 
+  #destroyBoardView() {
+    this.#boardView.remove();
+    this.#boardView = null;
+  }
+
   #extendBoardView() {
     for (const row of this.#boardView.rows) {
       for (const cell of row.cells) {
-        cell.setAttribute("class", "board__cell board__cell_clickable");
+        cell.setAttribute("class", "board__cell board__cell_type_unknown");
         cell.addEventListener("click", () => {
           const currentTaggedCell = document.querySelector(
             "#board__cell_type_tagged"
@@ -173,38 +179,88 @@ export class View {
     }
   }
 
-  #initialiseWelcomeControls() {
+  #initialiseGameStartControls() {
     const initialiseForm = () => {
-      const welcomeControls = document.createElement("div");
-      welcomeControls.setAttribute("class", "controls controls_type_welcome");
+      const gameStartControls = document.createElement("div");
+      gameStartControls.setAttribute(
+        "class",
+        "controls controls_type_game-start"
+      );
 
       const startGameButton = document.createElement("button");
-      startGameButton.setAttribute("class", "controls__button_type_start-game");
+      startGameButton.setAttribute(
+        "class",
+        "controls__button controls__button_type_start-game"
+      );
       startGameButton.textContent = "Start";
 
-      welcomeControls.append(startGameButton);
+      gameStartControls.append(startGameButton);
 
       const middle = document.querySelector(".middle");
-      middle.append(welcomeControls);
+      middle.append(gameStartControls);
 
-      return document.querySelector(".controls_type_welcome");
+      return document.querySelector(".controls_type_game-start");
     };
 
-    const initialiseFunction = (welcomeControls) => {
-      const startGameButton = welcomeControls.querySelector(
+    const initialiseFunction = (gameStartControls) => {
+      const startGameButton = gameStartControls.querySelector(
         ".controls__button_type_start-game"
       );
-      startGameButton.addEventListener("click", () => this.onStartDeployment());
+      startGameButton.addEventListener("click", () => {
+        this.onStartGame();
+      });
 
-      return welcomeControls;
+      return gameStartControls;
     };
 
     return initialiseFunction(initialiseForm());
   }
 
-  #destroyStartControls() {
-    this.#welcomeControls.remove();
-    this.#welcomeControls = null;
+  #destroyGameStartControls() {
+    this.#gameStartControls.remove();
+    this.#gameStartControls = null;
+  }
+
+  #initialisePreparationStartControls() {
+    const initialiseForm = () => {
+      const preparationStartControls = document.createElement("div");
+      preparationStartControls.setAttribute(
+        "class",
+        "controls controls_type_preparation-start"
+      );
+
+      const startPreparationButton = document.createElement("button");
+      startPreparationButton.setAttribute(
+        "class",
+        "controls__button controls__button_type_start-preparation"
+      );
+      startPreparationButton.textContent = "Start";
+
+      preparationStartControls.append(startPreparationButton);
+
+      const middle = document.querySelector(".middle");
+      middle.append(preparationStartControls);
+
+      return document.querySelector(".controls_type_preparation-start");
+    };
+
+    const initialiseFunction = (preparationStartControls) => {
+      const startPreparationButton = preparationStartControls.querySelector(
+        ".controls__button_type_start-preparation"
+      );
+      startPreparationButton.addEventListener("click", () => {
+        this.onStartPreparation();
+      });
+
+      return preparationStartControls;
+    };
+
+    return initialiseFunction(initialiseForm());
+  }
+
+  #destroyPreparationStartControls() {
+    this.#preparationStartControls.remove();
+    this.#preparationStartControls = null;
   }
 
   #initialisePreparationControls() {
@@ -234,7 +290,7 @@ export class View {
         "class",
         "controls__button_type_end-preparation"
       );
-      endPreparationButton.textContent = "Submit";
+      endPreparationButton.textContent = "End";
 
       preparationControls.append(clearShipsButton);
       preparationControls.append(rotateShipButton);
@@ -265,10 +321,56 @@ export class View {
     this.#preparationControls = null;
   }
 
+  #initialiseBattleStartControls() {
+    const initialiseForm = () => {
+      const battleStartControls = document.createElement("div");
+      battleStartControls.setAttribute(
+        "class",
+        "controls controls_type_battle-start"
+      );
+
+      const startBattleButton = document.createElement("button");
+      startBattleButton.setAttribute(
+        "class",
+        "controls__button controls__button_type_start-battle"
+      );
+      startBattleButton.textContent = "Start";
+
+      battleStartControls.append(startBattleButton);
+
+      const middle = document.querySelector(".middle");
+      middle.append(battleStartControls);
+
+      return document.querySelector(".controls_type_battle-start");
+    };
+
+    const initialiseFunction = (battleStartControls) => {
+      const startBattleButton = battleStartControls.querySelector(
+        ".controls__button_type_start-battle"
+      );
+      startBattleButton.addEventListener("click", () => {
+        this.onStartBattle();
+      });
+
+      return battleStartControls;
+    };
+
+    return initialiseFunction(initialiseForm());
+  }
+
+  #destroyBattleStartControls() {
+    this.#battleStartControls.remove();
+    this.#battleStartControls = null;
+  }
+
   #initialiseBattleControls() {
     const initialiseForm = () => {
       const battleControls = document.createElement("div");
       battleControls.setAttribute("class", "controls controls_type_battle");
+
+      const clearTagButton = document.createElement("button");
+      clearTagButton.setAttribute("class", "controls__button_type_clear-tag");
+      clearTagButton.textContent = "Clear";
 
       const launchMissileButton = document.createElement("button");
       launchMissileButton.setAttribute(
@@ -277,7 +379,13 @@ export class View {
       );
       launchMissileButton.textContent = "Launch";
 
+      const endBattleButton = document.createElement("button");
+      endBattleButton.setAttribute("class", "controls__button_type_end-battle");
+      endBattleButton.textContent = "End";
+
+      battleControls.append(clearTagButton);
       battleControls.append(launchMissileButton);
+      battleControls.append(endBattleButton);
 
       const middle = document.querySelector(".middle");
       middle.append(battleControls);
@@ -291,53 +399,97 @@ export class View {
       );
       launchMissileButton.addEventListener("click", () => {
         const taggedCell = document.querySelector("#board__cell_type_tagged");
-        taggedCell.setAttribute("id", "");
-        const x = +taggedCell.getAttribute("data-x");
-        const y = +taggedCell.getAttribute("data-y");
-        this.onLaunchMissile(x, y);
+        if (taggedCell) {
+          taggedCell.setAttribute("id", "");
+          const x = +taggedCell.getAttribute("data-x");
+          const y = +taggedCell.getAttribute("data-y");
+          this.onLaunchMissile(x, y);
+        }
       });
+
+      const endBattleButton = battleControls.querySelector(
+        ".controls__button_type_end-battle"
+      );
+      endBattleButton.addEventListener("click", () => {
+        this.onEndBattle();
+      });
+
+      return battleControls;
     };
 
     return initialiseFunction(initialiseForm());
   }
 
+  #destroyBattleControls() {
+    this.#battleControls.remove();
+    this.#battleControls = null;
+  }
+
+  handleGameStarted(response) {
+    this.#destroyGameStartControls();
+
+    this.#boardView = this.#initialiseBoardView();
+    this.#preparationStartControls = this.#initialisePreparationStartControls();
+
+    this.#updateMessageView(response.message);
+  }
+
   handlePreparationStarted(response) {
-    this.#destroyStartControls();
+    this.#destroyPreparationStartControls();
 
     this.#allocationView = this.#initialiseAllocationView();
     this.#preparationControls = this.#initialisePreparationControls();
 
     this.#updateMessageView(response.message);
-    this.#updateAllocationView(response.data.allocation);
-    this.#updateBoardViewForPlacement(response.data.board);
+    this.#updateBoardViewForPreparation;
+    this.#updateAllocationView(response.attacker.allocation);
   }
 
   handleShipPlaced(response) {
     this.#updateMessageView(response.message);
-    this.#updateAllocationView(response.data.allocation);
-    this.#updateBoardViewForPlacement(response.data.board);
+    this.#updateAllocationView(response.attacker.allocation);
+    this.#updateBoardViewForPreparation(response.attacker.board);
   }
 
   handlePreparationEnded(response) {
+    this.#destroyAllocationView();
+    this.#destroyBoardView();
+    this.#destroyPreparationControls();
+
+    this.#boardView = this.#initialiseBoardView();
+
+    if (response.attacker.name === PLAYER_2_NAME) {
+      this.#preparationStartControls =
+        this.#initialisePreparationStartControls();
+    } else {
+      this.#battleStartControls = this.#initialiseBattleStartControls();
+    }
+
     this.#updateMessageView(response.message);
-    this.#updateAllocationView(response.data.allocation);
-    this.#updateBoardViewForPlacement(response.data.board);
   }
 
   handleBattleStarted(response) {
-    this.#destroyAllocationView();
-    this.#destroyPreparationControls();
+    this.#destroyBattleStartControls();
+
+    this.#battleControls = this.#initialiseBattleControls();
 
     this.#extendBoardView();
 
     this.#updateMessageView(response.message);
-    this.#battleControls = this.#initialiseBattleControls();
-    this.#updateBoardViewForBattle(response.data.board);
+    this.#updateBoardViewForBattle(response.defender.board);
   }
 
   handleMissileLaunched(response) {
     this.#updateMessageView(response.message);
-    this.#updateBoardViewForBattle(response.data.board);
+    this.#updateBoardViewForBattle(response.defender.board);
+  }
+
+  handleBattleEnded(response) {
+    this.#destroyBattleControls();
+
+    this.#battleStartControls = this.#initialiseBattleStartControls();
+
+    this.#updateMessageView(response.message);
   }
 
   #updateMessageView(message) {
@@ -353,7 +505,7 @@ export class View {
     }
   }
 
-  #updateBoardViewForPlacement(board) {
+  #updateBoardViewForPreparation(board) {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
         const cell = this.#boardView.querySelector(
@@ -396,8 +548,12 @@ export class View {
     }
   }
 
+  bindToOnStartGame(callback) {
+    this.onStartGame = callback;
+  }
+
   bindToOnStartPreparation(callback) {
-    this.onStartDeployment = callback;
+    this.onStartPreparation = callback;
   }
 
   bindToOnPlaceShip(callback) {
@@ -408,7 +564,15 @@ export class View {
     this.onEndPreparation = callback;
   }
 
+  bindToOnStartBattle(callback) {
+    this.onStartBattle = callback;
+  }
+
   bindToOnLaunchMissile(callback) {
     this.onLaunchMissile = callback;
+  }
+
+  bindToOnEndBattle(callback) {
+    this.onEndBattle = callback;
   }
 }

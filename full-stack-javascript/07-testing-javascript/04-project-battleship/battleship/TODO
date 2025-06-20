@@ -16,8 +16,12 @@ Style the UI
 	Style the "Start" controls
 	Style the "Placement" controls
 	Style the "Battle" controls
+	Display "Start Game" controls horizontally- and vertically-centred
 Miscellaneous
 	If allocation is exhausted, don't let the user drag a ship onto the board
 	Remove "click" event listener from cells which have already been clicked
-	Disable "Launch" button if no cell is tagged
+	Disable "Clear Tag" button if no cell is tagged
+	Disable "Launch Missile" button if no cell is tagged
 	Disable "End Preparation" button if board is not full
+	Introduce start battle button (make the user start the battle -- neater events this way)
+	Convert concise-body functions to block-body functions

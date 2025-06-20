@@ -8,6 +8,9 @@ export class Controller {
     this.#model = model;
     this.#view = view;
 
+    this.#view.bindToOnStartGame(this.forwardStartGame);
+    this.#model.bindToOnGameStarted(this.forwardGameStarted);
+
     this.#view.bindToOnStartPreparation(this.forwardStartPreparation);
     this.#model.bindToOnPreparationStarted(this.forwardPreparationStarted);
 
@@ -16,11 +19,24 @@ export class Controller {
 
     this.#view.bindToOnEndPreparation(this.forwardEndPreparation);
     this.#model.bindToOnPreparationEnded(this.forwardPreparationEnded);
+
+    this.#view.bindToOnStartBattle(this.forwardStartBattle);
     this.#model.bindToOnBattleStarted(this.forwardBattleStarted);
 
     this.#view.bindToOnLaunchMissile(this.forwardLaunchMissile);
     this.#model.bindToOnMissileLaunched(this.forwardMissileLaunched);
+
+    this.#view.bindToOnEndBattle(this.forwardEndBattle);
+    this.#model.bindToOnBattleEnded(this.forwardBattleEnded);
   }
+
+  forwardStartGame = () => {
+    this.#model.handleStartGame();
+  };
+
+  forwardGameStarted = (response) => {
+    this.#view.handleGameStarted(response);
+  };
 
   forwardStartPreparation = () => {
     this.#model.handleStartPreparation();
@@ -46,6 +62,10 @@ export class Controller {
     this.#view.handlePreparationEnded(response);
   };
 
+  forwardStartBattle = () => {
+    this.#model.handleStartBattle();
+  };
+
   forwardBattleStarted = (response) => {
     this.#view.handleBattleStarted(response);
   };
@@ -56,5 +76,13 @@ export class Controller {
 
   forwardMissileLaunched = (response) => {
     this.#view.handleMissileLaunched(response);
+  };
+
+  forwardEndBattle = () => {
+    this.#model.handleEndBattle();
+  };
+
+  forwardBattleEnded = (response) => {
+    this.#view.handleBattleEnded(response);
   };
 }
