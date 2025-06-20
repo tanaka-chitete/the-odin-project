@@ -4,7 +4,7 @@ import { MISSILE_HIT, MISSILE_MISS } from "../constants";
 
 export class View {
   #messageView;
-  #fleetView;
+  #allocationView;
   #boardView;
 
   #welcomeControls;
@@ -26,34 +26,39 @@ export class View {
     return document.querySelector(".message");
   }
 
-  #initialiseFleetView() {
+  #initialiseAllocationView() {
     const initialiseForm = () => {
-      const fleetView = document.createElement("div");
-      fleetView.setAttribute("class", "fleet");
+      const allocationView = document.createElement("div");
+      allocationView.setAttribute("class", "allocation");
 
       for (let i = 5; i >= 1; i--) {
         const ship = document.createElement("div");
-        ship.setAttribute("id", `class-${i}`);
-        ship.setAttribute("class", `fleet__ship fleet__ship_class_${i}`);
+        ship.setAttribute("id", `allocation__ship_class_${i}`);
+        ship.setAttribute(
+          "class",
+          `allocation__ship allocation__ship_class_${i}`
+        );
         ship.setAttribute("draggable", "true");
         ship.setAttribute("data-class", i);
-        fleetView.append(ship);
 
         const quantity = document.createElement("span");
         quantity.setAttribute(
           "class",
-          `fleet__quantity fleet__quantity_class_${i}`
+          `allocation__quantity allocation__quantity_class_${i}`
         );
-        fleetView.append(quantity);
+
+        allocationView.append(ship);
+        allocationView.append(quantity);
       }
 
-      document.querySelector(".left").append(fleetView);
+      const left = document.querySelector(".left");
+      left.append(allocationView);
 
-      return document.querySelector(".fleet");
+      return document.querySelector(".allocation");
     };
 
-    const initialiseFunction = (fleetView) => {
-      fleetView.querySelectorAll(".fleet__ship").forEach((ship) => {
+    const initialiseFunction = (allocationView) => {
+      allocationView.querySelectorAll(".allocation__ship").forEach((ship) => {
         ship.addEventListener("dragstart", (event) => {
           event.dataTransfer.effectAllowed = "copy";
 
@@ -77,15 +82,15 @@ export class View {
         });
       });
 
-      return fleetView;
+      return allocationView;
     };
 
     return initialiseFunction(initialiseForm());
   }
 
-  #destroyFleetView() {
-    this.#fleetView.remove();
-    this.#fleetView = null;
+  #destroyAllocationView() {
+    this.#allocationView.remove();
+    this.#allocationView = null;
   }
 
   #initialiseBoardView() {
@@ -299,28 +304,28 @@ export class View {
   handlePreparationStarted(response) {
     this.#destroyStartControls();
 
-    this.#fleetView = this.#initialiseFleetView();
+    this.#allocationView = this.#initialiseAllocationView();
     this.#preparationControls = this.#initialisePreparationControls();
 
     this.#updateMessageView(response.message);
-    this.#updateFleetView(response.data.fleet);
+    this.#updateAllocationView(response.data.allocation);
     this.#updateBoardViewForPlacement(response.data.board);
   }
 
   handleShipPlaced(response) {
     this.#updateMessageView(response.message);
-    this.#updateFleetView(response.data.fleet);
+    this.#updateAllocationView(response.data.allocation);
     this.#updateBoardViewForPlacement(response.data.board);
   }
 
   handlePreparationEnded(response) {
     this.#updateMessageView(response.message);
-    this.#updateFleetView(response.data.fleet);
+    this.#updateAllocationView(response.data.allocation);
     this.#updateBoardViewForPlacement(response.data.board);
   }
 
   handleBattleStarted(response) {
-    this.#destroyFleetView();
+    this.#destroyAllocationView();
     this.#destroyPreparationControls();
 
     this.#extendBoardView();
@@ -339,10 +344,10 @@ export class View {
     this.#messageView.textContent = message;
   }
 
-  #updateFleetView(fleet) {
-    for (const [length, quantity] of Object.entries(fleet)) {
-      const quantityElement = this.#fleetView.querySelector(
-        `.fleet__quantity_class_${length}`
+  #updateAllocationView(allocation) {
+    for (const [length, quantity] of Object.entries(allocation)) {
+      const quantityElement = this.#allocationView.querySelector(
+        `.allocation__quantity_class_${length}`
       );
       quantityElement.textContent = quantity;
     }

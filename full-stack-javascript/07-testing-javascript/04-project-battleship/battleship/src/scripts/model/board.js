@@ -21,7 +21,7 @@ import { Ship } from "./ship";
 
 export class Board {
   #_board;
-  #_fleet;
+  #_allocation;
 
   constructor() {
     this.#_board = new Array(BOARD_LENGTH);
@@ -35,7 +35,7 @@ export class Board {
       }
     }
 
-    this.#_fleet = {
+    this.#_allocation = {
       [CLASS_5_LENGTH]: CLASS_5_QUANTITY,
       [CLASS_4_LENGTH]: CLASS_4_QUANTITY,
       [CLASS_3_LENGTH]: CLASS_3_QUANTITY,
@@ -48,8 +48,8 @@ export class Board {
     return this.#_board;
   }
 
-  get fleet() {
-    return this.#_fleet;
+  get allocation() {
+    return this.#_allocation;
   }
 
   place(x1, y1, x2, y2) {
@@ -83,11 +83,11 @@ export class Board {
     const path = this.#makePath(x1, y1, x2, y2);
 
     // The path must correspond with an available ship
-    if (!this.fleet[path.length]) {
+    if (!this.allocation[path.length]) {
       return false;
     }
 
-    this.fleet[path.length]--;
+    this.allocation[path.length]--;
 
     // The path must be vacant
     if (path.some(([x, y]) => this.board[y][x])) {
@@ -135,7 +135,7 @@ export class Board {
   }
 
   isFull() {
-    for (const quantity of Object.values(this.fleet)) {
+    for (const quantity of Object.values(this.allocation)) {
       if (quantity) {
         return false;
       }

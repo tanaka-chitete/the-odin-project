@@ -11,11 +11,11 @@ describe("Board", () => {
     });
   });
 
-  describe("fleet", () => {
-    it("is retrievable", () => expect(new Board().fleet).toBeDefined());
+  describe("allocation", () => {
+    it("is retrievable", () => expect(new Board().allocation).toBeDefined());
 
     it("is immutable", () => {
-      expect(() => (new Board().fleet = null)).toThrow();
+      expect(() => (new Board().allocation = null)).toThrow();
     });
   });
 

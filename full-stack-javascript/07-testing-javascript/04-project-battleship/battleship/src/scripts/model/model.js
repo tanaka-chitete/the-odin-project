@@ -16,7 +16,7 @@ export class Model {
       message: `Place your ships, ${this.#attacker.name}`,
       data: {
         board: this.#attacker.board.board,
-        fleet: this.#attacker.board.fleet,
+        allocation: this.#attacker.board.allocation,
       },
     };
 
@@ -32,7 +32,7 @@ export class Model {
       message: `Place your ships, ${this.#attacker.name}`,
       data: {
         board: this.#attacker.board.board,
-        fleet: this.#attacker.board.fleet,
+        allocation: this.#attacker.board.allocation,
       },
     };
 
@@ -50,7 +50,7 @@ export class Model {
         message: `Place your ships, ${this.#attacker.name}`,
         data: {
           board: this.#attacker.board.board,
-          fleet: this.#attacker.board.fleet,
+          allocation: this.#attacker.board.allocation,
         },
       };
       this.onPreparationEnded(response);

@@ -6,9 +6,9 @@ Let the user change ship placement
 	Let them rotate each ship
 	Let them move each ship
 	Let them clear all ships
-Let the users view their fleet's
-	Let them view Player 1's fleet's health
-	Let them view Player 2's fleet's health
+Let the users view their allocation's
+	Let them view Player 1's allocation's health
+	Let them view Player 2's allocation's health
 Style the UI
 	Display ships on-top of board borders
 	Style the logo

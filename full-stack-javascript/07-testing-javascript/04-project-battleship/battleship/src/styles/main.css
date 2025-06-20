@@ -80,7 +80,7 @@ main {
   grid-area: middle;
 }
 
-.fleet {
+.allocation {
   width: 426.672px;
   aspect-ratio: 1 / 1;
   display: grid;
@@ -88,67 +88,67 @@ main {
   grid-template-columns: repeat(10, 1fr);
 }
 
-.fleet__ship {
+.allocation__ship {
   visibility: visible; /* Becomes visible once game starts */
   background-color: var(--salt-500);
   border: 0.5px solid var(--salt-700);
   cursor: pointer;
 }
 
-.fleet__ship_exhausted {
+.allocation__ship_exhausted {
   cursor: pointer;
 }
 
-.fleet__ship_class_5 {
+.allocation__ship_class_5 {
   grid-row: 1;
   grid-column: 2 / 7;
 }
 
-.fleet__ship_class_4 {
+.allocation__ship_class_4 {
   grid-row: 3;
   grid-column: 2 / 6;
 }
 
-.fleet__ship_class_3 {
+.allocation__ship_class_3 {
   grid-row: 5;
   grid-column: 2 / 5;
 }
 
-.fleet__ship_class_2 {
+.allocation__ship_class_2 {
   grid-row: 7;
   grid-column: 2 / 4;
 }
 
-.fleet__ship_class_1 {
+.allocation__ship_class_1 {
   grid-row: 9;
   grid-column: 2 / 3;
 }
 
-.fleet__quantity {
+.allocation__quantity {
   user-select: none;
 }
 
-.fleet__quantity_class_5 {
+.allocation__quantity_class_5 {
   grid-row: 1;
   grid-column: 1 / 2;
 }
 
-.fleet__quantity_class_4 {
+.allocation__quantity_class_4 {
   grid-row: 3;
   grid-column: 1 / 2;
 }
 
-.fleet__quantity_class_3 {
+.allocation__quantity_class_3 {
   grid-row: 5;
   grid-column: 1 / 2;
 }
 
-.fleet__quantity_class_2 {
+.allocation__quantity_class_2 {
   grid-row: 7;
   grid-column: 1 / 2;
 }
 
-.fleet__quantity_class_1 {
+.allocation__quantity_class_1 {
   grid-row: 9;
   grid-column: 1 / 2;
 }
