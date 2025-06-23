@@ -5,7 +5,7 @@ export const PLAYER_2_NAME = "Player 2";
 export const ACCEPTED = true;
 export const REJECTED = !ACCEPTED;
 
-// Board
+// Battlefield
 export const BOARD_LENGTH = 10;
 
 export const CLASS_1_LENGTH = 1;

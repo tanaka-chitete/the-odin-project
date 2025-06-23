@@ -11,6 +11,7 @@ Let the users view their allocation's
 	Let them view Player 2's allocation's health
 Style the UI
 	Display ships on-top of board borders
+	Style the port ships (light background and border for differentiation)
 	Style the logo
 	Style the "Message" view
 	Style the "Start" controls

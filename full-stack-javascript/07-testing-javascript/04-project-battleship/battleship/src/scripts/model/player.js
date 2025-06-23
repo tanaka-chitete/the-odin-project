@@ -1,6 +1,6 @@
 "use strict";
 
-import { Board } from "./board";
+import { Battlefield } from "./board";
 
 export class Player {
   #_name;
@@ -8,7 +8,7 @@ export class Player {
 
   constructor(name) {
     this.#_name = name;
-    this.#_board = new Board();
+    this.#_board = new Battlefield();
   }
 
   get name() {
