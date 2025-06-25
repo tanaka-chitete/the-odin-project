@@ -17,7 +17,7 @@ export class Port {
     return this.#lengthToShip.has(length);
   }
 
-  getShip(length) {
+  removeShip(length) {
     if (!this.hasShip(length)) {
       return null;
     }
