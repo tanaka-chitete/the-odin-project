@@ -28,7 +28,7 @@ describe("Ship", () => {
       });
     });
 
-    describe("when the ship is sunk", () => {
+    describe("when the ship is not afloat", () => {
       it("does not receive the missile", () => {
         const ship = new Ship(3);
         ship.receiveMissile();
@@ -39,21 +39,21 @@ describe("Ship", () => {
     });
   });
 
-  describe("isActive()", () => {
+  describe("isAfloat()", () => {
     describe("when the ship is afloat", () => {
-      it("states that the ship is active", () => {
+      it("confirms the ship is afloat", () => {
         const ship = new Ship(3);
-        expect(ship.isActive()).toBe(true);
+        expect(ship.isAfloat()).toBe(true);
       });
     });
 
-    describe("when the ship is sunk", () => {
-      it("states that the ship is not active", () => {
+    describe("when the ship is not afloat", () => {
+      it("denies the ship is afloat", () => {
         const ship = new Ship(3);
         ship.receiveMissile();
         ship.receiveMissile();
         ship.receiveMissile();
-        expect(ship.isActive()).toBe(false);
+        expect(ship.isAfloat()).toBe(false);
       });
     });
   });

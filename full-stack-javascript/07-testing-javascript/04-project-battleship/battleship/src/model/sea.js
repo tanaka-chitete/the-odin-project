@@ -18,7 +18,19 @@ export class Sea {
     }
   }
 
+  getLength() {
+    return this.#map.length;
+  }
+
+  getWidth() {
+    return this.#map[0].length;
+  }
+
   getElement(x, y) {
+    if (!(x >= 0 && x <= 9 && y >= 0 && y <= 9)) {
+      return null;
+    }
+
     return this.#map[y][x];
   }
 
@@ -70,19 +82,22 @@ export class Sea {
 
   receiveMissile(x, y) {
     if (!(x >= 0 && x <= 9 && y >= 0 && y <= 9)) {
-      return false;
+      return;
     }
 
-    let hit;
+    if (
+      this.#map[y][x] === "missile (hit)" ||
+      this.#map[y][x] === "missile (miss)"
+    ) {
+      return;
+    }
+
     if (this.#map[y][x] instanceof Ship) {
       this.#map[y][x].receiveMissile();
-      this.#map[y][x] = "missile";
-      hit = true;
+      this.#map[y][x] = "missile (hit)";
     } else {
-      hit = false;
+      this.#map[y][x] = "missile (miss)";
     }
-
-    return hit;
   }
 
   isEmpty() {

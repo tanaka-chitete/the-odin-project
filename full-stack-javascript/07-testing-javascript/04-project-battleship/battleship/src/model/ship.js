@@ -22,14 +22,14 @@ export class Ship {
   }
 
   receiveMissile() {
-    if (!this.isActive()) {
+    if (!this.isAfloat()) {
       return;
     }
 
     --this.#integrity;
   }
 
-  isActive() {
+  isAfloat() {
     return this.#integrity > 0;
   }
 }
