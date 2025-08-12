@@ -80,6 +80,16 @@ export class Sea {
     }
   }
 
+  /**
+   * Does not receive a missile object as it could be tampered with prior to
+   * this method call (e.g. missile.recordHit())
+   * */
+  // recordMissile(x, y) RENAME TO RECORD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * Empty missile??????? This way you (1) avoid tampering and (2) don't rely on raw strings
+   * Well actually, javascript is dynamically typed, so people can tamper with your objects regardless...
+   * So, maybe just stick to the Missile with properties?
+   */
   receiveMissile(x, y) {
     if (!(x >= 0 && x <= 9 && y >= 0 && y <= 9)) {
       return;
