@@ -38,12 +38,12 @@ describe("Port", () => {
       });
     });
 
-    // describe("when the port does not have the ship", () => {
-    //   it("does not remove anything", () => {
-    //     const ship = new Ship(3);
-    //     const port = new Port([ship]);
-    //     expect(port.popShip(4)).toBe(null);
-    //   });
-    // });
+    describe("when the port does not have the ship", () => {
+      it("does not remove anything", () => {
+        const ship = new Ship(3);
+        const port = new Port([ship]);
+        expect(port.popShip(4)).toBe(null);
+      });
+    });
   });
 });
