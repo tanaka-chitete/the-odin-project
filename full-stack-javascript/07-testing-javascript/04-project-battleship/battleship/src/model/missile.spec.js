@@ -3,27 +3,19 @@
 import { Missile } from "./missile";
 
 describe("Missile", () => {
-  describe("recordHit()", () => {
-    it.skip("records the hit", () => {
-      const missile = new Missile();
-      //
-      missile.recordHit();
-      expect(missile.didHitShip());
-    });
-  });
-
-  describe("didHitShip()", () => {
+  describe("detonate()", () => {
     describe("if the missile hit a ship", () => {
-      it.skip("confirms the missile hit a ship", () => {
+      it("detonates", () => {
         const missile = new Missile();
-        expect(missile.didHitShip()).toBe(false);
+        missile.detonate();
+        expect(missile.didDetonate()).toBe(true);
       });
     });
 
     describe("if the missile did not hit a ship", () => {
-      it.skip("denies the missile hit a ship", () => {
+      it("does not detonate", () => {
         const missile = new Missile();
-        expect(missile.didHitShip()).toBe(true);
+        expect(missile.didDetonate()).toBe(false);
       });
     });
   });

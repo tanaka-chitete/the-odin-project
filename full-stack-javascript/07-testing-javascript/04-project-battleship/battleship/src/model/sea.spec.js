@@ -1,5 +1,6 @@
 "use strict";
 
+import { Missile } from "./missile.js";
 import { Sea } from "./sea.js";
 import { Ship } from "./ship.js";
 
@@ -78,7 +79,7 @@ describe("Sea", () => {
     });
   });
 
-  describe("receiveMissile()", () => {
+  describe("recordHit()", () => {
     describe("when the missile is without limits", () => {
       it("does not record the missile", () => {
         const sea = new Sea();
@@ -104,9 +105,12 @@ describe("Sea", () => {
     describe("when the missile hits a ship", () => {
       it("records the missile as a hit", () => {
         const sea = new Sea();
-        sea.placeShipHorizontally(new Ship(3), 0, 0);
-        sea.receiveMissile(0, 0);
-        expect(sea.getElement(0, 0)).toBe("missile (hit)");
+        const ship = new Ship(3);
+        sea.placeShipHorizontally(ship, 0, 0);
+        const missile = new Missile();
+        sea.receiveMissile(missile, 0, 0);
+        expect(sea.getElement(0, 0)).toBe(missile);
+        expect(sea.getElement(0, 0).didDetonate()).toBe(true);
       });
     });
 
@@ -114,8 +118,10 @@ describe("Sea", () => {
       it("records the missile as a miss", () => {
         const sea = new Sea();
         sea.placeShipHorizontally(new Ship(3), 0, 0);
-        sea.receiveMissile(3, 0);
-        expect(sea.getElement(3, 0)).toBe("missile (miss)");
+        const missile = new Missile();
+        sea.receiveMissile(missile, 3, 0);
+        expect(sea.getElement(3, 0)).toBe(missile);
+        expect(sea.getElement(3, 0).didDetonate()).toBe(false);
       });
     });
   });

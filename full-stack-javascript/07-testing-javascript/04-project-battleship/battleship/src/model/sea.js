@@ -1,5 +1,6 @@
 "use strict";
 
+import { Missile } from "./missile";
 import { Ship } from "./ship";
 
 export class Sea {
@@ -80,33 +81,21 @@ export class Sea {
     }
   }
 
-  /**
-   * Does not receive a missile object as it could be tampered with prior to
-   * this method call (e.g. missile.recordHit())
-   * */
-  // recordMissile(x, y) RENAME TO RECORD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  /**
-   * Empty missile??????? This way you (1) avoid tampering and (2) don't rely on raw strings
-   * Well actually, javascript is dynamically typed, so people can tamper with your objects regardless...
-   * So, maybe just stick to the Missile with properties?
-   */
-  receiveMissile(x, y) {
+  receiveMissile(missile, x, y) {
     if (!(x >= 0 && x <= 9 && y >= 0 && y <= 9)) {
       return;
     }
 
-    if (
-      this.#map[y][x] === "missile (hit)" ||
-      this.#map[y][x] === "missile (miss)"
-    ) {
+    if (this.#map[y][x] instanceof Missile) {
       return;
     }
 
     if (this.#map[y][x] instanceof Ship) {
-      this.#map[y][x].receiveMissile();
-      this.#map[y][x] = "missile (hit)";
+      this.#map[y][x].recordHit();
+      this.#map[y][x] = missile;
+      this.#map[y][x].detonate();
     } else {
-      this.#map[y][x] = "missile (miss)";
+      this.#map[y][x] = missile;
     }
   }
 

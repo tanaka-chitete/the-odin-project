@@ -19,21 +19,21 @@ describe("Ship", () => {
     });
   });
 
-  describe("receiveMissile()", () => {
+  describe("recordHit()", () => {
     describe("when the ship is afloat", () => {
-      it("receives the missile", () => {
+      it("records a hit", () => {
         const ship = new Ship(3);
-        ship.receiveMissile();
+        ship.recordHit();
         expect(ship.getIntegrity()).toBe(2);
       });
     });
 
     describe("when the ship is not afloat", () => {
-      it("does not receive the missile", () => {
+      it("does not record a hit", () => {
         const ship = new Ship(3);
-        ship.receiveMissile();
-        ship.receiveMissile();
-        ship.receiveMissile();
+        ship.recordHit();
+        ship.recordHit();
+        ship.recordHit();
         expect(ship.getIntegrity()).toBe(0);
       });
     });
@@ -50,9 +50,9 @@ describe("Ship", () => {
     describe("when the ship is not afloat", () => {
       it("denies the ship is afloat", () => {
         const ship = new Ship(3);
-        ship.receiveMissile();
-        ship.receiveMissile();
-        ship.receiveMissile();
+        ship.recordHit();
+        ship.recordHit();
+        ship.recordHit();
         expect(ship.isAfloat()).toBe(false);
       });
     });

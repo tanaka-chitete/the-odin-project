@@ -21,7 +21,7 @@ export class Ship {
     return this.#integrity;
   }
 
-  receiveMissile() {
+  recordHit() {
     if (!this.isAfloat()) {
       return;
     }
