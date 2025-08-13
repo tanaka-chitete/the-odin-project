@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <title>Battleship</title>
+  </head>
+  <body>
+    <div id="root">
+      <header>
+        <h1>Battleship</h1>
+        <h3 class="message"></h3>
+      </header>
+      <main>
+        <div class="left">
+          <div class="port"></div>
+        </div>
+        <div class="middle">
+          <table class="sea">
+            <tr class="sea__row">
+              <td class="sea__data" data-x="0" data-y="0"></td>
+              <td class="sea__data" data-x="1" data-y="0"></td>
+              <td class="sea__data" data-x="2" data-y="0"></td>
+              <td class="sea__data" data-x="3" data-y="0"></td>
+              <td class="sea__data" data-x="4" data-y="0"></td>
+              <td class="sea__data" data-x="5" data-y="0"></td>
+              <td class="sea__data" data-x="6" data-y="0"></td>
+              <td class="sea__data" data-x="7" data-y="0"></td>
+              <td class="sea__data" data-x="8" data-y="0"></td>
+              <td class="sea__data" data-x="9" data-y="0"></td>
+            </tr>
+            <tr class="sea__row">
+              <td class="sea__data" data-x="0" data-y="1"></td>
+              <td class="sea__data" data-x="1" data-y="1"></td>
+              <td class="sea__data" data-x="2" data-y="1"></td>
+              <td class="sea__data" data-x="3" data-y="1"></td>
+              <td class="sea__data" data-x="4" data-y="1"></td>
+              <td class="sea__data" data-x="5" data-y="1"></td>
+              <td class="sea__data" data-x="6" data-y="1"></td>
+              <td class="sea__data" data-x="7" data-y="1"></td>
+              <td class="sea__data" data-x="8" data-y="1"></td>
+              <td class="sea__data" data-x="9" data-y="1"></td>
+            </tr>
+            <tr class="sea__row">
+              <td class="sea__data" data-x="0" data-y="2"></td>
+              <td class="sea__data" data-x="1" data-y="2"></td>
+              <td class="sea__data" data-x="2" data-y="2"></td>
+              <td class="sea__data" data-x="3" data-y="2"></td>
+              <td class="sea__data" data-x="4" data-y="2"></td>
+              <td class="sea__data" data-x="5" data-y="2"></td>
+              <td class="sea__data" data-x="6" data-y="2"></td>
+              <td class="sea__data" data-x="7" data-y="2"></td>
+              <td class="sea__data" data-x="8" data-y="2"></td>
+              <td class="sea__data" data-x="9" data-y="2"></td>
+            </tr>
+            <tr class="sea__row">
+              <td class="sea__data" data-x="0" data-y="3"></td>
+              <td class="sea__data" data-x="1" data-y="3"></td>
+              <td class="sea__data" data-x="2" data-y="3"></td>
+              <td class="sea__data" data-x="3" data-y="3"></td>
+              <td class="sea__data" data-x="4" data-y="3"></td>
+              <td class="sea__data" data-x="5" data-y="3"></td>
+              <td class="sea__data" data-x="6" data-y="3"></td>
+              <td class="sea__data" data-x="7" data-y="3"></td>
+              <td class="sea__data" data-x="8" data-y="3"></td>
+              <td class="sea__data" data-x="9" data-y="3"></td>
+            </tr>
+            <tr class="sea__row">
+              <td class="sea__data" data-x="0" data-y="4"></td>
+              <td class="sea__data" data-x="1" data-y="4"></td>
+              <td class="sea__data" data-x="2" data-y="4"></td>
+              <td class="sea__data" data-x="3" data-y="4"></td>
+              <td class="sea__data" data-x="4" data-y="4"></td>
+              <td class="sea__data" data-x="5" data-y="4"></td>
+              <td class="sea__data" data-x="6" data-y="4"></td>
+              <td class="sea__data" data-x="7" data-y="4"></td>
+              <td class="sea__data" data-x="8" data-y="4"></td>
+              <td class="sea__data" data-x="9" data-y="4"></td>
+            </tr>
+            <tr class="sea__row">
+              <td class="sea__data" data-x="0" data-y="5"></td>
+              <td class="sea__data" data-x="1" data-y="5"></td>
+              <td class="sea__data" data-x="2" data-y="5"></td>
+              <td class="sea__data" data-x="3" data-y="5"></td>
+              <td class="sea__data" data-x="4" data-y="5"></td>
+              <td class="sea__data" data-x="5" data-y="5"></td>
+              <td class="sea__data" data-x="6" data-y="5"></td>
+              <td class="sea__data" data-x="7" data-y="5"></td>
+              <td class="sea__data" data-x="8" data-y="5"></td>
+              <td class="sea__data" data-x="9" data-y="5"></td>
+            </tr>
+            <tr class="sea__row">
+              <td class="sea__data" data-x="0" data-y="6"></td>
+              <td class="sea__data" data-x="1" data-y="6"></td>
+              <td class="sea__data" data-x="2" data-y="6"></td>
+              <td class="sea__data" data-x="3" data-y="6"></td>
+              <td class="sea__data" data-x="4" data-y="6"></td>
+              <td class="sea__data" data-x="5" data-y="6"></td>
+              <td class="sea__data" data-x="6" data-y="6"></td>
+              <td class="sea__data" data-x="7" data-y="6"></td>
+              <td class="sea__data" data-x="8" data-y="6"></td>
+              <td class="sea__data" data-x="9" data-y="6"></td>
+            </tr>
+            <tr class="sea__row">
+              <td class="sea__data" data-x="0" data-y="7"></td>
+              <td class="sea__data" data-x="1" data-y="7"></td>
+              <td class="sea__data" data-x="2" data-y="7"></td>
+              <td class="sea__data" data-x="3" data-y="7"></td>
+              <td class="sea__data" data-x="4" data-y="7"></td>
+              <td class="sea__data" data-x="5" data-y="7"></td>
+              <td class="sea__data" data-x="6" data-y="7"></td>
+              <td class="sea__data" data-x="7" data-y="7"></td>
+              <td class="sea__data" data-x="8" data-y="7"></td>
+              <td class="sea__data" data-x="9" data-y="7"></td>
+            </tr>
+            <tr class="sea__row">
+              <td class="sea__data" data-x="0" data-y="8"></td>
+              <td class="sea__data" data-x="1" data-y="8"></td>
+              <td class="sea__data" data-x="2" data-y="8"></td>
+              <td class="sea__data" data-x="3" data-y="8"></td>
+              <td class="sea__data" data-x="4" data-y="8"></td>
+              <td class="sea__data" data-x="5" data-y="8"></td>
+              <td class="sea__data" data-x="6" data-y="8"></td>
+              <td class="sea__data" data-x="7" data-y="8"></td>
+              <td class="sea__data" data-x="8" data-y="8"></td>
+              <td class="sea__data" data-x="9" data-y="8"></td>
+            </tr>
+            <tr class="sea__row">
+              <td class="sea__data" data-x="0" data-y="9"></td>
+              <td class="sea__data" data-x="1" data-y="9"></td>
+              <td class="sea__data" data-x="2" data-y="9"></td>
+              <td class="sea__data" data-x="3" data-y="9"></td>
+              <td class="sea__data" data-x="4" data-y="9"></td>
+              <td class="sea__data" data-x="5" data-y="9"></td>
+              <td class="sea__data" data-x="6" data-y="9"></td>
+              <td class="sea__data" data-x="7" data-y="9"></td>
+              <td class="sea__data" data-x="8" data-y="9"></td>
+              <td class="sea__data" data-x="9" data-y="9"></td>
+            </tr>
+          </table>
+          <div class="console">
+            <button
+              type="button"
+              class="console__button console__button_type_start-game"
+            >
+              Start
+            </button>
+          </div>
+        </div>
+      </main>
+      <footer>
+        <p>
+          Developed by
+          <a href="https://www.linkedin.com/in/tanaka-chitete/" target="_blank"
+            >Tanaka Chitete</a
+          >
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
