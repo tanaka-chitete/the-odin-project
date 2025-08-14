@@ -5,7 +5,7 @@ import { Ship } from "./ship.js";
 
 describe("Port", () => {
   describe("hasShip()", () => {
-    describe("when the port has the ship", () => {
+    describe("if the port has the ship", () => {
       it("confirms the port has the ship", () => {
         const ship = new Ship(3);
         const port = new Port([ship]);
@@ -13,7 +13,7 @@ describe("Port", () => {
       });
     });
 
-    describe("when the port does not have the ship", () => {
+    describe("if the port does not have the ship", () => {
       it("denies the port has the ship", () => {
         const ship = new Ship(3);
         const port = new Port([ship]);
@@ -23,7 +23,7 @@ describe("Port", () => {
   });
 
   describe("popShip()", () => {
-    describe("when the port has the ship", () => {
+    describe("if the port has the ship", () => {
       it("gets the ship from the port", () => {
         const ship = new Ship(3);
         const port = new Port([ship]);
@@ -38,7 +38,7 @@ describe("Port", () => {
       });
     });
 
-    describe("when the port does not have the ship", () => {
+    describe("if the port does not have the ship", () => {
       it("does not remove anything", () => {
         const ship = new Ship(3);
         const port = new Port([ship]);

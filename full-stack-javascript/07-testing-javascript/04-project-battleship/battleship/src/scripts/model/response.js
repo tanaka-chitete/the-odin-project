@@ -4,7 +4,11 @@ export class Response {
 
   constructor(message, data) {
     if (!(typeof message === "string")) {
-      throw new Error("name must be a String");
+      throw new Error("message must be a string");
+    }
+
+    if (data == null || data.constructor.name !== "Object") {
+      throw new Error("data must be an object");
     }
 
     this.#message = message;

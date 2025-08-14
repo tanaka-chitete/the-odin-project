@@ -16,9 +16,21 @@ describe("Response", () => {
       });
     });
 
-    describe("if the message is a string", () => {
+    describe("if the data is not an object", () => {
+      it("does not construct an object", () => {
+        expect(() => new Response("", null)).toThrow();
+        expect(() => new Response("", undefined)).toThrow();
+        expect(() => new Response("", true)).toThrow();
+        expect(() => new Response("", false)).toThrow();
+        expect(() => new Response("", 1)).toThrow();
+        expect(() => new Response("", 1n)).toThrow();
+        expect(() => new Response("", new Symbol())).toThrow();
+      });
+    });
+
+    describe("if the arguments are valid", () => {
       it("constructs an object", () => {
-        const message = "Start placement, Admiral 1";
+        const message = "";
         const data = {};
         const response = new Response(message, data);
         expect(response.getMessage()).toBe(message);

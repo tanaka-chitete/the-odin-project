@@ -5,7 +5,7 @@ import { Sea } from "./sea";
 
 describe("Admiral", () => {
   describe("constructor()", () => {
-    describe("when the name is not a string", () => {
+    describe("if the name is not a string", () => {
       it("does not construct an object", () => {
         expect(() => new Admiral(null)).toThrow();
         expect(() => new Admiral(undefined)).toThrow();
@@ -17,7 +17,7 @@ describe("Admiral", () => {
       });
     });
 
-    describe("when the name is a string", () => {
+    describe("if the name is a string", () => {
       it("constructs an object", () => {
         const admiral = new Admiral("Anjni");
         expect(admiral.getName()).toBe("Anjni");

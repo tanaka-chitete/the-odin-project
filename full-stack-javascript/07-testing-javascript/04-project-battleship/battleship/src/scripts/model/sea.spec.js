@@ -14,7 +14,7 @@ describe("Sea", () => {
   });
 
   describe("placeShipHorizontally()", () => {
-    describe("when the path is without limits", () => {
+    describe("if the path is outside limits", () => {
       it("does not place the ship", () => {
         const sea = new Sea();
         const ship = new Ship(3);
@@ -24,7 +24,7 @@ describe("Sea", () => {
       });
     });
 
-    describe("when the path is within limits", () => {
+    describe("if the path is inside limits", () => {
       it("places the ship", () => {
         const sea = new Sea();
         const ship = new Ship(3);
@@ -47,7 +47,7 @@ describe("Sea", () => {
   });
 
   describe("placeShipVertically()", () => {
-    describe("when the path is without limits", () => {
+    describe("if the path is outside limits", () => {
       it("does not place the ship", () => {
         const sea = new Sea();
         const ship = new Ship(3);
@@ -57,7 +57,7 @@ describe("Sea", () => {
       });
     });
 
-    describe("when the path is within limits", () => {
+    describe("if the path is inside limits", () => {
       it("places the ship", () => {
         const sea = new Sea();
         const ship = new Ship(3);
@@ -80,7 +80,7 @@ describe("Sea", () => {
   });
 
   describe("recordHit()", () => {
-    describe("when the missile is without limits", () => {
+    describe("if the missile is outside limits", () => {
       it("does not record the missile", () => {
         const sea = new Sea();
         sea.receiveMissile(-1, 0);
@@ -102,39 +102,41 @@ describe("Sea", () => {
       });
     });
 
-    describe("when the missile hits a ship", () => {
-      it("records the missile as a hit", () => {
-        const sea = new Sea();
-        const ship = new Ship(3);
-        sea.placeShipHorizontally(ship, 0, 0);
-        const missile = new Missile();
-        sea.receiveMissile(missile, 0, 0);
-        expect(sea.getElement(0, 0)).toBe(missile);
-        expect(sea.getElement(0, 0).didDetonate()).toBe(true);
+    describe("if the missile is inside limits", () => {
+      describe("if the missile hits a ship", () => {
+        it("records the missile as a hit", () => {
+          const sea = new Sea();
+          const ship = new Ship(3);
+          sea.placeShipHorizontally(ship, 0, 0);
+          const missile = new Missile();
+          sea.receiveMissile(missile, 0, 0);
+          expect(sea.getElement(0, 0)).toBe(missile);
+          expect(sea.getElement(0, 0).didDetonate()).toBe(true);
+        });
       });
-    });
 
-    describe("when the missile misses a ship", () => {
-      it("records the missile as a miss", () => {
-        const sea = new Sea();
-        sea.placeShipHorizontally(new Ship(3), 0, 0);
-        const missile = new Missile();
-        sea.receiveMissile(missile, 3, 0);
-        expect(sea.getElement(3, 0)).toBe(missile);
-        expect(sea.getElement(3, 0).didDetonate()).toBe(false);
+      describe("if the missile misses a ship", () => {
+        it("records the missile as a miss", () => {
+          const sea = new Sea();
+          sea.placeShipHorizontally(new Ship(3), 0, 0);
+          const missile = new Missile();
+          sea.receiveMissile(missile, 3, 0);
+          expect(sea.getElement(3, 0)).toBe(missile);
+          expect(sea.getElement(3, 0).didDetonate()).toBe(false);
+        });
       });
     });
   });
 
   describe("isEmpty()", () => {
-    describe("when there are no ships placed", () => {
+    describe("if there are no ships placed", () => {
       it("states that the sea is empty", () => {
         const sea = new Sea();
         expect(sea.isEmpty()).toBe(true);
       });
     });
 
-    describe("when there is at leas one ship placed", () => {
+    describe("if there is at leas one ship placed", () => {
       it("states that the sea is not empty", () => {
         const sea = new Sea();
         const ship = new Ship(3);

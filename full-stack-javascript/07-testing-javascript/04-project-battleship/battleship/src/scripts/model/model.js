@@ -1,6 +1,7 @@
 "use strict";
 
 import { Admiral } from "./admiral";
+import { Response } from "./response";
 
 export class Model {
   #attacker;
@@ -16,7 +17,8 @@ export class Model {
     //   message: `Start placement, ${this.#attacker.getName()}`,
     // };
     const response = new Response(
-      `Start preparation, ${this.#attacker.getName()}`
+      `Start preparation, ${this.#attacker.getName()}`,
+      {}
     );
 
     this.onGameStarted(response);
