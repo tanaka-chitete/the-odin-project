@@ -12,8 +12,13 @@ export class Model {
   }
 
   handleStartGame = () => {
-    const response = {
-      message: `Start placement, ${this.#attacker.getName()}`,
-    };
+    // const response = {
+    //   message: `Start placement, ${this.#attacker.getName()}`,
+    // };
+    const response = new Response(
+      `Start preparation, ${this.#attacker.getName()}`
+    );
+
+    this.onGameStarted(response);
   };
 }
