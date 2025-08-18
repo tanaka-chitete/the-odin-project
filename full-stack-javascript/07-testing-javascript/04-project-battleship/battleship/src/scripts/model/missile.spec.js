@@ -4,7 +4,7 @@ import { Missile } from "./missile";
 
 describe("Missile", () => {
   describe("detonate()", () => {
-    describe("if the missile hit a ship", () => {
+    describe("if detonation is triggered", () => {
       it("detonates", () => {
         const missile = new Missile();
         missile.detonate();
@@ -12,7 +12,7 @@ describe("Missile", () => {
       });
     });
 
-    describe("if the missile did not hit a ship", () => {
+    describe("if detonation is not triggered", () => {
       it("does not detonate", () => {
         const missile = new Missile();
         expect(missile.didDetonate()).toBe(false);

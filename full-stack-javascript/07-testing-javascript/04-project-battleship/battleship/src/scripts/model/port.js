@@ -1,21 +1,32 @@
 "use strict";
 
+import { Ship } from "./ship.js";
+
 export class Port {
-  #lengthToShips;
+  #classToShips;
 
-  constructor(ships) {
-    this.#lengthToShips = new Map();
-    for (const ship of ships) {
-      if (!this.hasShip(ship.getLength())) {
-        this.#lengthToShips.set(ship.getLength(), []);
-      }
-
-      this.#lengthToShips.get(ship.getLength()).push(ship);
-    }
+  constructor() {
+    this.#classToShips = new Map([
+      [5, [new Ship(5)]],
+      [4, [new Ship(4), new Ship(4)]],
+      [
+        3,
+        [
+          new Ship(3),
+          new Ship(3),
+          new Ship(3),
+          new Ship(3),
+          new Ship(3),
+          new Ship(3),
+          new Ship(3),
+        ],
+      ],
+      [2, [new Ship(2), new Ship(2), new Ship(2), new Ship(2), new Ship(2)]],
+    ]);
   }
 
   hasShip(length) {
-    return this.#lengthToShips.has(length);
+    return this.#classToShips.has(length);
   }
 
   popShip(length) {
@@ -23,10 +34,10 @@ export class Port {
       return null;
     }
 
-    const ship = this.#lengthToShips.get(length).pop();
+    const ship = this.#classToShips.get(length).pop();
 
-    if (this.#lengthToShips.get(length).length === 0) {
-      this.#lengthToShips.delete(length);
+    if (this.#classToShips.get(length).length === 0) {
+      this.#classToShips.delete(length);
     }
 
     return ship;

@@ -1,6 +1,5 @@
 "use strict";
 
-import { Missile } from "./missile";
 import { Ship } from "./ship";
 
 export class Sea {
@@ -19,7 +18,7 @@ export class Sea {
     }
   }
 
-  getLength() {
+  getSize() {
     return this.#map.length;
   }
 
@@ -35,14 +34,14 @@ export class Sea {
     return this.#map[y][x];
   }
 
-  placeShipHorizontally(ship, x, y) {
-    if (!(x >= 0 && x + ship.getLength() - 1 <= 9 && y >= 0 && y <= 9)) {
+  placeShip(ship, x, y) {
+    if (!(x >= 0 && x + ship.getSize() - 1 <= 9 && y >= 0 && y <= 9)) {
       return;
     }
 
     let vacant = true;
     let j = x;
-    while (vacant && j < x + ship.getLength()) {
+    while (vacant && j < x + ship.getSize()) {
       if (this.#map[y][j]) {
         vacant = false;
       }
@@ -53,31 +52,8 @@ export class Sea {
       return;
     }
 
-    for (let j = x; j < x + ship.getLength(); j++) {
+    for (let j = x; j < x + ship.getSize(); j++) {
       this.#map[y][j] = ship;
-    }
-  }
-
-  placeShipVertically(ship, x, y) {
-    if (!(x >= 0 && x <= 9 && y >= 0 && y + ship.getLength() - 1 <= 9)) {
-      return;
-    }
-
-    let vacant = true;
-    let i = y;
-    while (vacant && i < y + ship.getLength()) {
-      if (this.#map[i][x]) {
-        vacant = false;
-      }
-      i++;
-    }
-
-    if (!vacant) {
-      return;
-    }
-
-    for (let i = y; i < y + ship.getLength(); i++) {
-      this.#map[i][x] = ship;
     }
   }
 
@@ -91,7 +67,7 @@ export class Sea {
     }
 
     if (this.#map[y][x] instanceof Ship) {
-      this.#map[y][x].recordHit();
+      this.#map[y][x].receiveMissile();
       this.#map[y][x] = missile;
       this.#map[y][x].detonate();
     } else {

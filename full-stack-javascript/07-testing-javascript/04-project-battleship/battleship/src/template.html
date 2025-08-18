@@ -143,12 +143,50 @@
             </tr>
           </table>
           <div class="console">
-            <button
-              type="button"
-              class="console__button console__button_type_start-game"
-            >
-              Start
-            </button>
+            <div class="console__panel console__panel_type_game-start">
+              <button
+                type="button"
+                class="console__button console__button_type_start-game"
+              >
+                Start
+              </button>
+            </div>
+
+            <div class="console__panel console__panel_type_placement hidden">
+              <button
+                type="button"
+                class="console__button console__button_type_clear-ships"
+              >
+                Clear
+              </button>
+              <button
+                type="button"
+                class="console__button console__button_type_rotate-ship"
+              >
+                Rotate
+              </button>
+              <button
+                type="button"
+                class="console__button console__button_type_end-placement"
+              >
+                End
+              </button>
+            </div>
+
+            <div class="console__panel console__panel_type_engagement hidden">
+              <button
+                type="button"
+                class="console__button console__button_type_launch-missile"
+              >
+                Launch
+              </button>
+              <button
+                type="button"
+                class="console__button console__button_type_end-engagement"
+              >
+                End
+              </button>
+            </div>
           </div>
         </div>
       </main>

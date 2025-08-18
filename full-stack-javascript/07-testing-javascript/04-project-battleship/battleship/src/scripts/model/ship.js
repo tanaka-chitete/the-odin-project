@@ -5,15 +5,15 @@ export class Ship {
   #integrity;
 
   constructor(length) {
-    if (length < 1 || length > 5) {
-      throw new Error("the length must be within limits");
+    if (length < 2 || length > 5) {
+      throw new Error("the length must be inside limits");
     }
 
     this.#length = length;
     this.#integrity = length;
   }
 
-  getLength() {
+  getSize() {
     return this.#length;
   }
 
@@ -21,7 +21,7 @@ export class Ship {
     return this.#integrity;
   }
 
-  recordHit() {
+  receiveMissile() {
     if (!this.isAfloat()) {
       return;
     }

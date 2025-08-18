@@ -157,3 +157,7 @@ main {
 .sea__data_type_missile-miss {
   background-color: var(--rose-400);
 }
+
+.hidden {
+  display: none;
+}
