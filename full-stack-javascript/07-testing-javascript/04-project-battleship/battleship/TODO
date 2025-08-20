@@ -1,1 +1,4 @@
 Limit nesting to 2 levels
+Rewrite GameController.#message as GameController.#response (containing message, port, and sea)
+Abandon Ship.hit functionality
+Validate types
