@@ -47,7 +47,7 @@ export class Deployment {
     this.#attacker.withdrawShip(x, y);
   }
 
-  endPreparation() {
+  endDeployment() {
     if (!this.#attacker.hasPlacedShips()) {
       return;
     }
@@ -85,7 +85,7 @@ export class Deployment {
     }
   }
 
-  endSkirmish() {
+  endEngagement() {
     if (!this.#missileLaunched) {
       return;
     }

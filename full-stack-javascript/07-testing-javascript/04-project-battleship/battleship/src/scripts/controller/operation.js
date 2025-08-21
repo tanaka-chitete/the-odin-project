@@ -63,19 +63,6 @@ export class Operation {
     this.#state.endEngagement();
   }
 
-  setReport(report) {
-    this.#report = report;
-  }
-
-  getReport() {
-    /*
-    Enlistment: Nothing
-    Placement: Return attackers board (as they need to place their own ships)
-    Engagement: Return defenders board (as the attacker needs to fire at them)
-    */
-    this.#state.getReport();
-  }
-
   changeState(state) {
     this.#state = state;
   }
@@ -90,5 +77,18 @@ export class Operation {
 
   getAdmiral2() {
     return this.#admiral2;
+  }
+
+  setReport(report) {
+    this.#report = report;
+  }
+
+  getReport() {
+    /*
+    Enlistment: Nothing
+    Placement: Return attackers board (as they need to place their own ships)
+    Engagement: Return defenders board (as the attacker needs to fire at them)
+    */
+    return this.#report;
   }
 }

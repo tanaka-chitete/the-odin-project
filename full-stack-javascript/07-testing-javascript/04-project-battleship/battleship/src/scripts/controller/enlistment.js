@@ -29,9 +29,9 @@ export class Enlistment {
 
   withdrawShip(x, y) {}
 
-  endPreparation() {}
+  endDeployment() {}
 
   engageMissile(x, y) {}
 
-  endSkirmish() {}
+  endEngagement() {}
 }
