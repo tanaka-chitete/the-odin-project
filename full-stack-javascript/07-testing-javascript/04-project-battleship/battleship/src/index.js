@@ -3,14 +3,14 @@
 import "./styles/main.css";
 
 import { Admiral } from "./scripts/model/admiral";
-import { Controller } from "./scripts/controller/controller";
+import { Operation } from "./scripts/controller/operation";
 import { Port } from "./scripts/model/port";
 import { Sea } from "./scripts/model/sea";
-import { View } from "./scripts/view/view";
+import { Interface } from "./scripts/view/interface";
 
-new View(
-  new Controller(
-    new Admiral("Admiral 1", new Sea(new Port())),
-    new Admiral("Admiral 2", new Sea(new Port()))
+new Interface(
+  new Operation(
+    new Admiral("Admiral 1", new Port(), new Sea()),
+    new Admiral("Admiral 2", new Port(), new Sea())
   )
 );

@@ -34,7 +34,7 @@ export class Sea {
     return this.#map[y][x];
   }
 
-  placeShip(ship, x, y) {
+  deployShip(ship, x, y) {
     if (!(x >= 0 && x + ship.getSize() - 1 <= 9 && y >= 0 && y <= 9)) {
       return;
     }

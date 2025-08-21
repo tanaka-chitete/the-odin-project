@@ -1,26 +1,34 @@
 "use strict";
 
-export class Controller {
-  #attacker;
-  #defender;
-  #message;
-  #engagementEnded;
+export class Deployment {
+  #operation;
 
-  constructor(admiral1, admiral2) {
-    this.#attacker = admiral1;
-    this.#defender = admiral2;
+  constructor(operation) {
+    this.#operation = operation;
   }
 
-  startGame() {
-    this.#message = `Place your ships, ${this.#attacker.getName()}`;
+  startDeployment() {
+    const report = {
+      message: `Position your ships, ${this.#operation
+        .getAdmiral1()
+        .getName()}`,
+      port: this.#operation.getAdmiral1().getPort(),
+      sea: this.#operation.getAdmiral1().getSea(),
+    };
+    this.#operation.setReport(report);
+
+    const newState = new Deployment(this.#operation);
+    this.#operation.changeState(newState);
+
+    this.#operation.switchAdmiral();
   }
 
-  placeShip(shipClass, x, y) {
+  deployShip(shipClass, x, y) {
     if (!this.#attacker.canPlaceShip(shipClass, x, y)) {
       return;
     }
 
-    this.#attacker.placeShip(shipClass, x, y);
+    this.#attacker.deployShip(shipClass, x, y);
   }
 
   rotateShip(x, y) {
@@ -31,15 +39,15 @@ export class Controller {
     this.#attacker.rotateShip(x, y);
   }
 
-  removeShip(x, y) {
+  withdrawShip(x, y) {
     if (!this.#attacker.canRemoveShip(x, y)) {
       return;
     }
 
-    this.#attacker.removeShip(x, y);
+    this.#attacker.withdrawShip(x, y);
   }
 
-  endPlacement() {
+  endPreparation() {
     if (!this.#attacker.hasPlacedShips()) {
       return;
     }
@@ -49,9 +57,11 @@ export class Controller {
     } else {
       this.#message = `Launch a missile, ${this.#defender.getName()}`;
     }
+
+    [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
   }
 
-  launchMissile(x, y) {
+  engageMissile(x, y) {
     if (this.#defender.hasLostShips()) {
       return;
     }
@@ -60,10 +70,11 @@ export class Controller {
       return;
     }
 
-    this.#attacker.launchMissile(this.#defender, x, y);
-    this.#engagementEnded = true;
+    this.#attacker.engageMissile(this.#defender, x, y);
 
-    if (this.#defender.hasReceivedMissile(x, y)) {
+    this.#missileLaunched = true;
+
+    if (this.#defender.hasDetonatedMissile(x, y)) {
       if (this.#defender.hasLostShips()) {
         this.#message = `You win, ${this.#attacker.getName()}`;
       } else {
@@ -74,12 +85,15 @@ export class Controller {
     }
   }
 
-  endDebrief() {
-    if (!this.#engagementEnded) {
+  endSkirmish() {
+    if (!this.#missileLaunched) {
       return;
     }
 
+    this.#missileLaunched = false;
+
     this.#message = `Launch a missile, ${this.#defender.getName()}`;
+
     [this.#attacker, this.#defender] = [this.#defender, this.#attacker];
   }
 }

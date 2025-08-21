@@ -31,7 +31,7 @@ describe("Sea", () => {
       it("denies the ship can be placed", () => {
         const sea = new Sea();
         const ship1Class = 2;
-        sea.placeShip(ship1, 0, 0);
+        sea.deployShip(ship1, 0, 0);
         const ship2 = new Ship(2);
         expect(sea.canPlaceShip(ship2, 1, 0)).toBe(false);
       });
@@ -44,12 +44,12 @@ describe("Sea", () => {
     });
   });
 
-  describe("placeShip()", () => {
+  describe("deployShip()", () => {
     describe("if the path is outside limits", () => {
       it("does not place the ship", () => {
         const sea = new Sea();
         const ship = new Ship(2);
-        sea.placeShip(ship, -1, 0);
+        sea.deployShip(ship, -1, 0);
         expect(sea.getElement(-1, 0)).toBe(null);
         expect(sea.getElement(0, 0)).toBe(null);
       });
@@ -59,8 +59,8 @@ describe("Sea", () => {
       it("does not place the ship", () => {
         const sea = new Sea();
         const ship1 = new Ship(3);
-        sea.placeShip(ship1, 7, 0);
-        expect(() => sea.placeShip(ship1, 7, 1)).toThrow();
+        sea.deployShip(ship1, 7, 0);
+        expect(() => sea.deployShip(ship1, 7, 1)).toThrow();
       });
     });
 
@@ -68,9 +68,9 @@ describe("Sea", () => {
       it("does not place the ship", () => {
         const sea = new Sea();
         const ship1 = new Ship(2);
-        sea.placeShip(ship1, 0, 0);
+        sea.deployShip(ship1, 0, 0);
         const ship2 = new Ship(2);
-        sea.placeShip(ship2, 1, 0);
+        sea.deployShip(ship2, 1, 0);
         expect(sea.getElement(0, 0)).toBe(ship1);
         expect(sea.getElement(1, 0)).toBe(ship1);
         expect(sea.getElement(2, 0)).toBe(null);
@@ -80,7 +80,7 @@ describe("Sea", () => {
     it("places the ship", () => {
       const sea = new Sea();
       const ship = new Ship(2);
-      sea.placeShip(ship, 0, 0);
+      sea.deployShip(ship, 0, 0);
       expect(sea.getElement(0, 0)).toBe(ship);
       expect(sea.getElement(1, 0)).toBe(ship);
     });
@@ -118,7 +118,7 @@ describe("Sea", () => {
       it("confirms the missile can be received", () => {
         const sea = new Sea();
         const ship = new Ship(3);
-        sea.placeShip(ship, 0, 0);
+        sea.deployShip(ship, 0, 0);
         const missile = new Missile();
         expect(sea.canReceiveMissile(missile, 0, 0)).toBe(true);
       });
@@ -168,7 +168,7 @@ describe("receiveMissile()", () => {
       it("receives the missile", () => {
         const sea = new Sea();
         const ship = new Ship(3);
-        sea.placeShip(ship, 0, 0);
+        sea.deployShip(ship, 0, 0);
         const missile = new Missile();
         sea.receiveMissile(missile, 0, 0);
         expect(sea.getElement(0, 0)).toBe(missile);
@@ -198,7 +198,7 @@ describe("isEmpty()", () => {
     it("denies it is empty", () => {
       const sea = new Sea();
       const ship = new Ship(3);
-      sea.placeShip(ship, 0, 0);
+      sea.deployShip(ship, 0, 0);
       expect(sea.isEmpty()).toBe(false);
     });
   });
