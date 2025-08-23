@@ -6,13 +6,13 @@ import { Ship } from "./ship.js";
 import { Missile } from "./missile.js";
 
 describe("Sea", () => {
-  describe("canPlaceShip()", () => {
+  describe("canDeployShip()", () => {
     describe("if the port does not have the ship", () => {
       it("denies the ship can be placed", () => {
         const port = new Port();
         const sea = new Sea(port);
-        expect(sea.canPlaceShip(6, 0, 0));
-        expect(sea.canPlaceShip(1, 0, 0));
+        expect(sea.canDeployShip(6, 0, 0));
+        expect(sea.canDeployShip(1, 0, 0));
       });
     });
 
@@ -20,10 +20,10 @@ describe("Sea", () => {
       it("denies the ship can be placed", () => {
         const sea = new Sea();
         const ship = new Ship(2);
-        expect(sea.canPlaceShip(ship, -1, 0)).toBe(false);
-        expect(sea.canPlaceShip(ship, 9, 0)).toBe(false);
-        expect(sea.canPlaceShip(ship, 9, 9)).toBe(false);
-        expect(sea.canPlaceShip(ship, -1, 9)).toBe(false);
+        expect(sea.canDeployShip(ship, -1, 0)).toBe(false);
+        expect(sea.canDeployShip(ship, 9, 0)).toBe(false);
+        expect(sea.canDeployShip(ship, 9, 9)).toBe(false);
+        expect(sea.canDeployShip(ship, -1, 9)).toBe(false);
       });
     });
 
@@ -33,14 +33,14 @@ describe("Sea", () => {
         const ship1Class = 2;
         sea.deployShip(ship1, 0, 0);
         const ship2 = new Ship(2);
-        expect(sea.canPlaceShip(ship2, 1, 0)).toBe(false);
+        expect(sea.canDeployShip(ship2, 1, 0)).toBe(false);
       });
     });
 
     it("confirms the ship can be placed", () => {
       const sea = new Sea();
       const ship = new Ship(2);
-      expect(sea.canPlaceShip(ship, 0, 0)).toBe(true);
+      expect(sea.canDeployShip(ship, 0, 0)).toBe(true);
     });
   });
 

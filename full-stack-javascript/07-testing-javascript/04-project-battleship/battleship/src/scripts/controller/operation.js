@@ -1,94 +1,201 @@
 "use strict";
 
-import { Enlistment } from "./enlistment";
+import { Admiral } from "../model/admiral";
+
+export const STATE = {
+  ENLISTMENT,
+  DEPLOYMENT,
+  ENGAGEMENT,
+  ASSESSMENT,
+  SETTLEMENT,
+};
 
 export class Operation {
   #admiral1;
   #admiral2;
 
+  #offensiveAdmiral;
+  #defensiveAdmiral;
   #report;
-  #state;
 
-  // This state idea kinda sucks, since the UI:
-  // 1. needs to know what the next states are using a string (error-prone)
-  // 2. has logic of its own as a result (e.g. next states is "endDeployment") then it needs to create new elements or whatever
-  //    instead of just rendering them. So maybe you should create buttons for the next action, then allow the UI to style them as it sees fit?
-  // So.
-  // Memento pattern?
-  // snapshot = admiral.provideReport()
-  //
-
-  /*
-  Report {
-    + name
-    + port
-    + sea
-  }
-  */
-
-  // A SWITCH IN PLAYER CORRESPONDS TO A SWITCH IN STATE
-  // SO, SWITCH PLAYER WITH SWITCH OF STATE!!!!!!!!!!!
   constructor(admiral1, admiral2) {
     this.#admiral1 = admiral1;
     this.#admiral2 = admiral2;
-    // Enlistment (the initial state) is entered when the game is opened
-    this.#state = new Enlistment(this);
+
+    this.#offensiveAdmiral = this.#admiral1;
+    this.#defensiveAdmiral = this.#admiral2;
+    this.#report = {};
   }
 
   startDeployment() {
-    this.#state.startDeployment();
+    if (
+      this.#report.state !== STATE.ENLISTMENT ||
+      this.#report.state !== STATE.DEPLOYMENT ||
+      this.#report.state !== STATE.SETTLEMENT
+    ) {
+      return;
+    }
+
+    this.#report = {
+      message: `Place your ships, ${this.#offensiveAdmiral.getName()}`,
+      port: this.#offensiveAdmiral.getPort(),
+      sea: this.#offensiveAdmiral.getSea(),
+      state: STATE.DEPLOYMENT,
+    };
   }
 
   deployShip(shipClass, x, y) {
-    this.#state.deployShip(shipClass, x, y);
+    if (this.#report.state !== STATE.DEPLOYMENT) {
+      return;
+    }
+
+    if (!this.#offensiveAdmiral.canDeployShip(shipClass, x, y)) {
+      return;
+    }
+
+    this.#offensiveAdmiral.deployShip(shipClass, x, y);
   }
 
   rotateShip(x, y) {
-    this.#state.rotateShip(x, y);
+    if (this.#report.state !== STATE.DEPLOYMENT) {
+      return;
+    }
+
+    if (!this.#offensiveAdmiral.canRotateShip(shipClass, x, y)) {
+      return;
+    }
+
+    this.#offensiveAdmiral.rotateShip(x, y);
   }
 
-  withdrawShip(x, y) {
-    this.#state.withdrawShip(x, y);
+  recallShip(x, y) {
+    if (this.#report.state !== STATE.DEPLOYMENT) {
+      return;
+    }
+
+    if (!this.#offensiveAdmiral.canRecallShip(shipClass, x, y)) {
+      return;
+    }
+
+    this.#offensiveAdmiral.recallShip(x, y);
   }
 
   endDeployment() {
-    this.#state.startEngagement();
+    if (this.#report.state !== STATE.DEPLOYMENT) {
+      return;
+    }
+
+    this.#rotateOffensiveAdmiral();
+
+    if (this.#offensiveAdmiral === this.#admiral2) {
+      this.startDeployment();
+    } else {
+      this.startEngagement();
+    }
+  }
+
+  startEngagement() {
+    if (
+      this.#report.state !== STATE.DEPLOYMENT ||
+      this.#report.state !== STATE.ASSESSMENT
+    ) {
+      return;
+    }
+
+    this.#report = {
+      message: `Engage a missile, ${this.#offensiveAdmiral.getName()}`,
+      port: this.#defensiveAdmiral.getPort(),
+      sea: this.#defensiveAdmiral.getSea(),
+      state: STATE.ENGAGEMENT,
+    };
   }
 
   engageMissile(x, y) {
-    this.#state.engageMissile(x, y);
+    if (this.#report.state !== STATE.ENGAGEMENT) {
+      return;
+    }
+
+    if (
+      !this.#offensiveAdmiral.canEngageMissile(this.#defensiveAdmiral, x, y)
+    ) {
+      return;
+    }
+
+    this.#offensiveAdmiral.engageMissile(this.#defensiveAdmiral, x, y);
+
+    if (this.#defensiveAdmiral.hasLostShips()) {
+      this.#startSettlement();
+    }
+
+    this.#startAssessment();
   }
 
-  endEngagement() {
-    this.#state.endEngagement();
+  #startAssessment() {
+    if (this.#report.state !== STATE.ENGAGEMENT) {
+      return;
+    }
+
+    let message;
+    if (this.#defensiveAdmiral.hasHitShip(x, y)) {
+      message = `Successful missile, ${this.#offensiveAdmiral.getName()}`;
+    } else {
+      message = `Unsuccessful missile, ${this.#offensiveAdmiral.getName()}`;
+    }
+
+    this.#report = {
+      message: message,
+      port: this.#defensiveAdmiral.getPort(),
+      sea: this.#defensiveAdmiral.getSea(),
+      state: STATE.ASSESSMENT,
+    };
   }
 
-  changeState(state) {
-    this.#state = state;
+  endAssessment() {
+    if (this.#report.state !== STATE.ASSESSMENT) {
+      return;
+    }
+
+    this.#rotateOffensiveAdmiral();
+
+    this.startEngagement();
   }
 
-  switchAdmiral() {
-    [this.#admiral1, this.#admiral2] = [this.#admiral2, this.#admiral1];
+  #startSettlement() {
+    if (this.#report.state !== STATE.ENGAGEMENT) {
+      return;
+    }
+
+    this.#report = {
+      message: `You win, ${this.#offensiveAdmiral.getName()}`,
+      port: this.#defensiveAdmiral.getPort(),
+      sea: this.#defensiveAdmiral.getSea(),
+      state: STATE.SETTLEMENT,
+    };
   }
 
-  getAdmiral1() {
-    return this.#admiral1;
-  }
+  endSettlement() {
+    if (this.#report.state !== STATE.ENGAGEMENT) {
+      return;
+    }
 
-  getAdmiral2() {
-    return this.#admiral2;
-  }
+    this.#offensiveAdmiral = this.#admiral1 = new Admiral(
+      this.#admiral1.getName()
+    );
+    this.#defensiveAdmiral = this.#admiral2 = new Admiral(
+      this.#admiral2.getName()
+    );
 
-  setReport(report) {
-    this.#report = report;
+    this.startDeployment();
   }
 
   getReport() {
-    /*
-    Enlistment: Nothing
-    Placement: Return attackers board (as they need to place their own ships)
-    Engagement: Return defenders board (as the attacker needs to fire at them)
-    */
     return this.#report;
+  }
+
+  #rotateOffensiveAdmiral() {
+    [this.#offensiveAdmiral, this.#defensiveAdmiral] = [
+      this.#defensiveAdmiral,
+      this.#offensiveAdmiral,
+    ];
   }
 }
