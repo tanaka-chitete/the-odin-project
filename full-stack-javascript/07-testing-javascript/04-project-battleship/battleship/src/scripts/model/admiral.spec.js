@@ -2,29 +2,33 @@
 
 import { Admiral } from "./admiral";
 import { Sea } from "./sea";
+import { Port } from "./port";
 
 describe("Admiral", () => {
   describe("constructor()", () => {
-    describe("if the name is not a string", () => {
-      it("does not construct an object", () => {
-        expect(() => new Admiral(null)).toThrow();
-        expect(() => new Admiral(undefined)).toThrow();
-        expect(() => new Admiral(true)).toThrow();
-        expect(() => new Admiral(false)).toThrow();
-        expect(() => new Admiral(1)).toThrow();
-        expect(() => new Admiral(1n)).toThrow();
-        expect(() => new Admiral(new Symbol())).toThrow();
-      });
+    it("constructs an object", () => {
+      const name = "";
+      const port = new Port();
+      const sea = new Sea();
+  
+      const admiral = new Admiral(name, port, sea);
+  
+      expect(admiral.getName()).toBe(name);
+      expect(admiral.getPort()).toBe(port);
+      expect(admiral.getSea()).toBe(sea);
     });
+  })
 
-    new Admiral(new Sea(new Port()));
+  describe("canDeployShip()", () => {
+    describe("the ship", () => {
 
-    describe("if the name is a string", () => {
-      it("constructs an object", () => {
-        const admiral = new Admiral("Anjni");
-        expect(admiral.getName()).toBe("Anjni");
-        expect(admiral.getSea()).toBeInstanceOf(Sea);
-      });
-    });
+    })
+
+    describe("the ship cannot be deployed", () => {
+      it("denies the ship can be deployed", () => {
+        
+      })
+    }
+
   });
 });

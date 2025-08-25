@@ -5,7 +5,7 @@ import { Ship } from "./ship.js";
 
 describe("Port", () => {
   describe("hasShip()", () => {
-    describe("if the port does not have the ship", () => {
+    describe("the port does not have the ship", () => {
       it("denies the port has the ship", () => {
         const port = new Port();
         expect(port.hasShip(6)).toBe(false);
@@ -13,7 +13,7 @@ describe("Port", () => {
       });
     });
 
-    describe("if the port has the ship", () => {
+    describe("the port has the ship", () => {
       it("confirms the port has the ship", () => {
         const port = new Port();
         expect(port.hasShip(5)).toBe(true);
@@ -25,14 +25,14 @@ describe("Port", () => {
   });
 
   describe("popShip()", () => {
-    describe("if the port does not have the ship", () => {
+    describe("the port does not have the ship", () => {
       it("does not remove anything", () => {
         const port = new Port();
         expect(port.popShip(6)).toBe(null);
       });
     });
 
-    describe("if the port has the ship", () => {
+    describe("the port has the ship", () => {
       it("gets the ship from the port", () => {
         const port = new Port();
         expect(port.popShip(5)).toBeInstanceOf(Ship);
@@ -47,7 +47,7 @@ describe("Port", () => {
   });
 
   describe("isEmpty()", () => {
-    describe("only if the port has no ships", () => {
+    describe("only the port has no ships", () => {
       it("confirms it is empty", () => {
         const port = new Port();
         port.popShip(5);
