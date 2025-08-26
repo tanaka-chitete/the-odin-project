@@ -25,12 +25,12 @@ export class Port {
     ]);
   }
 
-  hasShip(length) {
+  canWithdrawShip(length) {
     return this.#classToShips.has(length);
   }
 
-  popShip(length) {
-    if (!this.hasShip(length)) {
+  withdrawShip(length) {
+    if (!this.canWithdrawShip(length)) {
       return null;
     }
 

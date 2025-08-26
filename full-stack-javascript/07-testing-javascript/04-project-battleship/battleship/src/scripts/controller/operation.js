@@ -44,16 +44,16 @@ export class Operation {
     };
   }
 
-  deployShip(shipClass, x, y) {
+  deployShip(length, x, y) {
     if (this.#report.state !== STATE.DEPLOYMENT) {
       return;
     }
 
-    if (!this.#offensiveAdmiral.canDeployShip(shipClass, x, y)) {
+    if (!this.#offensiveAdmiral.canReceiveShip(length, x, y)) {
       return;
     }
 
-    this.#offensiveAdmiral.deployShip(shipClass, x, y);
+    this.#offensiveAdmiral.deployShip(length, x, y);
   }
 
   rotateShip(x, y) {
@@ -61,7 +61,7 @@ export class Operation {
       return;
     }
 
-    if (!this.#offensiveAdmiral.canRotateShip(shipClass, x, y)) {
+    if (!this.#offensiveAdmiral.canRotateShip(length, x, y)) {
       return;
     }
 
@@ -73,7 +73,7 @@ export class Operation {
       return;
     }
 
-    if (!this.#offensiveAdmiral.canRecallShip(shipClass, x, y)) {
+    if (!this.#offensiveAdmiral.canRecallShip(length, x, y)) {
       return;
     }
 
@@ -82,6 +82,10 @@ export class Operation {
 
   endDeployment() {
     if (this.#report.state !== STATE.DEPLOYMENT) {
+      return;
+    }
+
+    if (!this.#offensiveAdmiral.hasDeployedShips()) {
       return;
     }
 

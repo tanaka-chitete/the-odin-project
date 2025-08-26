@@ -34,7 +34,15 @@ export class Sea {
     return this.#map[y][x];
   }
 
-  deployShip(ship, x, y) {
+  canReceiveShip(length, x, y) {
+    if (x < 0 || x + length - 1 > 9 || y < 0 || y > 9) {
+      return false;
+    }
+
+    return true;
+  }
+
+  receiveShip(ship, x, y) {
     if (!(x >= 0 && x + ship.getSize() - 1 <= 9 && y >= 0 && y <= 9)) {
       return;
     }

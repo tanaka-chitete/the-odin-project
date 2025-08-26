@@ -4,22 +4,22 @@ import { Port } from "./port.js";
 import { Ship } from "./ship.js";
 
 describe("Port", () => {
-  describe("hasShip()", () => {
+  describe("canWithdrawShip()", () => {
     describe("the port does not have the ship", () => {
       it("denies the port has the ship", () => {
         const port = new Port();
-        expect(port.hasShip(6)).toBe(false);
-        expect(port.hasShip(1)).toBe(false);
+        expect(port.canWithdrawShip(6)).toBe(false);
+        expect(port.canWithdrawShip(1)).toBe(false);
       });
     });
 
     describe("the port has the ship", () => {
       it("confirms the port has the ship", () => {
         const port = new Port();
-        expect(port.hasShip(5)).toBe(true);
-        expect(port.hasShip(4)).toBe(true);
-        expect(port.hasShip(3)).toBe(true);
-        expect(port.hasShip(2)).toBe(true);
+        expect(port.canWithdrawShip(5)).toBe(true);
+        expect(port.canWithdrawShip(4)).toBe(true);
+        expect(port.canWithdrawShip(3)).toBe(true);
+        expect(port.canWithdrawShip(2)).toBe(true);
       });
     });
   });
