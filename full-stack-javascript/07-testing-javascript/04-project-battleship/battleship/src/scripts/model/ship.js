@@ -1,5 +1,6 @@
 "use strict";
 
+// TODO: Remove length variable. It's unused
 export class Ship {
   #length;
   #integrity;

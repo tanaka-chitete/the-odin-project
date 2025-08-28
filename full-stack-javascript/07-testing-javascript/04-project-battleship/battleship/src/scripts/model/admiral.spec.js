@@ -42,16 +42,32 @@ describe("Admiral", () => {
       });
     });
 
-    describe("the coordinates are outside limits", () => {});
+    describe("the coordinates are outside limits", () => {
+      it("denies the ship can be deployed", () => {
+        expect(admiral.canDeployShip(2, -1, 0)).toBe(false);
+        expect(admiral.canDeployShip(2, 0, -1)).toBe(false);
+        expect(admiral.canDeployShip(2, 9, -1)).toBe(false);
+        expect(admiral.canDeployShip(2, 10, 0)).toBe(false);
+        expect(admiral.canDeployShip(2, 10, 9)).toBe(false);
+        expect(admiral.canDeployShip(2, 9, 10)).toBe(false);
+        expect(admiral.canDeployShip(2, 0, 10)).toBe(false);
+        expect(admiral.canDeployShip(2, -1, 9)).toBe(false);
+      });
+    });
 
     describe("the path is outside limits", () => {
       it("denies the ship can be deployed", () => {
         expect(admiral.canDeployShip(2, -1, 0)).toBe(false);
+        expect(admiral.canDeployShip(2, 9, 0)).toBe(false);
+        expect(admiral.canDeployShip(2, -1, 9)).toBe(false);
+        expect(admiral.canDeployShip(2, 9, 9)).toBe(false);
       });
     });
 
-    it("confirms the ship can be deployed", () => {
-      expect(admiral.canDeployShip(2, 0, 0)).toBe(true);
+    describe("the inputs are valid", () => {
+      it("confirms the ship can be deployed", () => {
+        expect(admiral.canDeployShip(2, 0, 0)).toBe(true);
+      });
     });
   });
 
@@ -63,32 +79,75 @@ describe("Admiral", () => {
       });
     });
 
-    describe("the coordinates are outside limits", () => {});
+    describe("the coordinates are outside limits", () => {
+      it("does not deploy the ship", () => {
+        expect(() => admiral.deployShip(2, -1, 0)).toThrow();
+        expect(() => admiral.deployShip(2, 0, -1)).toThrow();
+        expect(() => admiral.deployShip(2, 9, -1)).toThrow();
+        expect(() => admiral.deployShip(2, 10, 0)).toThrow();
+        expect(() => admiral.deployShip(2, 10, 9)).toThrow();
+        expect(() => admiral.deployShip(2, 9, 10)).toThrow();
+        expect(() => admiral.deployShip(2, 0, 10)).toThrow();
+        expect(() => admiral.deployShip(2, -1, 9)).toThrow();
+      });
+    });
 
     describe("the path is outside limits", () => {
       it("does not deploy the ship", () => {
         expect(() => admiral.deployShip(2, -1, 0)).toThrow();
+        expect(() => admiral.deployShip(2, 9, 0)).toThrow();
+        expect(() => admiral.deployShip(2, -1, 9)).toThrow();
+        expect(() => admiral.deployShip(2, 9, 9)).toThrow();
       });
     });
 
-    it("deploys the ship", () => {
-      expect(() => admiral.deployShip(2, 0, 0)).not.toThrow();
+    describe("the inputs are valid", () => {
+      it("deploys the ship", () => {
+        expect(() => admiral.deployShip(2, 0, 0)).not.toThrow();
+      });
     });
   });
 
   describe("canRotateShip()", () => {
-    describe("the coordinates are outside limits", () => {});
+    describe("the coordinates are outside limits", () => {
+      it("denies the ship can be rotated", () => {
+        expect(admiral.canRotateShip(-1, 0)).toBe(false);
+        expect(admiral.canRotateShip(0, -1)).toBe(false);
+        expect(admiral.canRotateShip(9, -1)).toBe(false);
+        expect(admiral.canRotateShip(10, 0)).toBe(false);
+        expect(admiral.canRotateShip(10, 9)).toBe(false);
+        expect(admiral.canRotateShip(9, 10)).toBe(false);
+        expect(admiral.canRotateShip(0, 10)).toBe(false);
+        expect(admiral.canRotateShip(-1, 9)).toBe(false);
+      });
+    });
 
-    describe("the new path is outside limits", () => {
+    describe("the ship is non-existent", () => {
+      it("denies the ship can be rotated", () => {
+        expect(admiral.canRotateShip(0, 0)).toBe(false);
+      });
+    });
+
+    describe("the path would be outside limits", () => {
       it("denies the ship can be rotated", () => {
         admiral.deployShip(2, 0, 9);
         expect(admiral.canRotateShip(0, 9)).toBe(false);
       });
     });
 
-    it("confirms the ship can be rotated", () => {
-      admiral.deployShip(2, 0, 0);
-      expect(admiral.canRotateShip(0, 0)).toBe(true);
+    describe("the path would be obstructed", () => {
+      it("denies the ship can be rotated", () => {
+        admiral.deployShip(2, 0, 0);
+        admiral.deployShip(2, 0, 1);
+        expect(admiral.canRotateShip(0, 0)).toBe(false);
+      });
+    });
+
+    describe("the inputs are valid", () => {
+      it("confirms the ship can be rotated", () => {
+        admiral.deployShip(2, 0, 0);
+        expect(admiral.canRotateShip(0, 0)).toBe(true);
+      });
     });
   });
 

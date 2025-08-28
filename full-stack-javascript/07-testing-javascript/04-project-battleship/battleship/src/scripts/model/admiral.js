@@ -13,32 +13,42 @@ export class Admiral {
     this.#sea = sea;
   }
 
-  canDeployShip(shipClass, x, y) {
-    if (!this.getPort().canWithdrawShip(shipClass)) {
+  canDeployShip(length, x, y) {
+    if (!this.getPort().canWithdrawShip(length)) {
       return false;
     }
 
-    if (!this.getSea().canReceiveShip(shipClass, x, y)) {
+    if (!this.getSea().canReceiveShip(length, x, y)) {
       return false;
     }
 
     return true;
   }
 
-  deployShip(shipClass, x, y) {
-    if (!this.getPort().canWithdrawShip(shipClass)) {
-      throw new Error(`Class must be within limits`);
+  deployShip(length, x, y) {
+    if (!this.getPort().canWithdrawShip(length)) {
+      throw new Error(`Length must be inside limits`);
     }
 
-    if (!this.getSea().canReceiveShip(shipClass, x, y)) {
-      throw new Error(`Path must be within limits`);
+    if (!this.getSea().canReceiveShip(length, x, y)) {
+      throw new Error(`Path must be unobstructed`);
     }
 
-    const ship = this.getPort().withdrawShip(shipClass);
+    const ship = this.getPort().withdrawShip(length);
     this.getSea().receiveShip(ship, x, y);
   }
 
-  canRotateShip(x, y) {}
+  canRotateShip(x, y) {
+    if (!this.getSea().hasReceivedShip(x, y)) {
+      return false;
+    }
+
+    if (!this.getSea().canRotateShip(x, y)) {
+      return false;
+    }
+
+    return true;
+  }
 
   getName() {
     return this.#name;

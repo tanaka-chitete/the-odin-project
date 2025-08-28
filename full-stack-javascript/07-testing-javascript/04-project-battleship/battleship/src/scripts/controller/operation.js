@@ -49,7 +49,7 @@ export class Operation {
       return;
     }
 
-    if (!this.#offensiveAdmiral.canReceiveShip(length, x, y)) {
+    if (!this.#offensiveAdmiral.canDeployShip(length, x, y)) {
       return;
     }
 

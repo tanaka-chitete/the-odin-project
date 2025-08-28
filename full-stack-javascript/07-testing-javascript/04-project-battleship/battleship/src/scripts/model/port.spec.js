@@ -24,24 +24,24 @@ describe("Port", () => {
     });
   });
 
-  describe("popShip()", () => {
+  describe("withdrawShip()", () => {
     describe("the port does not have the ship", () => {
       it("does not remove anything", () => {
         const port = new Port();
-        expect(port.popShip(6)).toBe(null);
+        expect(port.withdrawShip(6)).toBe(null);
       });
     });
 
     describe("the port has the ship", () => {
       it("gets the ship from the port", () => {
         const port = new Port();
-        expect(port.popShip(5)).toBeInstanceOf(Ship);
+        expect(port.withdrawShip(5)).toBeInstanceOf(Ship);
       });
 
       it("removes the ship from the port", () => {
         const port = new Port();
-        port.popShip(5);
-        expect(port.popShip(5)).toBe(null);
+        port.withdrawShip(5);
+        expect(port.withdrawShip(5)).toBe(null);
       });
     });
   });
@@ -50,35 +50,35 @@ describe("Port", () => {
     describe("only the port has no ships", () => {
       it("confirms it is empty", () => {
         const port = new Port();
-        port.popShip(5);
+        port.withdrawShip(5);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(4);
+        port.withdrawShip(4);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(4);
+        port.withdrawShip(4);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(3);
+        port.withdrawShip(3);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(3);
+        port.withdrawShip(3);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(3);
+        port.withdrawShip(3);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(3);
+        port.withdrawShip(3);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(3);
+        port.withdrawShip(3);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(3);
+        port.withdrawShip(3);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(3);
+        port.withdrawShip(3);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(2);
+        port.withdrawShip(2);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(2);
+        port.withdrawShip(2);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(2);
+        port.withdrawShip(2);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(2);
+        port.withdrawShip(2);
         expect(new Port().isEmpty()).toBe(false);
-        port.popShip(2);
+        port.withdrawShip(2);
         expect(new Port().isEmpty()).toBe(true);
       });
     });

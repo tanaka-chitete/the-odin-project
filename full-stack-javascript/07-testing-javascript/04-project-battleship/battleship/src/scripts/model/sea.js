@@ -1,5 +1,6 @@
 "use strict";
 
+import { Missile } from "./missile";
 import { Ship } from "./ship";
 
 export class Sea {
@@ -35,7 +36,30 @@ export class Sea {
   }
 
   canReceiveShip(length, x, y) {
-    if (x < 0 || x + length - 1 > 9 || y < 0 || y > 9) {
+    if (
+      x < 0 ||
+      x > this.#map.length - 1 ||
+      y < 0 ||
+      y > this.#map.length - 1
+    ) {
+      return false;
+    }
+
+    if (x + length - 1 > this.#map.length) {
+      return false;
+    }
+
+    let vacant = true;
+    let j = x;
+    while (j < x + length && vacant) {
+      if (this.#map[y][j] !== null) {
+        vacant = false;
+      }
+
+      j++;
+    }
+
+    if (!vacant) {
       return false;
     }
 
@@ -43,26 +67,63 @@ export class Sea {
   }
 
   receiveShip(ship, x, y) {
-    if (!(x >= 0 && x + ship.getSize() - 1 <= 9 && y >= 0 && y <= 9)) {
-      return;
-    }
-
-    let vacant = true;
-    let j = x;
-    while (vacant && j < x + ship.getSize()) {
-      if (this.#map[y][j]) {
-        vacant = false;
-      }
-      j++;
-    }
-
-    if (!vacant) {
-      return;
+    if (!this.canReceiveShip(ship.getSize(), x, y)) {
+      throw new Error("Path must be unobstructed");
     }
 
     for (let j = x; j < x + ship.getSize(); j++) {
       this.#map[y][j] = ship;
     }
+  }
+
+  hasReceivedShip(x, y) {
+    if (
+      x < 0 ||
+      x > this.#map.length - 1 ||
+      y < 0 ||
+      y > this.#map.length - 1
+    ) {
+      return false;
+    }
+
+    if (!(this.#map[y][x] instanceof Ship)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  canRotateShip(x, y) {
+    if (!this.hasReceivedShip(x, y)) {
+      return false;
+    }
+
+    const ship = this.#map[y][x];
+    let pivotX;
+    let pivotY;
+    outerLoop: for (let i = 0; i < this.#map.length; i++) {
+      for (let j = 0; j < this.#map.length; j++) {
+        if (this.#map[i][j] === ship) {
+          pivotX = j;
+          pivotY = i;
+          break outerLoop;
+        }
+      }
+    }
+
+    const positionedHorizontally =
+      this.#map[y][x + 1] === this.#map[pivotY][pivotX];
+
+    // We need to check if positioning vertically is unobstructed
+    if (positionedHorizontally) {
+      for (let i = y + 1; i < y + ship.getSize(); i++) {
+        if (i > this.#map.length - 1 || this.#map[i][x] !== null) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   receiveMissile(missile, x, y) {
