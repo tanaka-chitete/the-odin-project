@@ -2,6 +2,7 @@
 
 // TODO: Place Port, Sea, Ship, and Missile classes in here
 // TODO: Delete tests associated with aforementioned
+// TODO: Add method to check if coordinates are in-bounds
 export class Admiral {
   #name;
   #port;
@@ -27,11 +28,11 @@ export class Admiral {
 
   deployShip(length, x, y) {
     if (!this.getPort().canWithdrawShip(length)) {
-      throw new Error(`Length must be inside limits`);
+      throw new Error("Length must be inside limits");
     }
 
     if (!this.getSea().canReceiveShip(length, x, y)) {
-      throw new Error(`Path must be unobstructed`);
+      throw new Error("Path must be unobstructed");
     }
 
     const ship = this.getPort().withdrawShip(length);
@@ -48,6 +49,18 @@ export class Admiral {
     }
 
     return true;
+  }
+
+  rotateShip(x, y) {
+    if (!this.getSea().hasReceivedShip(x, y)) {
+      throw new Error("Ship must be received");
+    }
+
+    if (!this.getSea().canRotateShip(x, y)) {
+      throw new Error("Path must be unobstructed");
+    }
+
+    this.getSea().rotateShip(x, y);
   }
 
   getName() {

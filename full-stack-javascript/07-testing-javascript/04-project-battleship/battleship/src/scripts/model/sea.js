@@ -126,6 +126,12 @@ export class Sea {
     return true;
   }
 
+  rotateShip(x, y) {
+    if (!this.canRotateShip(x, y)) {
+      throw new Error("Inputs must be validated");
+    }
+  }
+
   receiveMissile(missile, x, y) {
     if (!(x >= 0 && x <= 9 && y >= 0 && y <= 9)) {
       return;
