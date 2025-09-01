@@ -38,30 +38,21 @@ export class Operation {
 
     this.#report = {
       message: `Place your ships, ${this.#offensiveAdmiral.getName()}`,
-      port: this.#offensiveAdmiral.getPort(),
       sea: this.#offensiveAdmiral.getSea(),
       state: STATE.DEPLOYMENT,
     };
   }
 
-  deployShip(length, x, y) {
+  deployShip(ship, x, y) {
     if (this.#report.state !== STATE.DEPLOYMENT) {
       return;
     }
 
-    if (!this.#offensiveAdmiral.canDeployShip(length, x, y)) {
-      return;
-    }
-
-    this.#offensiveAdmiral.deployShip(length, x, y);
+    this.#offensiveAdmiral.deployShip(ship, x, y);
   }
 
   rotateShip(x, y) {
     if (this.#report.state !== STATE.DEPLOYMENT) {
-      return;
-    }
-
-    if (!this.#offensiveAdmiral.canRotateShip(length, x, y)) {
       return;
     }
 
@@ -73,10 +64,6 @@ export class Operation {
       return;
     }
 
-    if (!this.#offensiveAdmiral.canRecallShip(length, x, y)) {
-      return;
-    }
-
     this.#offensiveAdmiral.recallShip(x, y);
   }
 
@@ -85,7 +72,7 @@ export class Operation {
       return;
     }
 
-    if (!this.#offensiveAdmiral.hasDeployedShips()) {
+    if (!this.#offensiveAdmiral.hasDeployedAllShips()) {
       return;
     }
 
@@ -108,7 +95,6 @@ export class Operation {
 
     this.#report = {
       message: `Engage a missile, ${this.#offensiveAdmiral.getName()}`,
-      port: this.#defensiveAdmiral.getPort(),
       sea: this.#defensiveAdmiral.getSea(),
       state: STATE.ENGAGEMENT,
     };
@@ -119,19 +105,13 @@ export class Operation {
       return;
     }
 
-    if (
-      !this.#offensiveAdmiral.canEngageMissile(this.#defensiveAdmiral, x, y)
-    ) {
-      return;
-    }
-
     this.#offensiveAdmiral.engageMissile(this.#defensiveAdmiral, x, y);
 
     if (this.#defensiveAdmiral.hasLostShips()) {
       this.#startSettlement();
+    } else {
+      this.#startAssessment();
     }
-
-    this.#startAssessment();
   }
 
   #startAssessment() {
@@ -178,7 +158,7 @@ export class Operation {
   }
 
   endSettlement() {
-    if (this.#report.state !== STATE.ENGAGEMENT) {
+    if (this.#report.state !== STATE.SETTLEMENT) {
       return;
     }
 

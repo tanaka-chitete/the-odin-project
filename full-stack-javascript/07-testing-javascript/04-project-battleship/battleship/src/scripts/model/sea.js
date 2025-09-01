@@ -19,83 +19,52 @@ export class Sea {
     }
   }
 
-  getSize() {
-    return this.#map.length;
-  }
-
-  getWidth() {
-    return this.#map[0].length;
-  }
-
   getElement(x, y) {
-    if (!(x >= 0 && x <= 9 && y >= 0 && y <= 9)) {
-      return null;
+    if (
+      x < 0 ||
+      x > this.#map.length - 1 ||
+      y < 0 ||
+      y > this.#map.length - 1
+    ) {
+      throw new Error("Coordinates must be inside limits");
     }
 
     return this.#map[y][x];
   }
 
-  canReceiveShip(length, x, y) {
+  receiveShip(ship, x, y) {
     if (
       x < 0 ||
       x > this.#map.length - 1 ||
       y < 0 ||
       y > this.#map.length - 1
     ) {
-      return false;
+      throw new Error("Coordinates must be inside limits");
     }
 
-    if (x + length - 1 > this.#map.length) {
-      return false;
-    }
-
-    let vacant = true;
-    let j = x;
-    while (j < x + length && vacant) {
-      if (this.#map[y][j] !== null) {
-        vacant = false;
+    for (let j = x; j < x + ship.getLength(); j++) {
+      if (j > this.#map.length - 1 || this.#map[y][j] !== null) {
+        throw new Error("Path must be unobstructed");
       }
-
-      j++;
     }
 
-    if (!vacant) {
-      return false;
-    }
-
-    return true;
-  }
-
-  receiveShip(ship, x, y) {
-    if (!this.canReceiveShip(ship.getSize(), x, y)) {
-      throw new Error("Path must be unobstructed");
-    }
-
-    for (let j = x; j < x + ship.getSize(); j++) {
+    for (let j = x; j < x + ship.getLength(); j++) {
       this.#map[y][j] = ship;
     }
   }
 
-  hasReceivedShip(x, y) {
+  rotateShip(x, y) {
     if (
       x < 0 ||
       x > this.#map.length - 1 ||
       y < 0 ||
       y > this.#map.length - 1
     ) {
-      return false;
+      throw new Error("Coordinates must be inside limits");
     }
 
     if (!(this.#map[y][x] instanceof Ship)) {
-      return false;
-    }
-
-    return true;
-  }
-
-  canRotateShip(x, y) {
-    if (!this.hasReceivedShip(x, y)) {
-      return false;
+      throw new Error("Ship must have been received");
     }
 
     const ship = this.#map[y][x];
@@ -116,19 +85,33 @@ export class Sea {
 
     // We need to check if positioning vertically is unobstructed
     if (positionedHorizontally) {
-      for (let i = y + 1; i < y + ship.getSize(); i++) {
+      for (let i = y + 1; i < y + ship.getLength(); i++) {
         if (i > this.#map.length - 1 || this.#map[i][x] !== null) {
-          return false;
+          return;
         }
       }
-    }
 
-    return true;
-  }
+      for (let j = x + 1; j < x + ship.getLength(); j++) {
+        this.#map[y][j] = null;
+      }
 
-  rotateShip(x, y) {
-    if (!this.canRotateShip(x, y)) {
-      throw new Error("Inputs must be validated");
+      for (let i = y + 1; i < y + ship.getLength(); i++) {
+        this.#map[i][x] = ship;
+      }
+    } else {
+      for (let j = x + 1; j < x + ship.getLength(); j++) {
+        if (j > this.#map.length - 1 || this.#map[y][j] !== null) {
+          return;
+        }
+      }
+
+      for (let i = y + 1; i < y + ship.getLength(); i++) {
+        this.#map[i][x] = null;
+      }
+
+      for (let j = x + 1; j < x + ship.getLength(); j++) {
+        this.#map[y][j] = ship;
+      }
     }
   }
 
@@ -165,5 +148,9 @@ export class Sea {
     }
 
     return empty;
+  }
+
+  getLength() {
+    return this.#map.length;
   }
 }

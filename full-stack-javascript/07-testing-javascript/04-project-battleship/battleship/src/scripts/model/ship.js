@@ -14,7 +14,7 @@ export class Ship {
     this.#integrity = length;
   }
 
-  getSize() {
+  getLength() {
     return this.#length;
   }
 

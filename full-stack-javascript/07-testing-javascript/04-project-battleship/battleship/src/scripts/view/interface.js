@@ -1,5 +1,6 @@
 "use strict";
 
+// TODO: Instantiate Ship instances here. In Interface.deployShip(x, y) -> Operation.deployShip(ship, x, y)
 export class Interface {
   #operation;
 

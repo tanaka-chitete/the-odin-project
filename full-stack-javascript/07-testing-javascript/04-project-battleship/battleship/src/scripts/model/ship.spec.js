@@ -12,9 +12,9 @@ describe("Ship", () => {
     });
   });
 
-  describe("getSize()", () => {
+  describe("getLength()", () => {
     it("gets the size", () => {
-      expect(new Ship(3).getSize()).toBe(3);
+      expect(new Ship(3).getLength()).toBe(3);
     });
   });
 
