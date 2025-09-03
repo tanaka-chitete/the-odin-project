@@ -2,9 +2,6 @@
 
 import { Sea } from "./sea";
 
-// TODO: Place Port, Sea, Ship, and Missile classes in here
-// TODO: Delete tests associated with aforementioned
-// TODO: Add method to check if coordinates are in-bounds
 export class Admiral {
   #name;
   #sea;
@@ -14,21 +11,34 @@ export class Admiral {
     this.#sea = new Sea();
   }
 
+  issueReport() {
+    return {
+      name: this.#name,
+      sea: this.#sea.getMap(),
+    };
+  }
+
   deployShip(ship, x, y) {
-    this.#sea.receiveShip(ship, x, y);
+    this.#sea.deployShip(ship, x, y);
   }
 
   rotateShip(x, y) {
     this.#sea.rotateShip(x, y);
   }
 
-  getName() {
-    return this.#name;
+  recallShip(x, y) {
+    this.#sea.recallShip(x, y);
   }
 
-  getElement(x, y) {
-    return this.#sea.getElement(x, y);
+  hasDeployedAllShips() {
+    return this.#sea.hasReceivedAllShips();
   }
 
-  // TODO: Implement createReport()
+  receiveMissile(missile, x, y) {
+    this.#sea.receiveMissile(missile, x, y);
+  }
+
+  hasLostAllShips() {
+    return this.#sea.hasLostAllShips();
+  }
 }

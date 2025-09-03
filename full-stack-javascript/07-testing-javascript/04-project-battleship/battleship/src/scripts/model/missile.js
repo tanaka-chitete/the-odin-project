@@ -9,7 +9,7 @@ export class Missile {
     this.#detonated = true;
   }
 
-  didDetonate() {
+  hasDetonated() {
     return this.#detonated;
   }
 }

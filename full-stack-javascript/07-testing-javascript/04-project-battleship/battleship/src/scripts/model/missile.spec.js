@@ -2,20 +2,23 @@
 
 import { Missile } from "./missile";
 
+let missile;
+beforeEach(() => {
+  missile = new Missile();
+});
+
 describe("Missile", () => {
-  describe("detonate()", () => {
-    describe("detonation is triggered", () => {
-      it("detonates", () => {
-        const missile = new Missile();
-        missile.detonate();
-        expect(missile.didDetonate()).toBe(true);
+  describe("hasDetonated", () => {
+    describe("the missile has not detonated", () => {
+      it("denies the missile has detonated", () => {
+        expect(missile.hasDetonated()).toBe(false);
       });
     });
 
-    describe("detonation is not triggered", () => {
-      it("does not detonate", () => {
-        const missile = new Missile();
-        expect(missile.didDetonate()).toBe(false);
+    describe("the missile has detonated", () => {
+      it("confirms that the missile has detonated", () => {
+        missile.detonate();
+        expect(missile.hasDetonated()).toBe(true);
       });
     });
   });

@@ -7,7 +7,7 @@ export class Ship {
 
   constructor(length) {
     if (length < 2 || length > 5) {
-      throw new Error("the length must be inside limits");
+      throw new Error("Length must be inside limits");
     }
 
     this.#length = length;
@@ -16,21 +16,5 @@ export class Ship {
 
   getLength() {
     return this.#length;
-  }
-
-  getIntegrity() {
-    return this.#integrity;
-  }
-
-  receiveMissile() {
-    if (!this.isAfloat()) {
-      return;
-    }
-
-    --this.#integrity;
-  }
-
-  isAfloat() {
-    return this.#integrity > 0;
   }
 }

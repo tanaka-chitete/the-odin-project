@@ -27,6 +27,10 @@ export class Operation {
     this.#report = {};
   }
 
+  getReport() {
+    return this.#report;
+  }
+
   startDeployment() {
     if (
       this.#report.state !== STATE.ENLISTMENT ||
@@ -36,9 +40,10 @@ export class Operation {
       return;
     }
 
+    const offensiveAdmiralReport = this.#offensiveAdmiral.issueReport();
     this.#report = {
-      message: `Place your ships, ${this.#offensiveAdmiral.getName()}`,
-      sea: this.#offensiveAdmiral.getSea(),
+      message: `Deploy your ships, ${offensiveAdmiralReport.name}`,
+      sea: offensiveAdmiralReport.sea,
       state: STATE.DEPLOYMENT,
     };
   }
@@ -93,45 +98,48 @@ export class Operation {
       return;
     }
 
+    const offensiveAdmiralReport = this.#offensiveAdmiral.issueReport();
     this.#report = {
-      message: `Engage a missile, ${this.#offensiveAdmiral.getName()}`,
-      sea: this.#defensiveAdmiral.getSea(),
+      message: `Engage a missile, ${offensiveAdmiralReport.name}`,
+      sea: offensiveAdmiralReport.sea,
       state: STATE.ENGAGEMENT,
     };
   }
 
-  engageMissile(x, y) {
+  engageMissile(missile, x, y) {
     if (this.#report.state !== STATE.ENGAGEMENT) {
       return;
     }
 
-    this.#offensiveAdmiral.engageMissile(this.#defensiveAdmiral, x, y);
+    this.#defensiveAdmiral.receiveMissile(missile, x, y);
 
-    if (this.#defensiveAdmiral.hasLostShips()) {
+    if (this.#defensiveAdmiral.hasLostAllShips()) {
       this.#startSettlement();
     } else {
-      this.#startAssessment();
+      this.#startAssessment(missile.hasDetonated());
     }
   }
 
-  #startAssessment() {
+  #startAssessment(missileDetonated) {
     if (this.#report.state !== STATE.ENGAGEMENT) {
       return;
     }
 
-    let message;
-    if (this.#defensiveAdmiral.hasHitShip(x, y)) {
-      message = `Successful missile, ${this.#offensiveAdmiral.getName()}`;
+    const offensiveAdmiralReport = this.#offensiveAdmiral.issueReport();
+    const defensiveAdmiralReport = this.#defensiveAdmiral.issueReport();
+    if (missileDetonated) {
+      this.#report = {
+        message: `Successful missile, ${offensiveAdmiralReport.name}`,
+        sea: defensiveAdmiralReport.sea,
+        state: STATE.ASSESSMENT,
+      };
     } else {
-      message = `Unsuccessful missile, ${this.#offensiveAdmiral.getName()}`;
+      this.#report = {
+        message: `Unsuccessful missile, ${offensiveAdmiralReport.name}`,
+        sea: defensiveAdmiralReport.sea,
+        state: STATE.ASSESSMENT,
+      };
     }
-
-    this.#report = {
-      message: message,
-      port: this.#defensiveAdmiral.getPort(),
-      sea: this.#defensiveAdmiral.getSea(),
-      state: STATE.ASSESSMENT,
-    };
   }
 
   endAssessment() {
@@ -149,10 +157,11 @@ export class Operation {
       return;
     }
 
+    const offensiveAdmiralReport = this.#offensiveAdmiral.issueReport();
+    const defensiveAdmiralReport = this.#defensiveAdmiral.issueReport();
     this.#report = {
-      message: `You win, ${this.#offensiveAdmiral.getName()}`,
-      port: this.#defensiveAdmiral.getPort(),
-      sea: this.#defensiveAdmiral.getSea(),
+      message: `You win, ${offensiveAdmiralReport.name}`,
+      sea: defensiveAdmiralReport.sea,
       state: STATE.SETTLEMENT,
     };
   }
@@ -170,10 +179,6 @@ export class Operation {
     );
 
     this.startDeployment();
-  }
-
-  getReport() {
-    return this.#report;
   }
 
   #rotateOffensiveAdmiral() {
