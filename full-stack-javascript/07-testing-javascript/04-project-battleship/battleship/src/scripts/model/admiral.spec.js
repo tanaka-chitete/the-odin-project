@@ -12,14 +12,6 @@ beforeEach(() => {
 });
 
 describe("Admiral", () => {
-  describe("issueReport()", () => {
-    it("issues a report", () => {
-      const report = admiral.issueReport();
-      expect(report.name).toBe(name);
-      expect(report.sea).toBeDefined();
-    });
-  });
-
   describe("deployShip()", () => {
     describe("the coordinates are outside limits", () => {
       it("throws", () => {
@@ -277,6 +269,36 @@ describe("Admiral", () => {
       it("confirms all ships are lost", () => {
         expect(admiral.hasLostAllShips()).toBe(true);
       });
+    });
+  });
+
+  describe("issueReport()", () => {
+    it("issues a report", () => {
+      const ship = new Ship(2);
+      admiral.deployShip(ship, 0, 0);
+      const missile = new Missile();
+      admiral.receiveMissile(missile, 0, 0);
+
+      const report = admiral.issueReport();
+      expect(report.issuer).toBe(name);
+      expect(report.port).toStrictEqual({
+        5: 1,
+        4: 2,
+        3: 7,
+        2: 4,
+      });
+      expect(report.sea).toStrictEqual([
+        [missile, ship, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+      ]);
     });
   });
 });

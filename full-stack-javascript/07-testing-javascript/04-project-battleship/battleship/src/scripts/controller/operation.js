@@ -24,7 +24,9 @@ export class Operation {
 
     this.#offensiveAdmiral = this.#admiral1;
     this.#defensiveAdmiral = this.#admiral2;
-    this.#report = {};
+    this.#report = {
+      state: STATE.ENLISTMENT,
+    };
   }
 
   getReport() {
@@ -42,7 +44,8 @@ export class Operation {
 
     const offensiveAdmiralReport = this.#offensiveAdmiral.issueReport();
     this.#report = {
-      message: `Deploy your ships, ${offensiveAdmiralReport.name}`,
+      message: `Deploy your ships, ${offensiveAdmiralReport.issuer}`,
+      port: offensiveAdmiralReport.port,
       sea: offensiveAdmiralReport.sea,
       state: STATE.DEPLOYMENT,
     };
@@ -99,9 +102,11 @@ export class Operation {
     }
 
     const offensiveAdmiralReport = this.#offensiveAdmiral.issueReport();
+    const defensiveAdmiralReport = this.#defensiveAdmiral.issueReport();
     this.#report = {
-      message: `Engage a missile, ${offensiveAdmiralReport.name}`,
-      sea: offensiveAdmiralReport.sea,
+      message: `Engage a missile, ${offensiveAdmiralReport.issuer}`,
+      port: defensiveAdmiralReport.port,
+      sea: defensiveAdmiralReport.sea,
       state: STATE.ENGAGEMENT,
     };
   }
@@ -129,13 +134,13 @@ export class Operation {
     const defensiveAdmiralReport = this.#defensiveAdmiral.issueReport();
     if (missileDetonated) {
       this.#report = {
-        message: `Successful missile, ${offensiveAdmiralReport.name}`,
+        message: `Successful missile, ${offensiveAdmiralReport.issuer}`,
         sea: defensiveAdmiralReport.sea,
         state: STATE.ASSESSMENT,
       };
     } else {
       this.#report = {
-        message: `Unsuccessful missile, ${offensiveAdmiralReport.name}`,
+        message: `Unsuccessful missile, ${offensiveAdmiralReport.issuer}`,
         sea: defensiveAdmiralReport.sea,
         state: STATE.ASSESSMENT,
       };
@@ -160,7 +165,7 @@ export class Operation {
     const offensiveAdmiralReport = this.#offensiveAdmiral.issueReport();
     const defensiveAdmiralReport = this.#defensiveAdmiral.issueReport();
     this.#report = {
-      message: `You win, ${offensiveAdmiralReport.name}`,
+      message: `You win, ${offensiveAdmiralReport.issuer}`,
       sea: defensiveAdmiralReport.sea,
       state: STATE.SETTLEMENT,
     };

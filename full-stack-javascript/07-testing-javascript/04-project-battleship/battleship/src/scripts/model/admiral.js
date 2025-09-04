@@ -12,13 +12,6 @@ export class Admiral {
     this.#sea = new Sea();
   }
 
-  issueReport() {
-    return {
-      name: this.#name,
-      sea: this.#sea.getMap(),
-    };
-  }
-
   deployShip(ship, x, y) {
     this.#sea.deployShip(ship, x, y);
   }
@@ -42,24 +35,32 @@ export class Admiral {
   hasLostAllShips() {
     return this.#sea.hasLostAllShips();
   }
+
+  issueReport() {
+    return {
+      issuer: this.#name,
+      port: Object.fromEntries(this.#sea.shipLengthToAllocation),
+      sea: this.#sea.getMap(),
+    };
+  }
 }
 
 class Sea {
-  #map;
-  #shipLengthToAllocation;
+  map;
+  shipLengthToAllocation;
 
   constructor() {
-    this.#map = new Array(10);
+    this.map = new Array(10);
     for (let i = 0; i < 10; i++) {
-      this.#map[i] = new Array(10);
+      this.map[i] = new Array(10);
     }
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
-        this.#map[i][j] = null;
+        this.map[i][j] = null;
       }
     }
 
-    this.#shipLengthToAllocation = new Map([
+    this.shipLengthToAllocation = new Map([
       [5, 1],
       [4, 2],
       [3, 7],
@@ -68,7 +69,7 @@ class Sea {
   }
 
   getMap() {
-    return this.#map;
+    return this.map;
   }
 
   deployShip(ship, x, y) {
@@ -76,50 +77,40 @@ class Sea {
       throw new Error("All ships have been received");
     }
 
-    if (
-      x < 0 ||
-      x > this.#map.length - 1 ||
-      y < 0 ||
-      y > this.#map.length - 1
-    ) {
+    if (x < 0 || x > this.map.length - 1 || y < 0 || y > this.map.length - 1) {
       throw new Error("Coordinates must be inside limits");
     }
 
     for (let j = x; j < x + ship.getLength(); j++) {
-      if (j > this.#map.length - 1 || this.#map[y][j] !== null) {
+      if (j > this.map.length - 1 || this.map[y][j] !== null) {
         throw new Error("Path must be unobstructed");
       }
     }
 
     for (let j = x; j < x + ship.getLength(); j++) {
-      this.#map[y][j] = ship;
+      this.map[y][j] = ship;
     }
 
     const newShipQuantity =
-      this.#shipLengthToAllocation.get(ship.getLength()) - 1;
-    this.#shipLengthToAllocation.set(ship.getLength(), newShipQuantity);
+      this.shipLengthToAllocation.get(ship.getLength()) - 1;
+    this.shipLengthToAllocation.set(ship.getLength(), newShipQuantity);
   }
 
   rotateShip(x, y) {
-    if (
-      x < 0 ||
-      x > this.#map.length - 1 ||
-      y < 0 ||
-      y > this.#map.length - 1
-    ) {
+    if (x < 0 || x > this.map.length - 1 || y < 0 || y > this.map.length - 1) {
       throw new Error("Coordinates must be inside limits");
     }
 
-    if (!(this.#map[y][x] instanceof Ship)) {
+    if (!(this.map[y][x] instanceof Ship)) {
       throw new Error("Ship must have been received");
     }
 
-    const ship = this.#map[y][x];
+    const ship = this.map[y][x];
     let shipFrontX;
     let shipFrontY;
-    outerLoop: for (let i = 0; i < this.#map.length; i++) {
-      for (let j = 0; j < this.#map.length; j++) {
-        if (this.#map[i][j] === ship) {
+    outerLoop: for (let i = 0; i < this.map.length; i++) {
+      for (let j = 0; j < this.map.length; j++) {
+        if (this.map[i][j] === ship) {
           shipFrontX = j;
           shipFrontY = i;
           break outerLoop;
@@ -127,62 +118,56 @@ class Sea {
       }
     }
 
-    const shipLateral =
-      this.#map[y][x + 1] === this.#map[shipFrontY][shipFrontX];
+    const shipLateral = this.map[y][x + 1] === this.map[shipFrontY][shipFrontX];
 
     // We need to check if positioning vertically is unobstructed
     if (shipLateral) {
       for (let i = y + 1; i < y + ship.getLength(); i++) {
-        if (i > this.#map.length - 1 || this.#map[i][x] !== null) {
+        if (i > this.map.length - 1 || this.map[i][x] !== null) {
           return;
         }
       }
 
       for (let j = x + 1; j < x + ship.getLength(); j++) {
-        this.#map[y][j] = null;
+        this.map[y][j] = null;
       }
 
       for (let i = y + 1; i < y + ship.getLength(); i++) {
-        this.#map[i][x] = ship;
+        this.map[i][x] = ship;
       }
     } else {
       for (let j = x + 1; j < x + ship.getLength(); j++) {
-        if (j > this.#map.length - 1 || this.#map[y][j] !== null) {
+        if (j > this.map.length - 1 || this.map[y][j] !== null) {
           return;
         }
       }
 
       for (let i = y + 1; i < y + ship.getLength(); i++) {
-        this.#map[i][x] = null;
+        this.map[i][x] = null;
       }
 
       for (let j = x + 1; j < x + ship.getLength(); j++) {
-        this.#map[y][j] = ship;
+        this.map[y][j] = ship;
       }
     }
   }
 
   recallShip(x, y) {
-    if (
-      x < 0 ||
-      x > this.#map.length - 1 ||
-      y < 0 ||
-      y > this.#map.length - 1
-    ) {
+    if (x < 0 || x > this.map.length - 1 || y < 0 || y > this.map.length - 1) {
       throw new Error("Coordinates must be inside limits");
     }
 
-    if (!(this.#map[y][x] instanceof Ship)) {
+    if (!(this.map[y][x] instanceof Ship)) {
       throw new Error("Ship must have been received");
     }
 
-    const ship = this.#map[y][x];
+    const ship = this.map[y][x];
 
     let shipFrontX;
     let shipFrontY;
-    outerLoop: for (let i = 0; i < this.#map.length; i++) {
-      for (let j = 0; j < this.#map.length; j++) {
-        if (this.#map[i][j] === ship) {
+    outerLoop: for (let i = 0; i < this.map.length; i++) {
+      for (let j = 0; j < this.map.length; j++) {
+        if (this.map[i][j] === ship) {
           shipFrontX = j;
           shipFrontY = i;
           break outerLoop;
@@ -190,26 +175,26 @@ class Sea {
       }
     }
 
-    const shipLateral = this.#map[shipFrontY][shipFrontX + 1] === ship;
+    const shipLateral = this.map[shipFrontY][shipFrontX + 1] === ship;
     if (shipLateral) {
       for (let j = x; j < x + ship.getLength(); j++) {
-        this.#map[y][j] = null;
+        this.map[y][j] = null;
       }
     } else {
       for (let i = y; i < y + ship.getLength(); i++) {
-        this.#map[i][x] = null;
+        this.map[i][x] = null;
       }
     }
 
-    this.#shipLengthToAllocation.set(
+    this.shipLengthToAllocation.set(
       ship.getLength(),
-      this.#shipLengthToAllocation.get(ship.getLength()) + 1
+      this.shipLengthToAllocation.get(ship.getLength()) + 1
     );
   }
 
   hasReceivedAllShips() {
-    for (const shipLength of this.#shipLengthToAllocation.keys()) {
-      if (this.#shipLengthToAllocation.get(shipLength) !== 0) {
+    for (const shipLength of this.shipLengthToAllocation.keys()) {
+      if (this.shipLengthToAllocation.get(shipLength) !== 0) {
         return false;
       }
     }
@@ -222,22 +207,22 @@ class Sea {
       throw new Error("Coordinates must be inside limits");
     }
 
-    if (this.#map[y][x] instanceof Missile) {
+    if (this.map[y][x] instanceof Missile) {
       throw new Error("Target must not be another missile");
     }
 
-    if (this.#map[y][x] instanceof Ship) {
-      this.#map[y][x] = missile;
+    if (this.map[y][x] instanceof Ship) {
+      this.map[y][x] = missile;
       missile.detonate();
     } else {
-      this.#map[y][x] = missile;
+      this.map[y][x] = missile;
     }
   }
 
   hasLostAllShips() {
-    for (let i = 0; i < this.#map.length; i++) {
-      for (let j = 0; j < this.#map[0].length; j++) {
-        if (this.#map[i][j] instanceof Ship) {
+    for (let i = 0; i < this.map.length; i++) {
+      for (let j = 0; j < this.map[0].length; j++) {
+        if (this.map[i][j] instanceof Ship) {
           return false;
         }
       }
