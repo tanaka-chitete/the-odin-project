@@ -135,12 +135,14 @@ export class Operation {
     if (missileDetonated) {
       this.#report = {
         message: `Successful missile, ${offensiveAdmiralReport.issuer}`,
+        port: defensiveAdmiralReport.port,
         sea: defensiveAdmiralReport.sea,
         state: STATE.ASSESSMENT,
       };
     } else {
       this.#report = {
         message: `Unsuccessful missile, ${offensiveAdmiralReport.issuer}`,
+        port: defensiveAdmiralReport.port,
         sea: defensiveAdmiralReport.sea,
         state: STATE.ASSESSMENT,
       };
@@ -166,6 +168,7 @@ export class Operation {
     const defensiveAdmiralReport = this.#defensiveAdmiral.issueReport();
     this.#report = {
       message: `You win, ${offensiveAdmiralReport.issuer}`,
+      port: defensiveAdmiralReport.port,
       sea: defensiveAdmiralReport.sea,
       state: STATE.SETTLEMENT,
     };
