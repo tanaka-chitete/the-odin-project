@@ -1,9 +1,7 @@
 "use strict";
 
-// TODO: Remove length variable. It's unused
 export class Ship {
   #length;
-  #integrity;
 
   constructor(length) {
     if (length < 2 || length > 5) {
@@ -11,7 +9,6 @@ export class Ship {
     }
 
     this.#length = length;
-    this.#integrity = length;
   }
 
   getLength() {
