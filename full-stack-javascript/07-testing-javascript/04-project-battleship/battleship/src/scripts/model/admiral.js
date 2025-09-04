@@ -46,21 +46,20 @@ export class Admiral {
 
 class Sea {
   #map;
-  #allocation;
+  #shipLengthToAllocation;
 
   constructor() {
     this.#map = new Array(10);
     for (let i = 0; i < 10; i++) {
       this.#map[i] = new Array(10);
     }
-
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
         this.#map[i][j] = null;
       }
     }
 
-    this.#allocation = new Map([
+    this.#shipLengthToAllocation = new Map([
       [5, 1],
       [4, 2],
       [3, 7],
@@ -96,10 +95,9 @@ class Sea {
       this.#map[y][j] = ship;
     }
 
-    this.#allocation.set(
-      ship.getLength(),
-      this.#allocation.get(ship.getLength()) - 1
-    );
+    const newShipQuantity =
+      this.#shipLengthToAllocation.get(ship.getLength()) - 1;
+    this.#shipLengthToAllocation.set(ship.getLength(), newShipQuantity);
   }
 
   rotateShip(x, y) {
@@ -117,23 +115,23 @@ class Sea {
     }
 
     const ship = this.#map[y][x];
-    let pivotX;
-    let pivotY;
+    let shipFrontX;
+    let shipFrontY;
     outerLoop: for (let i = 0; i < this.#map.length; i++) {
       for (let j = 0; j < this.#map.length; j++) {
         if (this.#map[i][j] === ship) {
-          pivotX = j;
-          pivotY = i;
+          shipFrontX = j;
+          shipFrontY = i;
           break outerLoop;
         }
       }
     }
 
-    const positionedHorizontally =
-      this.#map[y][x + 1] === this.#map[pivotY][pivotX];
+    const shipLateral =
+      this.#map[y][x + 1] === this.#map[shipFrontY][shipFrontX];
 
     // We need to check if positioning vertically is unobstructed
-    if (positionedHorizontally) {
+    if (shipLateral) {
       for (let i = y + 1; i < y + ship.getLength(); i++) {
         if (i > this.#map.length - 1 || this.#map[i][x] !== null) {
           return;
@@ -180,22 +178,20 @@ class Sea {
 
     const ship = this.#map[y][x];
 
-    let xCoordinateForFrontOfShip;
-    let yCoordinateForFrontOfShip;
+    let shipFrontX;
+    let shipFrontY;
     outerLoop: for (let i = 0; i < this.#map.length; i++) {
       for (let j = 0; j < this.#map.length; j++) {
         if (this.#map[i][j] === ship) {
-          xCoordinateForFrontOfShip = j;
-          yCoordinateForFrontOfShip = i;
+          shipFrontX = j;
+          shipFrontY = i;
           break outerLoop;
         }
       }
     }
 
-    const positionedHorizontally =
-      this.#map[yCoordinateForFrontOfShip][xCoordinateForFrontOfShip + 1] ===
-      ship;
-    if (positionedHorizontally) {
+    const shipLateral = this.#map[shipFrontY][shipFrontX + 1] === ship;
+    if (shipLateral) {
       for (let j = x; j < x + ship.getLength(); j++) {
         this.#map[y][j] = null;
       }
@@ -205,15 +201,15 @@ class Sea {
       }
     }
 
-    this.#allocation.set(
+    this.#shipLengthToAllocation.set(
       ship.getLength(),
-      this.#allocation.get(ship.getLength()) + 1
+      this.#shipLengthToAllocation.get(ship.getLength()) + 1
     );
   }
 
   hasReceivedAllShips() {
-    for (const lengthOfShip of this.#allocation.keys()) {
-      if (this.#allocation.get(lengthOfShip) !== 0) {
+    for (const shipLength of this.#shipLengthToAllocation.keys()) {
+      if (this.#shipLengthToAllocation.get(shipLength) !== 0) {
         return false;
       }
     }
