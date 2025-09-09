@@ -34,13 +34,13 @@
   background: black;
 }
 
-.board__cell {
+.sea__part {
   border: none;
   background: white;
   font-size: 10rem;
 }
 
-.board__cell:hover {
+.sea__part:hover {
   cursor: pointer;
 }
 

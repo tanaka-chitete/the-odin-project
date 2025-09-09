@@ -1,38 +1,201 @@
 "use strict";
 
-// TODO: Instantiate Ship instances here. In Interface.deployShip(x, y) -> Operation.deployShip(ship, x, y)
+import { Missile } from "../model/missile";
+import { Ship } from "../model/ship";
+import { STATE } from "../controller/operation";
+
 export class Interface {
   #operation;
 
-  #messageElement;
-  #consoleElement;
+  #messageElement = null;
+  #portElement = null;
+  #seaElement = null;
+  #consoleElement = null;
 
   constructor(operation) {
-    this.#operation;
+    this.#operation = operation;
 
-    this.#messageElement = document.querySelector(".message");
-    this.#consoleElement = document.querySelector(".console");
-
-    const startDeployment = this.#consoleElement.querySelector(
-      ".console__button_type_start-deployment"
-    );
-    startDeployment.addEventListener("click", () => {
-      operation.startDeployment();
-      this.#renderReport(operation.getReport());
-    });
+    this.#updateConsoleElement();
   }
 
-  #renderReport(report) {
-    this.#renderMessage(report.getMessage());
-    this.#renderPort(report.getPort());
-    this.#renderSea(report.getSea());
-  }
+  #updateMessageElement(message) {
+    if (message === null) {
+      return;
+    }
 
-  #renderMessage(message) {
+    if (this.#messageElement === null) {
+      this.#initialiseMessageElement();
+    }
+
     this.#messageElement.textContent = message;
   }
 
-  #renderPort(port) {}
+  #updatePortElement(port) {
+    if (port === null) {
+      return;
+    }
 
-  #renderSea(sea) {}
+    if (this.#portElement === null) {
+      this.#initialisePortElement();
+    }
+
+    this.#portElement.replaceChildren();
+
+    for (const [length, allocation] of Object.entries(port)) {
+      for (let i = 0; i < allocation; i++) {
+        const shipElement = document.createElement("div");
+        shipElement.setAttribute("id", `ship-${crypto.randomUUID()}`);
+        shipElement.setAttribute(
+          "class",
+          `port__ship port__ship_length_${length}`
+        );
+        shipElement.setAttribute("draggable", "true");
+        shipElement.setAttribute("data-ship_length", length);
+
+        this.#portElement.append(shipElement);
+
+        shipElement.addEventListener("dragstart", (event) => {
+          event.dataTransfer.effectAllowed = "move";
+
+          const viewportMouseX = event.clientX;
+          const viewportMouseY = event.clientY;
+          const shipElementBoundingBox = shipElement.getBoundingClientRect();
+          const shipElementMouseX = viewportMouseX - shipElementBoundingBox.x;
+          const shipElementMouseY = viewportMouseY - shipElementBoundingBox.y;
+
+          event.dataTransfer.setData("id", shipElement.getAttribute("id"));
+          event.dataTransfer.setData("shipElementMouseX", shipElementMouseX);
+          event.dataTransfer.setData("shipElementMouseY", shipElementMouseY);
+        });
+      }
+    }
+  }
+
+  #updateSeaElement(sea, state) {
+    if (sea === null) {
+      return;
+    }
+
+    if (this.#seaElement === null) {
+      this.#initialiseSeaElement();
+    }
+
+    if (state === STATE.DEPLOYMENT) {
+      for (let i = 0; i < sea.length; i++) {
+        for (let j = 0; j < sea.length; j++) {
+          const seaPartElement = this.#seaElement.querySelector(
+            `[data-x="${j}"][data-y="${i}"]`
+          );
+
+          if (sea[i][j]) {
+            seaPartElement.setAttribute(
+              "class",
+              "sea__part sea__part_type_ship"
+            );
+          } else {
+            seaPartElement.setAttribute("class", "sea__part");
+          }
+        }
+      }
+    } else {
+      for (let i = 0; i < sea.length; i++) {
+        for (let j = 0; j < sea[i].length; j++) {
+          const seaPartElement = this.#seaElement.querySelector(
+            `[data-x="${j}"][data-y="${i}"]`
+          );
+
+          if (sea[i][j] instanceof Missile) {
+            const missile = sea[i][j];
+            if (missile.hasDetonated()) {
+              seaPartElement.setAttribute(
+                "class",
+                "sea__part sea__part_type_detonated-missile"
+              );
+            } else {
+              seaPartElement.setAttribute(
+                "class",
+                "sea__part sea__part_type_primed-missile"
+              );
+            }
+          } else {
+            seaPartElement.setAttribute(
+              "class",
+              "sea__part sea__part_type_unknown-element"
+            );
+          }
+        }
+      }
+    }
+  }
+
+  #updateConsoleElement(state = null) {
+    if (this.#consoleElement === null) {
+      this.#initialiseConsoleElement();
+    }
+
+    if (state === STATE.DEPLOYMENT) {
+    }
+  }
+
+  #initialiseMessageElement() {
+    this.#messageElement = document.querySelector(".message");
+  }
+
+  #initialisePortElement() {
+    this.#portElement = document.querySelector(".port");
+  }
+
+  #initialiseSeaElement() {
+    this.#seaElement = document.querySelector(".sea");
+
+    this.#seaElement.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      event.dataTransfer.dropEffect = "move";
+    });
+
+    this.#seaElement.addEventListener("drop", (event) => {
+      event.preventDefault();
+
+      const viewportMouseX = event.clientX;
+      const viewportMouseY = event.clientY;
+      const seaElementBoundingBox = this.#seaElement.getBoundingClientRect();
+      const seaElementMouseX = viewportMouseX - seaElementBoundingBox.x;
+      const seaElementMouseY = viewportMouseY - seaElementBoundingBox.y;
+
+      const shipElementId = event.dataTransfer.getData("id");
+      const shipElement = document.querySelector(`#${shipElementId}`);
+
+      const cellElementBoundingBox =
+        this.#seaElement.rows[0].cells[0].getBoundingClientRect();
+      const seaElementIndexX = Math.floor(
+        seaElementMouseX / cellElementBoundingBox.width
+      );
+      const seaElementIndexY = Math.floor(
+        seaElementMouseY / cellElementBoundingBox.height
+      );
+
+      this.#operation.deployShip(
+        new Ship(+shipElement.getAttribute("data-ship_length")),
+        seaElementIndexX,
+        seaElementIndexY
+      );
+    });
+  }
+
+  #initialiseConsoleElement() {
+    this.#consoleElement = document.querySelector(".console");
+
+    const startDeploymentButton = this.#consoleElement.querySelector(
+      ".console__button_type_start-deployment"
+    );
+    startDeploymentButton.addEventListener("click", () => {
+      this.#operation.startDeployment();
+
+      const report = this.#operation.issueReport();
+      this.#updateMessageElement(report.message);
+      this.#updatePortElement(report.port);
+      this.#updateSeaElement(report.sea, report.state);
+      this.#updateConsoleElement(report.state);
+    });
+  }
 }

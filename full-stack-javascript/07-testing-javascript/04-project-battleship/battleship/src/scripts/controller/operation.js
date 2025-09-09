@@ -2,13 +2,13 @@
 
 import { Admiral } from "../model/admiral";
 
-export const STATE = {
-  ENLISTMENT,
-  DEPLOYMENT,
-  ENGAGEMENT,
-  ASSESSMENT,
-  SETTLEMENT,
-};
+export const STATE = Object.freeze({
+  ENLISTMENT: 0,
+  DEPLOYMENT: 1,
+  ENGAGEMENT: 2,
+  ASSESSMENT: 3,
+  SETTLEMENT: 4,
+});
 
 export class Operation {
   #admiral1;
@@ -29,14 +29,10 @@ export class Operation {
     };
   }
 
-  getReport() {
-    return this.#report;
-  }
-
   startDeployment() {
     if (
-      this.#report.state !== STATE.ENLISTMENT ||
-      this.#report.state !== STATE.DEPLOYMENT ||
+      this.#report.state !== STATE.ENLISTMENT &&
+      this.#report.state !== STATE.DEPLOYMENT &&
       this.#report.state !== STATE.SETTLEMENT
     ) {
       return;
@@ -84,7 +80,10 @@ export class Operation {
       return;
     }
 
-    this.#rotateOffensiveAdmiral();
+    [this.#offensiveAdmiral, this.#defensiveAdmiral] = [
+      this.#defensiveAdmiral,
+      this.#offensiveAdmiral,
+    ];
 
     if (this.#offensiveAdmiral === this.#admiral2) {
       this.startDeployment();
@@ -95,7 +94,7 @@ export class Operation {
 
   startEngagement() {
     if (
-      this.#report.state !== STATE.DEPLOYMENT ||
+      this.#report.state !== STATE.DEPLOYMENT &&
       this.#report.state !== STATE.ASSESSMENT
     ) {
       return;
@@ -154,7 +153,10 @@ export class Operation {
       return;
     }
 
-    this.#rotateOffensiveAdmiral();
+    [this.#offensiveAdmiral, this.#defensiveAdmiral] = [
+      this.#defensiveAdmiral,
+      this.#offensiveAdmiral,
+    ];
 
     this.startEngagement();
   }
@@ -189,10 +191,7 @@ export class Operation {
     this.startDeployment();
   }
 
-  #rotateOffensiveAdmiral() {
-    [this.#offensiveAdmiral, this.#defensiveAdmiral] = [
-      this.#defensiveAdmiral,
-      this.#offensiveAdmiral,
-    ];
+  issueReport() {
+    return this.#report;
   }
 }

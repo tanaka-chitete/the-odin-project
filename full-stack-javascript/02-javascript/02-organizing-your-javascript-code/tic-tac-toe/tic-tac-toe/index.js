@@ -2,7 +2,7 @@ function createBoard() {
   const numRows = 3;
   const array = [];
   let numValues = 0;
-  
+
   for (let i = 0; i < numRows; i++) {
     array[i] = new Array();
     for (let j = 0; j < numRows; j++) {
@@ -29,22 +29,22 @@ function createBoard() {
     if (row >= numRows || column >= numRows) {
       return "";
     }
-    
+
     return getArray()[row][column];
   };
 
-  const isFull = () => numValues >= (numRows ** 2);
+  const isFull = () => numValues >= numRows ** 2;
 
   return {
     getArray,
     setValue,
     getValue,
-    isFull
+    isFull,
   };
 }
 
 function createGameController(
-  player1Name = "Player 1", 
+  player1Name = "Player 1",
   player2Name = "Player 2"
 ) {
   const board = createBoard();
@@ -52,21 +52,21 @@ function createGameController(
   const players = [
     {
       name: player1Name,
-      symbol: "x"
+      symbol: "x",
     },
     {
       name: player2Name,
-      symbol: "o"
-    }
+      symbol: "o",
+    },
   ];
 
   let currentPlayer = players[0];
-  message = `${currentPlayer.name}'s turn`
-  
+  message = `${currentPlayer.name}'s turn`;
+
   const playTurn = (row, column) => {
     if (!over) {
       board.setValue(row, column, currentPlayer.symbol);
-      
+
       if (findTrio(currentPlayer.symbol)) {
         message = `${currentPlayer.name} wins!`;
         over = true;
@@ -75,7 +75,7 @@ function createGameController(
         over = true;
       } else {
         currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
-        message = `${currentPlayer.name}'s turn`
+        message = `${currentPlayer.name}'s turn`;
       }
     }
   };
@@ -87,7 +87,7 @@ function createGameController(
       return (
         board.getValue(row, column) === symbol &&
         board.getValue(row + rowStep, column + columnStep) === symbol &&
-        board.getValue(row + (2 * rowStep), column + (2 * columnStep)) === symbol
+        board.getValue(row + 2 * rowStep, column + 2 * columnStep) === symbol
       );
     }
 
@@ -134,10 +134,10 @@ function createGameController(
     return false;
   }
 
-  return { 
+  return {
     playTurn,
     getMessage,
-    getBoard: board.getArray 
+    getBoard: board.getArray,
   };
 }
 
@@ -152,25 +152,29 @@ function createDisplayController() {
     boardArray.forEach((row, rowIndex) => {
       row.forEach((cellValue, columnIndex) => {
         const cellButton = document.querySelector(
-          `.board__cell[data-row="${rowIndex}"][data-column="${columnIndex}"]`
+          `.sea__part[data-row="${rowIndex}"][data-column="${columnIndex}"]`
         );
 
         cellButton.textContent = cellValue;
       });
     });
   }
-  
-  const cellButtons = [...document.querySelectorAll(".board__cell")];
+
+  const cellButtons = [...document.querySelectorAll(".sea__part")];
   cellButtons.forEach((cellButton) => {
-    cellButton.addEventListener("click", () => {
-      gameController.playTurn(
-        cellButton.dataset.row, 
-        cellButton.dataset.column
-      );
-      updateDisplay();
-    }, { 
-      once: true // Prevents users from drawing on occupied cells
-    });
+    cellButton.addEventListener(
+      "click",
+      () => {
+        gameController.playTurn(
+          cellButton.dataset.row,
+          cellButton.dataset.column
+        );
+        updateDisplay();
+      },
+      {
+        once: true, // Prevents users from drawing on occupied cells
+      }
+    );
   });
 
   const restartButton = document.querySelector(".restart__button");
