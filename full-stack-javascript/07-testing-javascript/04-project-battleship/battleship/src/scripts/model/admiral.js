@@ -73,8 +73,12 @@ class Sea {
   }
 
   deployShip(ship, x, y) {
-    if (this.hasReceivedAllShips()) {
-      throw new Error("All ships have been received");
+    // if (this.hasReceivedAllShips()) {
+    //   throw new Error("All ships have been received");
+    // }
+
+    if (this.shipLengthToAllocation.get(ship.getLength()) <= 0) {
+      return;
     }
 
     if (x < 0 || x > this.map.length - 1 || y < 0 || y > this.map.length - 1) {
@@ -91,9 +95,10 @@ class Sea {
       this.map[y][j] = ship;
     }
 
-    const newShipQuantity =
-      this.shipLengthToAllocation.get(ship.getLength()) - 1;
-    this.shipLengthToAllocation.set(ship.getLength(), newShipQuantity);
+    this.shipLengthToAllocation.set(
+      ship.getLength(),
+      this.shipLengthToAllocation.get(ship.getLength()) - 1
+    );
   }
 
   rotateShip(x, y) {

@@ -119,7 +119,7 @@ main {
 }
 
 .sea,
-.sea__data {
+.sea__element {
   border: 1px solid var(--salt-700);
 }
 
@@ -129,27 +129,27 @@ main {
   border-collapse: collapse;
 }
 
-.sea__data_type_ship {
+.sea__element_type_ship {
   background-color: var(--salt-500);
 }
 
-#sea__data_type_selected {
+#sea__element_selected {
   background-color: var(--sky-400);
 }
 
-.sea__data_type_unknown {
+.sea__element_type_unknown-element {
   cursor: pointer;
 }
 
-.sea__data_type_unknown:hover {
+.sea__element_type_unknown-element:hover {
   background-color: var(--salt-400);
 }
 
-.sea__data_type_missile-hit {
+.sea__element_type_detonated-missile {
   background-color: var(--fern-400);
 }
 
-.sea__data_type_missile-miss {
+.sea__element_type_undetonated-missile {
   background-color: var(--rose-400);
 }
 

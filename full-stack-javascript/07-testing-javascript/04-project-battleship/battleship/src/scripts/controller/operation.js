@@ -25,6 +25,9 @@ export class Operation {
     this.#offensiveAdmiral = this.#admiral1;
     this.#defensiveAdmiral = this.#admiral2;
     this.#report = {
+      message: null,
+      port: null,
+      sea: null,
       state: STATE.ENLISTMENT,
     };
   }
@@ -53,6 +56,8 @@ export class Operation {
     }
 
     this.#offensiveAdmiral.deployShip(ship, x, y);
+
+    this.startDeployment();
   }
 
   rotateShip(x, y) {
@@ -61,6 +66,8 @@ export class Operation {
     }
 
     this.#offensiveAdmiral.rotateShip(x, y);
+
+    this.startDeployment();
   }
 
   recallShip(x, y) {
@@ -69,6 +76,8 @@ export class Operation {
     }
 
     this.#offensiveAdmiral.recallShip(x, y);
+
+    this.startDeployment();
   }
 
   endDeployment() {

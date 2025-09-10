@@ -34,13 +34,13 @@
   background: black;
 }
 
-.sea__part {
+.sea__element {
   border: none;
   background: white;
   font-size: 10rem;
 }
 
-.sea__part:hover {
+.sea__element:hover {
   cursor: pointer;
 }
 

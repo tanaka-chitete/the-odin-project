@@ -71,6 +71,55 @@ export class Interface {
     }
   }
 
+  #updateSeaElementForDeployment(sea) {
+    for (let i = 0; i < sea.length; i++) {
+      for (let j = 0; j < sea.length; j++) {
+        const seaElementElement = this.#seaElement.querySelector(
+          `[data-x="${j}"][data-y="${i}"]`
+        );
+
+        if (sea[i][j]) {
+          seaElementElement.setAttribute(
+            "class",
+            "sea__element sea__element_type_ship"
+          );
+        } else {
+          seaElementElement.setAttribute("class", "sea__element");
+        }
+      }
+    }
+  }
+
+  #updateSeaElementForEngagement(sea) {
+    for (let i = 0; i < sea.length; i++) {
+      for (let j = 0; j < sea[i].length; j++) {
+        const seaElementElement = this.#seaElement.querySelector(
+          `[data-x="${j}"][data-y="${i}"]`
+        );
+
+        if (sea[i][j] instanceof Missile) {
+          const missile = sea[i][j];
+          if (missile.hasDetonated()) {
+            seaElementElement.setAttribute(
+              "class",
+              "sea__element sea__element_type_detonated-missile"
+            );
+          } else {
+            seaElementElement.setAttribute(
+              "class",
+              "sea__element sea__element_type_undetonated-missile"
+            );
+          }
+        } else {
+          seaElementElement.setAttribute(
+            "class",
+            "sea__element sea__element_type_unknown-element"
+          );
+        }
+      }
+    }
+  }
+
   #updateSeaElement(sea, state) {
     if (sea === null) {
       return;
@@ -81,50 +130,9 @@ export class Interface {
     }
 
     if (state === STATE.DEPLOYMENT) {
-      for (let i = 0; i < sea.length; i++) {
-        for (let j = 0; j < sea.length; j++) {
-          const seaPartElement = this.#seaElement.querySelector(
-            `[data-x="${j}"][data-y="${i}"]`
-          );
-
-          if (sea[i][j]) {
-            seaPartElement.setAttribute(
-              "class",
-              "sea__part sea__part_type_ship"
-            );
-          } else {
-            seaPartElement.setAttribute("class", "sea__part");
-          }
-        }
-      }
+      this.#updateSeaElementForDeployment(sea);
     } else {
-      for (let i = 0; i < sea.length; i++) {
-        for (let j = 0; j < sea[i].length; j++) {
-          const seaPartElement = this.#seaElement.querySelector(
-            `[data-x="${j}"][data-y="${i}"]`
-          );
-
-          if (sea[i][j] instanceof Missile) {
-            const missile = sea[i][j];
-            if (missile.hasDetonated()) {
-              seaPartElement.setAttribute(
-                "class",
-                "sea__part sea__part_type_detonated-missile"
-              );
-            } else {
-              seaPartElement.setAttribute(
-                "class",
-                "sea__part sea__part_type_primed-missile"
-              );
-            }
-          } else {
-            seaPartElement.setAttribute(
-              "class",
-              "sea__part sea__part_type_unknown-element"
-            );
-          }
-        }
-      }
+      this.#updateSeaElementForEngagement(sea);
     }
   }
 
@@ -179,6 +187,8 @@ export class Interface {
         seaElementIndexX,
         seaElementIndexY
       );
+
+      this.#updateElements(this.#operation.issueReport());
     });
   }
 
@@ -191,11 +201,14 @@ export class Interface {
     startDeploymentButton.addEventListener("click", () => {
       this.#operation.startDeployment();
 
-      const report = this.#operation.issueReport();
-      this.#updateMessageElement(report.message);
-      this.#updatePortElement(report.port);
-      this.#updateSeaElement(report.sea, report.state);
-      this.#updateConsoleElement(report.state);
+      this.#updateElements(this.#operation.issueReport());
     });
+  }
+
+  #updateElements(report) {
+    this.#updateMessageElement(report.message);
+    this.#updatePortElement(report.port);
+    this.#updateSeaElement(report.sea, report.state);
+    this.#updateConsoleElement(report.state);
   }
 }

@@ -152,7 +152,7 @@ function createDisplayController() {
     boardArray.forEach((row, rowIndex) => {
       row.forEach((cellValue, columnIndex) => {
         const cellButton = document.querySelector(
-          `.sea__part[data-row="${rowIndex}"][data-column="${columnIndex}"]`
+          `.sea__element[data-row="${rowIndex}"][data-column="${columnIndex}"]`
         );
 
         cellButton.textContent = cellValue;
@@ -160,7 +160,7 @@ function createDisplayController() {
     });
   }
 
-  const cellButtons = [...document.querySelectorAll(".sea__part")];
+  const cellButtons = [...document.querySelectorAll(".sea__element")];
   cellButtons.forEach((cellButton) => {
     cellButton.addEventListener(
       "click",
