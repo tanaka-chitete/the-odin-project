@@ -18,6 +18,13 @@ export class Interface {
     this.#updateConsoleElement();
   }
 
+  #updateElements(report) {
+    this.#updateMessageElement(report.message);
+    this.#updatePortElement(report.port);
+    this.#updateSeaElement(report.sea, report.state);
+    this.#updateConsoleElement(report.state);
+  }
+
   #updateMessageElement(message) {
     if (message === null) {
       return;
@@ -142,6 +149,15 @@ export class Interface {
     }
 
     if (state === STATE.DEPLOYMENT) {
+      const enlistmentPanelElement = document.querySelector(
+        ".console__panel_type_enlistment"
+      );
+      enlistmentPanelElement.classList.add("hidden");
+
+      const deploymentPanelElement = document.querySelector(
+        ".console__panel_type_deployment"
+      );
+      deploymentPanelElement.classList.remove("hidden");
     }
   }
 
@@ -203,12 +219,5 @@ export class Interface {
 
       this.#updateElements(this.#operation.issueReport());
     });
-  }
-
-  #updateElements(report) {
-    this.#updateMessageElement(report.message);
-    this.#updatePortElement(report.port);
-    this.#updateSeaElement(report.sea, report.state);
-    this.#updateConsoleElement(report.state);
   }
 }
