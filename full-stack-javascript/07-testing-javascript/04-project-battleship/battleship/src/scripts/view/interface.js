@@ -51,7 +51,7 @@ export class Interface {
     for (const [length, allocation] of Object.entries(port)) {
       for (let i = 0; i < allocation; i++) {
         const shipElement = document.createElement("div");
-        shipElement.setAttribute("id", `ship-${crypto.randomUUID()}`);
+        shipElement.setAttribute("id", `port__ship_id_${crypto.randomUUID()}`);
         shipElement.setAttribute(
           "class",
           `port__ship port__ship_length_${length}`

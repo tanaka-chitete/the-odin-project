@@ -8,6 +8,21 @@ beforeEach(() => {
 });
 
 describe("Missile", () => {
+  describe("hasStopped", () => {
+    describe("the missile has not stopped", () => {
+      it("denies the missile has stopped", () => {
+        expect(missile.hasStopped()).toBe(false);
+      });
+    });
+
+    describe("the missile has stopped", () => {
+      it("confirms the missile has stopped", () => {
+        missile.stop();
+        expect(missile.hasStopped()).toBe(true);
+      });
+    });
+  });
+
   describe("hasDetonated", () => {
     describe("the missile has not detonated", () => {
       it("denies the missile has detonated", () => {

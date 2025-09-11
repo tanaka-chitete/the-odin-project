@@ -126,6 +126,10 @@ export class Operation {
 
     this.#defensiveAdmiral.receiveMissile(missile, x, y);
 
+    if (!missile.hasStopped()) {
+      return;
+    }
+
     if (this.#defensiveAdmiral.hasLostAllShips()) {
       this.#startSettlement();
     } else {

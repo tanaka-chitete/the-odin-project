@@ -73,21 +73,17 @@ class Sea {
   }
 
   deployShip(ship, x, y) {
-    // if (this.hasReceivedAllShips()) {
-    //   throw new Error("All ships have been received");
-    // }
-
     if (this.shipLengthToAllocation.get(ship.getLength()) <= 0) {
       return;
     }
 
     if (x < 0 || x > this.map.length - 1 || y < 0 || y > this.map.length - 1) {
-      throw new Error("Coordinates must be inside limits");
+      return;
     }
 
     for (let j = x; j < x + ship.getLength(); j++) {
       if (j > this.map.length - 1 || this.map[y][j] !== null) {
-        throw new Error("Path must be unobstructed");
+        return;
       }
     }
 
@@ -103,11 +99,11 @@ class Sea {
 
   rotateShip(x, y) {
     if (x < 0 || x > this.map.length - 1 || y < 0 || y > this.map.length - 1) {
-      throw new Error("Coordinates must be inside limits");
+      return;
     }
 
     if (!(this.map[y][x] instanceof Ship)) {
-      throw new Error("Ship must have been received");
+      return;
     }
 
     const ship = this.map[y][x];
@@ -159,11 +155,11 @@ class Sea {
 
   recallShip(x, y) {
     if (x < 0 || x > this.map.length - 1 || y < 0 || y > this.map.length - 1) {
-      throw new Error("Coordinates must be inside limits");
+      return;
     }
 
     if (!(this.map[y][x] instanceof Ship)) {
-      throw new Error("Ship must have been received");
+      return;
     }
 
     const ship = this.map[y][x];
@@ -209,11 +205,11 @@ class Sea {
 
   receiveMissile(missile, x, y) {
     if (x < 0 || x > 9 || y < 0 || y > 9) {
-      throw new Error("Coordinates must be inside limits");
+      return;
     }
 
     if (this.map[y][x] instanceof Missile) {
-      throw new Error("Target must not be another missile");
+      return;
     }
 
     if (this.map[y][x] instanceof Ship) {
