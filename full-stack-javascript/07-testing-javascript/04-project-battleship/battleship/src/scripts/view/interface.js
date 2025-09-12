@@ -18,13 +18,6 @@ export class Interface {
     this.#updateConsoleElement();
   }
 
-  #updateElements(report) {
-    this.#updateMessageElement(report.message);
-    this.#updatePortElement(report.port);
-    this.#updateSeaElement(report.sea, report.state);
-    this.#updateConsoleElement(report.state);
-  }
-
   #updateMessageElement(message) {
     if (message === null) {
       return;
@@ -79,17 +72,28 @@ export class Interface {
   }
 
   #updateSeaElementForDeployment(sea) {
+    const idToObject = new Map();
+
     for (let i = 0; i < sea.length; i++) {
       for (let j = 0; j < sea.length; j++) {
         const seaElementElement = this.#seaElement.querySelector(
           `[data-x="${j}"][data-y="${i}"]`
         );
 
+        seaElementElement.setAttribute("class", "sea__element");
+        seaElementElement.removeAttribute("data-id");
+
         if (sea[i][j]) {
+          // Associating segments with the same ship object makes it easier to select the ship when the user clicks it
+          if (!idToObject.has(sea[i][j])) {
+            idToObject.set(sea[i][j], `sea__element_id_${crypto.randomUUID()}`);
+          }
+
           seaElementElement.setAttribute(
             "class",
             "sea__element sea__element_type_ship"
           );
+          seaElementElement.setAttribute("data-id", idToObject.get(sea[i][j]));
         } else {
           seaElementElement.setAttribute("class", "sea__element");
         }
@@ -104,23 +108,20 @@ export class Interface {
           `[data-x="${j}"][data-y="${i}"]`
         );
 
-        if (sea[i][j] instanceof Missile) {
-          const missile = sea[i][j];
-          if (missile.hasDetonated()) {
-            seaElementElement.setAttribute(
-              "class",
-              "sea__element sea__element_type_detonated-missile"
-            );
-          } else {
-            seaElementElement.setAttribute(
-              "class",
-              "sea__element sea__element_type_undetonated-missile"
-            );
-          }
+        if (!(sea[i][j] instanceof Missile)) {
+          continue;
+        }
+
+        const missile = sea[i][j];
+        if (missile.hasDetonated()) {
+          seaElementElement.setAttribute(
+            "class",
+            "sea__element sea__element_type_detonated-missile"
+          );
         } else {
           seaElementElement.setAttribute(
             "class",
-            "sea__element sea__element_type_unknown-element"
+            "sea__element sea__element_type_undetonated-missile"
           );
         }
       }
@@ -149,16 +150,20 @@ export class Interface {
     }
 
     if (state === STATE.DEPLOYMENT) {
-      const enlistmentPanelElement = document.querySelector(
-        ".console__panel_type_enlistment"
-      );
-      enlistmentPanelElement.classList.add("hidden");
-
-      const deploymentPanelElement = document.querySelector(
-        ".console__panel_type_deployment"
-      );
-      deploymentPanelElement.classList.remove("hidden");
+      this.#updateConsoleElementForDeployment();
     }
+  }
+
+  #updateConsoleElementForDeployment() {
+    const enlistmentPanelElement = document.querySelector(
+      ".console__panel_type_enlistment"
+    );
+    enlistmentPanelElement.classList.add("hidden");
+
+    const deploymentPanelElement = document.querySelector(
+      ".console__panel_type_deployment"
+    );
+    deploymentPanelElement.classList.remove("hidden");
   }
 
   #initialiseMessageElement() {
@@ -171,6 +176,26 @@ export class Interface {
 
   #initialiseSeaElement() {
     this.#seaElement = document.querySelector(".sea");
+
+    this.#seaElement.addEventListener("click", (event) => {
+      // The user may have clicked a ship. A ship is represented with multiple segments.
+      const previouslySelectedElements = document.querySelectorAll(".selected");
+      for (const previouslySelectedElement of previouslySelectedElements) {
+        previouslySelectedElement.classList.remove("selected");
+      }
+
+      const newlySelectedElement = event.target;
+
+      if (newlySelectedElement.classList.contains("sea__element_type_ship")) {
+        const shipSegmentElements = document.querySelectorAll(
+          `[data-id=${newlySelectedElement.getAttribute("data-id")}]`
+        );
+
+        for (const shipSegmentElement of shipSegmentElements) {
+          shipSegmentElement.classList.add("selected");
+        }
+      }
+    });
 
     this.#seaElement.addEventListener("dragover", (event) => {
       event.preventDefault();
@@ -204,7 +229,9 @@ export class Interface {
         seaElementIndexY
       );
 
-      this.#updateElements(this.#operation.issueReport());
+      const report = this.#operation.issueReport();
+      this.#updatePortElement(report.port);
+      this.#updateSeaElement(report.sea, report.state);
     });
   }
 
@@ -217,7 +244,45 @@ export class Interface {
     startDeploymentButton.addEventListener("click", () => {
       this.#operation.startDeployment();
 
-      this.#updateElements(this.#operation.issueReport());
+      const report = this.#operation.issueReport();
+      this.#updateMessageElement(report.message);
+      this.#updatePortElement(report.port);
+      this.#updateSeaElement(report.sea, report.state);
+      this.#updateConsoleElement(report.state);
+    });
+
+    const recallShipButton = this.#consoleElement.querySelector(
+      ".console__button_type_recall-ship"
+    );
+    recallShipButton.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      // The user may have clicked a ship. A ship is represented with multiple segments.
+      const previouslySelectedElements = document.querySelectorAll(".selected");
+
+      if (previouslySelectedElements.length === 0) {
+        return;
+      }
+
+      previouslySelectedElements.forEach((previouslySelectedElement) => {
+        if (
+          !previouslySelectedElement.classList.contains(
+            "sea__element_type_ship"
+          )
+        ) {
+          return;
+        }
+      });
+
+      const seaElementIndexX =
+        +previouslySelectedElements[0].getAttribute("data-x");
+      const seaElementIndexY =
+        +previouslySelectedElements[0].getAttribute("data-y");
+      this.#operation.recallShip(seaElementIndexX, seaElementIndexY);
+
+      const report = this.#operation.issueReport();
+      this.#updatePortElement(report.port);
+      this.#updateSeaElement(report.sea, report.state);
     });
   }
 }

@@ -118,23 +118,20 @@ main {
   grid-column: 1 / 3;
 }
 
-.sea,
-.sea__element {
-  border: 1px solid var(--salt-700);
-}
-
 .sea {
   height: 426.672px;
   aspect-ratio: 1 / 1;
   border-collapse: collapse;
 }
 
-.sea__element_type_ship {
-  background-color: var(--salt-500);
+.sea,
+.sea__element {
+  border: 1px solid var(--salt-700);
 }
 
-#sea__element_selected {
-  background-color: var(--sky-400);
+.sea__element_type_ship {
+  background-color: var(--salt-500);
+  cursor: pointer;
 }
 
 .sea__element_type_unknown-element {
@@ -151,6 +148,10 @@ main {
 
 .sea__element_type_undetonated-missile {
   background-color: var(--rose-400);
+}
+
+.selected {
+  box-shadow: inset 0 0 0 3px var(--sky-400);
 }
 
 .hidden {
