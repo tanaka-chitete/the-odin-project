@@ -316,5 +316,18 @@ export class Interface {
       this.#updatePortElement(report.port);
       this.#updateSeaElement(report.sea, report.state);
     });
+
+    const endDeploymentButton = this.#consoleElement.querySelector(
+      ".console__button_type_end-deployment"
+    );
+    endDeploymentButton.addEventListener("click", () => {
+      this.#operation.endDeployment();
+
+      const report = this.#operation.issueReport();
+      this.#updateMessageElement(report.message);
+      this.#updatePortElement(report.port);
+      this.#updateSeaElement(report.sea, report.state);
+      this.#updateConsoleElement(report.state);
+    });
   }
 }
