@@ -101,12 +101,19 @@ export class Interface {
     }
   }
 
+  // TODO: Clear ship first!
   #updateSeaElementForEngagement(sea) {
     for (let i = 0; i < sea.length; i++) {
       for (let j = 0; j < sea[i].length; j++) {
         const seaElementElement = this.#seaElement.querySelector(
           `[data-x="${j}"][data-y="${i}"]`
         );
+
+        seaElementElement.setAttribute(
+          "class",
+          "sea__element sea__element_type_unknown-element"
+        );
+        seaElementElement.removeAttribute("data-id");
 
         if (!(sea[i][j] instanceof Missile)) {
           continue;
@@ -139,7 +146,7 @@ export class Interface {
 
     if (state === STATE.DEPLOYMENT) {
       this.#updateSeaElementForDeployment(sea);
-    } else {
+    } else if (state === STATE.ENGAGEMENT) {
       this.#updateSeaElementForEngagement(sea);
     }
   }
@@ -151,6 +158,8 @@ export class Interface {
 
     if (state === STATE.DEPLOYMENT) {
       this.#updateConsoleElementForDeployment();
+    } else if (state === STATE.ENGAGEMENT) {
+      this.#updateConsoleElementForEngagement();
     }
   }
 
@@ -164,6 +173,18 @@ export class Interface {
       ".console__panel_type_deployment"
     );
     deploymentPanelElement.classList.remove("hidden");
+  }
+
+  #updateConsoleElementForEngagement() {
+    const deploymentPanelElement = document.querySelector(
+      ".console__panel_type_deployment"
+    );
+    deploymentPanelElement.classList.add("hidden");
+
+    const engagementPanelElement = document.querySelector(
+      ".console__panel_type_engagement"
+    );
+    engagementPanelElement.classList.remove("hidden");
   }
 
   #initialiseMessageElement() {
@@ -194,6 +215,12 @@ export class Interface {
         for (const shipSegmentElement of shipSegmentElements) {
           shipSegmentElement.classList.add("selected");
         }
+      } else if (
+        newlySelectedElement.classList.contains(
+          "sea__element_type_unknown-element"
+        )
+      ) {
+        newlySelectedElement.classList.add("selected");
       }
     });
 
