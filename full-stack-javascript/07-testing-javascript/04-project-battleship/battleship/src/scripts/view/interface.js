@@ -257,7 +257,6 @@ export class Interface {
     recallShipButton.addEventListener("click", (event) => {
       event.preventDefault();
 
-      // The user may have clicked a ship. A ship is represented with multiple segments.
       const previouslySelectedElements = document.querySelectorAll(".selected");
 
       if (previouslySelectedElements.length === 0) {
@@ -279,6 +278,39 @@ export class Interface {
       const seaElementIndexY =
         +previouslySelectedElements[0].getAttribute("data-y");
       this.#operation.recallShip(seaElementIndexX, seaElementIndexY);
+
+      const report = this.#operation.issueReport();
+      this.#updatePortElement(report.port);
+      this.#updateSeaElement(report.sea, report.state);
+    });
+
+    const rotateShipButton = this.#consoleElement.querySelector(
+      ".console__button_type_rotate-ship"
+    );
+    rotateShipButton.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const previouslySelectedElements = document.querySelectorAll(".selected");
+
+      if (previouslySelectedElements.length === 0) {
+        return;
+      }
+
+      previouslySelectedElements.forEach((previouslySelectedElement) => {
+        if (
+          !previouslySelectedElement.classList.contains(
+            "sea__element_type_ship"
+          )
+        ) {
+          return;
+        }
+      });
+
+      const seaElementIndexX =
+        +previouslySelectedElements[0].getAttribute("data-x");
+      const seaElementIndexY =
+        +previouslySelectedElements[0].getAttribute("data-y");
+      this.#operation.rotateShip(seaElementIndexX, seaElementIndexY);
 
       const report = this.#operation.issueReport();
       this.#updatePortElement(report.port);
