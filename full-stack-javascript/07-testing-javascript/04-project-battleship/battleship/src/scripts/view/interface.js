@@ -101,7 +101,6 @@ export class Interface {
     }
   }
 
-  // TODO: Clear ship first!
   #updateSeaElementForEngagement(sea) {
     for (let i = 0; i < sea.length; i++) {
       for (let j = 0; j < sea[i].length; j++) {
@@ -146,7 +145,11 @@ export class Interface {
 
     if (state === STATE.DEPLOYMENT) {
       this.#updateSeaElementForDeployment(sea);
-    } else if (state === STATE.ENGAGEMENT) {
+    } else if (
+      state === STATE.ENGAGEMENT ||
+      state === STATE.ASSESSMENT ||
+      state === STATE.SETTLEMENT
+    ) {
       this.#updateSeaElementForEngagement(sea);
     }
   }
@@ -160,31 +163,68 @@ export class Interface {
       this.#updateConsoleElementForDeployment();
     } else if (state === STATE.ENGAGEMENT) {
       this.#updateConsoleElementForEngagement();
+    } else if (state === STATE.ASSESSMENT) {
+      this.#updateConsoleElementForAssessment();
+    } else if (state === STATE.SETTLEMENT) {
+      this.#updateConsoleElementForSettlement();
     }
   }
 
   #updateConsoleElementForDeployment() {
-    const enlistmentPanelElement = document.querySelector(
-      ".console__panel_type_enlistment"
+    const currentPanelElement = document.querySelector(
+      ".console__panel_visible"
     );
-    enlistmentPanelElement.classList.add("hidden");
+    if (currentPanelElement !== null) {
+      currentPanelElement.classList.remove("console__panel_visible");
+    }
 
     const deploymentPanelElement = document.querySelector(
       ".console__panel_type_deployment"
     );
-    deploymentPanelElement.classList.remove("hidden");
+    deploymentPanelElement.classList.add("console__panel_visible");
   }
 
+  // TODO: Refactor to use console__panel_active class
   #updateConsoleElementForEngagement() {
-    const deploymentPanelElement = document.querySelector(
-      ".console__panel_type_deployment"
+    const currentPanelElement = document.querySelector(
+      ".console__panel_visible"
     );
-    deploymentPanelElement.classList.add("hidden");
+    if (currentPanelElement !== null) {
+      currentPanelElement.classList.remove("console__panel_visible");
+    }
 
     const engagementPanelElement = document.querySelector(
       ".console__panel_type_engagement"
     );
-    engagementPanelElement.classList.remove("hidden");
+    engagementPanelElement.classList.add("console__panel_visible");
+  }
+
+  #updateConsoleElementForAssessment() {
+    const currentPanelElement = document.querySelector(
+      ".console__panel_visible"
+    );
+    if (currentPanelElement !== null) {
+      currentPanelElement.classList.remove("console__panel_visible");
+    }
+
+    const assessmentPanelElement = document.querySelector(
+      ".console__panel_type_assessment"
+    );
+    assessmentPanelElement.classList.add("console__panel_visible");
+  }
+
+  #updateConsoleElementForSettlement() {
+    const currentPanelElement = document.querySelector(
+      ".console__panel_visible"
+    );
+    if (currentPanelElement !== null) {
+      currentPanelElement.classList.remove("console__panel_visible");
+    }
+
+    const settlementPanelElement = document.querySelector(
+      ".console__panel_type_settlement"
+    );
+    settlementPanelElement.classList.add("console__panel_visible");
   }
 
   #initialiseMessageElement() {
@@ -347,12 +387,75 @@ export class Interface {
     const endDeploymentButton = this.#consoleElement.querySelector(
       ".console__button_type_end-deployment"
     );
-    endDeploymentButton.addEventListener("click", () => {
+    endDeploymentButton.addEventListener("click", (event) => {
+      event.preventDefault();
+
       this.#operation.endDeployment();
 
       const report = this.#operation.issueReport();
       this.#updateMessageElement(report.message);
       this.#updatePortElement(report.port);
+      this.#updateSeaElement(report.sea, report.state);
+      this.#updateConsoleElement(report.state);
+    });
+
+    const engageMissileButton = this.#consoleElement.querySelector(
+      ".console__button_type_engage-missile"
+    );
+    engageMissileButton.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const previouslySelectedElement = document.querySelector(".selected");
+
+      if (
+        previouslySelectedElement === null ||
+        !previouslySelectedElement.classList.contains(
+          "sea__element_type_unknown-element"
+        )
+      ) {
+        return;
+      }
+
+      const seaElementIndexX =
+        +previouslySelectedElement.getAttribute("data-x");
+      const seaElementIndexY =
+        +previouslySelectedElement.getAttribute("data-y");
+      this.#operation.engageMissile(
+        new Missile(),
+        seaElementIndexX,
+        seaElementIndexY
+      );
+
+      const report = this.#operation.issueReport();
+      this.#updateMessageElement(report.message);
+      this.#updateSeaElement(report.sea, report.state);
+      this.#updateConsoleElement(report.state);
+    });
+
+    const endAssessmentButton = this.#consoleElement.querySelector(
+      ".console__button_type_end-assessment"
+    );
+    endAssessmentButton.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      this.#operation.endAssessment();
+
+      const report = this.#operation.issueReport();
+      this.#updateMessageElement(report.message);
+      this.#updateSeaElement(report.sea, report.state);
+      this.#updateConsoleElement(report.state);
+    });
+
+    const endSettlementButton = this.#consoleElement.querySelector(
+      ".console__button_type_end-settlement"
+    );
+    endSettlementButton.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      this.#operation.endSettlement();
+
+      const report = this.#operation.issueReport();
+      this.#updateMessageElement(report.message);
       this.#updateSeaElement(report.sea, report.state);
       this.#updateConsoleElement(report.state);
     });

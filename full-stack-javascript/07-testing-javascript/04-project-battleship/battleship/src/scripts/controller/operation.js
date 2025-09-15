@@ -194,11 +194,14 @@ export class Operation {
       return;
     }
 
+    const admiral1Report = this.#admiral1.issueReport();
+    const admiral2Report = this.#admiral2.issueReport();
+
     this.#offensiveAdmiral = this.#admiral1 = new Admiral(
-      this.#admiral1.getName()
+      admiral1Report.issuer
     );
     this.#defensiveAdmiral = this.#admiral2 = new Admiral(
-      this.#admiral2.getName()
+      admiral2Report.issuer
     );
 
     this.startDeployment();

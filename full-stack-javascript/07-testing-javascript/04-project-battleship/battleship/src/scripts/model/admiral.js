@@ -65,10 +65,10 @@ class Sea {
       // [4, 2],
       // [3, 7],
       // [2, 5],
-      [5, 1],
+      [5, 0],
       [4, 0],
       [3, 0],
-      [2, 0],
+      [2, 1],
     ]);
   }
 
@@ -215,6 +215,8 @@ class Sea {
     if (this.map[y][x] instanceof Missile) {
       return;
     }
+
+    missile.stop();
 
     if (this.map[y][x] instanceof Ship) {
       this.map[y][x] = missile;
