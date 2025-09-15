@@ -281,17 +281,23 @@ export class Interface {
       const shipElementId = event.dataTransfer.getData("id");
       const shipElement = document.querySelector(`#${shipElementId}`);
 
+      const shipElementLength = +shipElement.getAttribute("data-ship_length");
+      const shipElementMouseX =
+        +event.dataTransfer.getData("shipElementMouseX");
+      const shipElementMouseY =
+        +event.dataTransfer.getData("shipElementMouseY");
+
       const cellElementBoundingBox =
         this.#seaElement.rows[0].cells[0].getBoundingClientRect();
-      const seaElementIndexX = Math.floor(
-        seaElementMouseX / cellElementBoundingBox.width
-      );
-      const seaElementIndexY = Math.floor(
-        seaElementMouseY / cellElementBoundingBox.height
-      );
+      const seaElementIndexX =
+        Math.floor(seaElementMouseX / cellElementBoundingBox.width) -
+        Math.floor(shipElementMouseX / cellElementBoundingBox.width);
+      const seaElementIndexY =
+        Math.floor(seaElementMouseY / cellElementBoundingBox.height) -
+        Math.floor(shipElementMouseY / cellElementBoundingBox.height);
 
       this.#operation.deployShip(
-        new Ship(+shipElement.getAttribute("data-ship_length")),
+        new Ship(shipElementLength),
         seaElementIndexX,
         seaElementIndexY
       );
