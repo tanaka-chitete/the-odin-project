@@ -72,6 +72,9 @@ export class Interface {
   }
 
   #updateSeaElementForDeployment(sea) {
+    const seaElement = document.querySelector(".sea");
+    seaElement.setAttribute("class", "sea sea_state_deployment");
+
     const idToObject = new Map();
 
     for (let i = 0; i < sea.length; i++) {
@@ -102,6 +105,9 @@ export class Interface {
   }
 
   #updateSeaElementForEngagement(sea) {
+    const seaElement = document.querySelector(".sea");
+    seaElement.setAttribute("class", "sea sea_state_engagement");
+
     for (let i = 0; i < sea.length; i++) {
       for (let j = 0; j < sea[i].length; j++) {
         const seaElementElement = this.#seaElement.querySelector(
@@ -134,6 +140,20 @@ export class Interface {
     }
   }
 
+  #updateSeaElementForAssessment(sea) {
+    this.#updateSeaElementForEngagement(sea);
+
+    const seaElement = document.querySelector(".sea");
+    seaElement.setAttribute("class", "sea sea_state_assessment");
+  }
+
+  #updateSeaElementForSettlement(sea) {
+    this.#updateSeaElementForEngagement(sea);
+
+    const seaElement = document.querySelector(".sea");
+    seaElement.setAttribute("class", "sea sea_state_settlement");
+  }
+
   #updateSeaElement(sea, state) {
     if (sea === null) {
       return;
@@ -143,14 +163,19 @@ export class Interface {
       this.#initialiseSeaElement();
     }
 
-    if (state === STATE.DEPLOYMENT) {
-      this.#updateSeaElementForDeployment(sea);
-    } else if (
-      state === STATE.ENGAGEMENT ||
-      state === STATE.ASSESSMENT ||
-      state === STATE.SETTLEMENT
-    ) {
-      this.#updateSeaElementForEngagement(sea);
+    switch (state) {
+      case STATE.DEPLOYMENT:
+        this.#updateSeaElementForDeployment(sea);
+        break;
+      case STATE.ENGAGEMENT:
+        this.#updateSeaElementForEngagement(sea);
+        break;
+      case STATE.ASSESSMENT:
+        this.#updateSeaElementForAssessment(sea);
+        break;
+      case STATE.SETTLEMENT:
+        this.#updateSeaElementForSettlement(sea);
+        break;
     }
   }
 
@@ -184,7 +209,6 @@ export class Interface {
     deploymentPanelElement.classList.add("console__panel_visible");
   }
 
-  // TODO: Refactor to use console__panel_active class
   #updateConsoleElementForEngagement() {
     const currentPanelElement = document.querySelector(
       ".console__panel_visible"

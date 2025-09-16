@@ -125,6 +125,13 @@ main {
   cursor: pointer;
 }
 
+.sea_state_enlistment,
+.sea_state_assessment,
+.sea_state_settlement {
+  pointer-events: none;
+  cursor: default;
+}
+
 .sea,
 .sea__element {
   border: 1px solid var(--salt-700);
