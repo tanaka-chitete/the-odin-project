@@ -264,9 +264,11 @@ export class Interface {
 
     this.#seaElement.addEventListener("click", (event) => {
       // The user may have clicked a ship. A ship is represented with multiple segments.
-      const previouslySelectedElements = document.querySelectorAll(".selected");
+      const previouslySelectedElements = document.querySelectorAll(
+        ".sea__element_selected"
+      );
       for (const previouslySelectedElement of previouslySelectedElements) {
-        previouslySelectedElement.classList.remove("selected");
+        previouslySelectedElement.classList.remove("sea__element_selected");
       }
 
       const newlySelectedElement = event.target;
@@ -277,14 +279,14 @@ export class Interface {
         );
 
         for (const shipSegmentElement of shipSegmentElements) {
-          shipSegmentElement.classList.add("selected");
+          shipSegmentElement.classList.add("sea__element_selected");
         }
       } else if (
         newlySelectedElement.classList.contains(
           "sea__element_type_unknown-element"
         )
       ) {
-        newlySelectedElement.classList.add("selected");
+        newlySelectedElement.classList.add("sea__element_selected");
       }
     });
 
@@ -354,7 +356,9 @@ export class Interface {
     recallShipButton.addEventListener("click", (event) => {
       event.preventDefault();
 
-      const previouslySelectedElements = document.querySelectorAll(".selected");
+      const previouslySelectedElements = document.querySelectorAll(
+        ".sea__element_selected"
+      );
 
       if (previouslySelectedElements.length === 0) {
         return;
@@ -387,7 +391,9 @@ export class Interface {
     rotateShipButton.addEventListener("click", (event) => {
       event.preventDefault();
 
-      const previouslySelectedElements = document.querySelectorAll(".selected");
+      const previouslySelectedElements = document.querySelectorAll(
+        ".sea__element_selected"
+      );
 
       if (previouslySelectedElements.length === 0) {
         return;
@@ -435,7 +441,9 @@ export class Interface {
     engageMissileButton.addEventListener("click", (event) => {
       event.preventDefault();
 
-      const previouslySelectedElement = document.querySelector(".selected");
+      const previouslySelectedElement = document.querySelector(
+        ".sea__element_selected"
+      );
 
       if (
         previouslySelectedElement === null ||
