@@ -65,11 +65,28 @@ body {
     "footer";
 }
 
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 main {
   grid-area: main;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-areas: "left middle right";
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message {
+  font-size: 0.875rem;
 }
 
 .left {
@@ -143,7 +160,6 @@ main {
 
 .sea__element_type_ship {
   background-color: var(--salt-500);
-  border: none;
 }
 
 .sea__element_type_detonated-missile {
@@ -154,14 +170,20 @@ main {
   background-color: var(--rose-400);
 }
 
+.console {
+  padding: 1rem;
+}
+
 .console__panel {
   display: none;
 }
 
 .console__panel_visible {
-  display: block;
+  display: flex;
+  justify-content: space-around;
 }
 
 .console__button {
+  width: 4rem;
   cursor: pointer;
 }
