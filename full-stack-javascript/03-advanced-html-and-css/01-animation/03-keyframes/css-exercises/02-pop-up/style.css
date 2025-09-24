@@ -32,14 +32,14 @@ button {
   border: 1px solid black;
   border-radius: 10px;
   position: fixed;
-  top: 0;
+  top: 50%;
   left: 50%;
   transform-origin: center;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -100%);
   pointer-events: none;
   opacity: 0;
   text-align: center;
-  transition-property: top, opacity;
+  transition-property: transform, opacity;
   transition-duration: 0.5s, 0.5s;
   transition-timing-function: ease-in-out, ease-in-out;
 }
@@ -57,7 +57,7 @@ button {
 }
 
 .popup-modal.show {
-  top: 50%;
+  transform: translate(-50%, -50%);
   opacity: 100%;
   pointer-events: all;
 }
