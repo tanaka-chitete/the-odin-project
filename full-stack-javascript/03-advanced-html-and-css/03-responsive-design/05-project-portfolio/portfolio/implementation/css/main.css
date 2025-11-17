@@ -1,2 +1,19 @@
 @import "./reset.css";
 @import "./modern-normalize.css";
+
+:root {
+  --gray-100: #ffffff;
+  --gray-400: #b6b6b6;
+  --gray-700: #676767;
+  --gray-1000: #000000;
+}
+
+.headshot {
+  background-color: red;
+}
+
+.about {
+  background-color: orange;
+}
+
+.
