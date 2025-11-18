@@ -14,7 +14,7 @@
   <body>
     <header>
       <section class="headshot">
-        <h1 class="headshot__title">Ashley Williams</h1>
+        <h1 class="title title_size_large">Ashley Williams</h1>
         <img
           src="ashley_williams-headshot.png"
           alt="Headshot"
@@ -23,89 +23,102 @@
       </section>
 
       <section class="about">
-        <h2 class="about__title">About</h2>
-        <p class="about__description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
-        </p>
-        <div class="about__links">
-          <i
-            class="fa-brands fa-github links__link links__link_size_medium"
-          ></i>
-          <i
-            class="fa-brands fa-linkedin links__link links__link_size_medium"
-          ></i>
-          <i
-            class="fa-brands fa-twitter links__link links__link_size_medium"
-          ></i>
+        <div class="about__top">
+          <h2 class="title title_size_medium">About</h2>
+          <p class="paragraph paragraph_size_medium">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur.
+          </p>
+        </div>
+
+        <div class="about__bottom">
+          <ul role="list" class="links">
+            <li class="links__link links__link_size_medium">
+              <i class="fa-brands fa-github"></i>
+            </li>
+            <li class="links__link links__link_size_medium">
+              <i class="fa-brands fa-linkedin"></i>
+            </li>
+            <li class="links__link links__link_size_medium">
+              <i class="fa-brands fa-twitter"></i>
+            </li>
+          </ul>
         </div>
       </section>
     </header>
 
     <main>
-      <section class="projects">
-        <h2 class="projects__title">Projects</h2>
-        <div class="entries">
-          <article class="entries__entry">
-            <img src="project1.png" alt="Project 1" class="entry__image" />
-            <div class="entry__about">
-              <div class="about__top">
-                <h3 class="top__title">Project 1</h3>
-                <div class="top__links">
-                  <i
-                    class="fa-brands fa-github links__link links__link_size_small"
-                  ></i>
-                  <i
-                    class="fa-solid fa-arrow-up-right-from-square links__link links__link_size_small"
-                  ></i>
+      <section class="work">
+        <h2 class="title title_size_medium">Work</h2>
+        <ul role="list" class="projects">
+          <li class="projects__project">
+            <article class="card">
+              <div class="card__top">
+                <img src="project1.png" alt="Project 1" class="entry__image" />
+              </div>
+              <div class="card__bottom">
+                <div class="title-and-links">
+                  <h3 class="title title_size_small">Project 1</h3>
+                  <ul role="list" class="links">
+                    <li class="links__link links__link_size_small">
+                      <i class="fa-brands fa-github"></i>
+                    </li>
+                    <li class="links__link links__link_size_small">
+                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </li>
+                  </ul>
                 </div>
               </div>
-              <div class="about__bottom">
-                <p class="bottom__description">
-                  Aenean sit amet aliquet mauris. Nam eu leo a purus.
-                </p>
-              </div>
-            </div>
-          </article>
-        </div>
+            </article>
+          </li>
+        </ul>
       </section>
     </main>
 
     <footer>
       <section class="contact">
-        <div class="contact-text">
-          <h2 class="contact-text__title">Contact</h2>
-          <p class="contact-text__prompt">
+        <div class="contact__left">
+          <h2 class="title title_size_medium title_theme_light">Contact</h2>
+          <p class="paragraph paragraph_theme_light">
             Please get in touch if you think working together could be mutually
             beneficial!
           </p>
           <br />
-          <p class="contact-text__address">
+          <p class="paragraph paragraph_theme_light">
             2821 California Street<br />
             San Francisco, California, 94115
           </p>
-        </div>
-        <p>(+1) 472-252-6595</p>
-        <p>ashley.williams@gmail.com</p>
-        <div class="contact-text__links">
-          <i class="fa-brands fa-github links__link links__link_size_large"></i>
-          <i
-            class="fa-brands fa-linkedin links__link links__link_size_large"
-          ></i>
-          <i
-            class="fa-brands fa-twitter links__link links__link_size_large"
-          ></i>
+          <p class="paragraph paragraph_theme_light">
+            <i class="fa-solid fa-phone"></i> (+1) 472-252-6595
+          </p>
+          <p class="paragraph paragraph_theme_light">
+            <i class="fa-solid fa-envelope"></i> ashley.williams@gmail.com
+          </p>
+
+          <ul role="list" class="links">
+            <li class="links__link links__link_size_large">
+              <i class="fa-brands fa-github"></i>
+            </li>
+            <li class="links__link links__link_size_large">
+              <i class="fa-brands fa-linkedin"></i>
+            </li>
+            <li class="links__link links__link_size_large">
+              <i class="fa-brands fa-twitter"></i>
+            </li>
+          </ul>
         </div>
 
-        <img
-          src="ashley_williams-half_body_shot.png"
-          alt="Half-body shot"
-          class="half-body-shot"
-        />
+        <div class="contact__right">
+          <img
+            src="ashley_williams-half_body_shot.png"
+            alt="Half-body shot"
+            class="half-body-shot"
+          />
+        </div>
       </section>
     </footer>
   </body>

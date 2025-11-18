@@ -8,6 +8,10 @@
   --gray-1000: #000000;
 }
 
+body {
+  height: 100vh;
+}
+
 .headshot {
   background-color: red;
 }
@@ -16,4 +20,10 @@
   background-color: orange;
 }
 
-.
+.work {
+  background-color: yellow;
+}
+
+.contact {
+  background-color: green;
+}
