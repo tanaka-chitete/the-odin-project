@@ -3,123 +3,94 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/modern-normalize.css" />
     <link rel="stylesheet" href="../css/main.css" />
     <script
       src="https://kit.fontawesome.com/1d1f11d75e.js"
       crossorigin="anonymous"
     ></script>
-    <title>Ashley Williams</title>
+    <title>Tanaka Chitete</title>
   </head>
 
   <body>
-    <header>
-      <section class="headshot">
-        <h1 class="title title_size_large">Ashley Williams</h1>
-        <img
-          src="ashley_williams-headshot.png"
-          alt="Headshot"
-          class="headshot__image"
-        />
-      </section>
+    <!-- <div class="header-background"></div> -->
+    <div class="viewport">
+      <header>
+        <div class="introduction">
+          <section class="introduction__headshot">
+            <h1 class="title title_size_large">Tanaka Chitete</h1>
+          </section>
 
-      <section class="about">
-        <div class="about__top">
-          <h2 class="title title_size_medium">About</h2>
-          <p class="paragraph paragraph_size_medium">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.
-          </p>
-        </div>
+          <section class="introduction__about">
+            <div class="about__text">
+              <h2 class="title title_size_medium title_italic">About</h2>
+              <p class="paragraph paragraph_size_medium">
+                "A thing is well designed if it adapts to the people who use it.
+                For code, that means it must adapt by changing. So, believe in
+                the ETC principle: Easier to Change. ETC. That's it." — Andy
+                Hunt
+              </p>
+            </div>
 
-        <div class="about__bottom">
-          <ul role="list" class="links">
-            <li class="links__link links__link_size_medium">
+            <div class="icons icons_size_medium">
               <i class="fa-brands fa-github"></i>
-            </li>
-            <li class="links__link links__link_size_medium">
               <i class="fa-brands fa-linkedin"></i>
-            </li>
-            <li class="links__link links__link_size_medium">
               <i class="fa-brands fa-twitter"></i>
-            </li>
-          </ul>
+            </div>
+          </section>
         </div>
-      </section>
-    </header>
+      </header>
 
-    <main>
-      <section class="work">
-        <h2 class="title title_size_medium">Work</h2>
-        <ul role="list" class="projects">
-          <li class="projects__project">
-            <article class="card">
-              <div class="card__top">
-                <img src="project1.png" alt="Project 1" class="entry__image" />
-              </div>
-              <div class="card__bottom">
-                <div class="title-and-links">
-                  <h3 class="title title_size_small">Project 1</h3>
-                  <ul role="list" class="links">
-                    <li class="links__link links__link_size_small">
-                      <i class="fa-brands fa-github"></i>
-                    </li>
-                    <li class="links__link links__link_size_small">
-                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </li>
-                  </ul>
+      <main>
+        <section class="work">
+          <h2 class="title title_size_medium">Projects</h2>
+          <div class="projects">
+            <article class="projects__project">
+              <div class="project__image"></div>
+              <div class="project__about">
+                <div class="about__title-and-icons">
+                  <h3 class="title title_size_small">Tristique</h3>
+                  <div class="icons icons_size_small">
+                    <i class="fa-brands fa-github"></i>
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </div>
                 </div>
+                <p class="paragraph paragraph_size_small">
+                  Nulla vel mollis enim. Nullam hendrerit nulla eget eleifend
+                  suscipit.
+                </p>
               </div>
             </article>
-          </li>
-        </ul>
-      </section>
-    </main>
+          </div>
+        </section>
+      </main>
 
-    <footer>
-      <section class="contact">
-        <div class="contact__left">
+      <footer>
+        <section class="contact">
           <h2 class="title title_size_medium title_theme_light">Contact</h2>
           <p class="paragraph paragraph_theme_light">
-            Please get in touch if you think working together could be mutually
-            beneficial!
+            What are you waiting for? Get in touch!
           </p>
           <br />
           <p class="paragraph paragraph_theme_light">
-            2821 California Street<br />
-            San Francisco, California, 94115
+            11/33 Livingstone Road<br />
+            Sydney, NSW, 2049
           </p>
           <p class="paragraph paragraph_theme_light">
-            <i class="fa-solid fa-phone"></i> (+1) 472-252-6595
+            <i class="fa-solid fa-phone"></i>+61 403 369 150
           </p>
           <p class="paragraph paragraph_theme_light">
-            <i class="fa-solid fa-envelope"></i> ashley.williams@gmail.com
+            <i class="fa-solid fa-envelope"></i> tanaka.chitete@gmail.com
           </p>
 
-          <ul role="list" class="links">
-            <li class="links__link links__link_size_large">
-              <i class="fa-brands fa-github"></i>
-            </li>
-            <li class="links__link links__link_size_large">
-              <i class="fa-brands fa-linkedin"></i>
-            </li>
-            <li class="links__link links__link_size_large">
-              <i class="fa-brands fa-twitter"></i>
-            </li>
-          </ul>
-        </div>
-
-        <div class="contact__right">
-          <img
-            src="ashley_williams-half_body_shot.png"
-            alt="Half-body shot"
-            class="half-body-shot"
-          />
-        </div>
-      </section>
-    </footer>
+          <div class="icons icons_size_large">
+            <i class="fa-brands fa-github"></i>
+            <i class="fa-brands fa-linkedin"></i>
+            <i class="fa-brands fa-twitter"></i>
+          </div>
+        </section>
+      </footer>
+    </div>
   </body>
 </html>
