@@ -1,8 +1,16 @@
 :root {
   --gray-100: #ffffff;
-  --gray-400: #b6b6b6;
-  --gray-700: #676767;
-  --gray-1000: #000000;
+  --gray-200: #fbfafa;
+  --gray-300: #f4f4f3;
+  --gray-400: #eaeaea;
+  --gray-500: #dcdcdc;
+  --gray-600: #bababc;
+  --gray-700: #919197;
+  --gray-800: #6c6c72;
+  --gray-900: #525257;
+  --gray-1000: #1c1c1c;
+
+  --banner-turquoise: #53c6ab;
 }
 
 body {
@@ -14,8 +22,24 @@ body {
   overflow-x: hidden;
 }
 
-.title,
-.paragraph {
+.viewport {
+  width: 1200px;
+  padding: 3rem;
+}
+
+.background {
+  position: absolute;
+  height: 100%;
+  width: 200%;
+  /* transform: rotate(-10deg) translate(0, -180px) scale(140%, 120%); */
+  transform: rotate(-10deg) translate(0, -750px);
+  z-index: -1;
+  background-color: var(--banner-turquoise);
+}
+
+.title {
+  color: var(--gray-1000);
+
   margin-bottom: 1rem;
 }
 
@@ -28,11 +52,35 @@ body {
   font-size: 2rem;
 }
 
+.title_size_small {
+  font-size: 1rem;
+}
+
 .title_colour_light {
-  color: white;
+  color: var(--gray-100);
+}
+
+.paragraph {
+  color: var(--gray-900);
+
+  margin-bottom: 1rem;
+}
+
+.paragraph_size_large {
+  font-size: 1rem;
+}
+
+.paragraph_size_small {
+  font-size: 0.9rem;
+}
+
+.paragraph_colour_light {
+  color: var(--gray-100);
 }
 
 .icons {
+  color: var(--gray-1000);
+
   display: flex;
   gap: 0.5rem;
 }
@@ -45,19 +93,8 @@ body {
   justify-content: flex-end;
 }
 
-.header-background {
-  position: absolute;
-  height: 100%;
-  width: 200%;
-  /* transform: rotate(-10deg) translate(0, -180px) scale(140%, 120%); */
-  transform: rotate(-10deg) translate(0, -750px);
-  z-index: -1;
-  background-color: #add250;
-}
-
-.viewport {
-  width: 1200px;
-  padding: 2rem;
+.icons_colour_light {
+  color: var(--gray-100);
 }
 
 /* Introduction */
@@ -65,6 +102,8 @@ body {
 .introduction {
   display: flex;
   align-items: center;
+
+  margin-bottom: 5rem;
 }
 
 .introduction__headshot {
@@ -73,7 +112,7 @@ body {
   aspect-ratio: 1 / 1;
   background-image: url("../other/tanaka_chitete-headshot.jpg");
   background-size: contain;
-  box-shadow: 0 0 5px gray;
+  box-shadow: 0 0 5px var(--gray-700);
 
   display: flex;
   align-items: end;
@@ -81,7 +120,7 @@ body {
 }
 
 .introduction__about {
-  box-shadow: 0 0 5px gray;
+  box-shadow: 0 0 5px var(--gray-700);
   background-color: white;
 
   padding: 1rem;
@@ -94,7 +133,7 @@ body {
 /* Projects */
 
 .work {
-  background-color: yellow;
+  margin-bottom: 5rem;
 }
 
 .projects {
@@ -103,8 +142,10 @@ body {
 }
 
 .projects__project {
-  background-color: lightskyblue;
   width: 400px;
+  background-color: white;
+  box-shadow: 0 0 4px var(--gray-700);
+
   display: grid;
   grid-template-areas:
     "image"
@@ -113,7 +154,11 @@ body {
 }
 
 .project__image {
-  background-color: gray;
+  background-color: var(--gray-400);
+}
+
+.project__about {
+  padding: 1rem;
 }
 
 .about__title-and-icons {
@@ -124,5 +169,7 @@ body {
 /* Contact */
 
 .contact {
-  background-color: green;
+  background-color: var(--banner-turquoise);
+
+  padding: 3rem;
 }
