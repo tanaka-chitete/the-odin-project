@@ -18,10 +18,6 @@ body {
   /* height: calc(100vh + 64px); */
   height: 100vh;
   overflow-x: hidden;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 footer {
@@ -29,16 +25,15 @@ footer {
 }
 
 .viewport {
-  width: 1200px;
+  max-width: 1200px;
+  margin: 0 auto;
+
   padding: 3rem;
 }
 
-.container {
-  max-width: 80rem;
+.viewport_section_top {
   height: 100%;
-  margin: 0 auto;
 }
-/*** this is the fix for the footer background issue */
 
 .background {
   position: absolute;
@@ -97,16 +92,34 @@ footer {
   gap: 0.5rem;
 }
 
-.icons_size_medium > .fa-brands {
-  font-size: 1.25rem;
+.icons_size_large > .icons__link {
+  font-size: 2rem;
+}
+
+.icons_size_medium > .icons__link {
+  font-size: 1.5rem;
+}
+
+.icons_size_small > .icons__link {
+  font-size: 1rem;
 }
 
 .icons_alignment_right {
   justify-content: flex-end;
 }
 
-.icons_colour_light {
+.icons_colour_light > .icons__link {
   color: var(--gray-100);
+}
+
+.icons__link {
+  cursor: pointer;
+}
+
+.icons__link:link,
+.icons__link:visited {
+  text-decoration: none;
+  color: var(--gray-1000);
 }
 
 /* Introduction */
