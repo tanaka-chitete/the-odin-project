@@ -37,11 +37,11 @@ footer {
 
 .background {
   position: absolute;
-  height: 100%;
-  width: 200%;
+  height: 1440px;
+  width: 3440px;
   z-index: -1;
   background-color: var(--canva-purple);
-  transform: rotate(-5deg) translate(0, -1050px);
+  transform: rotate(-5deg) translate(0, -1300px);
   box-shadow: 0 0 8px var(--gray-900);
 }
 
@@ -127,15 +127,15 @@ footer {
 /* Introduction */
 
 .introduction {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 
+  align-items: center;
   margin-bottom: 5rem;
 }
 
 .introduction__headshot {
   z-index: 1;
-  width: 50rem;
   aspect-ratio: 1 / 1;
   background-image: url("../other/tanaka_chitete-headshot.jpg");
   background-size: contain;
@@ -184,4 +184,40 @@ footer {
 
 .right-aligned {
   justify-content: flex-end;
+}
+
+@media only screen and (max-width: 600px) {
+  .background {
+    transform: rotate(-30deg) translate(0, -700px);
+  }
+
+  .viewport {
+    max-width: 600px;
+
+    padding: 1rem;
+  }
+
+  .introduction {
+    grid-template-columns: 1fr;
+  }
+
+  .introduction__headshot {
+    width: 100%;
+  }
+
+  .introduction__about {
+    border: none;
+  }
+
+  .projects {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .title_size_medium {
+    text-align: center;
+  }
+
+  .right-aligned {
+    justify-content: center;
+  }
 }
