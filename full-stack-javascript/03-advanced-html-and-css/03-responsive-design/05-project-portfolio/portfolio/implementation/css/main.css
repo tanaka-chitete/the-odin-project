@@ -10,7 +10,7 @@
   --gray-900: #525257;
   --gray-1000: #1c1c1c;
 
-  --banner-turquoise: #53c6ab;
+  --canva-purple: #832ae8;
 }
 
 body {
@@ -21,7 +21,7 @@ body {
 }
 
 footer {
-  background-color: var(--banner-turquoise);
+  background-color: var(--canva-purple);
 }
 
 .viewport {
@@ -39,9 +39,10 @@ footer {
   position: absolute;
   height: 100%;
   width: 200%;
-  transform: rotate(-5deg) translate(0, -1050px);
   z-index: -1;
-  background-color: var(--banner-turquoise);
+  background-color: var(--canva-purple);
+  transform: rotate(-5deg) translate(0, -1050px);
+  box-shadow: 0 0 8px var(--gray-900);
 }
 
 .title {
@@ -139,7 +140,7 @@ footer {
   background-image: url("../other/tanaka_chitete-headshot.jpg");
   background-size: contain;
   border-radius: 6px;
-  box-shadow: 0 0 5px var(--gray-700);
+  /* box-shadow: 0 0 8px var(--gray-600); */
 
   display: flex;
   align-items: end;
@@ -149,7 +150,9 @@ footer {
 .introduction__about {
   background-color: white;
   border-radius: 0 6px 6px 0;
-  box-shadow: 0 0 5px var(--gray-700);
+  border-top: 1px solid var(--gray-500);
+  border-right: 1px solid var(--gray-500);
+  border-bottom: 1px solid var(--gray-500);
 
   padding: 1rem;
 }
@@ -170,7 +173,7 @@ footer {
   flex: 1;
   background-color: white;
   border-radius: 6px;
-  box-shadow: 0 0 4px var(--gray-700);
+  border: 1px solid var(--gray-500);
 
   padding: 1rem;
 }
