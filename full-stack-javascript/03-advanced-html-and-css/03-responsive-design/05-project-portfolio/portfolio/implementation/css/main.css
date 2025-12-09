@@ -32,7 +32,7 @@ footer {
 }
 
 .viewport_section_top {
-  height: 100%;
+  min-height: 100%;
 }
 
 .background {
@@ -91,8 +91,15 @@ footer {
 }
 
 .link {
-  color: var(--gray-1000);
   text-decoration: none;
+}
+
+.link_type_icon {
+  color: var(--gray-1000);
+}
+
+.link_type_text {
+  color: var(--gray-1000);
 
   margin-bottom: 0.5rem;
   display: flex;
@@ -154,12 +161,13 @@ footer {
 }
 
 .projects {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 }
 
 .projects__project {
-  width: 400px;
+  flex: 1;
   background-color: white;
   border-radius: 6px;
   box-shadow: 0 0 4px var(--gray-700);
