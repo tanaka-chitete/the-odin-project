@@ -36,7 +36,7 @@ footer {
 }
 
 .background {
-  position: absolute;
+  position: fixed;
   height: 1440px;
   width: 3440px;
   z-index: -1;
